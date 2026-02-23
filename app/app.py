@@ -1,15 +1,107 @@
 import json
 import os
+import sqlite3
 import uuid
 from datetime import datetime
 from pathlib import Path
-from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+from flask import Flask, make_response, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "cyberpunk-secret-key-change-in-prod")
 
 EXAMS_DIR = Path(__file__).parent / "exams"
+DB_PATH = Path(os.environ.get("HISTORY_DB", Path(__file__).parent / "data" / "history.db"))
 
+CLIENT_ID_COOKIE = "cad_client_id"
+CLIENT_ID_MAX_AGE = 365 * 24 * 3600  # 1 year
+
+
+# ── Database ─────────────────────────────────────────────────
+
+def get_db():
+    db = sqlite3.connect(str(DB_PATH))
+    db.row_factory = sqlite3.Row
+    return db
+
+
+def init_db():
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with get_db() as db:
+        db.execute("""
+            CREATE TABLE IF NOT EXISTS history (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                client_id   TEXT    NOT NULL,
+                exam_title  TEXT,
+                alias       TEXT,
+                score       INTEGER,
+                total       INTEGER,
+                percentage  INTEGER,
+                pass_mark   INTEGER,
+                passed      INTEGER,
+                grade_label TEXT,
+                grade_class TEXT,
+                token       TEXT,
+                timestamp   TEXT
+            )
+        """)
+        db.execute("CREATE INDEX IF NOT EXISTS idx_client_id ON history(client_id)")
+        db.commit()
+
+
+init_db()
+
+
+def get_history(client_id):
+    with get_db() as db:
+        rows = db.execute(
+            "SELECT * FROM history WHERE client_id = ? ORDER BY id DESC LIMIT 50",
+            (client_id,),
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def insert_history(client_id, entry):
+    with get_db() as db:
+        db.execute(
+            """INSERT INTO history
+               (client_id, exam_title, alias, score, total, percentage,
+                pass_mark, passed, grade_label, grade_class, token, timestamp)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+            (
+                client_id,
+                entry["exam_title"],
+                entry["alias"],
+                entry["score"],
+                entry["total"],
+                entry["percentage"],
+                entry["pass_mark"],
+                int(entry["passed"]),
+                entry["grade_label"],
+                entry["grade_class"],
+                entry["token"],
+                entry["timestamp"],
+            ),
+        )
+        db.commit()
+
+
+def _ensure_client_id(response):
+    """Return (client_id, modified) — sets cookie on response if new."""
+    client_id = request.cookies.get(CLIENT_ID_COOKIE)
+    if client_id:
+        return client_id, False
+    client_id = str(uuid.uuid4())
+    response.set_cookie(
+        CLIENT_ID_COOKIE,
+        client_id,
+        max_age=CLIENT_ID_MAX_AGE,
+        samesite="Lax",
+        httponly=True,
+    )
+    return client_id, True
+
+
+# ── Exam helpers ─────────────────────────────────────────────
 
 def load_exam(exam_id):
     exam_path = EXAMS_DIR / f"{exam_id}.json"
@@ -38,11 +130,17 @@ def list_exams():
     return exams
 
 
+# ── Routes ───────────────────────────────────────────────────
+
 @app.route("/")
 def index():
     exams = list_exams()
-    history = session.get("history", [])
-    return render_template("index.html", exams=exams, history=history)
+    resp = make_response()
+    client_id, _ = _ensure_client_id(resp)
+    history = get_history(client_id)
+    resp.response = [render_template("index.html", exams=exams, history=history).encode()]
+    resp.content_type = "text/html"
+    return resp
 
 
 @app.route("/start", methods=["POST"])
@@ -57,16 +155,10 @@ def start():
     if not exam:
         return redirect(url_for("index"))
 
-    # Preserve history across exam starts
-    history = session.get("history", [])
     session.clear()
-    session["history"] = history
-
-    # Store exam state in session
     session["alias"] = alias
     session["exam_id"] = exam_id
     session["exam_title"] = exam.get("title", exam_id)
-    session["answers"] = {}
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
 
@@ -103,7 +195,6 @@ def submit():
 
     questions = exam.get("questions", [])
     pass_mark = exam.get("pass_mark", 70)
-    answers = {}
     score = 0
     results = []
 
@@ -114,7 +205,6 @@ def submit():
         is_correct = selected == correct
         if is_correct:
             score += 1
-        answers[key] = selected
         results.append({
             "index": i,
             "question": question.get("question"),
@@ -128,12 +218,11 @@ def submit():
     total = len(questions)
     percentage = round((score / total) * 100) if total > 0 else 0
     passed = percentage >= pass_mark
-
     grade = _grade(percentage)
 
-    # Append to session history
-    history = session.get("history", [])
-    history.append({
+    # Persist to DB
+    client_id = request.cookies.get(CLIENT_ID_COOKIE, str(uuid.uuid4()))
+    insert_history(client_id, {
         "exam_title": session.get("exam_title", exam_id),
         "alias": session.get("alias", "UNKNOWN"),
         "score": score,
@@ -155,22 +244,21 @@ def submit():
     session["passed"] = passed
     session["grade"] = grade
     session["started"] = False
-    session["history"] = history
 
     return redirect(url_for("results"))
 
 
 def _grade(pct):
     if pct >= 90:
-        return {"label": "ELITE HACKER", "class": "elite", "msg": "You've cracked the mainframe. The net is yours."}
+        return {"label": "ELITE HACKER",  "class": "elite",     "msg": "You've cracked the mainframe. The net is yours."}
     elif pct >= 75:
-        return {"label": "NETRUNNER", "class": "netrunner", "msg": "Solid jack-in. You know your way around the system."}
+        return {"label": "NETRUNNER",     "class": "netrunner", "msg": "Solid jack-in. You know your way around the system."}
     elif pct >= 60:
-        return {"label": "SCRIPT KID", "class": "scriptkid", "msg": "Not bad. Keep practicing and you'll level up."}
+        return {"label": "SCRIPT KID",    "class": "scriptkid", "msg": "Not bad. Keep practicing and you'll level up."}
     elif pct >= 40:
-        return {"label": "LURKER", "class": "lurker", "msg": "You're on the outside looking in. Hit the databanks harder."}
+        return {"label": "LURKER",        "class": "lurker",    "msg": "You're on the outside looking in. Hit the databanks harder."}
     else:
-        return {"label": "FLATLINED", "class": "flatlined", "msg": "You got iced. Time to re-learn the basics."}
+        return {"label": "FLATLINED",     "class": "flatlined", "msg": "You got iced. Time to re-learn the basics."}
 
 
 @app.route("/results")
@@ -195,10 +283,7 @@ def results():
 
 @app.route("/reset")
 def reset():
-    # Preserve history across resets so it persists within the session
-    history = session.get("history", [])
     session.clear()
-    session["history"] = history
     return redirect(url_for("index"))
 
 
