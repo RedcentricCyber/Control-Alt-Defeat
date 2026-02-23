@@ -121,9 +121,12 @@ def list_exams():
                 "id": path.stem,
                 "title": data.get("title", path.stem),
                 "description": data.get("description", ""),
+                "based_on": data.get("based_on", ""),
+                "created_by": data.get("created_by", ""),
                 "difficulty": data.get("difficulty", "UNKNOWN"),
                 "question_count": len(data.get("questions", [])),
                 "pass_mark": data.get("pass_mark", 70),
+                "links": data.get("links", []),
             })
         except (json.JSONDecodeError, KeyError):
             continue

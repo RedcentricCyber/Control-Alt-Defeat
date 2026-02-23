@@ -49,6 +49,19 @@
             <span class="tag tag-count">{{ exam.question_count }}Q</span>
             <span class="tag tag-passmark">PASS: {{ exam.pass_mark }}%</span>
           </div>
+          {% if exam.based_on or exam.created_by %}
+          <div class="exam-attribution">
+            {% if exam.based_on %}<span>&gt; BASED ON: {{ exam.based_on }}</span>{% endif %}
+            {% if exam.created_by %}<span>&gt; CREATED BY: {{ exam.created_by }}</span>{% endif %}
+          </div>
+          {% endif %}
+          {% if exam.links %}
+          <div class="exam-links" onclick="event.stopPropagation()">
+            {% for link in exam.links %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
         </label>
         {% else %}
         <div class="text-dim" style="padding:20px;">

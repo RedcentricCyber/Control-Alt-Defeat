@@ -1,8 +1,16 @@
 {
   "title": "WEB SECURITY RECON",
-  "description": "XSS, SQLi, CSRF, headers, and the hacker's guide to breaking web applications.",
+  "description": "Cover your attack surface: XSS, SQL injection, CSRF, security headers, JWT weaknesses, SSRF, and the OWASP Top 10. Know how applications break before you're asked to defend them.",
+  "based_on": "OWASP Top 10 (2021) & PortSwigger Web Security Academy",
+  "created_by": "Control-Alt-Defeat",
   "difficulty": "MEDIUM",
   "pass_mark": 70,
+  "links": [
+    { "text": "PortSwigger Web Security Academy", "url": "https://portswigger.net/web-security" },
+    { "text": "OWASP Top 10 (2021)", "url": "https://owasp.org/www-project-top-ten/" },
+    { "text": "MDN — Web Security", "url": "https://developer.mozilla.org/en-US/docs/Web/Security" },
+    { "text": "OWASP Cheat Sheet Series", "url": "https://cheatsheetseries.owasp.org/" }
+  ],
   "questions": [
     {
       "question": "Which HTTP header is used to prevent clickjacking attacks?",

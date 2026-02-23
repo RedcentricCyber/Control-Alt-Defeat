@@ -12,8 +12,23 @@
       <div class="text-dim mt-8" style="font-size:11px; letter-spacing:1px;">
         OPERATIVE: <span class="text-green">{{ alias }}</span>
       </div>
+      {% if exam.based_on or exam.created_by %}
+      <div class="exam-attribution mt-8">
+        {% if exam.based_on %}<span>&gt; BASED ON: {{ exam.based_on }}</span>{% endif %}
+        {% if exam.created_by %}<span>&gt; CREATED BY: {{ exam.created_by }}</span>{% endif %}
+      </div>
+      {% endif %}
     </div>
-    <div class="session-chip">SESSION // {{ token }}</div>
+    <div style="text-align:right;">
+      <div class="session-chip">SESSION // {{ token }}</div>
+      {% if exam.links %}
+      <div class="exam-links mt-8" style="justify-content:flex-end;">
+        {% for link in exam.links %}
+        <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
   </div>
 
   <!-- Progress -->

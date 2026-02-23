@@ -1,8 +1,16 @@
 {
   "title": "NETWORKING FUNDAMENTALS",
-  "description": "OSI layers, TCP/IP, subnetting, and protocol essentials for the aspiring netrunner.",
+  "description": "Test your grip on the backbone of every system: OSI layers, TCP/IP, subnetting, DNS, ARP, and the protocols that keep the net alive. Essential knowledge for any operative working below Layer 7.",
+  "based_on": "CompTIA Network+ (N10-009) Exam Objectives",
+  "created_by": "Control-Alt-Defeat",
   "difficulty": "EASY",
   "pass_mark": 70,
+  "links": [
+    { "text": "Cloudflare — What is the OSI Model?", "url": "https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/" },
+    { "text": "Professor Messer — Network+ Free Course", "url": "https://www.professormesser.com/network-plus/n10-009/n10-009-video/n10-009-training-course/" },
+    { "text": "Cisco Networking Academy", "url": "https://www.netacad.com/" },
+    { "text": "Subnet Calculator", "url": "https://www.subnet-calculator.com/" }
+  ],
   "questions": [
     {
       "question": "How many layers does the OSI model have?",

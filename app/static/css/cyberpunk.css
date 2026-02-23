@@ -725,6 +725,47 @@ input[type="text"]:focus {
   letter-spacing: 1px;
 }
 
+/* ── Exam card — attribution & revision links ───────────────── */
+.exam-attribution {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-dim);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+
+.exam-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.exam-link {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--neon-cyan);
+  text-decoration: none;
+  border: 1px solid rgba(0,229,255,0.3);
+  padding: 2px 7px;
+  letter-spacing: 0.5px;
+  transition: border-color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.exam-link:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(0,229,255,0.08);
+  text-shadow: var(--glow-cyan);
+}
+
+.exam-link::before { content: '↗ '; font-size: 9px; opacity: 0.7; }
+
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .exam-grid { grid-template-columns: 1fr; }

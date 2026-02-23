@@ -1,8 +1,16 @@
 {
   "title": "LINUX DEEP DIVE",
-  "description": "File system, permissions, processes, shell fu, and kernel internals for system hackers.",
+  "description": "Go beyond the command line: /proc internals, file permissions, SUID/SGID bits, seccomp, systemd unit types, process signalling, and shell redirection. Built for operators who need to own a system, not just use one.",
+  "based_on": "Linux Foundation LFCS & CompTIA Linux+ (XK0-005)",
+  "created_by": "Control-Alt-Defeat",
   "difficulty": "HARD",
   "pass_mark": 60,
+  "links": [
+    { "text": "man7.org — Linux Man Pages Online", "url": "https://man7.org/linux/man-pages/" },
+    { "text": "explainshell — Break down any shell command", "url": "https://explainshell.com/" },
+    { "text": "The Linux Command Line (free book)", "url": "https://linuxcommand.org/tlcl.php" },
+    { "text": "Linux Foundation Training", "url": "https://training.linuxfoundation.org/resources/?_sft_content_type=free-course" }
+  ],
   "questions": [
     {
       "question": "Which /proc file contains the command line of process with PID 1337?",
