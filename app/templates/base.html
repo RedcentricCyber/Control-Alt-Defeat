@@ -33,6 +33,8 @@
   {% block content %}{% endblock %}
 </div>
 
+{% block page_overlays %}{% endblock %}
+
 <script src="{{ url_for('static', filename='js/matrix.js') }}"></script>
 {% block extra_scripts %}{% endblock %}
 </body>

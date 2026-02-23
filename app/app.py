@@ -438,6 +438,7 @@ def history_detail(entry_id):
         answers=answers,
         category_breakdown=category_breakdown,
         grade=grade,
+        github_repo=GITHUB_REPO,
     )
 
 

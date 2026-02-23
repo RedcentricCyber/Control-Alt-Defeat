@@ -501,12 +501,13 @@ input[type="text"]:focus {
 }
 
 /* ── Question map panel ─────────────────────────────────────── */
-/* Anchored bottom-right; content stacks upward via flex-column  */
+/* z-index 10000 clears the body::before scanlines overlay (9999) */
+/* Panel lives outside .container so it's not capped by its z:1   */
 .q-map-panel {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  z-index: 150;
+  z-index: 10000;
   display: flex;
   flex-direction: column;
   width: 210px;
@@ -643,6 +644,27 @@ input[type="text"]:focus {
 
 .q-map-jump-btn:hover {
   background: rgba(255,230,0,0.08);
+}
+
+/* Keyboard shortcut hint bar at the bottom of the map */
+.q-map-kb-hint {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-dim);
+  font-family: var(--font-display);
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+.q-map-key {
+  display: inline-block;
+  padding: 0 4px;
+  border: 1px solid var(--border-dim);
+  color: var(--text-primary);
+  font-size: 8px;
+  margin-right: 1px;
 }
 
 

@@ -96,17 +96,23 @@
     <div class="prompt-line">Full question log for this attempt</div>
     <div class="mt-16">
     {% for r in answers %}
-    <div class="result-q {{ 'correct' if r.is_correct else 'wrong' }}">
+    <div class="result-q {{ 'correct' if r.is_correct else 'wrong' }}" id="result-row-{{ loop.index0 }}">
       <div class="question-number">
-        QUERY {{ '%03d' % (r.index + 1) }}
-        &nbsp;|&nbsp;
-        {% if r.is_correct %}
-          <span class="result-status-correct">■ CORRECT</span>
-        {% else %}
-          <span class="result-status-wrong">■ INCORRECT</span>
-        {% endif %}
-        {% if r.category %}
-          &nbsp;|&nbsp;<span class="result-category">{{ r.category }}</span>
+        <span>
+          QUERY {{ '%03d' % (r.index + 1) }}
+          &nbsp;|&nbsp;
+          {% if r.is_correct %}
+            <span class="result-status-correct">■ CORRECT</span>
+          {% else %}
+            <span class="result-status-wrong">■ INCORRECT</span>
+          {% endif %}
+          {% if r.category %}
+            &nbsp;|&nbsp;<span class="result-category">{{ r.category }}</span>
+          {% endif %}
+        </span>
+        {% if github_repo %}
+        <button type="button" class="q-action-btn report-btn"
+                onclick="reportHistoryQ({{ loop.index0 }})">⚐ REPORT</button>
         {% endif %}
       </div>
       <div class="result-q-text">{{ r.question }}</div>
@@ -161,4 +167,37 @@
   </div>
 
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+{% if github_repo %}
+<script>
+  (function () {
+    var EXAM_TITLE  = {{ entry.exam_title | tojson }};
+    var GITHUB_REPO = {{ github_repo | tojson }};
+
+    window.reportHistoryQ = function (idx) {
+      var row  = document.getElementById('result-row-' + idx);
+      var questionText = row
+        ? row.querySelector('.result-q-text').textContent.trim()
+        : 'Question ' + (idx + 1);
+
+      var title = '[Report] Q' + (idx + 1) + ' — ' +
+                  questionText.substring(0, 60) + (questionText.length > 60 ? '…' : '');
+      var body  =
+        '## Inaccuracy Report\n\n' +
+        '**Exam:** ' + EXAM_TITLE + '\n' +
+        '**Question #' + (idx + 1) + ':**\n> ' + questionText + '\n\n' +
+        '**What is inaccurate:**\n\n\n' +
+        '**Suggested correction (if known):**\n\n';
+
+      var url = 'https://github.com/' + GITHUB_REPO + '/issues/new' +
+                '?title='  + encodeURIComponent(title) +
+                '&body='   + encodeURIComponent(body)  +
+                '&labels=' + encodeURIComponent('inaccuracy');
+      window.open(url, '_blank', 'noopener,noreferrer');
+    };
+  })();
+</script>
+{% endif %}
 {% endblock %}

@@ -1,10 +1,11 @@
-// Exam page — option selection, progress, timer, flags, question map, report
+// Exam page — option selection, progress, timer, flags, question map, keyboard nav, report
 (function () {
-  var answered    = 0;
-  var answeredSet = {};   // keyed by "q{idx}"
-  var flaggedSet  = {};   // keyed by numeric idx
-  var visibleCards = {};  // keyed by numeric idx (IntersectionObserver)
-  var timedOut    = false;
+  var answered     = 0;
+  var answeredSet  = {};   // keyed by "q{idx}"
+  var flaggedSet   = {};   // keyed by numeric idx
+  var visibleCards = {};   // keyed by numeric idx (IntersectionObserver)
+  var currentCard  = 0;    // topmost card currently in viewport
+  var timedOut     = false;
 
   var progressBar   = document.getElementById('progress-bar');
   var progressText  = document.getElementById('progress-text');
@@ -99,10 +100,10 @@
     for (var i = 0; i < TOTAL; i++) {
       (function (idx) {
         var box = document.createElement('button');
-        box.type      = 'button';
-        box.className = 'q-map-box';
-        box.id        = 'map-box-' + idx;
-        box.title     = 'Q' + (idx + 1);
+        box.type        = 'button';
+        box.className   = 'q-map-box';
+        box.id          = 'map-box-' + idx;
+        box.title       = 'Q' + (idx + 1);
         box.textContent = idx + 1;
         box.onclick = function () {
           var card = document.getElementById('qcard-' + idx);
@@ -112,7 +113,7 @@
       })(i);
     }
 
-    // Track which card is topmost in the viewport
+    // Track the topmost card in the viewport
     if (window.IntersectionObserver) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -134,8 +135,9 @@
   }
 
   function _updateCurrentBox() {
-    var keys = Object.keys(visibleCards).map(Number);
-    var topmost = keys.length > 0 ? Math.min.apply(null, keys) : -1;
+    var keys    = Object.keys(visibleCards).map(Number);
+    var topmost = keys.length > 0 ? Math.min.apply(null, keys) : currentCard;
+    currentCard = topmost;
     for (var i = 0; i < TOTAL; i++) {
       var box = document.getElementById('map-box-' + i);
       if (box) {
@@ -145,7 +147,6 @@
     }
   }
 
-  // Reflects answered + flagged state on a single map box
   function _updateMapBox(idx) {
     var box = document.getElementById('map-box-' + idx);
     if (!box) return;
@@ -177,6 +178,59 @@
     var card  = document.getElementById('qcard-' + first);
     if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
+
+  // ── Keyboard navigation ───────────────────────────────────────
+  function _scrollToCard(idx) {
+    if (idx < 0)      idx = 0;
+    if (idx >= TOTAL) idx = TOTAL - 1;
+    var card = document.getElementById('qcard-' + idx);
+    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function _selectCurrentAnswer(letter) {
+    var optEl = document.getElementById('opt-' + currentCard + '-' + letter);
+    if (optEl) selectOption(optEl, 'q' + currentCard, letter);
+  }
+
+  document.addEventListener('keydown', function (e) {
+    // Don't intercept when typing in a form field
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    // Don't intercept modifier combos (Ctrl+S, Cmd+R, etc.)
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+    switch (e.key) {
+      // ── Navigation
+      case 'ArrowDown':
+      case 'PageDown':
+      case 'j': case 'J':
+        e.preventDefault();
+        _scrollToCard(currentCard + 1);
+        break;
+      case 'ArrowUp':
+      case 'PageUp':
+      case 'k': case 'K':
+        e.preventDefault();
+        _scrollToCard(currentCard - 1);
+        break;
+
+      // ── Answer selection
+      case 'a': case 'A': _selectCurrentAnswer('A'); break;
+      case 'b': case 'B': _selectCurrentAnswer('B'); break;
+      case 'c': case 'C': _selectCurrentAnswer('C'); break;
+      case 'd': case 'D': _selectCurrentAnswer('D'); break;
+
+      // ── Flag
+      case 'f': case 'F':
+        toggleFlag(currentCard);
+        break;
+
+      // ── Map toggle
+      case 'm': case 'M':
+        toggleMap();
+        break;
+    }
+  });
 
   // ── Submit guard ──────────────────────────────────────────────
   if (form) {
@@ -211,7 +265,6 @@
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
   if (typeof TIME_LIMIT !== 'undefined' && TIME_LIMIT > 0) {
-    // Countdown
     var totalSeconds = TIME_LIMIT * 60;
     var storageKey   = 'cad_timer_' + SESSION_TOKEN;
     var stored       = sessionStorage.getItem(storageKey);
@@ -247,7 +300,6 @@
     var timerInterval = setInterval(tick, 1000);
 
   } else {
-    // Count-up elapsed
     var elapsedKey   = 'cad_elapsed_' + SESSION_TOKEN;
     var storedStart  = sessionStorage.getItem(elapsedKey);
     var elapsedStart = storedStart ? parseInt(storedStart, 10) : Date.now();
