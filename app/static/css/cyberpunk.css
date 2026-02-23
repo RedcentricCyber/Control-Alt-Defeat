@@ -232,6 +232,27 @@ header {
   background: rgba(0,255,65,0.06);
 }
 
+/* Double-click launch flash */
+@keyframes card-launch {
+  0%   { box-shadow: var(--glow-green), inset 0 0 30px rgba(0,255,65,0.04); }
+  50%  { box-shadow: 0 0 40px rgba(0,255,65,0.8), inset 0 0 60px rgba(0,255,65,0.12); }
+  100% { box-shadow: var(--glow-green), inset 0 0 30px rgba(0,255,65,0.04); }
+}
+
+.exam-card.launching {
+  animation: card-launch 0.18s ease-out forwards;
+  border-color: var(--neon-green);
+}
+
+/* Alias-nudge pulse when double-clicking without an alias set */
+@keyframes input-nudge {
+  0%   { border-color: var(--border-dim); box-shadow: none; }
+  40%  { border-color: var(--neon-cyan);  box-shadow: 0 0 14px rgba(0,229,255,0.5); }
+  100% { border-color: var(--border-dim); box-shadow: none; }
+}
+
+.input-nudge { animation: input-nudge 0.7s ease-out; }
+
 .exam-card input[type="radio"] { display: none; }
 
 .exam-title {
