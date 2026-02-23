@@ -175,7 +175,7 @@ header {
 /* ── Exam list ──────────────────────────────────────────────── */
 .exam-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: 1fr;
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -183,9 +183,10 @@ header {
 .exam-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-dim);
+  border-left: 3px solid transparent;
   padding: 18px;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.1s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   position: relative;
   overflow: hidden;
 }
@@ -201,8 +202,8 @@ header {
 .exam-card:hover,
 .exam-card.selected {
   border-color: var(--neon-green);
+  border-left-color: var(--neon-green);
   box-shadow: var(--glow-green), inset 0 0 30px rgba(0,255,65,0.04);
-  transform: translateY(-2px);
 }
 
 .exam-card.selected {
@@ -828,8 +829,7 @@ input[type="text"]:focus {
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .exam-grid { grid-template-columns: 1fr; }
-  header { padding: 10px 14px; }
+header { padding: 10px 14px; }
   .container { padding: 14px 12px 40px; }
   .history-row {
     grid-template-columns: 1fr 1fr;
