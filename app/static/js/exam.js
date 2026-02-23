@@ -3,8 +3,7 @@
   var answered     = 0;
   var answeredSet  = {};   // keyed by "q{idx}"
   var flaggedSet   = {};   // keyed by numeric idx
-  var visibleCards = {};   // keyed by numeric idx (IntersectionObserver)
-  var currentCard  = 0;    // topmost card currently in viewport
+  var currentCard  = 0;    // index of the card currently at/past the sticky bar
   var timedOut     = false;
 
   var progressBar   = document.getElementById('progress-bar');
@@ -92,6 +91,43 @@
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  // ── Current-card tracking (scroll-based) ─────────────────────
+  //
+  // We find the sticky bar's height once so we know where the
+  // "reading line" is.  A card becomes current the moment its top
+  // edge scrolls up to that line.
+  var _stickyOffset = (function () {
+    var bar = document.querySelector('.exam-sticky-bar');
+    return bar ? bar.offsetHeight + 16 : 64;
+  })();
+
+  // Scan all cards and return the index of the last one whose top
+  // edge is at or above the sticky reading line.
+  function _computeCurrentCard() {
+    var found = 0;
+    for (var i = 0; i < TOTAL; i++) {
+      var card = document.getElementById('qcard-' + i);
+      if (!card) continue;
+      if (card.getBoundingClientRect().top <= _stickyOffset) {
+        found = i;
+      } else {
+        break; // cards are in DOM order — safe to stop early
+      }
+    }
+    return found;
+  }
+
+  function _syncCurrentCard() {
+    var found = _computeCurrentCard();
+    if (found !== currentCard) {
+      currentCard = found;
+      _updateCurrentBox();
+    }
+  }
+
+  // Passive scroll listener — fires on every scroll tick
+  window.addEventListener('scroll', _syncCurrentCard, { passive: true });
+
   // ── Question map ──────────────────────────────────────────────
   function _buildMap() {
     var grid = document.getElementById('q-map-grid');
@@ -106,43 +142,35 @@
         box.title       = 'Q' + (idx + 1);
         box.textContent = idx + 1;
         box.onclick = function () {
+          // Optimistically highlight the clicked box immediately so it
+          // feels responsive before the scroll animation completes.
+          currentCard = idx;
+          _updateCurrentBox();
           var card = document.getElementById('qcard-' + idx);
-          if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
         };
         grid.appendChild(box);
       })(i);
     }
 
-    // Track the topmost card in the viewport
-    if (window.IntersectionObserver) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          var idx = parseInt(entry.target.id.replace('qcard-', ''), 10);
-          if (entry.isIntersecting) {
-            visibleCards[idx] = true;
-          } else {
-            delete visibleCards[idx];
-          }
-        });
-        _updateCurrentBox();
-      }, { rootMargin: '-56px 0px -20% 0px', threshold: 0.15 });
-
-      for (var j = 0; j < TOTAL; j++) {
-        var card = document.getElementById('qcard-' + j);
-        if (card) observer.observe(card);
-      }
+    // Auto-expand the map on wide screens
+    if (window.innerWidth >= 900) {
+      var body    = document.getElementById('q-map-body');
+      var chevron = document.getElementById('q-map-chevron');
+      if (body)    body.style.display = '';
+      if (chevron) chevron.textContent = '▴';
     }
+
+    // Sync initial highlight after layout has settled
+    setTimeout(_syncCurrentCard, 50);
   }
 
   function _updateCurrentBox() {
-    var keys    = Object.keys(visibleCards).map(Number);
-    var topmost = keys.length > 0 ? Math.min.apply(null, keys) : currentCard;
-    currentCard = topmost;
     for (var i = 0; i < TOTAL; i++) {
       var box = document.getElementById('map-box-' + i);
       if (box) {
-        if (i === topmost) box.classList.add('is-current');
-        else               box.classList.remove('is-current');
+        if (i === currentCard) box.classList.add('is-current');
+        else                   box.classList.remove('is-current');
       }
     }
   }
@@ -175,8 +203,7 @@
     var keys = Object.keys(flaggedSet).map(Number);
     if (keys.length === 0) return;
     var first = Math.min.apply(null, keys);
-    var card  = document.getElementById('qcard-' + first);
-    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    _scrollToCard(first);
   };
 
   // ── Keyboard navigation ───────────────────────────────────────
@@ -184,7 +211,12 @@
     if (idx < 0)      idx = 0;
     if (idx >= TOTAL) idx = TOTAL - 1;
     var card = document.getElementById('qcard-' + idx);
-    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (card) {
+      // Optimistic update so rapid key presses immediately advance
+      currentCard = idx;
+      _updateCurrentBox();
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   function _selectCurrentAnswer(letter) {

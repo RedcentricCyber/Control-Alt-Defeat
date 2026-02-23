@@ -2,7 +2,7 @@
    CONTROL-ALT-DEFEAT — Cyberpunk Exam System
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
 
 :root {
   --bg-primary:    #080810;
@@ -20,7 +20,7 @@
   --glow-green:    0 0 8px #00ff41, 0 0 20px #00ff4155;
   --glow-cyan:     0 0 8px #00e5ff, 0 0 20px #00e5ff55;
   --glow-magenta:  0 0 8px #ff00ff, 0 0 20px #ff00ff55;
-  --font-mono:     'Share Tech Mono', 'Courier New', monospace;
+  --font-mono:     'JetBrains Mono', 'Share Tech Mono', 'Courier New', monospace;
   --font-display:  'Orbitron', 'Share Tech Mono', monospace;
 }
 
@@ -37,6 +37,8 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ── Scanlines overlay ──────────────────────────────────────── */
@@ -689,10 +691,10 @@ input[type="text"]:focus {
 }
 
 .question-text {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-primary);
   margin-bottom: 18px;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .options-list {
@@ -751,9 +753,10 @@ input[type="text"]:focus {
 }
 
 .option-text {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-primary);
   flex: 1;
+  line-height: 1.6;
 }
 
 /* ── Progress bar ───────────────────────────────────────────── */
@@ -864,7 +867,8 @@ input[type="text"]:focus {
 .result-q.wrong   { border-left: 3px solid var(--neon-red);   }
 
 .result-q-text {
-  font-size: 13px;
+  font-size: 15px;
+  line-height: 1.75;
   margin-bottom: 10px;
   color: var(--text-primary);
 }
