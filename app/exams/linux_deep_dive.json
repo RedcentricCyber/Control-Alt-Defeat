@@ -7,7 +7,6 @@
   "pass_mark": 60,
   "time_limit": 10,
   "num_questions": 10,
-  "categories": ["Process & /proc", "File Permissions & Special Bits", "System & Kernel", "Shell & Users"],
   "links": [
     { "text": "man7.org — Linux Man Pages Online", "url": "https://man7.org/linux/man-pages/" },
     { "text": "explainshell — Break down any shell command", "url": "https://explainshell.com/" },

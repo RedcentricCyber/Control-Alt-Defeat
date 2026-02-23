@@ -7,7 +7,6 @@
   "pass_mark": 70,
   "time_limit": 15,
   "num_questions": 10,
-  "categories": ["OSI Model", "Addressing & Subnetting", "Protocols & Ports", "DNS & Routing"],
   "links": [
     { "text": "Cloudflare — What is the OSI Model?", "url": "https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/" },
     { "text": "Professor Messer — Network+ Free Course", "url": "https://www.professormesser.com/network-plus/n10-009/n10-009-video/n10-009-training-course/" },

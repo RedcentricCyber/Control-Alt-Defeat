@@ -7,7 +7,6 @@
   "pass_mark": 70,
   "time_limit": 12,
   "num_questions": 10,
-  "categories": ["Injection Attacks", "Security Headers", "Authentication & Cookies", "OWASP & Tools"],
   "links": [
     { "text": "PortSwigger Web Security Academy", "url": "https://portswigger.net/web-security" },
     { "text": "OWASP Top 10 (2021)", "url": "https://owasp.org/www-project-top-ten/" },

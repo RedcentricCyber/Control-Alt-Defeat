@@ -129,7 +129,9 @@ def list_exams():
                 "difficulty": data.get("difficulty", "UNKNOWN"),
                 "num_questions": data.get("num_questions", pool_size),
                 "pool_size": pool_size,
-                "categories": data.get("categories", []),
+                "categories": sorted({
+                    q["category"] for q in data.get("questions", []) if q.get("category")
+                }),
                 "pass_mark": data.get("pass_mark", 70),
                 "time_limit": data.get("time_limit", 0),
                 "links": data.get("links", []),
