@@ -5,25 +5,51 @@
 {% block content %}
 <div class="fade-in">
 
-  <!-- Exam header -->
+  <!-- Exam header (non-sticky context info) -->
   <div class="exam-header mt-16">
     <div>
       <div class="exam-info-title">{{ exam.title }}</div>
       <div class="text-dim mt-8" style="font-size:11px; letter-spacing:1px;">
         OPERATIVE: <span class="text-green">{{ alias }}</span>
       </div>
+      {% if exam.based_on or exam.created_by %}
+      <div class="exam-attribution mt-8">
+        {% if exam.based_on %}<span>&gt; BASED ON: {{ exam.based_on }}</span>{% endif %}
+        {% if exam.created_by %}<span>&gt; CREATED BY: {{ exam.created_by }}</span>{% endif %}
+      </div>
+      {% endif %}
     </div>
-    <div class="session-chip">SESSION // {{ token }}</div>
+    <div style="text-align:right;">
+      <div class="session-chip">SESSION // {{ token }}</div>
+      {% if exam.links %}
+      <div class="exam-links mt-8" style="justify-content:flex-end;">
+        {% for link in exam.links %}
+        <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
   </div>
 
-  <!-- Progress -->
-  <div>
-    <div class="progress-label flex justify-between">
-      <span>PROGRESS</span>
-      <span id="progress-text">0 / {{ exam.questions | length }}</span>
+  <!-- Sticky bar: always visible while scrolling -->
+  <div class="exam-sticky-bar">
+    <div class="esb-left">
+      <div class="esb-title">{{ exam.title }}</div>
+      <div class="text-dim esb-token">// {{ token }}</div>
     </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    <div class="esb-mid">
+      <div class="esb-prog-track">
+        <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+      </div>
+      <div class="esb-counts">
+        <span id="progress-text">0 / {{ exam.questions | length }}</span><span class="text-dim"> answered</span><span id="flag-count-wrap" style="display:none;">&nbsp;·&nbsp;<span id="flag-count" class="text-yellow">0</span><span class="text-dim"> flagged</span></span>
+      </div>
+    </div>
+    <div class="esb-right">
+      <div id="exam-timer" class="exam-timer">
+        <span class="timer-label" id="timer-label">{% if exam.time_limit %}TIME REMAINING{% else %}TIME ELAPSED{% endif %}</span>
+        <span id="timer-display" class="timer-value">{% if exam.time_limit %}{{ '%02d' % exam.time_limit }}:00{% else %}00:00{% endif %}</span>
+      </div>
     </div>
   </div>
 
@@ -31,11 +57,23 @@
   <form action="/submit" method="POST" id="exam-form">
 
     {% for question in exam.questions %}
-    <div class="question-card fade-in" id="qcard-{{ loop.index0 }}"
-         style="animation-delay: {{ loop.index0 * 0.04 }}s">
+    {% set qidx = loop.index0 %}
+    <div class="question-card fade-in" id="qcard-{{ qidx }}"
+         style="animation-delay: {{ qidx * 0.04 }}s">
 
       <div class="question-number">
-        QUERY {{ '%03d' % loop.index }} / {{ '%03d' % (exam.questions | length) }}
+        <span>
+          QUERY {{ '%03d' % loop.index }} / {{ '%03d' % (exam.questions | length) }}
+          {% if question.category %}<span class="question-category-badge">{{ question.category }}</span>{% endif %}
+        </span>
+        <span class="question-actions">
+          <button type="button" class="q-action-btn flag-btn" id="flag-btn-{{ qidx }}"
+                  onclick="toggleFlag({{ qidx }})">⚑ FLAG</button>
+          {% if github_repo %}
+          <button type="button" class="q-action-btn report-btn"
+                  onclick="reportQuestion({{ qidx }})">⚐ REPORT</button>
+          {% endif %}
+        </span>
       </div>
 
       <div class="question-text">{{ question.question }}</div>
@@ -43,10 +81,10 @@
       <ul class="options-list">
         {% for key, text in question.options.items() | sort %}
         <li class="option-item"
-            id="opt-{{ loop.index0 }}-{{ key }}"
-            onclick="selectOption(this, 'q{{ loop.index0 }}', '{{ key }}')">
-          <input type="radio" name="q{{ loop.index0 }}" value="{{ key }}"
-                 id="r-{{ loop.index0 }}-{{ key }}">
+            id="opt-{{ qidx }}-{{ key }}"
+            onclick="selectOption(this, 'q{{ qidx }}', '{{ key }}')">
+          <input type="radio" name="q{{ qidx }}" value="{{ key }}"
+                 id="r-{{ qidx }}-{{ key }}">
           <span class="option-letter">[{{ key }}]</span>
           <span class="option-text">{{ text }}</span>
         </li>
@@ -70,12 +108,49 @@
     </div>
 
   </form>
+
+</div>
+
+{% endblock %}
+
+{% block page_overlays %}
+<!-- Question map panel — lives outside .container to clear the body::before stacking context -->
+<div class="q-map-panel" id="q-map-panel">
+  <div class="q-map-body" id="q-map-body" style="display:none;">
+    <div class="q-map-legend">
+      <div class="q-map-legend-row"><span class="q-map-swatch q-map-swatch-answered"></span><span>ANSWERED</span></div>
+      <div class="q-map-legend-row"><span class="q-map-swatch q-map-swatch-flagged"></span><span>FLAGGED</span></div>
+      <div class="q-map-legend-row"><span class="q-map-swatch q-map-swatch-current"></span><span>IN VIEW</span></div>
+    </div>
+    <div class="q-map-grid" id="q-map-grid"><!-- built by JS --></div>
+    <button type="button" class="q-map-jump-btn" id="q-map-flagged-btn"
+            style="display:none;" onclick="jumpToFirstFlagged()">
+      ⚑ JUMP TO FLAGGED
+    </button>
+    <div class="q-map-kb-hint">
+      <span class="q-map-key">A</span><span class="q-map-key">B</span><span class="q-map-key">C</span><span class="q-map-key">D</span> answer
+      &nbsp;·&nbsp;
+      <span class="q-map-key">↑↓</span><span class="q-map-key">J</span><span class="q-map-key">K</span> navigate
+      &nbsp;·&nbsp;
+      <span class="q-map-key">F</span> flag
+      &nbsp;·&nbsp;
+      <span class="q-map-key">M</span> map
+    </div>
+  </div>
+  <button type="button" class="q-map-header" onclick="toggleMap()">
+    <span>☷ QUESTION MAP</span>
+    <span id="q-map-chevron">▾</span>
+  </button>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
   const TOTAL = {{ exam.questions | length }};
+  const TIME_LIMIT = {{ exam.time_limit | default(0) }};
+  const SESSION_TOKEN = '{{ token }}';
+  const EXAM_TITLE = {{ exam.title | tojson }};
+  {% if github_repo %}const GITHUB_REPO = {{ github_repo | tojson }};{% endif %}
 </script>
 <script src="{{ url_for('static', filename='js/exam.js') }}"></script>
 {% endblock %}

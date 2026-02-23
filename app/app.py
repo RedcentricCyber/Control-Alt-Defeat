@@ -1,14 +1,159 @@
 import json
 import os
+import random
+import sqlite3
+import time
 import uuid
+from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
-from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+from flask import Flask, make_response, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "cyberpunk-secret-key-change-in-prod")
 
 EXAMS_DIR = Path(__file__).parent / "exams"
+DB_PATH = Path(os.environ.get("HISTORY_DB", Path(__file__).parent / "data" / "history.db"))
 
+CLIENT_ID_COOKIE = "cad_client_id"
+ALIAS_COOKIE     = "cad_alias"
+CLIENT_ID_MAX_AGE = 365 * 24 * 3600  # 1 year
+GITHUB_REPO = os.environ.get("GITHUB_REPO", "x41x41x41/Control-Alt-Defeat")
+
+
+# ── Database ─────────────────────────────────────────────────
+
+def get_db():
+    db = sqlite3.connect(str(DB_PATH))
+    db.row_factory = sqlite3.Row
+    return db
+
+
+def init_db():
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with get_db() as db:
+        db.execute("""
+            CREATE TABLE IF NOT EXISTS history (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                client_id   TEXT    NOT NULL,
+                exam_title  TEXT,
+                alias       TEXT,
+                score       INTEGER,
+                total       INTEGER,
+                percentage  INTEGER,
+                pass_mark   INTEGER,
+                passed      INTEGER,
+                grade_label TEXT,
+                grade_class TEXT,
+                token       TEXT,
+                timestamp   TEXT
+            )
+        """)
+        db.execute("CREATE INDEX IF NOT EXISTS idx_client_id ON history(client_id)")
+        # Migrate: add answers column for per-attempt question detail
+        try:
+            db.execute("ALTER TABLE history ADD COLUMN answers TEXT")
+        except sqlite3.OperationalError:
+            pass  # column already exists
+        # Migrate: add time_taken for duration tracking
+        try:
+            db.execute("ALTER TABLE history ADD COLUMN time_taken INTEGER")
+        except sqlite3.OperationalError:
+            pass  # column already exists
+        db.commit()
+
+
+init_db()
+
+
+def get_history(client_id):
+    with get_db() as db:
+        rows = db.execute(
+            "SELECT * FROM history WHERE client_id = ? ORDER BY id DESC LIMIT 50",
+            (client_id,),
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def insert_history(client_id, entry, answers=None, time_taken=None):
+    with get_db() as db:
+        cursor = db.execute(
+            """INSERT INTO history
+               (client_id, exam_title, alias, score, total, percentage,
+                pass_mark, passed, grade_label, grade_class, token, timestamp, answers, time_taken)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            (
+                client_id,
+                entry["exam_title"],
+                entry["alias"],
+                entry["score"],
+                entry["total"],
+                entry["percentage"],
+                entry["pass_mark"],
+                int(entry["passed"]),
+                entry["grade_label"],
+                entry["grade_class"],
+                entry["token"],
+                entry["timestamp"],
+                json.dumps(answers) if answers is not None else None,
+                time_taken,
+            ),
+        )
+        db.commit()
+        return cursor.lastrowid
+
+
+def get_history_entry(entry_id, client_id):
+    with get_db() as db:
+        row = db.execute(
+            "SELECT * FROM history WHERE id = ? AND client_id = ?",
+            (entry_id, client_id),
+        ).fetchone()
+    return dict(row) if row else None
+
+
+def _compute_category_breakdown(answers):
+    """Return per-category correct/total/percentage, preserving question order."""
+    by_cat = {}
+    order = []
+    for r in answers:
+        cat = r.get("category", "")
+        if not cat:
+            continue
+        if cat not in by_cat:
+            by_cat[cat] = {"correct": 0, "total": 0}
+            order.append(cat)
+        by_cat[cat]["total"] += 1
+        if r.get("is_correct"):
+            by_cat[cat]["correct"] += 1
+    return [
+        {
+            "category": cat,
+            "correct": by_cat[cat]["correct"],
+            "total": by_cat[cat]["total"],
+            "percentage": round(by_cat[cat]["correct"] / by_cat[cat]["total"] * 100),
+        }
+        for cat in order
+    ]
+
+
+def _ensure_client_id(response):
+    """Return (client_id, modified) — sets cookie on response if new."""
+    client_id = request.cookies.get(CLIENT_ID_COOKIE)
+    if client_id:
+        return client_id, False
+    client_id = str(uuid.uuid4())
+    response.set_cookie(
+        CLIENT_ID_COOKIE,
+        client_id,
+        max_age=CLIENT_ID_MAX_AGE,
+        samesite="Lax",
+        httponly=True,
+    )
+    return client_id, True
+
+
+# ── Exam helpers ─────────────────────────────────────────────
 
 def load_exam(exam_id):
     exam_path = EXAMS_DIR / f"{exam_id}.json"
@@ -24,22 +169,96 @@ def list_exams():
         try:
             with open(path) as f:
                 data = json.load(f)
+            pool_size = len(data.get("questions", []))
             exams.append({
                 "id": path.stem,
                 "title": data.get("title", path.stem),
                 "description": data.get("description", ""),
+                "based_on": data.get("based_on", ""),
+                "created_by": data.get("created_by", ""),
                 "difficulty": data.get("difficulty", "UNKNOWN"),
-                "question_count": len(data.get("questions", [])),
+                "num_questions": data.get("num_questions", pool_size),
+                "pool_size": pool_size,
+                "categories": sorted({
+                    q["category"] for q in data.get("questions", []) if q.get("category")
+                }),
+                "pass_mark": data.get("pass_mark", 70),
+                "time_limit": data.get("time_limit", 0),
+                "links": data.get("links", []),
             })
         except (json.JSONDecodeError, KeyError):
             continue
     return exams
 
 
+def select_question_indices(questions, num_questions):
+    """Return a shuffled list of indices into `questions` to serve.
+
+    When questions carry a 'category' field the selection is stratified:
+    slots are divided as evenly as possible across all categories so every
+    category is represented.  Questions without a category fall into a
+    fallback pool used to top up any shortfall.
+
+    If num_questions >= pool size every question is returned (shuffled).
+    """
+    n = len(questions)
+    if num_questions >= n:
+        result = list(range(n))
+        random.shuffle(result)
+        return result
+
+    # Bucket indices by category
+    by_cat = defaultdict(list)
+    for i, q in enumerate(questions):
+        by_cat[q.get("category") or ""].append(i)
+
+    uncategorized = by_cat.pop("", [])
+    cats = list(by_cat.keys())
+
+    if not cats:
+        # No categories defined — plain random sample
+        pool = list(range(n))
+        random.shuffle(pool)
+        return pool[:num_questions]
+
+    # Distribute slots across categories
+    n_cats = len(cats)
+    base = num_questions // n_cats
+    remainder = num_questions % n_cats
+
+    selected = []
+    for idx, cat in enumerate(cats):
+        take = base + (1 if idx < remainder else 0)
+        pool = by_cat[cat][:]
+        random.shuffle(pool)
+        selected.extend(pool[:take])
+
+    # Top up with uncategorized / overflow if any category was under-stocked
+    if len(selected) < num_questions:
+        already = set(selected)
+        extras = [i for i in uncategorized if i not in already]
+        # Also pull from over-stocked categories if still short
+        for cat in cats:
+            extras += [i for i in by_cat[cat] if i not in already and i not in extras]
+        random.shuffle(extras)
+        selected.extend(extras[:num_questions - len(selected)])
+
+    random.shuffle(selected)
+    return selected
+
+
+# ── Routes ───────────────────────────────────────────────────
+
 @app.route("/")
 def index():
     exams = list_exams()
-    return render_template("index.html", exams=exams)
+    resp = make_response()
+    client_id, _ = _ensure_client_id(resp)
+    history = get_history(client_id)
+    saved_alias = request.cookies.get(ALIAS_COOKIE, "")
+    resp.response = [render_template("index.html", exams=exams, history=history, saved_alias=saved_alias).encode()]
+    resp.content_type = "text/html"
+    return resp
 
 
 @app.route("/start", methods=["POST"])
@@ -54,15 +273,22 @@ def start():
     if not exam:
         return redirect(url_for("index"))
 
-    # Store exam state in session
+    all_questions = exam.get("questions", [])
+    num_questions = exam.get("num_questions", len(all_questions))
+    question_indices = select_question_indices(all_questions, num_questions)
+
+    session.clear()
     session["alias"] = alias
     session["exam_id"] = exam_id
     session["exam_title"] = exam.get("title", exam_id)
-    session["answers"] = {}
+    session["question_indices"] = question_indices
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
+    session["start_time"] = int(time.time())
 
-    return redirect(url_for("exam"))
+    resp = redirect(url_for("exam"))
+    resp.set_cookie(ALIAS_COOKIE, alias, max_age=CLIENT_ID_MAX_AGE, samesite="Lax", httponly=True)
+    return resp
 
 
 @app.route("/exam")
@@ -75,11 +301,16 @@ def exam():
     if not exam:
         return redirect(url_for("index"))
 
+    all_questions = exam.get("questions", [])
+    indices = session.get("question_indices", list(range(len(all_questions))))
+    exam["questions"] = [all_questions[i] for i in indices]
+
     return render_template(
         "exam.html",
         exam=exam,
         alias=session.get("alias"),
         token=session.get("session_token"),
+        github_repo=GITHUB_REPO,
     )
 
 
@@ -93,8 +324,11 @@ def submit():
     if not exam:
         return redirect(url_for("index"))
 
-    questions = exam.get("questions", [])
-    answers = {}
+    all_questions = exam.get("questions", [])
+    indices = session.get("question_indices", list(range(len(all_questions))))
+    questions = [all_questions[i] for i in indices]
+
+    pass_mark = exam.get("pass_mark", 70)
     score = 0
     results = []
 
@@ -105,7 +339,6 @@ def submit():
         is_correct = selected == correct
         if is_correct:
             score += 1
-        answers[key] = selected
         results.append({
             "index": i,
             "question": question.get("question"),
@@ -114,34 +347,46 @@ def submit():
             "correct": correct,
             "is_correct": is_correct,
             "explanation": question.get("explanation", ""),
+            "category": question.get("category", ""),
         })
 
     total = len(questions)
     percentage = round((score / total) * 100) if total > 0 else 0
-
+    passed = percentage >= pass_mark
     grade = _grade(percentage)
 
-    session["results"] = results
-    session["score"] = score
-    session["total"] = total
-    session["percentage"] = percentage
-    session["grade"] = grade
+    # Persist to DB
+    client_id = request.cookies.get(CLIENT_ID_COOKIE, str(uuid.uuid4()))
+    entry_id = insert_history(client_id, {
+        "exam_title": session.get("exam_title", exam_id),
+        "alias": session.get("alias", "UNKNOWN"),
+        "score": score,
+        "total": total,
+        "percentage": percentage,
+        "pass_mark": pass_mark,
+        "passed": passed,
+        "grade_label": grade["label"],
+        "grade_class": grade["class"],
+        "token": session.get("session_token", "--------"),
+        "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+    }, answers=results, time_taken=int(time.time()) - session.get("start_time", int(time.time())))
+
     session["started"] = False
 
-    return redirect(url_for("results"))
+    return redirect(url_for("history_detail", entry_id=entry_id))
 
 
 def _grade(pct):
     if pct >= 90:
-        return {"label": "ELITE HACKER", "class": "elite", "msg": "You've cracked the mainframe. The net is yours."}
+        return {"label": "ELITE HACKER",  "class": "elite",     "msg": "You've cracked the mainframe. The net is yours."}
     elif pct >= 75:
-        return {"label": "NETRUNNER", "class": "netrunner", "msg": "Solid jack-in. You know your way around the system."}
+        return {"label": "NETRUNNER",     "class": "netrunner", "msg": "Solid jack-in. You know your way around the system."}
     elif pct >= 60:
-        return {"label": "SCRIPT KID", "class": "scriptkid", "msg": "Not bad. Keep practicing and you'll level up."}
+        return {"label": "SCRIPT KID",    "class": "scriptkid", "msg": "Not bad. Keep practicing and you'll level up."}
     elif pct >= 40:
-        return {"label": "LURKER", "class": "lurker", "msg": "You're on the outside looking in. Hit the databanks harder."}
+        return {"label": "LURKER",        "class": "lurker",    "msg": "You're on the outside looking in. Hit the databanks harder."}
     else:
-        return {"label": "FLATLINED", "class": "flatlined", "msg": "You got iced. Time to re-learn the basics."}
+        return {"label": "FLATLINED",     "class": "flatlined", "msg": "You got iced. Time to re-learn the basics."}
 
 
 @app.route("/results")
@@ -158,7 +403,42 @@ def results():
         score=session.get("score", 0),
         total=session.get("total", 0),
         percentage=session.get("percentage", 0),
+        pass_mark=session.get("pass_mark", 70),
+        passed=session.get("passed", False),
         grade=session.get("grade", {}),
+    )
+
+
+@app.route("/history")
+def history_list():
+    client_id = request.cookies.get(CLIENT_ID_COOKIE)
+    if not client_id:
+        return redirect(url_for("index"))
+    history = get_history(client_id)
+    return render_template("history_list.html", history=history)
+
+
+@app.route("/history/<int:entry_id>")
+def history_detail(entry_id):
+    client_id = request.cookies.get(CLIENT_ID_COOKIE)
+    if not client_id:
+        return redirect(url_for("index"))
+
+    entry = get_history_entry(entry_id, client_id)
+    if not entry:
+        return redirect(url_for("index"))
+
+    answers = json.loads(entry["answers"]) if entry.get("answers") else None
+    category_breakdown = _compute_category_breakdown(answers) if answers else []
+    grade = {"label": entry["grade_label"], "class": entry["grade_class"]}
+
+    return render_template(
+        "history_detail.html",
+        entry=entry,
+        answers=answers,
+        category_breakdown=category_breakdown,
+        grade=grade,
+        github_repo=GITHUB_REPO,
     )
 
 

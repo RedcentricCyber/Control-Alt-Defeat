@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}CONTROL-ALT-DEFEAT // MISSION HISTORY{% endblock %}
+
+{% block content %}
+<div class="fade-in">
+
+  <div class="mt-24 mb-16">
+    <h1 class="page-title">MISSION HISTORY</h1>
+    <p class="page-subtitle">// COMPLETE RECORD OF ALL OPERATIONS</p>
+  </div>
+
+  {% if history %}
+  <div class="panel fade-in fade-in-delay-1" data-label="ALL ATTEMPTS">
+    <div class="prompt-line">Click any entry to view the full debrief</div>
+    <div class="history-table mt-16">
+      <div class="history-row history-header">
+        <span>SESSION</span>
+        <span>OPERATIVE</span>
+        <span>MISSION</span>
+        <span>SCORE</span>
+        <span>VERDICT</span>
+        <span>TIMESTAMP</span>
+      </div>
+      {% for entry in history %}
+      <a href="/history/{{ entry.id }}" class="history-row history-row-link {% if entry.passed %}history-pass{% else %}history-fail{% endif %}">
+        <span class="text-dim" style="font-size:10px;">{{ entry.token }}</span>
+        <span>{{ entry.alias }}</span>
+        <span style="font-size:11px;">{{ entry.exam_title }}</span>
+        <span>
+          <span class="grade-{{ entry.grade_class }}">{{ entry.score }}/{{ entry.total }}</span>
+          <span class="text-dim" style="font-size:10px;">&nbsp;({{ entry.percentage }}%)</span>
+        </span>
+        <span>
+          {% if entry.passed %}
+            <span class="verdict-pass">■ PASSED</span>
+          {% else %}
+            <span class="verdict-fail">✕ FAILED</span>
+          {% endif %}
+        </span>
+        <span class="text-dim" style="font-size:10px;">{{ entry.timestamp }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="panel fade-in fade-in-delay-1" data-label="ALL ATTEMPTS">
+    <div class="text-dim" style="font-size:12px;">&gt; No missions on record. <a href="/" class="text-cyan">Run your first exam.</a></div>
+  </div>
+  {% endif %}
+
+  <div class="flex gap-12 flex-wrap mt-24 fade-in">
+    <a href="/" class="btn btn-primary">&gt;&gt; BACK TO TERMINAL</a>
+  </div>
+
+</div>
+{% endblock %}

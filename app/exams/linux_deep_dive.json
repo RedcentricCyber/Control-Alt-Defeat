@@ -1,9 +1,21 @@
 {
   "title": "LINUX DEEP DIVE",
-  "description": "File system, permissions, processes, shell fu, and kernel internals for system hackers.",
+  "description": "Go beyond the command line: /proc internals, file permissions, SUID/SGID bits, seccomp, systemd unit types, process signalling, and shell redirection. Built for operators who need to own a system, not just use one.",
+  "based_on": "Linux Foundation LFCS & CompTIA Linux+ (XK0-005)",
+  "created_by": "Control-Alt-Defeat",
   "difficulty": "HARD",
+  "pass_mark": 60,
+  "time_limit": 10,
+  "num_questions": 10,
+  "links": [
+    { "text": "man7.org — Linux Man Pages Online", "url": "https://man7.org/linux/man-pages/" },
+    { "text": "explainshell — Break down any shell command", "url": "https://explainshell.com/" },
+    { "text": "The Linux Command Line (free book)", "url": "https://linuxcommand.org/tlcl.php" },
+    { "text": "Linux Foundation Training", "url": "https://training.linuxfoundation.org/resources/?_sft_content_type=free-course" }
+  ],
   "questions": [
     {
+      "category": "Process & /proc",
       "question": "Which /proc file contains the command line of process with PID 1337?",
       "options": {
         "A": "/proc/1337/status",
@@ -15,6 +27,7 @@
       "explanation": "/proc/<PID>/cmdline holds the null-separated command-line arguments of the process. /proc/<PID>/maps shows memory mappings."
     },
     {
+      "category": "File Permissions & Special Bits",
       "question": "What octal permission value gives the owner read/write/execute and the group and others read/execute only?",
       "options": {
         "A": "0755",
@@ -26,6 +39,7 @@
       "explanation": "0755 = rwxr-xr-x. Owner: 7 (rwx), Group: 5 (r-x), Others: 5 (r-x)."
     },
     {
+      "category": "System & Kernel",
       "question": "Which systemd unit type runs a command once on boot and does not restart?",
       "options": {
         "A": "Type=simple",
@@ -37,6 +51,7 @@
       "explanation": "Type=oneshot executes the ExecStart command synchronously and is considered active only while the process runs, then exits."
     },
     {
+      "category": "File Permissions & Special Bits",
       "question": "In Linux, what does the sticky bit on a directory do?",
       "options": {
         "A": "Makes the directory immutable",
@@ -48,6 +63,7 @@
       "explanation": "The sticky bit (chmod +t) on a directory (like /tmp) lets users delete only their own files, even if they have write permission to the directory."
     },
     {
+      "category": "Process & /proc",
       "question": "Which command shows all open file descriptors for a specific process?",
       "options": {
         "A": "fstat <pid>",
@@ -59,6 +75,7 @@
       "explanation": "`lsof -p <pid>` lists all open files (including sockets and pipes) for the given process ID."
     },
     {
+      "category": "File Permissions & Special Bits",
       "question": "What does `chmod u+s /usr/bin/myprog` accomplish?",
       "options": {
         "A": "Makes the file executable only by root",
@@ -70,6 +87,7 @@
       "explanation": "SUID (Set User ID) on an executable causes it to run with the file owner's UID instead of the invoking user's UID."
     },
     {
+      "category": "System & Kernel",
       "question": "Which kernel facility allows filtering and restriction of system calls a process can make?",
       "options": {
         "A": "cgroups",
@@ -81,6 +99,7 @@
       "explanation": "seccomp (Secure Computing Mode) restricts the set of system calls a process may make, used heavily in container runtimes."
     },
     {
+      "category": "Process & /proc",
       "question": "How do you send a signal to all processes in a process group with PGID 4242?",
       "options": {
         "A": "kill 4242",
@@ -92,6 +111,7 @@
       "explanation": "Prefixing the PID with a minus sign (`-4242`) tells kill to target the entire process group. `-TERM` can be omitted as it's the default."
     },
     {
+      "category": "Shell & Users",
       "question": "In bash, what is the difference between `2>&1` and `&>`?",
       "options": {
         "A": "They are identical in all shells",
@@ -103,6 +123,7 @@
       "explanation": "`2>&1` redirects file descriptor 2 (stderr) to wherever fd 1 (stdout) currently points. `&> file` is bash shorthand to redirect both stdout and stderr to a file."
     },
     {
+      "category": "Shell & Users",
       "question": "Which /etc file maps usernames to UID, GID, home directory, and login shell?",
       "options": {
         "A": "/etc/shadow",

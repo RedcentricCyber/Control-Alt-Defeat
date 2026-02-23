@@ -1,9 +1,21 @@
 {
   "title": "WEB SECURITY RECON",
-  "description": "XSS, SQLi, CSRF, headers, and the hacker's guide to breaking web applications.",
+  "description": "Cover your attack surface: XSS, SQL injection, CSRF, security headers, JWT weaknesses, SSRF, and the OWASP Top 10. Know how applications break before you're asked to defend them.",
+  "based_on": "OWASP Top 10 (2021) & PortSwigger Web Security Academy",
+  "created_by": "Control-Alt-Defeat",
   "difficulty": "MEDIUM",
+  "pass_mark": 70,
+  "time_limit": 12,
+  "num_questions": 10,
+  "links": [
+    { "text": "PortSwigger Web Security Academy", "url": "https://portswigger.net/web-security" },
+    { "text": "OWASP Top 10 (2021)", "url": "https://owasp.org/www-project-top-ten/" },
+    { "text": "MDN — Web Security", "url": "https://developer.mozilla.org/en-US/docs/Web/Security" },
+    { "text": "OWASP Cheat Sheet Series", "url": "https://cheatsheetseries.owasp.org/" }
+  ],
   "questions": [
     {
+      "category": "Security Headers",
       "question": "Which HTTP header is used to prevent clickjacking attacks?",
       "options": {
         "A": "Content-Security-Policy",
@@ -15,6 +27,7 @@
       "explanation": "X-Frame-Options (DENY or SAMEORIGIN) prevents the page from being embedded in an iframe, mitigating clickjacking."
     },
     {
+      "category": "Injection Attacks",
       "question": "A classic SQL injection payload to bypass a login form login check is:",
       "options": {
         "A": "'; DROP TABLE users; --",
@@ -26,6 +39,7 @@
       "explanation": "' OR '1'='1 turns the WHERE clause always-true, bypassing authentication. The DROP TABLE payload is destructive but doesn't bypass login."
     },
     {
+      "category": "Injection Attacks",
       "question": "What type of XSS attack stores the malicious payload in the server's database?",
       "options": {
         "A": "Reflected XSS",
@@ -37,6 +51,7 @@
       "explanation": "Stored (persistent) XSS saves the payload server-side and serves it to all visitors. Reflected XSS echoes the payload directly in the response."
     },
     {
+      "category": "Authentication & Cookies",
       "question": "Which token-based mechanism is the primary defense against CSRF attacks?",
       "options": {
         "A": "JWT token in Authorization header",
@@ -48,6 +63,7 @@
       "explanation": "Anti-CSRF (synchronizer) tokens are random values tied to the user's session and validated on state-changing requests."
     },
     {
+      "category": "OWASP & Tools",
       "question": "Which OWASP Top 10 category covers using components with known vulnerabilities?",
       "options": {
         "A": "A01 — Broken Access Control",
@@ -59,6 +75,7 @@
       "explanation": "A06:2021 covers Vulnerable and Outdated Components — using libraries, frameworks, or other software with known CVEs."
     },
     {
+      "category": "Authentication & Cookies",
       "question": "What does the 'Secure' flag on a cookie do?",
       "options": {
         "A": "Prevents JavaScript from accessing the cookie",
@@ -70,6 +87,7 @@
       "explanation": "The Secure flag ensures the cookie is only sent over HTTPS, preventing transmission over unencrypted HTTP."
     },
     {
+      "category": "Injection Attacks",
       "question": "Which HTTP method is typically used to exploit SSRF vulnerabilities to probe internal services?",
       "options": {
         "A": "DELETE",
@@ -81,6 +99,7 @@
       "explanation": "SSRF (Server-Side Request Forgery) typically abuses GET requests that fetch a URL the attacker controls, redirecting the server to probe internal endpoints."
     },
     {
+      "category": "Security Headers",
       "question": "What is the primary purpose of the Content-Security-Policy (CSP) header?",
       "options": {
         "A": "Prevent SQL injection",
@@ -92,6 +111,7 @@
       "explanation": "CSP restricts which scripts, styles, and resources can be loaded, significantly reducing the attack surface for XSS."
     },
     {
+      "category": "Authentication & Cookies",
       "question": "In JWT, which part contains the claims (payload)?",
       "options": {
         "A": "The first Base64URL-encoded segment",
@@ -103,6 +123,7 @@
       "explanation": "A JWT has three parts: header.payload.signature. The second segment (payload) contains the claims, encoded in Base64URL."
     },
     {
+      "category": "OWASP & Tools",
       "question": "Which tool is commonly used to intercept and modify HTTP/HTTPS traffic during a pentest?",
       "options": {
         "A": "Nmap",

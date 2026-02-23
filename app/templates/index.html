@@ -23,6 +23,7 @@
           placeholder="e.g. ghost_null, xX_d3bug_Xx"
           autocomplete="off"
           maxlength="32"
+          value="{{ saved_alias }}"
           required
         >
       </div>
@@ -46,8 +47,27 @@
           <div class="exam-desc">{{ exam.description }}</div>
           <div class="exam-meta">
             <span class="tag tag-{{ exam.difficulty | lower }}">{{ exam.difficulty }}</span>
-            <span class="tag tag-count">{{ exam.question_count }}Q</span>
+            <span class="tag tag-count">
+              {{- exam.num_questions }}Q
+              {%- if exam.pool_size > exam.num_questions %} / {{ exam.pool_size }} pool{%- endif -%}
+            </span>
+            <span class="tag tag-passmark">PASS: {{ exam.pass_mark }}%</span>
+            {% if exam.time_limit %}<span class="tag tag-timer">{{ exam.time_limit }}MIN</span>{% endif %}
           </div>
+          {% if exam.based_on or exam.created_by or exam.categories %}
+          <div class="exam-attribution">
+            {% if exam.based_on %}<span>&gt; BASED ON: {{ exam.based_on }}</span>{% endif %}
+            {% if exam.created_by %}<span>&gt; CREATED BY: {{ exam.created_by }}</span>{% endif %}
+            {% if exam.categories %}<span>&gt; TOPICS: {{ exam.categories | join(' · ') }}</span>{% endif %}
+          </div>
+          {% endif %}
+          {% if exam.links %}
+          <div class="exam-links" onclick="event.stopPropagation()">
+            {% for link in exam.links %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
         </label>
         {% else %}
         <div class="text-dim" style="padding:20px;">
@@ -65,6 +85,43 @@
     </div>
 
   </form>
+
+  <!-- Exam history -->
+  {% if history %}
+  <div class="panel fade-in fade-in-delay-3 mt-24" data-label="MISSION HISTORY">
+    <div class="prompt-line">Previous attempts this session</div>
+    <div class="history-table mt-16">
+      <div class="history-row history-header">
+        <span>SESSION</span>
+        <span>OPERATIVE</span>
+        <span>MISSION</span>
+        <span>SCORE</span>
+        <span>VERDICT</span>
+        <span>TIMESTAMP</span>
+      </div>
+      {% for entry in history %}
+      <a href="/history/{{ entry.id }}" class="history-row history-row-link {% if entry.passed %}history-pass{% else %}history-fail{% endif %}">
+        <span class="text-dim" style="font-size:10px;">{{ entry.token }}</span>
+        <span>{{ entry.alias }}</span>
+        <span style="font-size:11px;">{{ entry.exam_title }}</span>
+        <span>
+          <span class="grade-{{ entry.grade_class }}">{{ entry.score }}/{{ entry.total }}</span>
+          <span class="text-dim" style="font-size:10px;">&nbsp;({{ entry.percentage }}%)</span>
+        </span>
+        <span>
+          {% if entry.passed %}
+            <span class="verdict-pass">■ PASSED</span>
+          {% else %}
+            <span class="verdict-fail">✕ FAILED</span>
+          {% endif %}
+        </span>
+        <span class="text-dim" style="font-size:10px;">{{ entry.timestamp }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}
 

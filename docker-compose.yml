@@ -10,6 +10,8 @@ services:
     volumes:
       # Mount exams directory so you can add/edit exams without rebuilding
       - ./app/exams:/app/exams:ro
+      # Persist the history database across container restarts
+      - ./data:/app/data
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-fs", "http://localhost:5000/"]

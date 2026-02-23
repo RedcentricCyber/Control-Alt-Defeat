@@ -18,6 +18,16 @@
     <div class="score-pct grade-{{ grade.class }}">{{ percentage }}% ACCURACY</div>
     <div class="grade-label grade-{{ grade.class }}">{{ grade.label }}</div>
     <div class="grade-msg">{{ grade.msg }}</div>
+
+    <!-- Pass / Fail verdict -->
+    <div class="pass-verdict {% if passed %}pass-verdict-pass{% else %}pass-verdict-fail{% endif %} mt-16">
+      {% if passed %}
+        ■ MISSION PASSED
+      {% else %}
+        ✕ MISSION FAILED
+      {% endif %}
+      <span class="pass-mark-note">// PASS MARK: {{ pass_mark }}%</span>
+    </div>
   </div>
 
   <!-- Stats bar -->
@@ -39,6 +49,10 @@
         <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-magenta);">{{ percentage }}%</div>
         <div class="text-dim" style="font-size:10px; letter-spacing:2px;">SCORE</div>
       </div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; {% if passed %}color:var(--neon-green);{% else %}color:var(--neon-red);{% endif %}">{{ pass_mark }}%</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">PASS MARK</div>
+      </div>
     </div>
   </div>
 
@@ -56,6 +70,9 @@
           <span class="result-status-correct">■ CORRECT</span>
         {% else %}
           <span class="result-status-wrong">■ INCORRECT</span>
+        {% endif %}
+        {% if r.category %}
+          &nbsp;|&nbsp;<span class="result-category">{{ r.category }}</span>
         {% endif %}
       </div>
       <div class="result-q-text">{{ r.question }}</div>
