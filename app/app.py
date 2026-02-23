@@ -15,6 +15,7 @@ EXAMS_DIR = Path(__file__).parent / "exams"
 DB_PATH = Path(os.environ.get("HISTORY_DB", Path(__file__).parent / "data" / "history.db"))
 
 CLIENT_ID_COOKIE = "cad_client_id"
+ALIAS_COOKIE     = "cad_alias"
 CLIENT_ID_MAX_AGE = 365 * 24 * 3600  # 1 year
 
 
@@ -205,7 +206,8 @@ def index():
     resp = make_response()
     client_id, _ = _ensure_client_id(resp)
     history = get_history(client_id)
-    resp.response = [render_template("index.html", exams=exams, history=history).encode()]
+    saved_alias = request.cookies.get(ALIAS_COOKIE, "")
+    resp.response = [render_template("index.html", exams=exams, history=history, saved_alias=saved_alias).encode()]
     resp.content_type = "text/html"
     return resp
 
@@ -234,7 +236,9 @@ def start():
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
 
-    return redirect(url_for("exam"))
+    resp = redirect(url_for("exam"))
+    resp.set_cookie(ALIAS_COOKIE, alias, max_age=CLIENT_ID_MAX_AGE, samesite="Lax", httponly=True)
+    return resp
 
 
 @app.route("/exam")
