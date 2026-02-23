@@ -1,7 +1,8 @@
-// Exam page — option selection, progress tracking, submit guard, countdown timer
+// Exam page — option selection, progress tracking, submit guard, timer, flag, report
 (function () {
   var answered = 0;
   var answeredSet = {};
+  var flaggedSet  = {};
   var timedOut = false;
 
   var progressBar   = document.getElementById('progress-bar');
@@ -37,7 +38,56 @@
     updateProgress();
   };
 
-  // Submit guard — bypassed when timer expires (timedOut = true)
+  // ── Flag for review ──────────────────────────────────────────
+  window.toggleFlag = function (idx) {
+    var card = document.getElementById('qcard-'    + idx);
+    var btn  = document.getElementById('flag-btn-' + idx);
+    if (flaggedSet[idx]) {
+      delete flaggedSet[idx];
+      if (card) card.classList.remove('flagged');
+      if (btn)  { btn.textContent = '⚑ FLAG'; btn.classList.remove('is-flagged'); }
+    } else {
+      flaggedSet[idx] = true;
+      if (card) card.classList.add('flagged');
+      if (btn)  { btn.textContent = '⚑ FLAGGED'; btn.classList.add('is-flagged'); }
+    }
+    _updateFlagCount();
+  };
+
+  function _updateFlagCount() {
+    var count = Object.keys(flaggedSet).length;
+    var wrap  = document.getElementById('flag-count-wrap');
+    var disp  = document.getElementById('flag-count');
+    if (wrap) wrap.style.display = count > 0 ? '' : 'none';
+    if (disp) disp.textContent = count;
+  }
+
+  // ── Report inaccuracy ────────────────────────────────────────
+  // GITHUB_REPO is optionally injected by the template.
+  window.reportQuestion = function (idx) {
+    if (typeof GITHUB_REPO === 'undefined') return;
+    var card = document.getElementById('qcard-' + idx);
+    var questionText = card
+      ? card.querySelector('.question-text').textContent.trim()
+      : 'Question ' + (idx + 1);
+
+    var title = '[Report] Q' + (idx + 1) + ' — ' +
+                questionText.substring(0, 60) + (questionText.length > 60 ? '…' : '');
+    var body  =
+      '## Inaccuracy Report\n\n' +
+      '**Exam:** ' + EXAM_TITLE + '\n' +
+      '**Question #' + (idx + 1) + ':**\n> ' + questionText + '\n\n' +
+      '**What is inaccurate:**\n\n\n' +
+      '**Suggested correction (if known):**\n\n';
+
+    var url = 'https://github.com/' + GITHUB_REPO + '/issues/new' +
+              '?title='  + encodeURIComponent(title) +
+              '&body='   + encodeURIComponent(body)  +
+              '&labels=' + encodeURIComponent('inaccuracy');
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  // ── Submit guard — bypassed when timer expires ───────────────
   if (form) {
     form.addEventListener('submit', function (e) {
       if (timedOut) return;
@@ -52,7 +102,7 @@
     });
   }
 
-  // Abort — also clears the persisted timer start time
+  // ── Abort ────────────────────────────────────────────────────
   window.confirmAbort = function () {
     if (confirm('ABORT MISSION?\nAll progress will be lost.')) {
       if (typeof SESSION_TOKEN !== 'undefined') {
@@ -64,16 +114,13 @@
   };
 
   // ── Timer ────────────────────────────────────────────────────
-  // TIME_LIMIT is injected by the template (minutes); 0 = untimed.
-  // Start time is stored in sessionStorage so a page refresh does not
-  // reset the clock — the timer picks up where it left off.
   var timerEl      = document.getElementById('exam-timer');
   var timerDisplay = document.getElementById('timer-display');
 
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
   if (typeof TIME_LIMIT !== 'undefined' && TIME_LIMIT > 0) {
-    // ── Countdown mode ──────────────────────────────────────
+    // ── Countdown mode ───────────────────────────────────────
     var totalSeconds = TIME_LIMIT * 60;
     var storageKey   = 'cad_timer_' + SESSION_TOKEN;
 
@@ -106,13 +153,13 @@
       }
     }
 
-    tick(); // run immediately so display is correct on load
+    tick();
     var timerInterval = setInterval(tick, 1000);
 
   } else {
     // ── Count-up elapsed mode ────────────────────────────────
-    var elapsedKey  = 'cad_elapsed_' + SESSION_TOKEN;
-    var storedStart = sessionStorage.getItem(elapsedKey);
+    var elapsedKey   = 'cad_elapsed_' + SESSION_TOKEN;
+    var storedStart  = sessionStorage.getItem(elapsedKey);
     var elapsedStart = storedStart ? parseInt(storedStart, 10) : Date.now();
     if (!storedStart) sessionStorage.setItem(elapsedKey, elapsedStart);
 

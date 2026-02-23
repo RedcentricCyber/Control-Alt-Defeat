@@ -373,6 +373,112 @@ input[type="text"]:focus {
 
 .question-card.answered { border-color: rgba(0,229,255,0.4); }
 
+.question-card.flagged {
+  border-left: 2px solid var(--neon-yellow);
+  background: rgba(255,230,0,0.025);
+}
+
+/* ── Sticky exam bar ────────────────────────────────────────── */
+.exam-sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  margin: 20px -16px 20px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-dim);
+  border-bottom: 1px solid var(--border-dim);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+
+.esb-left {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.esb-title {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--neon-green);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.esb-token {
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.esb-mid {
+  flex: 2;
+  min-width: 100px;
+}
+
+.esb-prog-track {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  margin-bottom: 5px;
+}
+
+.esb-counts {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.esb-right {
+  flex-shrink: 0;
+}
+
+.esb-right .exam-timer {
+  padding: 4px 10px;
+  min-width: 90px;
+}
+
+.esb-right .timer-value {
+  font-size: 1.1rem;
+}
+
+/* ── Question action buttons (flag / report) ─────────────────── */
+.question-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.q-action-btn {
+  font-family: var(--font-display);
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border: 1px solid var(--border-dim);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.q-action-btn:hover { color: var(--text-primary); border-color: var(--text-primary); }
+
+.flag-btn.is-flagged {
+  color: var(--neon-yellow);
+  border-color: var(--neon-yellow);
+  text-shadow: 0 0 6px var(--neon-yellow);
+}
+
+.report-btn:hover {
+  color: var(--neon-red);
+  border-color: var(--neon-red);
+}
+
 .question-number {
   display: flex;
   justify-content: space-between;
@@ -596,6 +702,7 @@ input[type="text"]:focus {
 /* ── Utilities ──────────────────────────────────────────────── */
 .text-green   { color: var(--neon-green);   }
 .text-cyan    { color: var(--neon-cyan);    }
+.text-yellow  { color: var(--neon-yellow);  }
 .text-magenta { color: var(--neon-magenta); }
 .text-dim     { color: var(--text-dim);     }
 .text-red     { color: var(--neon-red);     }
@@ -929,8 +1036,10 @@ a.history-row-link:hover {
   header { padding: 10px 14px; }
   .nav-links { display: none; }
   .container { padding: 14px 12px 40px; }
-  .exam-timer-fixed { bottom: 12px; right: 12px; padding: 4px 10px; min-width: 90px; }
-  .exam-timer-fixed .timer-value { font-size: 1.1rem; }
+  .exam-sticky-bar { margin: 14px -12px 14px; padding: 6px 12px; gap: 10px; }
+  .esb-left { display: none; }
+  .question-actions { gap: 4px; }
+  .q-action-btn { padding: 2px 6px; font-size: 8px; }
   .history-row {
     grid-template-columns: 1fr 1fr;
     font-size: 11px;

@@ -5,7 +5,7 @@
 {% block content %}
 <div class="fade-in">
 
-  <!-- Exam header -->
+  <!-- Exam header (non-sticky context info) -->
   <div class="exam-header mt-16">
     <div>
       <div class="exam-info-title">{{ exam.title }}</div>
@@ -31,14 +31,25 @@
     </div>
   </div>
 
-  <!-- Progress -->
-  <div>
-    <div class="progress-label flex justify-between">
-      <span>PROGRESS</span>
-      <span id="progress-text">0 / {{ exam.questions | length }}</span>
+  <!-- Sticky bar: always visible while scrolling -->
+  <div class="exam-sticky-bar">
+    <div class="esb-left">
+      <div class="esb-title">{{ exam.title }}</div>
+      <div class="text-dim esb-token">// {{ token }}</div>
     </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    <div class="esb-mid">
+      <div class="esb-prog-track">
+        <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+      </div>
+      <div class="esb-counts">
+        <span id="progress-text">0 / {{ exam.questions | length }}</span><span class="text-dim"> answered</span><span id="flag-count-wrap" style="display:none;">&nbsp;·&nbsp;<span id="flag-count" class="text-yellow">0</span><span class="text-dim"> flagged</span></span>
+      </div>
+    </div>
+    <div class="esb-right">
+      <div id="exam-timer" class="exam-timer">
+        <span class="timer-label" id="timer-label">{% if exam.time_limit %}TIME REMAINING{% else %}TIME ELAPSED{% endif %}</span>
+        <span id="timer-display" class="timer-value">{% if exam.time_limit %}{{ '%02d' % exam.time_limit }}:00{% else %}00:00{% endif %}</span>
+      </div>
     </div>
   </div>
 
@@ -51,8 +62,18 @@
          style="animation-delay: {{ qidx * 0.04 }}s">
 
       <div class="question-number">
-        <span>QUERY {{ '%03d' % loop.index }} / {{ '%03d' % (exam.questions | length) }}</span>
-        {% if question.category %}<span class="question-category-badge">{{ question.category }}</span>{% endif %}
+        <span>
+          QUERY {{ '%03d' % loop.index }} / {{ '%03d' % (exam.questions | length) }}
+          {% if question.category %}<span class="question-category-badge">{{ question.category }}</span>{% endif %}
+        </span>
+        <span class="question-actions">
+          <button type="button" class="q-action-btn flag-btn" id="flag-btn-{{ qidx }}"
+                  onclick="toggleFlag({{ qidx }})">⚑ FLAG</button>
+          {% if github_repo %}
+          <button type="button" class="q-action-btn report-btn"
+                  onclick="reportQuestion({{ qidx }})">⚐ REPORT</button>
+          {% endif %}
+        </span>
       </div>
 
       <div class="question-text">{{ question.question }}</div>
@@ -88,11 +109,6 @@
 
   </form>
 
-  <div id="exam-timer" class="exam-timer exam-timer-fixed">
-    <span class="timer-label" id="timer-label">{% if exam.time_limit %}TIME REMAINING{% else %}TIME ELAPSED{% endif %}</span>
-    <span id="timer-display" class="timer-value">{% if exam.time_limit %}{{ '%02d' % exam.time_limit }}:00{% else %}00:00{% endif %}</span>
-  </div>
-
 </div>
 {% endblock %}
 
@@ -101,6 +117,8 @@
   const TOTAL = {{ exam.questions | length }};
   const TIME_LIMIT = {{ exam.time_limit | default(0) }};
   const SESSION_TOKEN = '{{ token }}';
+  const EXAM_TITLE = {{ exam.title | tojson }};
+  {% if github_repo %}const GITHUB_REPO = {{ github_repo | tojson }};{% endif %}
 </script>
 <script src="{{ url_for('static', filename='js/exam.js') }}"></script>
 {% endblock %}

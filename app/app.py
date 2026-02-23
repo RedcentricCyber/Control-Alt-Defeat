@@ -18,6 +18,7 @@ DB_PATH = Path(os.environ.get("HISTORY_DB", Path(__file__).parent / "data" / "hi
 CLIENT_ID_COOKIE = "cad_client_id"
 ALIAS_COOKIE     = "cad_alias"
 CLIENT_ID_MAX_AGE = 365 * 24 * 3600  # 1 year
+GITHUB_REPO = os.environ.get("GITHUB_REPO", "x41x41x41/Control-Alt-Defeat")
 
 
 # ── Database ─────────────────────────────────────────────────
@@ -308,6 +309,7 @@ def exam():
         exam=exam,
         alias=session.get("alias"),
         token=session.get("session_token"),
+        github_repo=GITHUB_REPO,
     )
 
 
