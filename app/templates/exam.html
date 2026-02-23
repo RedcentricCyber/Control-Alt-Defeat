@@ -21,12 +21,6 @@
     </div>
     <div style="text-align:right;">
       <div class="session-chip">SESSION // {{ token }}</div>
-      {% if exam.time_limit %}
-      <div id="exam-timer" class="exam-timer mt-8">
-        <span class="timer-label">TIME REMAINING</span>
-        <span id="timer-display" class="timer-value">{{ '%02d' % exam.time_limit }}:00</span>
-      </div>
-      {% endif %}
       {% if exam.links %}
       <div class="exam-links mt-8" style="justify-content:flex-end;">
         {% for link in exam.links %}
@@ -57,7 +51,8 @@
          style="animation-delay: {{ qidx * 0.04 }}s">
 
       <div class="question-number">
-        QUERY {{ '%03d' % loop.index }} / {{ '%03d' % (exam.questions | length) }}
+        <span>QUERY {{ '%03d' % loop.index }} / {{ '%03d' % (exam.questions | length) }}</span>
+        {% if question.category %}<span class="question-category-badge">{{ question.category }}</span>{% endif %}
       </div>
 
       <div class="question-text">{{ question.question }}</div>
@@ -92,6 +87,14 @@
     </div>
 
   </form>
+
+  {% if exam.time_limit %}
+  <div id="exam-timer" class="exam-timer exam-timer-fixed">
+    <span class="timer-label">TIME REMAINING</span>
+    <span id="timer-display" class="timer-value">{{ '%02d' % exam.time_limit }}:00</span>
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}
 

@@ -352,11 +352,23 @@ input[type="text"]:focus {
 .question-card.answered { border-color: rgba(0,229,255,0.4); }
 
 .question-number {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: var(--font-display);
   font-size: 10px;
   color: var(--text-dim);
   letter-spacing: 2px;
   margin-bottom: 10px;
+}
+
+.question-category-badge {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--neon-magenta);
+  border: 1px solid rgba(255,0,255,0.35);
+  padding: 2px 8px;
+  white-space: nowrap;
 }
 
 .question-text {
@@ -790,6 +802,15 @@ input[type="text"]:focus {
   transition: border-color 0.3s;
 }
 
+.exam-timer-fixed {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 200;
+  background: var(--bg-panel);
+  box-shadow: 0 0 16px rgba(0,0,0,0.6), var(--glow-green);
+}
+
 .timer-label {
   display: block;
   font-size: 9px;
@@ -829,8 +850,10 @@ input[type="text"]:focus {
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
-header { padding: 10px 14px; }
+  header { padding: 10px 14px; }
   .container { padding: 14px 12px 40px; }
+  .exam-timer-fixed { bottom: 12px; right: 12px; padding: 4px 10px; min-width: 90px; }
+  .exam-timer-fixed .timer-value { font-size: 1.1rem; }
   .history-row {
     grid-template-columns: 1fr 1fr;
     font-size: 11px;
