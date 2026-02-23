@@ -1,0 +1,117 @@
+{
+  "title": "LINUX DEEP DIVE",
+  "description": "File system, permissions, processes, shell fu, and kernel internals for system hackers.",
+  "difficulty": "HARD",
+  "questions": [
+    {
+      "question": "Which /proc file contains the command line of process with PID 1337?",
+      "options": {
+        "A": "/proc/1337/status",
+        "B": "/proc/1337/cmdline",
+        "C": "/proc/1337/environ",
+        "D": "/proc/1337/maps"
+      },
+      "correct": "B",
+      "explanation": "/proc/<PID>/cmdline holds the null-separated command-line arguments of the process. /proc/<PID>/maps shows memory mappings."
+    },
+    {
+      "question": "What octal permission value gives the owner read/write/execute and the group and others read/execute only?",
+      "options": {
+        "A": "0755",
+        "B": "0644",
+        "C": "0700",
+        "D": "0775"
+      },
+      "correct": "A",
+      "explanation": "0755 = rwxr-xr-x. Owner: 7 (rwx), Group: 5 (r-x), Others: 5 (r-x)."
+    },
+    {
+      "question": "Which systemd unit type runs a command once on boot and does not restart?",
+      "options": {
+        "A": "Type=simple",
+        "B": "Type=oneshot",
+        "C": "Type=idle",
+        "D": "Type=forking"
+      },
+      "correct": "B",
+      "explanation": "Type=oneshot executes the ExecStart command synchronously and is considered active only while the process runs, then exits."
+    },
+    {
+      "question": "In Linux, what does the sticky bit on a directory do?",
+      "options": {
+        "A": "Makes the directory immutable",
+        "B": "Prevents users from deleting files owned by others in that directory",
+        "C": "Causes the directory to be loaded into RAM on mount",
+        "D": "Inherits the owner's UID for all new files"
+      },
+      "correct": "B",
+      "explanation": "The sticky bit (chmod +t) on a directory (like /tmp) lets users delete only their own files, even if they have write permission to the directory."
+    },
+    {
+      "question": "Which command shows all open file descriptors for a specific process?",
+      "options": {
+        "A": "fstat <pid>",
+        "B": "lsof -p <pid>",
+        "C": "fdisk -l <pid>",
+        "D": "strace -e file <pid>"
+      },
+      "correct": "B",
+      "explanation": "`lsof -p <pid>` lists all open files (including sockets and pipes) for the given process ID."
+    },
+    {
+      "question": "What does `chmod u+s /usr/bin/myprog` accomplish?",
+      "options": {
+        "A": "Makes the file executable only by root",
+        "B": "Sets the SUID bit so the program runs with the file owner's privileges",
+        "C": "Adds the sticky bit to restrict deletion",
+        "D": "Grants setgid so the program runs with the group's privileges"
+      },
+      "correct": "B",
+      "explanation": "SUID (Set User ID) on an executable causes it to run with the file owner's UID instead of the invoking user's UID."
+    },
+    {
+      "question": "Which kernel facility allows filtering and restriction of system calls a process can make?",
+      "options": {
+        "A": "cgroups",
+        "B": "namespaces",
+        "C": "seccomp",
+        "D": "eBPF tracepoints"
+      },
+      "correct": "C",
+      "explanation": "seccomp (Secure Computing Mode) restricts the set of system calls a process may make, used heavily in container runtimes."
+    },
+    {
+      "question": "How do you send a signal to all processes in a process group with PGID 4242?",
+      "options": {
+        "A": "kill 4242",
+        "B": "kill -TERM -4242",
+        "C": "pkill -g 4242",
+        "D": "killall -g 4242"
+      },
+      "correct": "B",
+      "explanation": "Prefixing the PID with a minus sign (`-4242`) tells kill to target the entire process group. `-TERM` can be omitted as it's the default."
+    },
+    {
+      "question": "In bash, what is the difference between `2>&1` and `&>`?",
+      "options": {
+        "A": "They are identical in all shells",
+        "B": "`2>&1` redirects stderr to stdout; `&>` redirects both to a file (bash-specific)",
+        "C": "`&>` is POSIX-compliant; `2>&1` is bash-specific",
+        "D": "`2>&1` suppresses all output; `&>` appends to a file"
+      },
+      "correct": "B",
+      "explanation": "`2>&1` redirects file descriptor 2 (stderr) to wherever fd 1 (stdout) currently points. `&> file` is bash shorthand to redirect both stdout and stderr to a file."
+    },
+    {
+      "question": "Which /etc file maps usernames to UID, GID, home directory, and login shell?",
+      "options": {
+        "A": "/etc/shadow",
+        "B": "/etc/group",
+        "C": "/etc/passwd",
+        "D": "/etc/login.defs"
+      },
+      "correct": "C",
+      "explanation": "/etc/passwd holds one record per user: username:password-placeholder:UID:GID:GECOS:home:shell. Passwords are in /etc/shadow."
+    }
+  ]
+}

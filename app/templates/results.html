@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}CONTROL-ALT-DEFEAT // MISSION DEBRIEF{% endblock %}
+
+{% block content %}
+<div class="fade-in">
+
+  <div class="mt-16 mb-16">
+    <h1 class="page-title">MISSION DEBRIEF</h1>
+    <p class="page-subtitle">// SESSION {{ token }} — OPERATIVE: {{ alias }}</p>
+  </div>
+
+  <!-- Score display -->
+  <div class="score-display fade-in fade-in-delay-1">
+    <div class="score-number grade-{{ grade.class }}">
+      {{ score }}<span style="font-size:0.4em; opacity:0.5;">/{{ total }}</span>
+    </div>
+    <div class="score-pct grade-{{ grade.class }}">{{ percentage }}% ACCURACY</div>
+    <div class="grade-label grade-{{ grade.class }}">{{ grade.label }}</div>
+    <div class="grade-msg">{{ grade.msg }}</div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="panel fade-in fade-in-delay-2" data-label="PERFORMANCE METRICS">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap:20px; text-align:center;">
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-green);">{{ score }}</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">CORRECT</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-red);">{{ total - score }}</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">INCORRECT</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-cyan);">{{ total }}</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">TOTAL</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-magenta);">{{ percentage }}%</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">SCORE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Per-question breakdown -->
+  <div class="panel fade-in fade-in-delay-3" data-label="QUESTION ANALYSIS">
+    <div class="prompt-line">Review each query and correct answer below</div>
+
+    <div class="mt-16">
+    {% for r in results %}
+    <div class="result-q {{ 'correct' if r.is_correct else 'wrong' }}">
+      <div class="question-number">
+        QUERY {{ '%03d' % (r.index + 1) }}
+        &nbsp;|&nbsp;
+        {% if r.is_correct %}
+          <span class="result-status-correct">■ CORRECT</span>
+        {% else %}
+          <span class="result-status-wrong">■ INCORRECT</span>
+        {% endif %}
+      </div>
+      <div class="result-q-text">{{ r.question }}</div>
+
+      <ul class="options-list">
+        {% for key, text in r.options.items() | sort %}
+        <li class="option-item
+          {% if key == r.correct %}correct-answer
+          {% elif key == r.selected and not r.is_correct %}wrong-answer
+          {% endif %}"
+          style="cursor:default;">
+          <span class="option-letter">[{{ key }}]</span>
+          <span class="option-text">{{ text }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      {% if r.explanation %}
+      <div class="explanation">
+        &gt; {{ r.explanation }}
+      </div>
+      {% endif %}
+
+      {% if not r.is_correct and r.selected %}
+      <div style="margin-top:8px; font-size:11px; color:var(--text-dim);">
+        Your answer: <span class="text-red">[{{ r.selected }}]</span>
+        &nbsp;|&nbsp;
+        Correct: <span class="text-green">[{{ r.correct }}]</span>
+      </div>
+      {% elif not r.selected %}
+      <div style="margin-top:8px; font-size:11px; color:var(--text-dim);">
+        <span class="text-red">NO ANSWER SUBMITTED</span>
+        &nbsp;|&nbsp;
+        Correct: <span class="text-green">[{{ r.correct }}]</span>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex gap-12 flex-wrap mt-24 fade-in">
+    <a href="/reset" class="btn btn-primary">&gt;&gt; RUN ANOTHER MISSION</a>
+  </div>
+
+</div>
+{% endblock %}

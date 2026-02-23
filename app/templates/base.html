@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}CONTROL-ALT-DEFEAT{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/cyberpunk.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<canvas id="matrix-canvas"></canvas>
+
+<header>
+  <div class="logo">
+    CONTROL<span>-</span>ALT<span>-</span>DEFEAT
+  </div>
+  <div class="nav-status">
+    <span class="blink">■</span> SYSTEM ONLINE &nbsp;|&nbsp;
+    {% if session.get('alias') %}
+      OPERATIVE: <span class="text-cyan">{{ session['alias'] }}</span>
+    {% else %}
+      AWAITING OPERATIVE
+    {% endif %}
+  </div>
+</header>
+
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+
+<script src="{{ url_for('static', filename='js/matrix.js') }}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

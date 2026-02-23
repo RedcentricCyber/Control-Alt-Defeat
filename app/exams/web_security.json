@@ -1,0 +1,117 @@
+{
+  "title": "WEB SECURITY RECON",
+  "description": "XSS, SQLi, CSRF, headers, and the hacker's guide to breaking web applications.",
+  "difficulty": "MEDIUM",
+  "questions": [
+    {
+      "question": "Which HTTP header is used to prevent clickjacking attacks?",
+      "options": {
+        "A": "Content-Security-Policy",
+        "B": "X-Frame-Options",
+        "C": "X-XSS-Protection",
+        "D": "Strict-Transport-Security"
+      },
+      "correct": "B",
+      "explanation": "X-Frame-Options (DENY or SAMEORIGIN) prevents the page from being embedded in an iframe, mitigating clickjacking."
+    },
+    {
+      "question": "A classic SQL injection payload to bypass a login form login check is:",
+      "options": {
+        "A": "'; DROP TABLE users; --",
+        "B": "' OR '1'='1",
+        "C": "<script>alert(1)</script>",
+        "D": "../../etc/passwd"
+      },
+      "correct": "B",
+      "explanation": "' OR '1'='1 turns the WHERE clause always-true, bypassing authentication. The DROP TABLE payload is destructive but doesn't bypass login."
+    },
+    {
+      "question": "What type of XSS attack stores the malicious payload in the server's database?",
+      "options": {
+        "A": "Reflected XSS",
+        "B": "DOM-based XSS",
+        "C": "Stored XSS",
+        "D": "Blind XSS"
+      },
+      "correct": "C",
+      "explanation": "Stored (persistent) XSS saves the payload server-side and serves it to all visitors. Reflected XSS echoes the payload directly in the response."
+    },
+    {
+      "question": "Which token-based mechanism is the primary defense against CSRF attacks?",
+      "options": {
+        "A": "JWT token in Authorization header",
+        "B": "Synchronizer (anti-CSRF) token",
+        "C": "HTTP-only cookie flag",
+        "D": "Content-Type: application/json header"
+      },
+      "correct": "B",
+      "explanation": "Anti-CSRF (synchronizer) tokens are random values tied to the user's session and validated on state-changing requests."
+    },
+    {
+      "question": "Which OWASP Top 10 category covers using components with known vulnerabilities?",
+      "options": {
+        "A": "A01 — Broken Access Control",
+        "B": "A05 — Security Misconfiguration",
+        "C": "A06 — Vulnerable and Outdated Components",
+        "D": "A09 — Security Logging Failures"
+      },
+      "correct": "C",
+      "explanation": "A06:2021 covers Vulnerable and Outdated Components — using libraries, frameworks, or other software with known CVEs."
+    },
+    {
+      "question": "What does the 'Secure' flag on a cookie do?",
+      "options": {
+        "A": "Prevents JavaScript from accessing the cookie",
+        "B": "Encrypts the cookie value",
+        "C": "Restricts the cookie to HTTPS connections only",
+        "D": "Sets the cookie's SameSite policy to Strict"
+      },
+      "correct": "C",
+      "explanation": "The Secure flag ensures the cookie is only sent over HTTPS, preventing transmission over unencrypted HTTP."
+    },
+    {
+      "question": "Which HTTP method is typically used to exploit SSRF vulnerabilities to probe internal services?",
+      "options": {
+        "A": "DELETE",
+        "B": "GET",
+        "C": "PATCH",
+        "D": "OPTIONS"
+      },
+      "correct": "B",
+      "explanation": "SSRF (Server-Side Request Forgery) typically abuses GET requests that fetch a URL the attacker controls, redirecting the server to probe internal endpoints."
+    },
+    {
+      "question": "What is the primary purpose of the Content-Security-Policy (CSP) header?",
+      "options": {
+        "A": "Prevent SQL injection",
+        "B": "Mitigate XSS by controlling resource loading",
+        "C": "Enforce HTTPS redirects",
+        "D": "Rate-limit API requests"
+      },
+      "correct": "B",
+      "explanation": "CSP restricts which scripts, styles, and resources can be loaded, significantly reducing the attack surface for XSS."
+    },
+    {
+      "question": "In JWT, which part contains the claims (payload)?",
+      "options": {
+        "A": "The first Base64URL-encoded segment",
+        "B": "The second Base64URL-encoded segment",
+        "C": "The third Base64URL-encoded segment",
+        "D": "It is encrypted and not directly readable"
+      },
+      "correct": "B",
+      "explanation": "A JWT has three parts: header.payload.signature. The second segment (payload) contains the claims, encoded in Base64URL."
+    },
+    {
+      "question": "Which tool is commonly used to intercept and modify HTTP/HTTPS traffic during a pentest?",
+      "options": {
+        "A": "Nmap",
+        "B": "Wireshark",
+        "C": "Burp Suite",
+        "D": "Metasploit"
+      },
+      "correct": "C",
+      "explanation": "Burp Suite is the de-facto web application proxy for intercepting, replaying, and fuzzing HTTP/HTTPS requests."
+    }
+  ]
+}
