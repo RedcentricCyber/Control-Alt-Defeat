@@ -1,6 +1,7 @@
 import json
 import os
 import uuid
+from datetime import datetime
 from pathlib import Path
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 
@@ -30,6 +31,7 @@ def list_exams():
                 "description": data.get("description", ""),
                 "difficulty": data.get("difficulty", "UNKNOWN"),
                 "question_count": len(data.get("questions", [])),
+                "pass_mark": data.get("pass_mark", 70),
             })
         except (json.JSONDecodeError, KeyError):
             continue
@@ -39,7 +41,8 @@ def list_exams():
 @app.route("/")
 def index():
     exams = list_exams()
-    return render_template("index.html", exams=exams)
+    history = session.get("history", [])
+    return render_template("index.html", exams=exams, history=history)
 
 
 @app.route("/start", methods=["POST"])
@@ -53,6 +56,11 @@ def start():
     exam = load_exam(exam_id)
     if not exam:
         return redirect(url_for("index"))
+
+    # Preserve history across exam starts
+    history = session.get("history", [])
+    session.clear()
+    session["history"] = history
 
     # Store exam state in session
     session["alias"] = alias
@@ -94,6 +102,7 @@ def submit():
         return redirect(url_for("index"))
 
     questions = exam.get("questions", [])
+    pass_mark = exam.get("pass_mark", 70)
     answers = {}
     score = 0
     results = []
@@ -118,15 +127,35 @@ def submit():
 
     total = len(questions)
     percentage = round((score / total) * 100) if total > 0 else 0
+    passed = percentage >= pass_mark
 
     grade = _grade(percentage)
+
+    # Append to session history
+    history = session.get("history", [])
+    history.append({
+        "exam_title": session.get("exam_title", exam_id),
+        "alias": session.get("alias", "UNKNOWN"),
+        "score": score,
+        "total": total,
+        "percentage": percentage,
+        "pass_mark": pass_mark,
+        "passed": passed,
+        "grade_label": grade["label"],
+        "grade_class": grade["class"],
+        "token": session.get("session_token", "--------"),
+        "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+    })
 
     session["results"] = results
     session["score"] = score
     session["total"] = total
     session["percentage"] = percentage
+    session["pass_mark"] = pass_mark
+    session["passed"] = passed
     session["grade"] = grade
     session["started"] = False
+    session["history"] = history
 
     return redirect(url_for("results"))
 
@@ -158,13 +187,18 @@ def results():
         score=session.get("score", 0),
         total=session.get("total", 0),
         percentage=session.get("percentage", 0),
+        pass_mark=session.get("pass_mark", 70),
+        passed=session.get("passed", False),
         grade=session.get("grade", {}),
     )
 
 
 @app.route("/reset")
 def reset():
+    # Preserve history across resets so it persists within the session
+    history = session.get("history", [])
     session.clear()
+    session["history"] = history
     return redirect(url_for("index"))
 
 

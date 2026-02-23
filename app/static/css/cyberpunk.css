@@ -639,9 +639,100 @@ input[type="text"]:focus {
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--neon-green); }
 
+/* ── Pass / Fail verdict ────────────────────────────────────── */
+.pass-verdict {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  padding: 10px 24px;
+  border: 1px solid;
+  margin-top: 16px;
+}
+
+.pass-verdict-pass {
+  color: var(--neon-green);
+  border-color: var(--neon-green);
+  box-shadow: var(--glow-green), inset 0 0 20px rgba(0,255,65,0.06);
+}
+
+.pass-verdict-fail {
+  color: var(--neon-red);
+  border-color: var(--neon-red);
+  box-shadow: 0 0 8px var(--neon-red), inset 0 0 20px rgba(255,0,60,0.06);
+}
+
+.pass-mark-note {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-left: 12px;
+  letter-spacing: 1px;
+  font-family: var(--font-mono);
+  font-weight: normal;
+}
+
+.tag-passmark {
+  border-color: var(--neon-magenta);
+  color: var(--neon-magenta);
+}
+
+/* ── History table ──────────────────────────────────────────── */
+.history-table {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.history-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1.5fr 80px 80px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 12px;
+  border: 1px solid transparent;
+}
+
+.history-header {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border-dim);
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+}
+
+.history-pass {
+  border-left: 2px solid var(--neon-green);
+  background: rgba(0,255,65,0.02);
+}
+
+.history-fail {
+  border-left: 2px solid var(--neon-red);
+  background: rgba(255,0,60,0.02);
+}
+
+.verdict-pass {
+  color: var(--neon-green);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.verdict-fail {
+  color: var(--neon-red);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .exam-grid { grid-template-columns: 1fr; }
   header { padding: 10px 14px; }
   .container { padding: 14px 12px 40px; }
+  .history-row {
+    grid-template-columns: 1fr 1fr;
+    font-size: 11px;
+  }
+  .history-header { display: none; }
 }

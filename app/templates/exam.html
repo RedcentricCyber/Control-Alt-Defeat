@@ -31,8 +31,9 @@
   <form action="/submit" method="POST" id="exam-form">
 
     {% for question in exam.questions %}
-    <div class="question-card fade-in" id="qcard-{{ loop.index0 }}"
-         style="animation-delay: {{ loop.index0 * 0.04 }}s">
+    {% set qidx = loop.index0 %}
+    <div class="question-card fade-in" id="qcard-{{ qidx }}"
+         style="animation-delay: {{ qidx * 0.04 }}s">
 
       <div class="question-number">
         QUERY {{ '%03d' % loop.index }} / {{ '%03d' % (exam.questions | length) }}
@@ -43,10 +44,10 @@
       <ul class="options-list">
         {% for key, text in question.options.items() | sort %}
         <li class="option-item"
-            id="opt-{{ loop.index0 }}-{{ key }}"
-            onclick="selectOption(this, 'q{{ loop.index0 }}', '{{ key }}')">
-          <input type="radio" name="q{{ loop.index0 }}" value="{{ key }}"
-                 id="r-{{ loop.index0 }}-{{ key }}">
+            id="opt-{{ qidx }}-{{ key }}"
+            onclick="selectOption(this, 'q{{ qidx }}', '{{ key }}')">
+          <input type="radio" name="q{{ qidx }}" value="{{ key }}"
+                 id="r-{{ qidx }}-{{ key }}">
           <span class="option-letter">[{{ key }}]</span>
           <span class="option-text">{{ text }}</span>
         </li>

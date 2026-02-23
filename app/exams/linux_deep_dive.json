@@ -2,6 +2,7 @@
   "title": "LINUX DEEP DIVE",
   "description": "File system, permissions, processes, shell fu, and kernel internals for system hackers.",
   "difficulty": "HARD",
+  "pass_mark": 60,
   "questions": [
     {
       "question": "Which /proc file contains the command line of process with PID 1337?",

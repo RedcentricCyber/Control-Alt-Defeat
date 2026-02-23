@@ -2,6 +2,7 @@
   "title": "WEB SECURITY RECON",
   "description": "XSS, SQLi, CSRF, headers, and the hacker's guide to breaking web applications.",
   "difficulty": "MEDIUM",
+  "pass_mark": 70,
   "questions": [
     {
       "question": "Which HTTP header is used to prevent clickjacking attacks?",

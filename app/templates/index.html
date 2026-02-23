@@ -47,6 +47,7 @@
           <div class="exam-meta">
             <span class="tag tag-{{ exam.difficulty | lower }}">{{ exam.difficulty }}</span>
             <span class="tag tag-count">{{ exam.question_count }}Q</span>
+            <span class="tag tag-passmark">PASS: {{ exam.pass_mark }}%</span>
           </div>
         </label>
         {% else %}
@@ -65,6 +66,43 @@
     </div>
 
   </form>
+
+  <!-- Exam history -->
+  {% if history %}
+  <div class="panel fade-in fade-in-delay-3 mt-24" data-label="MISSION HISTORY">
+    <div class="prompt-line">Previous attempts this session</div>
+    <div class="history-table mt-16">
+      <div class="history-row history-header">
+        <span>SESSION</span>
+        <span>OPERATIVE</span>
+        <span>MISSION</span>
+        <span>SCORE</span>
+        <span>VERDICT</span>
+        <span>TIMESTAMP</span>
+      </div>
+      {% for entry in history | reverse %}
+      <div class="history-row {% if entry.passed %}history-pass{% else %}history-fail{% endif %}">
+        <span class="text-dim" style="font-size:10px;">{{ entry.token }}</span>
+        <span>{{ entry.alias }}</span>
+        <span style="font-size:11px;">{{ entry.exam_title }}</span>
+        <span>
+          <span class="grade-{{ entry.grade_class }}">{{ entry.score }}/{{ entry.total }}</span>
+          <span class="text-dim" style="font-size:10px;">&nbsp;({{ entry.percentage }}%)</span>
+        </span>
+        <span>
+          {% if entry.passed %}
+            <span class="verdict-pass">■ PASSED</span>
+          {% else %}
+            <span class="verdict-fail">✕ FAILED</span>
+          {% endif %}
+        </span>
+        <span class="text-dim" style="font-size:10px;">{{ entry.timestamp }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}
 

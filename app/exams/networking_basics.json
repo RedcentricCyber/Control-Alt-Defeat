@@ -2,6 +2,7 @@
   "title": "NETWORKING FUNDAMENTALS",
   "description": "OSI layers, TCP/IP, subnetting, and protocol essentials for the aspiring netrunner.",
   "difficulty": "EASY",
+  "pass_mark": 70,
   "questions": [
     {
       "question": "How many layers does the OSI model have?",
