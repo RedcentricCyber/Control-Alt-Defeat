@@ -751,6 +751,60 @@ input[type="text"]:focus {
   letter-spacing: 1px;
 }
 
+a.history-row-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+a.history-row-link:hover {
+  border-left-color: var(--neon-cyan);
+  background: rgba(0,229,255,0.05);
+  cursor: pointer;
+}
+
+/* ── Category breakdown ─────────────────────────────────────── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.cat-card {
+  border: 1px solid var(--border-dim);
+  padding: 14px;
+  background: var(--bg-secondary);
+}
+
+.cat-name {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.cat-score-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.cat-bar-wrap {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+}
+
+.cat-bar-fill {
+  height: 100%;
+  transition: width 0.6s ease;
+}
+
+.cat-bar-pass { background: var(--neon-green);   box-shadow: 0 0 6px var(--neon-green); }
+.cat-bar-warn { background: var(--neon-yellow);  box-shadow: 0 0 6px var(--neon-yellow); }
+.cat-bar-fail { background: var(--neon-red);     box-shadow: 0 0 6px var(--neon-red); }
+
 /* ── Exam card — attribution & revision links ───────────────── */
 .exam-attribution {
   display: flex;

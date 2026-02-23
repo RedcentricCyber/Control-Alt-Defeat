@@ -48,6 +48,11 @@ def init_db():
             )
         """)
         db.execute("CREATE INDEX IF NOT EXISTS idx_client_id ON history(client_id)")
+        # Migrate: add answers column for per-attempt question detail
+        try:
+            db.execute("ALTER TABLE history ADD COLUMN answers TEXT")
+        except sqlite3.OperationalError:
+            pass  # column already exists
         db.commit()
 
 
@@ -63,13 +68,13 @@ def get_history(client_id):
     return [dict(r) for r in rows]
 
 
-def insert_history(client_id, entry):
+def insert_history(client_id, entry, answers=None):
     with get_db() as db:
         db.execute(
             """INSERT INTO history
                (client_id, exam_title, alias, score, total, percentage,
-                pass_mark, passed, grade_label, grade_class, token, timestamp)
-               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+                pass_mark, passed, grade_label, grade_class, token, timestamp, answers)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (
                 client_id,
                 entry["exam_title"],
@@ -83,9 +88,44 @@ def insert_history(client_id, entry):
                 entry["grade_class"],
                 entry["token"],
                 entry["timestamp"],
+                json.dumps(answers) if answers is not None else None,
             ),
         )
         db.commit()
+
+
+def get_history_entry(entry_id, client_id):
+    with get_db() as db:
+        row = db.execute(
+            "SELECT * FROM history WHERE id = ? AND client_id = ?",
+            (entry_id, client_id),
+        ).fetchone()
+    return dict(row) if row else None
+
+
+def _compute_category_breakdown(answers):
+    """Return per-category correct/total/percentage, preserving question order."""
+    by_cat = {}
+    order = []
+    for r in answers:
+        cat = r.get("category", "")
+        if not cat:
+            continue
+        if cat not in by_cat:
+            by_cat[cat] = {"correct": 0, "total": 0}
+            order.append(cat)
+        by_cat[cat]["total"] += 1
+        if r.get("is_correct"):
+            by_cat[cat]["correct"] += 1
+    return [
+        {
+            "category": cat,
+            "correct": by_cat[cat]["correct"],
+            "total": by_cat[cat]["total"],
+            "percentage": round(by_cat[cat]["correct"] / by_cat[cat]["total"] * 100),
+        }
+        for cat in order
+    ]
 
 
 def _ensure_client_id(response):
@@ -318,7 +358,7 @@ def submit():
         "grade_class": grade["class"],
         "token": session.get("session_token", "--------"),
         "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
-    })
+    }, answers=results)
 
     session["results"] = results
     session["score"] = score
@@ -362,6 +402,29 @@ def results():
         pass_mark=session.get("pass_mark", 70),
         passed=session.get("passed", False),
         grade=session.get("grade", {}),
+    )
+
+
+@app.route("/history/<int:entry_id>")
+def history_detail(entry_id):
+    client_id = request.cookies.get(CLIENT_ID_COOKIE)
+    if not client_id:
+        return redirect(url_for("index"))
+
+    entry = get_history_entry(entry_id, client_id)
+    if not entry:
+        return redirect(url_for("index"))
+
+    answers = json.loads(entry["answers"]) if entry.get("answers") else None
+    category_breakdown = _compute_category_breakdown(answers) if answers else []
+    grade = {"label": entry["grade_label"], "class": entry["grade_class"]}
+
+    return render_template(
+        "history_detail.html",
+        entry=entry,
+        answers=answers,
+        category_breakdown=category_breakdown,
+        grade=grade,
     )
 
 

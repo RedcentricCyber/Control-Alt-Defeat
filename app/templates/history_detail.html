@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}CONTROL-ALT-DEFEAT // ARCHIVED DEBRIEF{% endblock %}
+
+{% block content %}
+<div class="fade-in">
+
+  <div class="mt-16 mb-16">
+    <a href="/" class="text-dim" style="font-size:11px; letter-spacing:2px; text-decoration:none;">&lt; BACK TO TERMINAL</a>
+    <h1 class="page-title mt-8">ARCHIVED DEBRIEF</h1>
+    <p class="page-subtitle">
+      // SESSION {{ entry.token }}
+      &nbsp;—&nbsp; OPERATIVE: {{ entry.alias }}
+      &nbsp;—&nbsp; {{ entry.timestamp }}
+    </p>
+    <p class="page-subtitle" style="margin-top:4px;">
+      // MISSION: {{ entry.exam_title }}
+    </p>
+  </div>
+
+  <!-- Score display -->
+  <div class="score-display fade-in fade-in-delay-1">
+    <div class="score-number grade-{{ grade.class }}">
+      {{ entry.score }}<span style="font-size:0.4em; opacity:0.5;">/{{ entry.total }}</span>
+    </div>
+    <div class="score-pct grade-{{ grade.class }}">{{ entry.percentage }}% ACCURACY</div>
+    <div class="grade-label grade-{{ grade.class }}">{{ grade.label }}</div>
+
+    <div class="pass-verdict {% if entry.passed %}pass-verdict-pass{% else %}pass-verdict-fail{% endif %} mt-16">
+      {% if entry.passed %}■ MISSION PASSED{% else %}✕ MISSION FAILED{% endif %}
+      <span class="pass-mark-note">// PASS MARK: {{ entry.pass_mark }}%</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="panel fade-in fade-in-delay-2" data-label="PERFORMANCE METRICS">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap:20px; text-align:center;">
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-green);">{{ entry.score }}</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">CORRECT</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-red);">{{ entry.total - entry.score }}</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">INCORRECT</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-cyan);">{{ entry.total }}</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">TOTAL</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-magenta);">{{ entry.percentage }}%</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">SCORE</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; {% if entry.passed %}color:var(--neon-green);{% else %}color:var(--neon-red);{% endif %}">{{ entry.pass_mark }}%</div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">PASS MARK</div>
+      </div>
+    </div>
+  </div>
+
+  {% if category_breakdown %}
+  <!-- Category breakdown -->
+  <div class="panel fade-in fade-in-delay-2" data-label="CATEGORY BREAKDOWN">
+    <div class="prompt-line">Performance across knowledge domains</div>
+    <div class="cat-grid mt-16">
+      {% for cat in category_breakdown %}
+      <div class="cat-card">
+        <div class="cat-name">{{ cat.category }}</div>
+        <div class="cat-score-row">
+          <span>{{ cat.correct }}/{{ cat.total }} correct</span>
+          <span class="{% if cat.percentage >= 80 %}text-green{% elif cat.percentage >= 50 %}text-cyan{% else %}text-red{% endif %}">
+            {{ cat.percentage }}%
+          </span>
+        </div>
+        <div class="cat-bar-wrap">
+          <div class="cat-bar-fill {% if cat.percentage >= 80 %}cat-bar-pass{% elif cat.percentage >= 50 %}cat-bar-warn{% else %}cat-bar-fail{% endif %}"
+               style="width: {{ cat.percentage }}%"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if answers %}
+  <!-- Per-question breakdown -->
+  <div class="panel fade-in fade-in-delay-3" data-label="QUESTION ANALYSIS">
+    <div class="prompt-line">Full question log for this attempt</div>
+    <div class="mt-16">
+    {% for r in answers %}
+    <div class="result-q {{ 'correct' if r.is_correct else 'wrong' }}">
+      <div class="question-number">
+        QUERY {{ '%03d' % (r.index + 1) }}
+        &nbsp;|&nbsp;
+        {% if r.is_correct %}
+          <span class="result-status-correct">■ CORRECT</span>
+        {% else %}
+          <span class="result-status-wrong">■ INCORRECT</span>
+        {% endif %}
+        {% if r.category %}
+          &nbsp;|&nbsp;<span class="result-category">{{ r.category }}</span>
+        {% endif %}
+      </div>
+      <div class="result-q-text">{{ r.question }}</div>
+
+      <ul class="options-list">
+        {% for key, text in r.options.items() | sort %}
+        <li class="option-item
+          {% if key == r.correct %}correct-answer
+          {% elif key == r.selected and not r.is_correct %}wrong-answer
+          {% endif %}"
+          style="cursor:default;">
+          <span class="option-letter">[{{ key }}]</span>
+          <span class="option-text">{{ text }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      {% if r.explanation %}
+      <div class="explanation">
+        &gt; {{ r.explanation }}
+      </div>
+      {% endif %}
+
+      {% if not r.is_correct and r.selected %}
+      <div style="margin-top:8px; font-size:11px; color:var(--text-dim);">
+        Your answer: <span class="text-red">[{{ r.selected }}]</span>
+        &nbsp;|&nbsp;
+        Correct: <span class="text-green">[{{ r.correct }}]</span>
+      </div>
+      {% elif not r.selected %}
+      <div style="margin-top:8px; font-size:11px; color:var(--text-dim);">
+        <span class="text-red">NO ANSWER SUBMITTED</span>
+        &nbsp;|&nbsp;
+        Correct: <span class="text-green">[{{ r.correct }}]</span>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="panel fade-in fade-in-delay-3" data-label="QUESTION ANALYSIS">
+    <div class="text-dim" style="font-size:12px;">&gt; Detailed question data is not available for this attempt.</div>
+  </div>
+  {% endif %}
+
+  <!-- Actions -->
+  <div class="flex gap-12 flex-wrap mt-24 fade-in">
+    <a href="/" class="btn btn-primary">&gt;&gt; BACK TO TERMINAL</a>
+  </div>
+
+</div>
+{% endblock %}
