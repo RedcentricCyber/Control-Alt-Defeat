@@ -479,6 +479,152 @@ input[type="text"]:focus {
   border-color: var(--neon-red);
 }
 
+/* ── Question map panel ─────────────────────────────────────── */
+/* Anchored bottom-right; content stacks upward via flex-column  */
+.q-map-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  width: 210px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-dim);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.75);
+}
+
+/* Body (legend + grid + jump button) sits above the toggle header */
+.q-map-body {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-dim);
+}
+
+/* Toggle header button */
+.q-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 7px 10px;
+  font-family: var(--font-display);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--neon-green);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.q-map-header:hover { background: rgba(0,255,65,0.06); }
+
+/* Legend */
+.q-map-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+
+.q-map-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.q-map-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border: 1px solid;
+}
+
+.q-map-swatch-answered {
+  border-color: var(--neon-cyan);
+  background: rgba(0,229,255,0.15);
+}
+
+.q-map-swatch-flagged {
+  border-color: var(--neon-yellow);
+  background: rgba(255,230,0,0.15);
+}
+
+.q-map-swatch-current {
+  border-color: var(--neon-green);
+  background: transparent;
+  box-shadow: 0 0 4px var(--neon-green);
+}
+
+/* Numbered grid */
+.q-map-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.q-map-box {
+  font-family: var(--font-display);
+  font-size: 9px;
+  padding: 5px 2px;
+  text-align: center;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-dim);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+
+.q-map-box:hover {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+
+.q-map-box.is-answered {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  background: rgba(0,229,255,0.08);
+}
+
+.q-map-box.is-flagged {
+  border-color: var(--neon-yellow);
+  color: var(--neon-yellow);
+  background: rgba(255,230,0,0.08);
+}
+
+/* Current-view ring: outset outline so it sits outside the border */
+.q-map-box.is-current {
+  outline: 1px solid var(--neon-green);
+  outline-offset: 2px;
+  box-shadow: 0 0 6px rgba(0,255,65,0.4);
+}
+
+/* Jump-to-flagged button */
+.q-map-jump-btn {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 5px 0;
+  font-family: var(--font-display);
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--neon-yellow);
+  background: transparent;
+  border: 1px solid var(--neon-yellow);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.q-map-jump-btn:hover {
+  background: rgba(255,230,0,0.08);
+}
+
+
 .question-number {
   display: flex;
   justify-content: space-between;
@@ -1040,6 +1186,7 @@ a.history-row-link:hover {
   .esb-left { display: none; }
   .question-actions { gap: 4px; }
   .q-action-btn { padding: 2px 6px; font-size: 8px; }
+  .q-map-panel { right: 10px; bottom: 10px; width: 180px; }
   .history-row {
     grid-template-columns: 1fr 1fr;
     font-size: 11px;

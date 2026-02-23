@@ -110,6 +110,33 @@
   </form>
 
 </div>
+
+<!-- Question map panel (fixed bottom-right, expands upward) -->
+<div class="q-map-panel" id="q-map-panel">
+  <div class="q-map-body" id="q-map-body" style="display:none;">
+    <div class="q-map-legend">
+      <div class="q-map-legend-row">
+        <span class="q-map-swatch q-map-swatch-answered"></span><span>ANSWERED</span>
+      </div>
+      <div class="q-map-legend-row">
+        <span class="q-map-swatch q-map-swatch-flagged"></span><span>FLAGGED</span>
+      </div>
+      <div class="q-map-legend-row">
+        <span class="q-map-swatch q-map-swatch-current"></span><span>IN VIEW</span>
+      </div>
+    </div>
+    <div class="q-map-grid" id="q-map-grid"><!-- built by JS --></div>
+    <button type="button" class="q-map-jump-btn" id="q-map-flagged-btn"
+            style="display:none;" onclick="jumpToFirstFlagged()">
+      ⚑ JUMP TO FLAGGED
+    </button>
+  </div>
+  <button type="button" class="q-map-header" onclick="toggleMap()">
+    <span>☷ QUESTION MAP</span>
+    <span id="q-map-chevron">▾</span>
+  </button>
+</div>
+
 {% endblock %}
 
 {% block extra_scripts %}

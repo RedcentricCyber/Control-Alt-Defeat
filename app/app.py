@@ -77,7 +77,7 @@ def get_history(client_id):
 
 def insert_history(client_id, entry, answers=None, time_taken=None):
     with get_db() as db:
-        db.execute(
+        cursor = db.execute(
             """INSERT INTO history
                (client_id, exam_title, alias, score, total, percentage,
                 pass_mark, passed, grade_label, grade_class, token, timestamp, answers, time_taken)
@@ -100,6 +100,7 @@ def insert_history(client_id, entry, answers=None, time_taken=None):
             ),
         )
         db.commit()
+        return cursor.lastrowid
 
 
 def get_history_entry(entry_id, client_id):
@@ -356,7 +357,7 @@ def submit():
 
     # Persist to DB
     client_id = request.cookies.get(CLIENT_ID_COOKIE, str(uuid.uuid4()))
-    insert_history(client_id, {
+    entry_id = insert_history(client_id, {
         "exam_title": session.get("exam_title", exam_id),
         "alias": session.get("alias", "UNKNOWN"),
         "score": score,
@@ -370,16 +371,9 @@ def submit():
         "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
     }, answers=results, time_taken=int(time.time()) - session.get("start_time", int(time.time())))
 
-    session["results"] = results
-    session["score"] = score
-    session["total"] = total
-    session["percentage"] = percentage
-    session["pass_mark"] = pass_mark
-    session["passed"] = passed
-    session["grade"] = grade
     session["started"] = False
 
-    return redirect(url_for("results"))
+    return redirect(url_for("history_detail", entry_id=entry_id))
 
 
 def _grade(pct):
