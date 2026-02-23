@@ -71,6 +71,9 @@
         {% else %}
           <span class="result-status-wrong">■ INCORRECT</span>
         {% endif %}
+        {% if r.category %}
+          &nbsp;|&nbsp;<span class="result-category">{{ r.category }}</span>
+        {% endif %}
       </div>
       <div class="result-q-text">{{ r.question }}</div>
 

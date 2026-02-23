@@ -1,7 +1,9 @@
 import json
 import os
+import random
 import sqlite3
 import uuid
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from flask import Flask, make_response, render_template, request, session, redirect, url_for
@@ -117,6 +119,7 @@ def list_exams():
         try:
             with open(path) as f:
                 data = json.load(f)
+            pool_size = len(data.get("questions", []))
             exams.append({
                 "id": path.stem,
                 "title": data.get("title", path.stem),
@@ -124,7 +127,9 @@ def list_exams():
                 "based_on": data.get("based_on", ""),
                 "created_by": data.get("created_by", ""),
                 "difficulty": data.get("difficulty", "UNKNOWN"),
-                "question_count": len(data.get("questions", [])),
+                "num_questions": data.get("num_questions", pool_size),
+                "pool_size": pool_size,
+                "categories": data.get("categories", []),
                 "pass_mark": data.get("pass_mark", 70),
                 "time_limit": data.get("time_limit", 0),
                 "links": data.get("links", []),
@@ -132,6 +137,62 @@ def list_exams():
         except (json.JSONDecodeError, KeyError):
             continue
     return exams
+
+
+def select_question_indices(questions, num_questions):
+    """Return a shuffled list of indices into `questions` to serve.
+
+    When questions carry a 'category' field the selection is stratified:
+    slots are divided as evenly as possible across all categories so every
+    category is represented.  Questions without a category fall into a
+    fallback pool used to top up any shortfall.
+
+    If num_questions >= pool size every question is returned (shuffled).
+    """
+    n = len(questions)
+    if num_questions >= n:
+        result = list(range(n))
+        random.shuffle(result)
+        return result
+
+    # Bucket indices by category
+    by_cat = defaultdict(list)
+    for i, q in enumerate(questions):
+        by_cat[q.get("category") or ""].append(i)
+
+    uncategorized = by_cat.pop("", [])
+    cats = list(by_cat.keys())
+
+    if not cats:
+        # No categories defined — plain random sample
+        pool = list(range(n))
+        random.shuffle(pool)
+        return pool[:num_questions]
+
+    # Distribute slots across categories
+    n_cats = len(cats)
+    base = num_questions // n_cats
+    remainder = num_questions % n_cats
+
+    selected = []
+    for idx, cat in enumerate(cats):
+        take = base + (1 if idx < remainder else 0)
+        pool = by_cat[cat][:]
+        random.shuffle(pool)
+        selected.extend(pool[:take])
+
+    # Top up with uncategorized / overflow if any category was under-stocked
+    if len(selected) < num_questions:
+        already = set(selected)
+        extras = [i for i in uncategorized if i not in already]
+        # Also pull from over-stocked categories if still short
+        for cat in cats:
+            extras += [i for i in by_cat[cat] if i not in already and i not in extras]
+        random.shuffle(extras)
+        selected.extend(extras[:num_questions - len(selected)])
+
+    random.shuffle(selected)
+    return selected
 
 
 # ── Routes ───────────────────────────────────────────────────
@@ -159,10 +220,15 @@ def start():
     if not exam:
         return redirect(url_for("index"))
 
+    all_questions = exam.get("questions", [])
+    num_questions = exam.get("num_questions", len(all_questions))
+    question_indices = select_question_indices(all_questions, num_questions)
+
     session.clear()
     session["alias"] = alias
     session["exam_id"] = exam_id
     session["exam_title"] = exam.get("title", exam_id)
+    session["question_indices"] = question_indices
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
 
@@ -178,6 +244,10 @@ def exam():
     exam = load_exam(exam_id)
     if not exam:
         return redirect(url_for("index"))
+
+    all_questions = exam.get("questions", [])
+    indices = session.get("question_indices", list(range(len(all_questions))))
+    exam["questions"] = [all_questions[i] for i in indices]
 
     return render_template(
         "exam.html",
@@ -197,7 +267,10 @@ def submit():
     if not exam:
         return redirect(url_for("index"))
 
-    questions = exam.get("questions", [])
+    all_questions = exam.get("questions", [])
+    indices = session.get("question_indices", list(range(len(all_questions))))
+    questions = [all_questions[i] for i in indices]
+
     pass_mark = exam.get("pass_mark", 70)
     score = 0
     results = []
@@ -217,6 +290,7 @@ def submit():
             "correct": correct,
             "is_correct": is_correct,
             "explanation": question.get("explanation", ""),
+            "category": question.get("category", ""),
         })
 
     total = len(questions)

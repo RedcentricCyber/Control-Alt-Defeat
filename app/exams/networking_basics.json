@@ -6,6 +6,8 @@
   "difficulty": "EASY",
   "pass_mark": 70,
   "time_limit": 15,
+  "num_questions": 10,
+  "categories": ["OSI Model", "Addressing & Subnetting", "Protocols & Ports", "DNS & Routing"],
   "links": [
     { "text": "Cloudflare — What is the OSI Model?", "url": "https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/" },
     { "text": "Professor Messer — Network+ Free Course", "url": "https://www.professormesser.com/network-plus/n10-009/n10-009-video/n10-009-training-course/" },
@@ -14,6 +16,7 @@
   ],
   "questions": [
     {
+      "category": "OSI Model",
       "question": "How many layers does the OSI model have?",
       "options": {
         "A": "4",
@@ -25,6 +28,7 @@
       "explanation": "The OSI model has 7 layers: Physical, Data Link, Network, Transport, Session, Presentation, and Application."
     },
     {
+      "category": "OSI Model",
       "question": "Which protocol operates at the Network layer (Layer 3) of the OSI model?",
       "options": {
         "A": "Ethernet",
@@ -36,6 +40,7 @@
       "explanation": "IP (Internet Protocol) operates at Layer 3. Ethernet is Layer 2, TCP is Layer 4, and HTTP is Layer 7."
     },
     {
+      "category": "Addressing & Subnetting",
       "question": "What is the default subnet mask for a Class C network?",
       "options": {
         "A": "255.0.0.0",
@@ -47,6 +52,7 @@
       "explanation": "Class C networks use a /24 subnet mask: 255.255.255.0, providing up to 254 usable host addresses."
     },
     {
+      "category": "Protocols & Ports",
       "question": "Which port does HTTPS use by default?",
       "options": {
         "A": "80",
@@ -58,6 +64,7 @@
       "explanation": "HTTPS uses port 443 by default. Port 80 is plain HTTP."
     },
     {
+      "category": "Protocols & Ports",
       "question": "What does ARP stand for?",
       "options": {
         "A": "Advanced Routing Protocol",
@@ -69,6 +76,7 @@
       "explanation": "ARP — Address Resolution Protocol — maps an IP address to a MAC address on a local network segment."
     },
     {
+      "category": "Addressing & Subnetting",
       "question": "Which of the following is a private (RFC 1918) IP address range?",
       "options": {
         "A": "8.8.8.0/24",
@@ -80,6 +88,7 @@
       "explanation": "172.16.0.0–172.31.255.255 (/12) is one of the three RFC 1918 private ranges. 100.64.0.0/10 is CGNAT space, 169.254.0.0/16 is link-local."
     },
     {
+      "category": "Protocols & Ports",
       "question": "TCP uses a ____-way handshake to establish a connection.",
       "options": {
         "A": "Two",
@@ -91,6 +100,7 @@
       "explanation": "TCP uses a three-way handshake: SYN → SYN-ACK → ACK."
     },
     {
+      "category": "DNS & Routing",
       "question": "Which DNS record type maps a hostname to an IPv4 address?",
       "options": {
         "A": "AAAA",
@@ -102,6 +112,7 @@
       "explanation": "The A record maps a hostname to an IPv4 address. AAAA maps to IPv6. CNAME is an alias. MX is for mail."
     },
     {
+      "category": "DNS & Routing",
       "question": "What is the maximum size of an Ethernet frame payload (MTU)?",
       "options": {
         "A": "512 bytes",
@@ -113,6 +124,7 @@
       "explanation": "Standard Ethernet MTU is 1500 bytes. Jumbo frames extend this to 9000 bytes but require explicit configuration."
     },
     {
+      "category": "DNS & Routing",
       "question": "Which command displays the routing table on a Linux system?",
       "options": {
         "A": "ifconfig -r",
