@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}CONTROL-ALT-DEFEAT // MISSION IN PROGRESS{% endblock %}
+
+{% block content %}
+<div class="fade-in">
+
+  <!-- Exam header -->
+  <div class="exam-header mt-16">
+    <div>
+      <div class="exam-info-title">{{ exam.title }}</div>
+      <div class="text-dim mt-8" style="font-size:11px; letter-spacing:1px;">
+        OPERATIVE: <span class="text-green">{{ alias }}</span>
+      </div>
+    </div>
+    <div class="session-chip">SESSION // {{ token }}</div>
+  </div>
+
+  <!-- Progress -->
+  <div>
+    <div class="progress-label flex justify-between">
+      <span>PROGRESS</span>
+      <span id="progress-text">0 / {{ exam.questions | length }}</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Questions -->
+  <form action="/submit" method="POST" id="exam-form">
+
+    {% for question in exam.questions %}
+    <div class="question-card fade-in" id="qcard-{{ loop.index0 }}"
+         style="animation-delay: {{ loop.index0 * 0.04 }}s">
+
+      <div class="question-number">
+        QUERY {{ '%03d' % loop.index }} / {{ '%03d' % (exam.questions | length) }}
+      </div>
+
+      <div class="question-text">{{ question.question }}</div>
+
+      <ul class="options-list">
+        {% for key, text in question.options.items() | sort %}
+        <li class="option-item"
+            id="opt-{{ loop.index0 }}-{{ key }}"
+            onclick="selectOption(this, 'q{{ loop.index0 }}', '{{ key }}')">
+          <input type="radio" name="q{{ loop.index0 }}" value="{{ key }}"
+                 id="r-{{ loop.index0 }}-{{ key }}">
+          <span class="option-letter">[{{ key }}]</span>
+          <span class="option-text">{{ text }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+    </div>
+    {% endfor %}
+
+    <!-- Submit -->
+    <div class="flex gap-12 flex-wrap mt-24">
+      <button type="button" class="btn btn-danger" onclick="confirmAbort()">
+        &gt; ABORT MISSION
+      </button>
+      <button type="submit" class="btn btn-primary" id="submit-btn">
+        <span>&gt;&gt;</span> UPLOAD ANSWERS
+      </button>
+    </div>
+    <div class="text-dim mt-8" style="font-size:11px;">
+      &gt; <span id="answered-count">0</span> of {{ exam.questions | length }} queries answered
+    </div>
+
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  const TOTAL = {{ exam.questions | length }};
+</script>
+<script src="{{ url_for('static', filename='js/exam.js') }}"></script>
+{% endblock %}
