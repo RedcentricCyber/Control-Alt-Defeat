@@ -2,6 +2,7 @@ import json
 import os
 import random
 import sqlite3
+import time
 import uuid
 from collections import defaultdict
 from datetime import datetime
@@ -53,6 +54,11 @@ def init_db():
             db.execute("ALTER TABLE history ADD COLUMN answers TEXT")
         except sqlite3.OperationalError:
             pass  # column already exists
+        # Migrate: add time_taken for duration tracking
+        try:
+            db.execute("ALTER TABLE history ADD COLUMN time_taken INTEGER")
+        except sqlite3.OperationalError:
+            pass  # column already exists
         db.commit()
 
 
@@ -68,13 +74,13 @@ def get_history(client_id):
     return [dict(r) for r in rows]
 
 
-def insert_history(client_id, entry, answers=None):
+def insert_history(client_id, entry, answers=None, time_taken=None):
     with get_db() as db:
         db.execute(
             """INSERT INTO history
                (client_id, exam_title, alias, score, total, percentage,
-                pass_mark, passed, grade_label, grade_class, token, timestamp, answers)
-               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                pass_mark, passed, grade_label, grade_class, token, timestamp, answers, time_taken)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (
                 client_id,
                 entry["exam_title"],
@@ -89,6 +95,7 @@ def insert_history(client_id, entry, answers=None):
                 entry["token"],
                 entry["timestamp"],
                 json.dumps(answers) if answers is not None else None,
+                time_taken,
             ),
         )
         db.commit()
@@ -275,6 +282,7 @@ def start():
     session["question_indices"] = question_indices
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
+    session["start_time"] = int(time.time())
 
     resp = redirect(url_for("exam"))
     resp.set_cookie(ALIAS_COOKIE, alias, max_age=CLIENT_ID_MAX_AGE, samesite="Lax", httponly=True)
@@ -358,7 +366,7 @@ def submit():
         "grade_class": grade["class"],
         "token": session.get("session_token", "--------"),
         "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
-    }, answers=results)
+    }, answers=results, time_taken=int(time.time()) - session.get("start_time", int(time.time())))
 
     session["results"] = results
     session["score"] = score
@@ -403,6 +411,15 @@ def results():
         passed=session.get("passed", False),
         grade=session.get("grade", {}),
     )
+
+
+@app.route("/history")
+def history_list():
+    client_id = request.cookies.get(CLIENT_ID_COOKIE)
+    if not client_id:
+        return redirect(url_for("index"))
+    history = get_history(client_id)
+    return render_template("history_list.html", history=history)
 
 
 @app.route("/history/<int:entry_id>")

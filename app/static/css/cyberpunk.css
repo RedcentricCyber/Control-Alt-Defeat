@@ -98,6 +98,28 @@ header {
 
 .logo span { color: var(--neon-magenta); }
 
+.nav-links {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-link {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+}
+
 .nav-status {
   font-size: 11px;
   color: var(--text-dim);
@@ -905,6 +927,7 @@ a.history-row-link:hover {
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
   header { padding: 10px 14px; }
+  .nav-links { display: none; }
   .container { padding: 14px 12px 40px; }
   .exam-timer-fixed { bottom: 12px; right: 12px; padding: 4px 10px; min-width: 90px; }
   .exam-timer-fixed .timer-value { font-size: 1.1rem; }

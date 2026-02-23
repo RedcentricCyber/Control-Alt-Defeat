@@ -88,12 +88,10 @@
 
   </form>
 
-  {% if exam.time_limit %}
   <div id="exam-timer" class="exam-timer exam-timer-fixed">
-    <span class="timer-label">TIME REMAINING</span>
-    <span id="timer-display" class="timer-value">{{ '%02d' % exam.time_limit }}:00</span>
+    <span class="timer-label" id="timer-label">{% if exam.time_limit %}TIME REMAINING{% else %}TIME ELAPSED{% endif %}</span>
+    <span id="timer-display" class="timer-value">{% if exam.time_limit %}{{ '%02d' % exam.time_limit }}:00{% else %}00:00{% endif %}</span>
   </div>
-  {% endif %}
 
 </div>
 {% endblock %}

@@ -55,6 +55,14 @@
         <div style="font-family:var(--font-display); font-size:2rem; {% if entry.passed %}color:var(--neon-green);{% else %}color:var(--neon-red);{% endif %}">{{ entry.pass_mark }}%</div>
         <div class="text-dim" style="font-size:10px; letter-spacing:2px;">PASS MARK</div>
       </div>
+      {% if entry.time_taken is not none %}
+      <div>
+        <div style="font-family:var(--font-display); font-size:2rem; color:var(--neon-yellow);">
+          {{ '%02d' % (entry.time_taken // 60) }}:{{ '%02d' % (entry.time_taken % 60) }}
+        </div>
+        <div class="text-dim" style="font-size:10px; letter-spacing:2px;">TIME TAKEN</div>
+      </div>
+      {% endif %}
     </div>
   </div>
 

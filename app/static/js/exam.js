@@ -56,27 +56,30 @@
   window.confirmAbort = function () {
     if (confirm('ABORT MISSION?\nAll progress will be lost.')) {
       if (typeof SESSION_TOKEN !== 'undefined') {
-        sessionStorage.removeItem('cad_timer_' + SESSION_TOKEN);
+        sessionStorage.removeItem('cad_timer_'   + SESSION_TOKEN);
+        sessionStorage.removeItem('cad_elapsed_' + SESSION_TOKEN);
       }
       window.location.href = '/reset';
     }
   };
 
-  // ── Countdown timer ─────────────────────────────────────────
+  // ── Timer ────────────────────────────────────────────────────
   // TIME_LIMIT is injected by the template (minutes); 0 = untimed.
   // Start time is stored in sessionStorage so a page refresh does not
   // reset the clock — the timer picks up where it left off.
+  var timerEl      = document.getElementById('exam-timer');
+  var timerDisplay = document.getElementById('timer-display');
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
   if (typeof TIME_LIMIT !== 'undefined' && TIME_LIMIT > 0) {
+    // ── Countdown mode ──────────────────────────────────────
     var totalSeconds = TIME_LIMIT * 60;
     var storageKey   = 'cad_timer_' + SESSION_TOKEN;
-    var timerEl      = document.getElementById('exam-timer');
-    var timerDisplay = document.getElementById('timer-display');
 
     var stored    = sessionStorage.getItem(storageKey);
     var startTime = stored ? parseInt(stored, 10) : Date.now();
     if (!stored) sessionStorage.setItem(storageKey, startTime);
-
-    function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
     function tick() {
       var elapsed   = Math.floor((Date.now() - startTime) / 1000);
@@ -105,6 +108,23 @@
 
     tick(); // run immediately so display is correct on load
     var timerInterval = setInterval(tick, 1000);
+
+  } else {
+    // ── Count-up elapsed mode ────────────────────────────────
+    var elapsedKey  = 'cad_elapsed_' + SESSION_TOKEN;
+    var storedStart = sessionStorage.getItem(elapsedKey);
+    var elapsedStart = storedStart ? parseInt(storedStart, 10) : Date.now();
+    if (!storedStart) sessionStorage.setItem(elapsedKey, elapsedStart);
+
+    function tickElapsed() {
+      var secs = Math.floor((Date.now() - elapsedStart) / 1000);
+      if (timerDisplay) {
+        timerDisplay.textContent = pad(Math.floor(secs / 60)) + ':' + pad(secs % 60);
+      }
+    }
+
+    tickElapsed();
+    setInterval(tickElapsed, 1000);
   }
 
   updateProgress();

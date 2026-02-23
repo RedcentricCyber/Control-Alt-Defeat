@@ -5,7 +5,7 @@
   const examCards   = document.querySelectorAll('.exam-card');
   const radios      = document.querySelectorAll('input[name="exam_id"]');
 
-  let aliasOk = false;
+  let aliasOk = aliasInput ? aliasInput.value.trim().length > 0 : false;
   let examOk  = false;
 
   function updateBtn() {
@@ -18,6 +18,9 @@
       updateBtn();
     });
   }
+
+  // Reflect pre-filled alias immediately
+  updateBtn();
 
   radios.forEach(function (radio) {
     radio.addEventListener('change', function () {
