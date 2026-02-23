@@ -48,6 +48,7 @@
             <span class="tag tag-{{ exam.difficulty | lower }}">{{ exam.difficulty }}</span>
             <span class="tag tag-count">{{ exam.question_count }}Q</span>
             <span class="tag tag-passmark">PASS: {{ exam.pass_mark }}%</span>
+            {% if exam.time_limit %}<span class="tag tag-timer">{{ exam.time_limit }}MIN</span>{% endif %}
           </div>
           {% if exam.based_on or exam.created_by %}
           <div class="exam-attribution">

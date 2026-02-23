@@ -126,6 +126,7 @@ def list_exams():
                 "difficulty": data.get("difficulty", "UNKNOWN"),
                 "question_count": len(data.get("questions", [])),
                 "pass_mark": data.get("pass_mark", 70),
+                "time_limit": data.get("time_limit", 0),
                 "links": data.get("links", []),
             })
         except (json.JSONDecodeError, KeyError):

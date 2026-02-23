@@ -21,6 +21,12 @@
     </div>
     <div style="text-align:right;">
       <div class="session-chip">SESSION // {{ token }}</div>
+      {% if exam.time_limit %}
+      <div id="exam-timer" class="exam-timer mt-8">
+        <span class="timer-label">TIME REMAINING</span>
+        <span id="timer-display" class="timer-value">{{ '%02d' % exam.time_limit }}:00</span>
+      </div>
+      {% endif %}
       {% if exam.links %}
       <div class="exam-links mt-8" style="justify-content:flex-end;">
         {% for link in exam.links %}
@@ -92,6 +98,8 @@
 {% block extra_scripts %}
 <script>
   const TOTAL = {{ exam.questions | length }};
+  const TIME_LIMIT = {{ exam.time_limit | default(0) }};
+  const SESSION_TOKEN = '{{ token }}';
 </script>
 <script src="{{ url_for('static', filename='js/exam.js') }}"></script>
 {% endblock %}

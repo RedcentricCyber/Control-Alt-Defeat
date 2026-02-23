@@ -677,6 +677,11 @@ input[type="text"]:focus {
   color: var(--neon-magenta);
 }
 
+.tag-timer {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+
 /* ── History table ──────────────────────────────────────────── */
 .history-table {
   display: flex;
@@ -765,6 +770,53 @@ input[type="text"]:focus {
 }
 
 .exam-link::before { content: '↗ '; font-size: 9px; opacity: 0.7; }
+
+/* ── Countdown timer ────────────────────────────────────────── */
+.exam-timer {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid var(--neon-green);
+  text-align: center;
+  min-width: 110px;
+  transition: border-color 0.3s;
+}
+
+.timer-label {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+
+.timer-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--neon-green);
+  letter-spacing: 3px;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+/* ≤ 25% remaining */
+.timer-warn {
+  border-color: var(--neon-yellow);
+}
+.timer-warn .timer-value {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 8px var(--neon-yellow);
+}
+
+/* ≤ 10% remaining */
+.timer-critical {
+  border-color: var(--neon-red);
+  box-shadow: 0 0 8px rgba(255,0,60,0.4);
+}
+.timer-critical .timer-value {
+  color: var(--neon-red);
+  text-shadow: 0 0 8px var(--neon-red);
+  animation: blink 0.6s step-end infinite;
+}
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 600px) {

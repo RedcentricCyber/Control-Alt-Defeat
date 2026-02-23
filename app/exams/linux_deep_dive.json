@@ -5,6 +5,7 @@
   "created_by": "Control-Alt-Defeat",
   "difficulty": "HARD",
   "pass_mark": 60,
+  "time_limit": 10,
   "links": [
     { "text": "man7.org — Linux Man Pages Online", "url": "https://man7.org/linux/man-pages/" },
     { "text": "explainshell — Break down any shell command", "url": "https://explainshell.com/" },
