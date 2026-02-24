@@ -47,12 +47,10 @@
           <div class="exam-desc">{{ exam.description }}</div>
           <div class="exam-meta">
             <span class="tag tag-{{ exam.difficulty | lower }}">{{ exam.difficulty }}</span>
-            <span class="tag tag-count">
-              {{- exam.num_questions }}Q
-              {%- if exam.pool_size > exam.num_questions %} / {{ exam.pool_size }} pool{%- endif -%}
-            </span>
-            <span class="tag tag-passmark">PASS: {{ exam.pass_mark }}%</span>
-            {% if exam.time_limit %}<span class="tag tag-timer">{{ exam.time_limit }}MIN</span>{% endif %}
+            <span class="tag tag-count">QUESTIONS: {{- exam.num_questions }}</span>
+            {%- if exam.pool_size > exam.num_questions %}<span class="tag tag-count">TOTAL QUESTION POOL: {{ exam.pool_size }}</span>{%- endif -%}</span>
+            <span class="tag tag-passmark">PASS MARK: {{ exam.pass_mark }}%</span>
+            {% if exam.time_limit %}<span class="tag tag-timer">MINUTES: {{ exam.time_limit }}</span>{% endif %}
           </div>
           {% if exam.based_on or exam.created_by or exam.categories %}
           <div class="exam-attribution">
