@@ -3,6 +3,8 @@ Control-Alt-Defeat is a cyberpunk-themed multichoice web exam application built 
 
 ## Running the App
 
+From inside the repository.
+
 **Docker (recommended):**
 ```bash
 docker-compose up --build   # first run
