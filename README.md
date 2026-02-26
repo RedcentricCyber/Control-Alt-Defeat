@@ -16,7 +16,7 @@ pip install -r requirements.txt
 python app/app.py           # http://localhost:5000
 ```
 
-## Exams
+## Exam Files
 
 The current exams have been generated using ChatGPT, after giving it some (public) information about exams it's supposed to be helping you prepare for.
 
