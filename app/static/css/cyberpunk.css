@@ -157,7 +157,7 @@ header {
   background: var(--bg-panel);
   border: 1px solid var(--border-dim);
   border-left: 3px solid var(--neon-green);
-  padding: 24px;
+  padding: 28px;
   margin-bottom: 20px;
   position: relative;
 }
@@ -172,7 +172,6 @@ header {
   font-size: 11px;
   color: var(--neon-green);
   letter-spacing: 2px;
-  text-transform: uppercase;
 }
 
 .panel-cyan  { border-left-color: var(--neon-cyan);    }
@@ -208,7 +207,7 @@ header {
   background: var(--bg-secondary);
   border: 1px solid var(--border-dim);
   border-left: 3px solid transparent;
-  padding: 18px;
+  padding: 22px;
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
   position: relative;
@@ -298,10 +297,9 @@ header {
 
 label {
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-dim);
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  letter-spacing: 1px;
   margin-bottom: 8px;
 }
 
@@ -1225,6 +1223,96 @@ a.history-row-link:hover {
   animation: blink 0.6s step-end infinite;
 }
 
+/* ── Exam config (question count + time limit) ──────────────── */
+.card-config {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-dim);
+}
+
+.cfg-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.config-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.cfg-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cfg-val {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--neon-green);
+  white-space: nowrap;
+  letter-spacing: 1px;
+  min-width: 72px;
+}
+
+.cfg-number-input {
+  width: 100px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--neon-green);
+  padding: 8px 0;
+  color: var(--neon-green);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  outline: none;
+  caret-color: var(--neon-green);
+  transition: border-color 0.2s;
+}
+
+.cfg-number-input:focus {
+  border-bottom-color: var(--neon-cyan);
+  box-shadow: 0 1px 0 var(--neon-cyan);
+}
+
+/* Range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: var(--border-dim);
+  outline: none;
+  cursor: pointer;
+  flex: 1;
+  border: none;
+  padding: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--neon-green);
+  box-shadow: 0 0 6px var(--neon-green);
+  cursor: pointer;
+  border-radius: 0;
+}
+
+input[type="range"]::-moz-range-thumb {
+  border: none;
+  border-radius: 0;
+  width: 14px;
+  height: 14px;
+  background: var(--neon-green);
+  box-shadow: 0 0 6px var(--neon-green);
+  cursor: pointer;
+}
+
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
   header { padding: 10px 14px; }
@@ -1240,6 +1328,7 @@ a.history-row-link:hover {
     font-size: 12px;
   }
   .history-header { display: none; }
+  .config-grid { grid-template-columns: 1fr; }
 }
 
 /* -- HUMAN ADDED STUFF -- */

@@ -13,10 +13,10 @@
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
     <!-- Alias input -->
-    <div class="panel fade-in fade-in-delay-1" data-label="STEP 01 // IDENTIFY YOURSELF">
+    <div class="panel fade-in fade-in-delay-1" data-label="Step 01 // Identify Yourself">
       <div class="prompt-line">Enter your operative alias to proceed</div>
       <div class="form-group mt-16">
-        <label for="alias">OPERATIVE ALIAS</label>
+        <label for="alias">Operative alias</label>
         <input
           type="text"
           id="alias"
@@ -31,12 +31,15 @@
     </div>
 
     <!-- Exam selection -->
-    <div class="panel fade-in fade-in-delay-2" data-label="STEP 02 // SELECT MISSION">
+    <div class="panel fade-in fade-in-delay-2" data-label="Step 02 // Select Mission">
       <div class="prompt-line">Choose your target knowledge domain</div>
 
       <div class="exam-grid mt-16" id="exam-grid">
         {% for exam in exams %}
-        <label class="exam-card" id="card-{{ exam.id }}" for="exam-{{ exam.id }}">
+        <label class="exam-card" id="card-{{ exam.id }}" for="exam-{{ exam.id }}"
+               data-pool-size="{{ exam.pool_size }}"
+               data-default-questions="{{ exam.num_questions }}"
+               data-default-time="{{ exam.time_limit }}">
           <input
             type="radio"
             name="exam_id"
@@ -67,6 +70,21 @@
             {% endfor %}
           </div>
           {% endif %}
+          <div class="card-config" style="display:none;" onclick="event.stopPropagation()">
+            <div class="config-grid">
+              <div>
+                <span class="cfg-label">Questions</span>
+                <div class="cfg-slider-row">
+                  <input type="range" class="card-q-range" min="1" max="{{ exam.pool_size }}" value="{{ exam.num_questions }}">
+                  <span class="cfg-val"><span class="card-q-val">{{ exam.num_questions }}</span><span class="text-dim"> / {{ exam.pool_size }}</span></span>
+                </div>
+              </div>
+              <div>
+                <span class="cfg-label">Time <span class="text-dim" style="font-size:12px;">(minutes — 0 for untimed)</span></span>
+                <input type="number" class="cfg-number-input card-time-val" min="0" max="999" value="{{ exam.time_limit }}">
+              </div>
+            </div>
+          </div>
         </label>
         {% else %}
         <div class="text-dim" style="padding:20px;">
@@ -75,6 +93,10 @@
         {% endfor %}
       </div>
     </div>
+
+    <!-- Hidden fields populated by JS from the selected card's config -->
+    <input type="hidden" name="num_questions" id="num-questions-hidden" value="">
+    <input type="hidden" name="time_limit_override" id="time-limit-hidden" value="">
 
     <!-- Submit -->
     <div class="fade-in fade-in-delay-3">
@@ -87,7 +109,7 @@
 
   <!-- Exam history -->
   {% if history %}
-  <div class="panel fade-in fade-in-delay-3 mt-24" data-label="MISSION HISTORY">
+  <div class="panel fade-in fade-in-delay-3 mt-24" data-label="Mission History">
     <div class="prompt-line">Previous attempts this session</div>
     <div class="history-table mt-16">
       <div class="history-row history-header">
