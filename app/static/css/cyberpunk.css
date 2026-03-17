@@ -249,13 +249,22 @@ header {
 
 .exam-card input[type="radio"] { display: none; }
 
-/* Card header: title (left) + difficulty tag (right) */
+/* Card header: title (left) + badges group (right) */
 .card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 10px;
+}
+
+.card-top-badges {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .exam-title {
@@ -273,16 +282,68 @@ header {
   line-height: 1.65;
 }
 
-/* Meta row: pass mark, attribution, links */
-.card-meta-row {
+/* Source line: "Based on: X" */
+.card-source {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 10px;
+}
+
+.card-source-label {
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+
+/* Tags row */
+.card-tags {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 16px;
-  font-size: 13px;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.card-tag {
+  padding: 2px 7px;
+  border: 1px solid var(--border-dim);
+  font-size: 11px;
   color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+.card-tag-overflow {
+  display: none;
+}
+
+.card-tags-more {
+  background: none;
+  border: 1px solid var(--text-dim);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 7px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.card-tags-more:hover {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+}
+
+/* Links row */
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* Separator before footer */
+.card-info-sep {
   margin-top: 14px;
-  padding-top: 12px;
+  padding-top: 0;
   border-top: 1px solid var(--border-dim);
 }
 

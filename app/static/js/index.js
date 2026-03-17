@@ -12,6 +12,15 @@
     });
   }
 
+  // Expand hidden category tags
+  window.expandTags = function (btn) {
+    var tagsRow = btn.parentElement;
+    tagsRow.querySelectorAll('.card-tag-overflow').forEach(function (el) {
+      el.classList.remove('card-tag-overflow');
+    });
+    btn.remove();
+  };
+
   // Called by each card's launch button
   window.launchExam = function (examId) {
     if (!aliasOk) {
