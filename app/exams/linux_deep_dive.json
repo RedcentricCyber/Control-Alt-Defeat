@@ -3,7 +3,7 @@
   "description": "Go beyond the command line: /proc internals, file permissions, SUID/SGID bits, seccomp, systemd unit types, process signalling, and shell redirection. Built for operators who need to own a system, not just use one.",
   "based_on": "Linux Foundation LFCS & CompTIA Linux+ (XK0-005)",
   "created_by": "Control-Alt-Defeat",
-  "difficulty": "HARD",
+  "difficulty": "EASY",
   "pass_mark": 60,
   "time_limit": 10,
   "num_questions": 10,
