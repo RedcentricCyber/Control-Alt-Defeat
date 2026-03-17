@@ -49,9 +49,9 @@
 
           <div class="exam-desc">{{ exam.description }}</div>
 
-          {% if exam.based_on %}
+          {% if exam.created_by or exam.based_on %}
           <div class="card-source">
-            <span class="card-source-label">Based on: </span>{{ exam.based_on }}{% if exam.created_by %} <span class="card-source-label">— by</span> {{ exam.created_by }}{% endif %}
+            {% if exam.created_by %}<span class="card-source-label">Created by: </span>{{ exam.created_by }}{% if exam.based_on %}, {% endif %}{% endif %}{% if exam.based_on %}<span class="card-source-label">Based on: </span>{{ exam.based_on }}{% endif %}
           </div>
           {% endif %}
 
