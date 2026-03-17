@@ -46,22 +46,6 @@
 
           <div class="exam-desc">{{ exam.description }}</div>
 
-          <div class="card-config">
-            <div class="config-grid">
-              <div>
-                <span class="cfg-label">Questions</span>
-                <div class="cfg-slider-row">
-                  <input type="range" class="card-q-range" min="1" max="{{ exam.pool_size }}" value="{{ exam.num_questions }}">
-                  <span class="cfg-val"><span class="card-q-val">{{ exam.num_questions }}</span><span class="text-dim"> / {{ exam.pool_size }}</span></span>
-                </div>
-              </div>
-              <div>
-                <span class="cfg-label">Time <span class="text-dim" style="font-size:11px;">(min — 0 for untimed)</span></span>
-                <input type="number" class="cfg-number-input card-time-val" min="0" max="999" value="{{ exam.time_limit }}">
-              </div>
-            </div>
-          </div>
-
           <div class="card-meta-row">
             <span>Pass: <span class="text-green">{{ exam.pass_mark }}%</span></span>
             {% if exam.based_on %}<span>{{ exam.based_on }}</span>{% endif %}
@@ -69,10 +53,20 @@
             {% if exam.links %}{% for link in exam.links %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>{% endfor %}{% endif %}
           </div>
 
-          <div class="card-actions">
+          <div class="card-footer">
+            <div class="card-footer-field">
+              <span class="cfg-label">Questions <span class="text-dim" style="font-size:11px;">/ {{ exam.pool_size }}</span></span>
+              <input type="number" class="cfg-number-input card-q-input"
+                     min="1" max="{{ exam.pool_size }}" value="{{ exam.num_questions }}">
+            </div>
+            <div class="card-footer-field">
+              <span class="cfg-label">Time <span class="text-dim" style="font-size:11px;">(min — 0 untimed)</span></span>
+              <input type="number" class="cfg-number-input card-time-val"
+                     min="0" max="999" value="{{ exam.time_limit }}">
+            </div>
             <button type="button" class="btn btn-primary card-launch-btn"
                     onclick="launchExam('{{ exam.id }}')">
-              <span>&gt;&gt;</span> LAUNCH MISSION
+              <span>&gt;&gt;</span> LAUNCH
             </button>
           </div>
         </div>

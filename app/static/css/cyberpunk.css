@@ -1244,14 +1244,22 @@ a.history-row-link:hover {
   animation: blink 0.6s step-end infinite;
 }
 
-/* ── Exam config (question count + time limit) ──────────────── */
-.card-config {
+/* ── Card footer: question count | time limit | launch button ── */
+.card-footer {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid var(--border-dim);
 }
 
-/* card-config is always visible — no display:none needed */
+.card-footer-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 
 .cfg-label {
   display: block;
@@ -1259,33 +1267,11 @@ a.history-row-link:hover {
   color: var(--text-dim);
   letter-spacing: 1px;
   margin-bottom: 8px;
-}
-
-.config-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 28px;
-  align-items: start;
-}
-
-.cfg-slider-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.cfg-val {
-  font-family: var(--font-display);
-  font-size: 13px;
-  color: var(--neon-green);
   white-space: nowrap;
-  letter-spacing: 1px;
-  min-width: 72px;
 }
 
 .cfg-number-input {
-  width: 100px;
+  width: 100%;
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--neon-green);
@@ -1303,37 +1289,9 @@ a.history-row-link:hover {
   box-shadow: 0 1px 0 var(--neon-cyan);
 }
 
-/* Range slider */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 3px;
-  background: var(--border-dim);
-  outline: none;
-  cursor: pointer;
-  flex: 1;
-  border: none;
-  padding: 0;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  background: var(--neon-green);
-  box-shadow: 0 0 6px var(--neon-green);
-  cursor: pointer;
-  border-radius: 0;
-}
-
-input[type="range"]::-moz-range-thumb {
-  border: none;
-  border-radius: 0;
-  width: 14px;
-  height: 14px;
-  background: var(--neon-green);
-  box-shadow: 0 0 6px var(--neon-green);
-  cursor: pointer;
+.card-launch-btn {
+  flex: 2;
+  justify-content: center;
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
@@ -1351,7 +1309,8 @@ input[type="range"]::-moz-range-thumb {
     font-size: 12px;
   }
   .history-header { display: none; }
-  .config-grid { grid-template-columns: 1fr; }
+  .card-footer { flex-wrap: wrap; }
+  .card-launch-btn { flex: 1 0 100%; }
 }
 
 /* -- HUMAN ADDED STUFF -- */
