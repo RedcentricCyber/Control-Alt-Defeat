@@ -5,6 +5,14 @@
   const examCards   = document.querySelectorAll('.exam-card');
   const radios      = document.querySelectorAll('input[name="exam_id"]');
 
+  // Config panel elements
+  const configPanel = document.getElementById('config-panel');
+  const qRange      = document.getElementById('cfg-questions-range');
+  const qValEl      = document.getElementById('cfg-q-val');
+  const qMaxEl      = document.getElementById('cfg-q-max');
+  const qHidden     = document.getElementById('num-questions-hidden');
+  const timeInput   = document.getElementById('cfg-time');
+
   let aliasOk = aliasInput ? aliasInput.value.trim().length > 0 : false;
   let examOk  = false;
 
@@ -22,6 +30,35 @@
   // Reflect pre-filled alias immediately
   updateBtn();
 
+  // Populate and reveal the config panel for the selected exam
+  function populateConfig(examId) {
+    var card = document.getElementById('card-' + examId);
+    if (!card) return;
+    var poolSize    = parseInt(card.dataset.poolSize, 10)         || 100;
+    var defaultQ    = parseInt(card.dataset.defaultQuestions, 10) || poolSize;
+    var defaultTime = parseInt(card.dataset.defaultTime, 10)      || 0;
+
+    if (qRange) {
+      qRange.min   = 1;
+      qRange.max   = poolSize;
+      qRange.value = defaultQ;
+    }
+    if (qValEl)  qValEl.textContent  = defaultQ;
+    if (qMaxEl)  qMaxEl.textContent  = ' / ' + poolSize;
+    if (qHidden) qHidden.value       = defaultQ;
+    if (timeInput) timeInput.value   = defaultTime;
+
+    if (configPanel) configPanel.style.display = '';
+  }
+
+  // Keep hidden field in sync with the range slider
+  if (qRange) {
+    qRange.addEventListener('input', function () {
+      if (qValEl)  qValEl.textContent = this.value;
+      if (qHidden) qHidden.value      = this.value;
+    });
+  }
+
   radios.forEach(function (radio) {
     radio.addEventListener('change', function () {
       // Deselect all cards
@@ -31,6 +68,7 @@
       if (card) card.classList.add('selected');
       examOk = true;
       updateBtn();
+      populateConfig(radio.value);
     });
   });
 

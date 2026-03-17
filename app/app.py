@@ -362,7 +362,14 @@ def start():
         return redirect(url_for("index"))
 
     all_questions = exam.get("questions", [])
-    num_questions = exam.get("num_questions", len(all_questions))
+    pool_size = len(all_questions)
+
+    # Number of questions — use form override if valid, else exam default
+    try:
+        num_questions = max(1, min(int(request.form.get("num_questions", "")), pool_size))
+    except (ValueError, TypeError):
+        num_questions = min(exam.get("num_questions", pool_size), pool_size)
+
     question_indices = select_question_indices(all_questions, num_questions)
 
     session.clear()
@@ -373,6 +380,12 @@ def start():
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
     session["start_time"] = int(time.time())
+
+    # Time limit — use form override if valid, else leave unset (exam default used in /exam)
+    try:
+        session["time_limit_override"] = max(0, min(int(request.form.get("time_limit_override", "")), 9999))
+    except (ValueError, TypeError):
+        pass  # no override — /exam will use exam.time_limit directly
 
     logger.info("Exam started — alias=%r exam=%r questions=%d", alias, exam_id, len(question_indices))
 
@@ -394,6 +407,11 @@ def exam():
     all_questions = exam.get("questions", [])
     indices = session.get("question_indices", list(range(len(all_questions))))
     exam["questions"] = [all_questions[i] for i in indices]
+
+    # Apply time limit override if the user customised it on the index page
+    tl_override = session.get("time_limit_override")
+    if tl_override is not None:
+        exam["time_limit"] = tl_override
 
     return render_template(
         "exam.html",

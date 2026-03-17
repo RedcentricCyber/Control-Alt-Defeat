@@ -13,10 +13,10 @@
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
     <!-- Alias input -->
-    <div class="panel fade-in fade-in-delay-1" data-label="STEP 01 // IDENTIFY YOURSELF">
+    <div class="panel fade-in fade-in-delay-1" data-label="Step 01 // Identify Yourself">
       <div class="prompt-line">Enter your operative alias to proceed</div>
       <div class="form-group mt-16">
-        <label for="alias">OPERATIVE ALIAS</label>
+        <label for="alias">Operative alias</label>
         <input
           type="text"
           id="alias"
@@ -31,12 +31,15 @@
     </div>
 
     <!-- Exam selection -->
-    <div class="panel fade-in fade-in-delay-2" data-label="STEP 02 // SELECT MISSION">
+    <div class="panel fade-in fade-in-delay-2" data-label="Step 02 // Select Mission">
       <div class="prompt-line">Choose your target knowledge domain</div>
 
       <div class="exam-grid mt-16" id="exam-grid">
         {% for exam in exams %}
-        <label class="exam-card" id="card-{{ exam.id }}" for="exam-{{ exam.id }}">
+        <label class="exam-card" id="card-{{ exam.id }}" for="exam-{{ exam.id }}"
+               data-pool-size="{{ exam.pool_size }}"
+               data-default-questions="{{ exam.num_questions }}"
+               data-default-time="{{ exam.time_limit }}">
           <input
             type="radio"
             name="exam_id"
@@ -76,6 +79,26 @@
       </div>
     </div>
 
+    <!-- Mission config (revealed on exam selection) -->
+    <div class="panel fade-in" data-label="Step 03 // Mission Parameters" id="config-panel" style="display:none;">
+      <div class="prompt-line">Customise session — defaults loaded from selected exam</div>
+      <div class="config-grid mt-16">
+        <div class="form-group">
+          <label for="cfg-questions-range">Number of questions</label>
+          <div class="cfg-slider-row">
+            <input type="range" id="cfg-questions-range" min="1" max="100" value="20">
+            <span class="cfg-val"><span id="cfg-q-val">20</span><span class="text-dim" id="cfg-q-max"> / 100</span></span>
+          </div>
+          <input type="hidden" name="num_questions" id="num-questions-hidden" value="">
+        </div>
+        <div class="form-group">
+          <label for="cfg-time">Time limit <span class="text-dim" style="font-size:12px;">(minutes — 0 for untimed)</span></label>
+          <input type="number" class="cfg-number-input" name="time_limit_override"
+                 id="cfg-time" min="0" max="999" value="0">
+        </div>
+      </div>
+    </div>
+
     <!-- Submit -->
     <div class="fade-in fade-in-delay-3">
       <button type="submit" class="btn btn-primary" id="launch-btn" disabled>
@@ -87,7 +110,7 @@
 
   <!-- Exam history -->
   {% if history %}
-  <div class="panel fade-in fade-in-delay-3 mt-24" data-label="MISSION HISTORY">
+  <div class="panel fade-in fade-in-delay-3 mt-24" data-label="Mission History">
     <div class="prompt-line">Previous attempts this session</div>
     <div class="history-table mt-16">
       <div class="history-row history-header">
