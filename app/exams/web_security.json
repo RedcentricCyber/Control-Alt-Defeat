@@ -3,7 +3,7 @@
   "description": "Cover your attack surface: XSS, SQL injection, CSRF, security headers, JWT weaknesses, SSRF, and the OWASP Top 10. Know how applications break before you're asked to defend them.",
   "based_on": "OWASP Top 10 (2021) & PortSwigger Web Security Academy",
   "created_by": "Control-Alt-Defeat",
-  "difficulty": "MEDIUM",
+  "difficulty": "EASY",
   "pass_mark": 70,
   "time_limit": 12,
   "num_questions": 10,
