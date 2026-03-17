@@ -7,7 +7,11 @@
   "pass_mark": 66.6,
   "time_limit": 60,
   "num_questions": 60,
-  "links": [],
+  "links": [
+    { "text": "CCT App Syllabus", "url": "https://www.crest-approved.org/wp-content/uploads/2024/02/CREST-Certified-Tester-Application-CCT-APP_syllabus-24012024-v3.pdf" },
+    { "text": "CCT Inf Syllabus", "url": "https://www.crest-approved.org/wp-content/uploads/2024/02/CREST-Certified-Tester-Infrastructure-CCT-INF_syllabus-24012024-v3.pdf" },
+    { "text": "Sample Questions", "url": "https://www.crest-approved.org/wp-content/uploads/2024/02/CCT-APP-Sample-Questions.pdf" }
+  ],
   "questions": [
     {
       "category": "Soft Skills and Assessment Management (PT001)",
