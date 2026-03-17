@@ -70,6 +70,21 @@
             {% endfor %}
           </div>
           {% endif %}
+          <div class="card-config" style="display:none;" onclick="event.stopPropagation()">
+            <div class="config-grid">
+              <div>
+                <span class="cfg-label">Questions</span>
+                <div class="cfg-slider-row">
+                  <input type="range" class="card-q-range" min="1" max="{{ exam.pool_size }}" value="{{ exam.num_questions }}">
+                  <span class="cfg-val"><span class="card-q-val">{{ exam.num_questions }}</span><span class="text-dim"> / {{ exam.pool_size }}</span></span>
+                </div>
+              </div>
+              <div>
+                <span class="cfg-label">Time <span class="text-dim" style="font-size:12px;">(minutes — 0 for untimed)</span></span>
+                <input type="number" class="cfg-number-input card-time-val" min="0" max="999" value="{{ exam.time_limit }}">
+              </div>
+            </div>
+          </div>
         </label>
         {% else %}
         <div class="text-dim" style="padding:20px;">
@@ -79,25 +94,9 @@
       </div>
     </div>
 
-    <!-- Mission config (revealed on exam selection) -->
-    <div class="panel fade-in" data-label="Step 03 // Mission Parameters" id="config-panel" style="display:none;">
-      <div class="prompt-line">Customise session — defaults loaded from selected exam</div>
-      <div class="config-grid mt-16">
-        <div class="form-group">
-          <label for="cfg-questions-range">Number of questions</label>
-          <div class="cfg-slider-row">
-            <input type="range" id="cfg-questions-range" min="1" max="100" value="20">
-            <span class="cfg-val"><span id="cfg-q-val">20</span><span class="text-dim" id="cfg-q-max"> / 100</span></span>
-          </div>
-          <input type="hidden" name="num_questions" id="num-questions-hidden" value="">
-        </div>
-        <div class="form-group">
-          <label for="cfg-time">Time limit <span class="text-dim" style="font-size:12px;">(minutes — 0 for untimed)</span></label>
-          <input type="number" class="cfg-number-input" name="time_limit_override"
-                 id="cfg-time" min="0" max="999" value="0">
-        </div>
-      </div>
-    </div>
+    <!-- Hidden fields populated by JS from the selected card's config -->
+    <input type="hidden" name="num_questions" id="num-questions-hidden" value="">
+    <input type="hidden" name="time_limit_override" id="time-limit-hidden" value="">
 
     <!-- Submit -->
     <div class="fade-in fade-in-delay-3">

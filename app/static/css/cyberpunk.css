@@ -1224,6 +1224,20 @@ a.history-row-link:hover {
 }
 
 /* ── Exam config (question count + time limit) ──────────────── */
+.card-config {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-dim);
+}
+
+.cfg-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
 .config-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
