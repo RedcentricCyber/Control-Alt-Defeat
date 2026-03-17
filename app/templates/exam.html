@@ -50,6 +50,7 @@
 
   <!-- Questions -->
   <form action="/submit" method="POST" id="exam-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
     {% for question in exam.questions %}
     {% set qidx = loop.index0 %}
