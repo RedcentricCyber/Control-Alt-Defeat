@@ -1,0 +1,1458 @@
+{
+  "title": "CREST CCT \u2014 Network Services",
+  "description": "Covers the Network Services (PT005) domain of the CREST Certified Tester (CCT) examination. Topics include enumeration and exploitation of common network services (FTP, SSH, SMTP, DNS, SMB, LDAP, SNMP, RDP, MSSQL, etc.), service fingerprinting, credential attacks, and privilege escalation via network services.",
+  "based_on": "CREST CCT",
+  "created_by": "Claude (Anthropic)",
+  "difficulty": "HARD",
+  "pass_mark": 70,
+  "time_limit": 90,
+  "num_questions": 40,
+  "links": [
+    {
+      "label": "CREST CCT Syllabus",
+      "url": "https://www.crest-approved.org/membership/crest-certified-tester/"
+    }
+  ],
+  "questions": [
+    {
+      "category": "Network Services (PT005)",
+      "question": "During a penetration test, you connect to an FTP server and successfully log in with the username 'anonymous' and an email address as the password. What is this type of access called?",
+      "options": {
+        "A": "Credential stuffing",
+        "B": "Anonymous FTP access",
+        "C": "FTP bounce attack",
+        "D": "Passive mode exploitation"
+      },
+      "correct": "B",
+      "explanation": "Anonymous FTP allows users to connect without a real account by using 'anonymous' as the username and typically any email address as the password, often exposing sensitive files to unauthenticated users."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which FTP mode requires the client to open a listening port for the server to connect back to for data transfer?",
+      "options": {
+        "A": "Passive mode",
+        "B": "Extended passive mode",
+        "C": "Active mode",
+        "D": "Binary mode"
+      },
+      "correct": "C",
+      "explanation": "In active mode FTP, the client sends a PORT command specifying a port it is listening on, and the server initiates the data connection back to the client \u2014 which often fails through firewalls and NAT."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Why is FTP considered insecure for transmitting credentials over a network?",
+      "options": {
+        "A": "It uses weak symmetric encryption for passwords",
+        "B": "It transmits credentials in cleartext, making them visible to packet sniffers",
+        "C": "It stores passwords in reversible Base64 encoding on the server",
+        "D": "It only supports anonymous authentication"
+      },
+      "correct": "B",
+      "explanation": "FTP sends usernames and passwords in plaintext over the network, allowing any attacker with packet capture capability on the network path to intercept credentials directly."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which tool is commonly used to brute-force FTP credentials during a penetration test?",
+      "options": {
+        "A": "sqlmap",
+        "B": "Hydra",
+        "C": "Burp Suite",
+        "D": "Nikto"
+      },
+      "correct": "B",
+      "explanation": "Hydra (THC-Hydra) is a fast and flexible network login cracker that supports numerous protocols including FTP, SSH, HTTP, and many others for credential brute-forcing."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "An SSH server is configured to accept only key-based authentication. Which file on the server specifies the public keys authorised to log in as a given user?",
+      "options": {
+        "A": "/etc/ssh/ssh_config",
+        "B": "~/.ssh/known_hosts",
+        "C": "~/.ssh/authorized_keys",
+        "D": "/etc/ssh/ssh_host_rsa_key"
+      },
+      "correct": "C",
+      "explanation": "The ~/.ssh/authorized_keys file contains the public keys that are permitted to authenticate as that user; each line represents one authorised key."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which OpenSSH vulnerability allowed remote attackers to enumerate valid usernames by measuring response time differences?",
+      "options": {
+        "A": "Heartbleed (CVE-2014-0160)",
+        "B": "OpenSSH User Enumeration (CVE-2018-15473)",
+        "C": "Shellshock (CVE-2014-6271)",
+        "D": "BlueKeep (CVE-2019-0708)"
+      },
+      "correct": "B",
+      "explanation": "CVE-2018-15473 allowed attackers to determine whether a username existed on an OpenSSH server by sending malformed authentication requests and observing different server responses for valid versus invalid usernames."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which SSH feature allows a penetration tester to forward traffic from a local port through an encrypted SSH tunnel to reach a service on an internal network?",
+      "options": {
+        "A": "SSH agent forwarding",
+        "B": "SSH local port forwarding (-L)",
+        "C": "SSH X11 forwarding",
+        "D": "SSH multiplexing"
+      },
+      "correct": "B",
+      "explanation": "SSH local port forwarding (ssh -L) binds a local port and tunnels traffic through the SSH connection to a specified destination host and port, enabling access to internal services through a compromised SSH server."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the purpose of the SSH known_hosts file on a client system?",
+      "options": {
+        "A": "It stores the client's private keys for authentication",
+        "B": "It records the public host keys of previously connected servers to detect MITM attacks",
+        "C": "It contains a list of users permitted to use SSH",
+        "D": "It defines the cipher suites the client will accept"
+      },
+      "correct": "B",
+      "explanation": "The known_hosts file stores server host key fingerprints; if a server's key changes unexpectedly, SSH warns the user of a potential man-in-the-middle attack."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester discovers a Telnet service running on an embedded device. What is the primary security concern with this protocol?",
+      "options": {
+        "A": "Telnet uses weak DES encryption that can be cracked in real time",
+        "B": "Telnet transmits all data including credentials in cleartext",
+        "C": "Telnet only supports anonymous authentication",
+        "D": "Telnet is vulnerable to SYN flood attacks by design"
+      },
+      "correct": "B",
+      "explanation": "Telnet sends all communication, including usernames and passwords, as unencrypted plaintext, making it trivial for an attacker to capture credentials via network sniffing."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which protocol was designed as the secure replacement for Telnet?",
+      "options": {
+        "A": "SNMP",
+        "B": "SSH",
+        "C": "HTTPS",
+        "D": "RDP"
+      },
+      "correct": "B",
+      "explanation": "SSH (Secure Shell) was developed as a cryptographically secure replacement for Telnet, providing encrypted remote shell access and authentication."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "During SMTP enumeration, which command can a penetration tester use to verify whether a specific email address exists on the mail server?",
+      "options": {
+        "A": "HELO",
+        "B": "VRFY",
+        "C": "DATA",
+        "D": "QUIT"
+      },
+      "correct": "B",
+      "explanation": "The SMTP VRFY command asks the server to verify whether a given email address or username exists, enabling user enumeration when the server responds differently for valid and invalid addresses."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is an SMTP open relay, and why is it a security concern?",
+      "options": {
+        "A": "A server that encrypts all outgoing email \u2014 it may leak encryption keys",
+        "B": "A server that allows unauthenticated users to send email to any external domain \u2014 it can be abused for spam and phishing",
+        "C": "A server that stores emails in plaintext \u2014 credentials may be exposed",
+        "D": "A server that forwards all email to a backup MX \u2014 it creates a single point of failure"
+      },
+      "correct": "B",
+      "explanation": "An open relay accepts and forwards email from any sender to any recipient without authentication, making it exploitable for sending spam, phishing emails, or conducting social engineering attacks."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which SMTP command can be used to enumerate mailing list members on a misconfigured mail server?",
+      "options": {
+        "A": "EHLO",
+        "B": "MAIL FROM",
+        "C": "EXPN",
+        "D": "RSET"
+      },
+      "correct": "C",
+      "explanation": "The EXPN command expands a mailing list or alias, revealing all member email addresses \u2014 a valuable source of valid usernames during enumeration."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A tester uses the SMTP RCPT TO command with various email addresses and notes that the server returns '250 OK' for valid addresses and '550 User unknown' for invalid ones. What attack is being performed?",
+      "options": {
+        "A": "SMTP header injection",
+        "B": "Open relay testing",
+        "C": "SMTP user enumeration via RCPT TO",
+        "D": "SMTP smuggling"
+      },
+      "correct": "C",
+      "explanation": "Differential responses to RCPT TO commands reveal which email addresses are valid on the server, allowing enumeration of user accounts even when VRFY and EXPN are disabled."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is SMTP header injection?",
+      "options": {
+        "A": "Injecting SQL queries into the SMTP authentication mechanism",
+        "B": "Injecting additional email headers (such as BCC or Subject) via user-controlled input in a web application's email function",
+        "C": "Replacing the SMTP banner to disguise the mail server software",
+        "D": "Intercepting SMTP traffic with a proxy to modify headers in transit"
+      },
+      "correct": "B",
+      "explanation": "SMTP header injection occurs when user input is incorporated into email headers without sanitisation, allowing attackers to inject additional headers like BCC to send copies of emails to themselves."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which command-line tool and syntax would a penetration tester use to attempt a DNS zone transfer against the domain example.com from nameserver ns1.example.com?",
+      "options": {
+        "A": "nslookup -type=ANY example.com ns1.example.com",
+        "B": "dig axfr example.com @ns1.example.com",
+        "C": "host -a example.com ns1.example.com",
+        "D": "dnsenum --zone-transfer example.com"
+      },
+      "correct": "B",
+      "explanation": "The 'dig axfr' command requests a full zone transfer (AXFR) from the specified nameserver, which if permitted will return all DNS records for the domain."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which DNS record type maps a hostname to an IPv6 address?",
+      "options": {
+        "A": "A",
+        "B": "AAAA",
+        "C": "CNAME",
+        "D": "PTR"
+      },
+      "correct": "B",
+      "explanation": "AAAA (quad-A) records map a hostname to a 128-bit IPv6 address, analogous to how A records map hostnames to IPv4 addresses."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which DNS record type specifies the mail servers responsible for receiving email for a domain?",
+      "options": {
+        "A": "A",
+        "B": "NS",
+        "C": "MX",
+        "D": "SOA"
+      },
+      "correct": "C",
+      "explanation": "MX (Mail Exchange) records specify the mail servers and their priorities for a domain, directing email delivery to the correct servers."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester discovers that a DNS server allows zone transfers to any requesting host. What information can be obtained?",
+      "options": {
+        "A": "Only the SOA record for the domain",
+        "B": "A complete listing of all DNS records in the zone, revealing hostnames, IP addresses, and network topology",
+        "C": "The DNSSEC signing keys for the zone",
+        "D": "The DNS server's configuration file and credentials"
+      },
+      "correct": "B",
+      "explanation": "An unrestricted zone transfer returns every DNS record in the zone, exposing internal hostnames, IP addresses, mail servers, and other infrastructure details useful for mapping the target network."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which DNS record type is used for reverse DNS lookups, mapping an IP address to a hostname?",
+      "options": {
+        "A": "A",
+        "B": "CNAME",
+        "C": "PTR",
+        "D": "TXT"
+      },
+      "correct": "C",
+      "explanation": "PTR (Pointer) records provide reverse DNS resolution, mapping an IP address back to its associated hostname within the in-addr.arpa (IPv4) or ip6.arpa (IPv6) zone."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "During HTTP reconnaissance, which HTTP method can be used to determine which methods a web server supports?",
+      "options": {
+        "A": "HEAD",
+        "B": "TRACE",
+        "C": "OPTIONS",
+        "D": "CONNECT"
+      },
+      "correct": "C",
+      "explanation": "The OPTIONS method returns the HTTP methods supported by the server for a given resource, often revealing potentially dangerous methods like PUT, DELETE, or TRACE."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester sends the request 'GET /../../etc/passwd HTTP/1.1' to a web server. What attack is being attempted?",
+      "options": {
+        "A": "Local file inclusion",
+        "B": "Server-side request forgery",
+        "C": "Directory traversal",
+        "D": "HTTP request smuggling"
+      },
+      "correct": "C",
+      "explanation": "Directory traversal (path traversal) uses sequences like ../ to escape the web root directory and access arbitrary files on the server's filesystem."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which tool can be used to grab the HTTP banner of a web server and identify its software version?",
+      "options": {
+        "A": "enum4linux",
+        "B": "Nmap with the -sV flag or curl -I",
+        "C": "Responder",
+        "D": "BloodHound"
+      },
+      "correct": "B",
+      "explanation": "Nmap's service version detection (-sV) probes open ports to identify server software and versions, while 'curl -I' retrieves HTTP response headers that often include the Server banner."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the primary security advantage of POP3S (port 995) over POP3 (port 110)?",
+      "options": {
+        "A": "POP3S uses stronger password hashing algorithms",
+        "B": "POP3S encrypts the entire communication channel using TLS, preventing credential interception",
+        "C": "POP3S requires multi-factor authentication",
+        "D": "POP3S stores emails in an encrypted format on the server"
+      },
+      "correct": "B",
+      "explanation": "POP3S wraps the POP3 protocol in TLS encryption, protecting credentials and email content from being captured by network sniffers, unlike plaintext POP3 on port 110."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which protocol retrieves email from a server and, by default on port 143, transmits credentials in cleartext?",
+      "options": {
+        "A": "SMTP",
+        "B": "IMAP",
+        "C": "LDAP",
+        "D": "HTTP"
+      },
+      "correct": "B",
+      "explanation": "IMAP on port 143 transmits login credentials in plaintext by default; IMAPS on port 993 should be used instead to encrypt the connection with TLS."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In a Kerberos environment, what condition must an account meet to be vulnerable to AS-REP Roasting?",
+      "options": {
+        "A": "The account must have a Service Principal Name (SPN) set",
+        "B": "The account must have the 'Do not require Kerberos preauthentication' flag enabled",
+        "C": "The account must be a member of the Domain Admins group",
+        "D": "The account must have an expired password"
+      },
+      "correct": "B",
+      "explanation": "AS-REP Roasting targets accounts that have Kerberos pre-authentication disabled, allowing an attacker to request an AS-REP containing data encrypted with the user's password hash for offline cracking."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is a Golden Ticket attack in a Kerberos environment?",
+      "options": {
+        "A": "Cracking a TGS ticket obtained via Kerberoasting",
+        "B": "Forging a Ticket Granting Ticket (TGT) using the KRBTGT account's NTLM hash, granting domain-wide access",
+        "C": "Replaying a captured TGT from a domain administrator",
+        "D": "Exploiting a vulnerability in the KDC to bypass authentication entirely"
+      },
+      "correct": "B",
+      "explanation": "A Golden Ticket is a forged TGT created using the KRBTGT account's NTLM hash, allowing the attacker to impersonate any user and access any resource in the domain for the ticket's lifetime."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "How does a Silver Ticket attack differ from a Golden Ticket attack?",
+      "options": {
+        "A": "A Silver Ticket forges a TGS ticket using a service account's NTLM hash, granting access to a specific service rather than the entire domain",
+        "B": "A Silver Ticket targets Linux-based Kerberos implementations only",
+        "C": "A Silver Ticket requires compromising the KRBTGT account",
+        "D": "A Silver Ticket exploits weak cipher suites in the KDC"
+      },
+      "correct": "A",
+      "explanation": "A Silver Ticket forges a Ticket Granting Service (TGS) ticket using the NTLM hash of a specific service account, providing access only to that service without contacting the KDC."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which tool is commonly used to perform Kerberoasting by requesting TGS tickets for accounts with SPNs in an Active Directory environment?",
+      "options": {
+        "A": "Mimikatz",
+        "B": "Rubeus or Impacket's GetUserSPNs.py",
+        "C": "Responder",
+        "D": "CrackMapExec"
+      },
+      "correct": "B",
+      "explanation": "Rubeus (Windows) and Impacket's GetUserSPNs.py (Linux) are the standard tools for Kerberoasting \u2014 they request TGS tickets for all accounts with SPNs and output them in a format suitable for offline cracking."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In a Pass-the-Ticket attack, what does the attacker use to authenticate to network services?",
+      "options": {
+        "A": "A stolen plaintext password",
+        "B": "A captured or forged Kerberos ticket (TGT or TGS)",
+        "C": "A brute-forced NTLM hash",
+        "D": "A forged SAML token"
+      },
+      "correct": "B",
+      "explanation": "Pass-the-Ticket involves stealing or forging Kerberos tickets from memory (using tools like Mimikatz) and injecting them into the current session to authenticate as the ticket owner."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What does an LDAP null bind allow an attacker to do?",
+      "options": {
+        "A": "Authenticate as the LDAP administrator with a blank password",
+        "B": "Connect to the LDAP server without providing any credentials and potentially query directory information",
+        "C": "Inject LDAP queries to bypass web application authentication",
+        "D": "Encrypt LDAP traffic using a self-signed certificate"
+      },
+      "correct": "B",
+      "explanation": "An LDAP null bind (anonymous bind) allows connecting to the directory without credentials; if the server permits unauthenticated queries, an attacker can enumerate users, groups, and other directory objects."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which port does LDAP typically operate on?",
+      "options": {
+        "A": "88",
+        "B": "389",
+        "C": "445",
+        "D": "636"
+      },
+      "correct": "B",
+      "explanation": "LDAP operates on TCP port 389 by default; LDAPS (LDAP over TLS) uses port 636 for encrypted connections."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "During a penetration test, you successfully establish an SMB null session to a Windows host. What can you typically enumerate?",
+      "options": {
+        "A": "The contents of all shared folders",
+        "B": "Share names, user accounts, group memberships, and password policies",
+        "C": "The SAM database with all password hashes",
+        "D": "The server's SSL/TLS certificates"
+      },
+      "correct": "B",
+      "explanation": "SMB null sessions allow unauthenticated enumeration of shares, users, groups, and domain policies, providing valuable reconnaissance information without valid credentials."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the significance of SMB signing in a Windows Active Directory environment?",
+      "options": {
+        "A": "SMB signing encrypts all file transfers between client and server",
+        "B": "SMB signing prevents NTLM relay attacks by ensuring message integrity and authenticity",
+        "C": "SMB signing restricts SMB access to domain-joined machines only",
+        "D": "SMB signing replaces Kerberos authentication for SMB connections"
+      },
+      "correct": "B",
+      "explanation": "SMB signing adds a cryptographic signature to each SMB message, preventing attackers from tampering with or relaying captured NTLM authentication messages in relay attacks."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which vulnerability, tracked as MS17-010, allows remote code execution via SMBv1 and was infamously exploited by the WannaCry ransomware?",
+      "options": {
+        "A": "BlueKeep",
+        "B": "EternalBlue",
+        "C": "Heartbleed",
+        "D": "Shellshock"
+      },
+      "correct": "B",
+      "explanation": "EternalBlue (MS17-010) is a critical vulnerability in Microsoft's SMBv1 implementation that allows remote code execution; it was weaponised by the WannaCry and NotPetya campaigns."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In an NTLM relay attack, what is the role of a tool like Responder?",
+      "options": {
+        "A": "It cracks NTLM hashes using rainbow tables",
+        "B": "It poisons LLMNR/NBT-NS/mDNS responses to capture NTLM authentication attempts from victims on the network",
+        "C": "It performs Kerberoasting against Active Directory",
+        "D": "It patches the EternalBlue vulnerability on SMB servers"
+      },
+      "correct": "B",
+      "explanation": "Responder poisons name resolution protocols (LLMNR, NBT-NS, mDNS) to trick victims into authenticating to the attacker's machine, capturing NTLMv1/v2 hashes or relaying them with ntlmrelayx."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which tool is used in conjunction with Responder to relay captured NTLM authentication to other services on the network?",
+      "options": {
+        "A": "Mimikatz",
+        "B": "ntlmrelayx (Impacket)",
+        "C": "Hashcat",
+        "D": "BloodHound"
+      },
+      "correct": "B",
+      "explanation": "ntlmrelayx from the Impacket suite relays captured NTLM authentications to target services (SMB, LDAP, HTTP, MSSQL), potentially gaining code execution or modifying Active Directory objects."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which tool is commonly used to enumerate SMB shares, users, and groups from a Linux attacking machine?",
+      "options": {
+        "A": "enum4linux",
+        "B": "Nikto",
+        "C": "dnsenum",
+        "D": "Burp Suite"
+      },
+      "correct": "A",
+      "explanation": "enum4linux is a wrapper around smbclient, rpcclient, and net commands designed to enumerate information from Windows/Samba hosts via SMB, including shares, users, groups, and password policies."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What are the default SNMP community strings commonly found on misconfigured devices?",
+      "options": {
+        "A": "admin / password",
+        "B": "public (read-only) and private (read-write)",
+        "C": "snmpuser / snmppass",
+        "D": "community / secret"
+      },
+      "correct": "B",
+      "explanation": "SNMP v1/v2c devices are frequently left with the default community strings 'public' for read-only access and 'private' for read-write access, allowing unauthenticated information disclosure or configuration changes."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which command-line tool walks the SNMP MIB tree to enumerate all available information from an SNMP-enabled device?",
+      "options": {
+        "A": "snmpget",
+        "B": "snmpwalk",
+        "C": "snmpset",
+        "D": "snmptrap"
+      },
+      "correct": "B",
+      "explanation": "snmpwalk queries the entire MIB tree (or a subtree) of an SNMP agent, retrieving all available OIDs which can reveal system information, network interfaces, routing tables, running processes, and installed software."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "How does SNMPv3 improve security over SNMPv1 and v2c?",
+      "options": {
+        "A": "SNMPv3 uses TLS encryption for all communication",
+        "B": "SNMPv3 adds username-based authentication, message integrity, and optional encryption instead of relying on cleartext community strings",
+        "C": "SNMPv3 removes the ability to write configuration changes",
+        "D": "SNMPv3 restricts access to the loopback interface only"
+      },
+      "correct": "B",
+      "explanation": "SNMPv3 introduces the User-based Security Model (USM) with authentication (MD5/SHA) and privacy (DES/AES) capabilities, replacing the insecure community string model of v1/v2c."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which critical vulnerability in Microsoft's Remote Desktop Protocol implementation allowed pre-authentication remote code execution and was dubbed 'BlueKeep'?",
+      "options": {
+        "A": "CVE-2017-0144 (EternalBlue)",
+        "B": "CVE-2019-0708 (BlueKeep)",
+        "C": "CVE-2014-0160 (Heartbleed)",
+        "D": "CVE-2021-44228 (Log4Shell)"
+      },
+      "correct": "B",
+      "explanation": "BlueKeep (CVE-2019-0708) is a critical use-after-free vulnerability in RDP that allows unauthenticated remote code execution on Windows systems without Network Level Authentication enabled."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is Network Level Authentication (NLA) in the context of RDP, and why is it important?",
+      "options": {
+        "A": "NLA encrypts the RDP session with AES-256",
+        "B": "NLA requires the user to authenticate before a full RDP session is established, reducing the attack surface for pre-authentication vulnerabilities",
+        "C": "NLA restricts RDP access to local network connections only",
+        "D": "NLA enforces multi-factor authentication for all RDP connections"
+      },
+      "correct": "B",
+      "explanation": "NLA requires authentication via CredSSP before the RDP session is fully established, meaning exploits targeting the RDP protocol itself (like BlueKeep) cannot be reached without valid credentials."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester gains access to a MSSQL server as the 'sa' account. Which stored procedure can be enabled to execute operating system commands?",
+      "options": {
+        "A": "sp_configure",
+        "B": "xp_cmdshell",
+        "C": "sp_executesql",
+        "D": "xp_dirtree"
+      },
+      "correct": "B",
+      "explanation": "xp_cmdshell is a MSSQL extended stored procedure that allows execution of arbitrary operating system commands; it is disabled by default but can be re-enabled by the sa account via sp_configure."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In MSSQL, how can an attacker use UNC path injection to capture NTLM hashes?",
+      "options": {
+        "A": "By modifying the SQL Server's registry keys to redirect authentication",
+        "B": "By using xp_dirtree or xp_fileexist with a UNC path pointing to an attacker-controlled SMB server, forcing the SQL service to authenticate",
+        "C": "By injecting a UNC path into the SQL Server connection string",
+        "D": "By exploiting the MSSQL Browser service to redirect connections"
+      },
+      "correct": "B",
+      "explanation": "Functions like xp_dirtree('\\\\attacker-ip\\share') cause the SQL Server to initiate an SMB connection to the attacker's server, sending the SQL service account's NTLM hash which can be captured by Responder."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is a linked server in MSSQL, and how can it be exploited?",
+      "options": {
+        "A": "A linked server is a backup MSSQL instance that mirrors all data",
+        "B": "A linked server is a connection to another database server that can be queried remotely, and may run with higher privileges allowing privilege escalation",
+        "C": "A linked server is a failover cluster node",
+        "D": "A linked server is a read-only replica used for reporting"
+      },
+      "correct": "B",
+      "explanation": "Linked servers allow MSSQL to query other database servers via OPENQUERY; if the linked server connection uses a higher-privileged account (e.g., sa), an attacker can escalate privileges by executing commands through the link chain."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "On a MySQL server, what security risk does allowing remote root login present?",
+      "options": {
+        "A": "The root account cannot use prepared statements remotely",
+        "B": "It enables brute-force attacks against the highest-privileged database account from any network location",
+        "C": "Remote root connections bypass all SQL query logging",
+        "D": "Remote root access disables MySQL's built-in encryption"
+      },
+      "correct": "B",
+      "explanation": "Allowing remote root login exposes the most privileged MySQL account to network-based brute-force and credential-stuffing attacks from anywhere that can reach the database port."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "How can MySQL User Defined Functions (UDFs) be used for privilege escalation on a Linux host?",
+      "options": {
+        "A": "UDFs automatically elevate MySQL to run as root",
+        "B": "A shared library can be loaded as a UDF to execute operating system commands with the privileges of the MySQL service account",
+        "C": "UDFs bypass MySQL's authentication mechanism entirely",
+        "D": "UDFs allow direct modification of /etc/shadow"
+      },
+      "correct": "B",
+      "explanation": "By writing a malicious shared object to the MySQL plugin directory and creating a UDF from it, an attacker can execute OS commands as the MySQL service user, potentially escalating to root if MySQL runs with elevated privileges."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which command is used to discover NFS exports available on a remote server?",
+      "options": {
+        "A": "nfsstat -e",
+        "B": "showmount -e <target>",
+        "C": "mount -t nfs <target>:/",
+        "D": "rpcinfo -p <target>"
+      },
+      "correct": "B",
+      "explanation": "The 'showmount -e' command queries the NFS server's export list, revealing which directories are shared and which hosts are permitted to mount them."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In VoIP/SIP security testing, what is the purpose of the tool svmap?",
+      "options": {
+        "A": "It captures and decodes VoIP call audio",
+        "B": "It scans a network to identify SIP devices and their capabilities",
+        "C": "It performs denial-of-service attacks against SIP proxies",
+        "D": "It encrypts SIP traffic using SRTP"
+      },
+      "correct": "B",
+      "explanation": "svmap is part of the SIPVicious toolkit and scans a network range to identify SIP-enabled devices such as phones, PBXes, and gateways by sending SIP requests and analysing responses."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the primary security risk associated with TFTP (port 69)?",
+      "options": {
+        "A": "TFTP uses weak MD5 checksums for file integrity",
+        "B": "TFTP provides no authentication mechanism, allowing anyone to read or write files",
+        "C": "TFTP encrypts files with a default shared key",
+        "D": "TFTP only supports plaintext file formats"
+      },
+      "correct": "B",
+      "explanation": "TFTP has no authentication or access control mechanism whatsoever; any client that can reach the TFTP server can read or write files, making it a target for extracting router configurations and other sensitive data."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester discovers TFTP running on a network device. What is a common file they might try to retrieve?",
+      "options": {
+        "A": "The device's SSL private key",
+        "B": "The device's running configuration file (e.g., running-config on Cisco devices)",
+        "C": "The device's Active Directory database",
+        "D": "The device's kernel image"
+      },
+      "correct": "B",
+      "explanation": "Network device configurations often contain credentials, SNMP community strings, and network topology information; TFTP is frequently used by routers and switches for configuration backup and can be exploited to retrieve these files."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "On a Linux system, which file contains the password hashes and is readable only by root?",
+      "options": {
+        "A": "/etc/passwd",
+        "B": "/etc/shadow",
+        "C": "/etc/group",
+        "D": "/etc/login.defs"
+      },
+      "correct": "B",
+      "explanation": "/etc/shadow stores the actual password hashes and is restricted to root access (typically mode 640 or 600), while /etc/passwd is world-readable but no longer contains password hashes."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What information about user accounts is stored in /etc/passwd on a Linux system?",
+      "options": {
+        "A": "Username, encrypted password hash, UID, GID, home directory, and shell",
+        "B": "Username, UID, GID, GECOS field, home directory, and login shell (with 'x' as password placeholder)",
+        "C": "Username and plaintext password only",
+        "D": "Username, SSH public key, and last login timestamp"
+      },
+      "correct": "B",
+      "explanation": "/etc/passwd contains colon-delimited fields including username, password placeholder ('x' indicating the hash is in /etc/shadow), UID, GID, GECOS comment, home directory, and login shell."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which password cracking tool supports GPU acceleration and is commonly used to crack password hashes offline?",
+      "options": {
+        "A": "John the Ripper",
+        "B": "Hashcat",
+        "C": "Hydra",
+        "D": "Medusa"
+      },
+      "correct": "B",
+      "explanation": "Hashcat is specifically designed for GPU-accelerated offline password hash cracking, supporting hundreds of hash types and multiple attack modes including dictionary, brute-force, and rule-based attacks."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In Hashcat, what does the attack mode '-a 0' specify?",
+      "options": {
+        "A": "Brute-force (mask) attack",
+        "B": "Straight (dictionary) attack",
+        "C": "Combination attack",
+        "D": "Rule-based attack"
+      },
+      "correct": "B",
+      "explanation": "Hashcat's -a 0 is the straight (dictionary) attack mode, which tests each word from a wordlist against the target hashes, optionally combined with rules to mutate the candidates."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In Hashcat, what does the attack mode '-a 3' specify?",
+      "options": {
+        "A": "Dictionary attack",
+        "B": "Combination attack",
+        "C": "Brute-force (mask) attack",
+        "D": "Toggle case attack"
+      },
+      "correct": "C",
+      "explanation": "Hashcat's -a 3 is the brute-force (mask) attack mode, where the attacker defines character sets and positions using mask syntax (e.g., ?u?l?l?l?d?d) to generate all possible candidates matching the pattern."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What does Hashcat attack mode '-a 6' do?",
+      "options": {
+        "A": "It combines two wordlists",
+        "B": "It performs a hybrid attack appending mask characters to each dictionary word",
+        "C": "It uses Markov chain-based generation",
+        "D": "It reverses each word in a dictionary before testing"
+      },
+      "correct": "B",
+      "explanation": "Hashcat's -a 6 is a hybrid dictionary + mask attack that appends mask-generated characters to each word from a dictionary (e.g., wordlist + ?d?d appends all two-digit combinations to each word)."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is a rainbow table, and why has it become less effective against modern password storage?",
+      "options": {
+        "A": "A database of encrypted passwords \u2014 modern encryption is unbreakable",
+        "B": "A precomputed table mapping hashes to plaintext passwords \u2014 salted hashes render rainbow tables ineffective since each password produces a unique hash",
+        "C": "A colour-coded chart of password complexity \u2014 modern passwords exceed the chart's range",
+        "D": "A network map of password servers \u2014 modern systems use decentralised authentication"
+      },
+      "correct": "B",
+      "explanation": "Rainbow tables are precomputed hash-to-plaintext lookup tables; salting passwords with a unique random value before hashing means each user's hash is different even for identical passwords, defeating precomputed tables."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which network redundancy protocol operates at Layer 3 and can be hijacked by an attacker sending higher-priority advertisements to become the active router?",
+      "options": {
+        "A": "Spanning Tree Protocol (STP)",
+        "B": "HSRP (Hot Standby Router Protocol)",
+        "C": "LACP (Link Aggregation Control Protocol)",
+        "D": "OSPF (Open Shortest Path First)"
+      },
+      "correct": "B",
+      "explanation": "HSRP uses priority values to elect the active router; an attacker can send forged HSRP advertisements with a higher priority to take over as the active router, enabling traffic interception."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "How can an attacker exploit Spanning Tree Protocol (STP) to perform a man-in-the-middle attack?",
+      "options": {
+        "A": "By flooding the switch's MAC table to force it into hub mode",
+        "B": "By sending superior BPDUs to become the root bridge, causing all traffic to flow through the attacker's switch",
+        "C": "By exploiting ARP cache poisoning via STP frames",
+        "D": "By disabling all switch ports through STP topology changes"
+      },
+      "correct": "B",
+      "explanation": "An attacker sends Bridge Protocol Data Units (BPDUs) with a lower bridge priority to become elected as the root bridge, forcing network traffic to be rerouted through their device for interception."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which protocol, similar to HSRP but vendor-neutral and defined in RFC 5798, allows virtual router redundancy and can be similarly hijacked?",
+      "options": {
+        "A": "GLBP",
+        "B": "VRRP",
+        "C": "EIGRP",
+        "D": "BGP"
+      },
+      "correct": "B",
+      "explanation": "VRRP (Virtual Router Redundancy Protocol) is the standards-based equivalent of Cisco's HSRP; it can be hijacked by advertising higher-priority VRRP packets to take over the virtual router role."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which Nmap scan type sends a SYN packet to each target port and determines its state based on the response, without completing the TCP three-way handshake?",
+      "options": {
+        "A": "TCP connect scan (-sT)",
+        "B": "SYN scan (-sS)",
+        "C": "UDP scan (-sU)",
+        "D": "FIN scan (-sF)"
+      },
+      "correct": "B",
+      "explanation": "A SYN scan (half-open scan) sends a SYN packet and classifies the port based on the response: SYN-ACK means open, RST means closed; the handshake is never completed, making it faster and less likely to be logged."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester uses SSH dynamic port forwarding (ssh -D) to create a SOCKS proxy. What does this allow?",
+      "options": {
+        "A": "Forwarding a single specific port to a remote host",
+        "B": "Routing arbitrary traffic from any application through the SSH tunnel as a SOCKS proxy",
+        "C": "Establishing a VPN connection through the SSH server",
+        "D": "Decrypting SSH traffic from other users on the same server"
+      },
+      "correct": "B",
+      "explanation": "SSH -D creates a local SOCKS proxy that tunnels all proxied application traffic through the SSH connection, enabling the tester to access multiple internal services without setting up individual port forwards."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the default port for Kerberos authentication?",
+      "options": {
+        "A": "53",
+        "B": "88",
+        "C": "389",
+        "D": "445"
+      },
+      "correct": "B",
+      "explanation": "Kerberos uses TCP/UDP port 88 for communication between clients and the Key Distribution Center (KDC), which handles authentication requests and ticket granting."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which DNS record type contains human-readable text data and is often used for SPF, DKIM, and domain verification records?",
+      "options": {
+        "A": "MX",
+        "B": "NS",
+        "C": "TXT",
+        "D": "SOA"
+      },
+      "correct": "C",
+      "explanation": "TXT records hold arbitrary text data and are commonly used for email authentication (SPF, DKIM, DMARC), domain ownership verification, and other metadata purposes."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which DNS record type indicates the authoritative nameserver for a domain and contains zone administration information such as serial number and refresh intervals?",
+      "options": {
+        "A": "NS",
+        "B": "SOA",
+        "C": "A",
+        "D": "MX"
+      },
+      "correct": "B",
+      "explanation": "The SOA (Start of Authority) record contains zone metadata including the primary nameserver, responsible person's email, zone serial number, and timing parameters for zone transfers and caching."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester discovers an SNMP service with the community string 'private'. What level of access does this typically grant?",
+      "options": {
+        "A": "Read-only access to system information",
+        "B": "Read-write access, potentially allowing configuration changes on the device",
+        "C": "Administrative access to the management console",
+        "D": "Access to encrypted SNMP v3 credentials"
+      },
+      "correct": "B",
+      "explanation": "The default 'private' community string typically grants read-write access to the SNMP agent, potentially allowing an attacker to modify device configurations, change settings, or even execute commands."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which tool can a penetration tester use to perform credential spraying against RDP services?",
+      "options": {
+        "A": "Gobuster",
+        "B": "Crowbar (formerly Levye)",
+        "C": "Dirb",
+        "D": "Sublist3r"
+      },
+      "correct": "B",
+      "explanation": "Crowbar is a brute-forcing tool that supports RDP, SSH, VNC, and OpenVPN; it is particularly effective for RDP credential spraying as it supports NLA authentication."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What file permissions should /etc/shadow have on a properly configured Linux system?",
+      "options": {
+        "A": "644 (rw-r--r--)",
+        "B": "640 (rw-r-----) or 600 (rw-------)",
+        "C": "777 (rwxrwxrwx)",
+        "D": "755 (rwxr-xr-x)"
+      },
+      "correct": "B",
+      "explanation": "/etc/shadow should be readable only by root (and optionally the shadow group), with permissions of 640 or 600; any broader permissions would allow non-privileged users to read password hashes."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In a rule-based password cracking attack, what does a 'rule' do?",
+      "options": {
+        "A": "It defines the hash algorithm to use for cracking",
+        "B": "It applies transformations to dictionary words (such as appending numbers, capitalising, or substituting characters) to generate additional candidates",
+        "C": "It sets the GPU temperature limit during cracking",
+        "D": "It specifies which network ports to target for online brute-forcing"
+      },
+      "correct": "B",
+      "explanation": "Rules define character manipulations applied to each word in a dictionary \u2014 such as toggling case, appending digits, or performing leet-speak substitutions \u2014 significantly expanding the candidate space without a larger wordlist."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which SSH cipher is considered weak and should be disabled on modern SSH servers?",
+      "options": {
+        "A": "aes256-gcm@openssh.com",
+        "B": "chacha20-poly1305@openssh.com",
+        "C": "arcfour (RC4)",
+        "D": "aes128-ctr"
+      },
+      "correct": "C",
+      "explanation": "The arcfour (RC4) cipher has known cryptographic weaknesses including biases in its keystream and should be disabled in favour of modern ciphers like AES-GCM or ChaCha20-Poly1305."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester wants to use SSH remote port forwarding (ssh -R) to expose an internal web service to their attack machine. What does this achieve?",
+      "options": {
+        "A": "It forwards a port on the SSH server back to the client's local network, making a client-side service accessible from the server side",
+        "B": "It encrypts HTTP traffic between the browser and the web server",
+        "C": "It creates a reverse shell connection to the attacker",
+        "D": "It disables SSH host key verification for the connection"
+      },
+      "correct": "A",
+      "explanation": "SSH -R binds a port on the remote (server) side and forwards connections through the SSH tunnel to a host and port accessible from the client, effectively exposing a local or internal service to the remote network."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the purpose of the DNS NS record type?",
+      "options": {
+        "A": "It maps a hostname to an IP address",
+        "B": "It delegates authority for a domain or subdomain to a specific nameserver",
+        "C": "It creates an alias for another hostname",
+        "D": "It specifies the mail server for a domain"
+      },
+      "correct": "B",
+      "explanation": "NS (Name Server) records delegate a DNS zone to authoritative nameservers, indicating which servers are responsible for answering queries about that domain."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What type of DNS record creates an alias, pointing one hostname to another?",
+      "options": {
+        "A": "A",
+        "B": "PTR",
+        "C": "CNAME",
+        "D": "MX"
+      },
+      "correct": "C",
+      "explanation": "A CNAME (Canonical Name) record creates an alias that points one domain name to another, allowing multiple names to resolve to the same host without duplicating A records."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "During a penetration test of VoIP infrastructure, what risk does unencrypted SIP signalling present?",
+      "options": {
+        "A": "SIP messages will be rejected by firewalls",
+        "B": "Attackers can eavesdrop on call setup details, capture credentials, and potentially intercept or redirect calls",
+        "C": "The PBX will automatically disable itself",
+        "D": "Only the caller ID will be exposed"
+      },
+      "correct": "B",
+      "explanation": "Unencrypted SIP transmits call setup information, authentication credentials, and call routing data in cleartext, allowing attackers to intercept calls, capture credentials, and perform call redirection attacks."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "On a compromised MSSQL server, which command would an attacker use to enable xp_cmdshell if it is disabled?",
+      "options": {
+        "A": "EXEC sp_configure 'show advanced options', 1; RECONFIGURE; EXEC sp_configure 'xp_cmdshell', 1; RECONFIGURE;",
+        "B": "ALTER DATABASE master SET xp_cmdshell = ON",
+        "C": "GRANT EXECUTE ON xp_cmdshell TO public",
+        "D": "CREATE PROCEDURE xp_cmdshell AS EXEC cmd.exe"
+      },
+      "correct": "A",
+      "explanation": "Enabling xp_cmdshell requires first enabling advanced options via sp_configure, then enabling xp_cmdshell itself, with RECONFIGURE after each change to apply the settings."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which Nmap script can be used to check if an SMB server is vulnerable to the EternalBlue (MS17-010) exploit?",
+      "options": {
+        "A": "smb-enum-shares",
+        "B": "smb-vuln-ms17-010",
+        "C": "smb-brute",
+        "D": "smb-os-discovery"
+      },
+      "correct": "B",
+      "explanation": "The Nmap script smb-vuln-ms17-010 specifically tests for the EternalBlue vulnerability by sending crafted SMB packets and analysing the server's response to determine if it is unpatched."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the difference between LDAP (port 389) and LDAPS (port 636)?",
+      "options": {
+        "A": "LDAP supports only read operations while LDAPS supports read and write",
+        "B": "LDAPS encrypts the LDAP connection using TLS/SSL, while standard LDAP communicates in cleartext",
+        "C": "LDAPS requires Kerberos authentication while LDAP supports simple bind",
+        "D": "LDAP and LDAPS are different protocols with incompatible schemas"
+      },
+      "correct": "B",
+      "explanation": "LDAPS wraps the standard LDAP protocol in a TLS/SSL encrypted connection on port 636, preventing credential interception and data eavesdropping that is possible with cleartext LDAP on port 389."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "An attacker exploits an NFS share with no_root_squash enabled by creating a SUID binary on the mounted share. What is the impact?",
+      "options": {
+        "A": "The binary will run with the NFS server's service account privileges",
+        "B": "The SUID binary will execute as root on the NFS server when run by any local user, enabling privilege escalation",
+        "C": "The binary will be automatically removed by NFS security mechanisms",
+        "D": "The SUID bit is stripped when files are created over NFS"
+      },
+      "correct": "B",
+      "explanation": "With no_root_squash, a remote root user can create a root-owned SUID binary on the NFS share; any user on the NFS server who executes this binary will gain root privileges through the SUID mechanism."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which of the following tools is specifically designed for subdomain enumeration through DNS?",
+      "options": {
+        "A": "Nikto",
+        "B": "Sublist3r",
+        "C": "SQLmap",
+        "D": "Metasploit"
+      },
+      "correct": "B",
+      "explanation": "Sublist3r is a subdomain enumeration tool that combines search engine scraping, DNS brute-forcing, and third-party data sources to discover subdomains associated with a target domain."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In an NTLM relay attack, why is it important that SMB signing is not enforced on the target?",
+      "options": {
+        "A": "SMB signing slows down the connection, making relay attacks impractical",
+        "B": "SMB signing requires the attacker to know the session key to sign messages, which is not available in a relay scenario, causing authentication to fail",
+        "C": "SMB signing encrypts the NTLM hash, preventing its capture",
+        "D": "SMB signing requires mutual certificate authentication"
+      },
+      "correct": "B",
+      "explanation": "When SMB signing is enforced, each message must be signed with a key derived from the user's password; the relaying attacker doesn't possess this key and cannot generate valid signatures, causing the relayed session to be rejected."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which Kerberos component issues Ticket Granting Tickets (TGTs) and Ticket Granting Service (TGS) tickets?",
+      "options": {
+        "A": "The Domain Controller's NTDS.dit database",
+        "B": "The Key Distribution Center (KDC)",
+        "C": "The Global Catalog server",
+        "D": "The LDAP directory service"
+      },
+      "correct": "B",
+      "explanation": "The KDC (Key Distribution Center), which runs on Domain Controllers, contains the Authentication Service (AS) that issues TGTs and the Ticket Granting Service (TGS) that issues service tickets."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which FTP mode is generally preferred when clients are behind NAT or firewalls, and why?",
+      "options": {
+        "A": "Active mode, because the server initiates connections which bypass client-side firewalls",
+        "B": "Passive mode, because the client initiates both control and data connections, avoiding the need for inbound connections to the client",
+        "C": "Extended mode, because it tunnels data through the control connection",
+        "D": "Implicit mode, because it uses TLS for all connections"
+      },
+      "correct": "B",
+      "explanation": "Passive mode has the server listen on a random high port and the client initiates the data connection, avoiding issues with client-side firewalls and NAT that would block the server's inbound connection in active mode."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "During a penetration test, you discover a web server that responds to the HTTP TRACE method. What attack does this potentially enable?",
+      "options": {
+        "A": "SQL injection via trace data",
+        "B": "Cross-Site Tracing (XST), which can steal HttpOnly cookies by reflecting them in the TRACE response",
+        "C": "Remote code execution via TRACE buffer overflow",
+        "D": "Directory traversal via TRACE request paths"
+      },
+      "correct": "B",
+      "explanation": "Cross-Site Tracing (XST) exploits the TRACE method which echoes the entire request back to the client, including cookies marked as HttpOnly, potentially allowing an attacker to steal them via client-side scripting."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is credential spraying, and why is it effective against services like RDP?",
+      "options": {
+        "A": "Trying many passwords against a single account to find the correct one",
+        "B": "Trying a small number of commonly used passwords against many accounts simultaneously, avoiding account lockout thresholds",
+        "C": "Spraying captured hashes across multiple services for pass-the-hash",
+        "D": "Using rainbow tables against all accounts in a domain"
+      },
+      "correct": "B",
+      "explanation": "Credential spraying tries a few common passwords (like 'Summer2024!') against many accounts, staying under lockout thresholds; it is effective against RDP because many organisations have users with weak passwords."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which John the Ripper utility is used to combine the /etc/passwd and /etc/shadow files into a single file suitable for cracking?",
+      "options": {
+        "A": "john --rules",
+        "B": "unshadow",
+        "C": "john --wordlist",
+        "D": "john --show"
+      },
+      "correct": "B",
+      "explanation": "The 'unshadow' utility merges /etc/passwd and /etc/shadow into a single file in the format John the Ripper expects, combining user information with the corresponding password hashes."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "An attacker captures an NTLMv2 hash using Responder. Which tool and approach would they use to crack it?",
+      "options": {
+        "A": "John the Ripper with the --format=NT flag",
+        "B": "Hashcat with mode 5600 (NetNTLMv2) and a wordlist",
+        "C": "Ophcrack with Windows XP rainbow tables",
+        "D": "Mimikatz to decrypt the hash directly"
+      },
+      "correct": "B",
+      "explanation": "Hashcat mode 5600 is specifically designed for cracking NetNTLMv2 hashes (captured from network authentication); combined with a good wordlist and rules, it efficiently recovers the plaintext password."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What SNMP OID subtree is commonly walked to enumerate running processes on a Linux system?",
+      "options": {
+        "A": "1.3.6.1.2.1.1 (system)",
+        "B": "1.3.6.1.2.1.25.4.2 (hrSWRunTable)",
+        "C": "1.3.6.1.2.1.2.2 (interfaces)",
+        "D": "1.3.6.1.2.1.4.20 (ipAddrTable)"
+      },
+      "correct": "B",
+      "explanation": "The hrSWRunTable OID (1.3.6.1.2.1.25.4.2) contains information about running processes including process names, paths, and parameters, revealing installed software and services on the target system."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which SIPVicious tool is used to enumerate valid SIP extensions (user accounts) on a PBX?",
+      "options": {
+        "A": "svmap",
+        "B": "svwar",
+        "C": "svcrack",
+        "D": "svreport"
+      },
+      "correct": "B",
+      "explanation": "svwar (SIP War dialer) enumerates valid SIP extensions/accounts on a PBX by sending REGISTER or INVITE requests and analysing the responses to distinguish between valid and invalid extensions."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the primary risk of using SNMPv1 on network devices?",
+      "options": {
+        "A": "SNMPv1 does not support GET requests",
+        "B": "SNMPv1 transmits community strings in cleartext, providing no authentication security",
+        "C": "SNMPv1 cannot monitor network interfaces",
+        "D": "SNMPv1 is limited to IPv6 networks only"
+      },
+      "correct": "B",
+      "explanation": "SNMPv1 sends community strings as plaintext over the network, meaning anyone capturing network traffic can obtain the community string and gain read or read-write access to the SNMP agent."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In a penetration test, you gain access to a MySQL server as root and want to read the file /etc/passwd from the underlying operating system. Which SQL statement would you use?",
+      "options": {
+        "A": "SELECT LOAD_FILE('/etc/passwd');",
+        "B": "EXEC xp_cmdshell('cat /etc/passwd');",
+        "C": "SELECT * FROM OPENROWSET('/etc/passwd');",
+        "D": "READ FILE '/etc/passwd';"
+      },
+      "correct": "A",
+      "explanation": "MySQL's LOAD_FILE() function reads a file from the server's filesystem and returns its contents as a string, provided the MySQL user has the FILE privilege and the file is readable by the MySQL process."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What countermeasure prevents HSRP hijacking on a network?",
+      "options": {
+        "A": "Enabling DHCP snooping",
+        "B": "Configuring HSRP authentication with a strong key and using MD5 authentication",
+        "C": "Enabling port security on all switch ports",
+        "D": "Disabling ARP on the router interfaces"
+      },
+      "correct": "B",
+      "explanation": "HSRP MD5 authentication ensures that only routers with the correct authentication key can participate in HSRP, preventing attackers from injecting forged HSRP advertisements with higher priority."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which switch security feature prevents STP manipulation attacks by restricting which ports can receive BPDUs?",
+      "options": {
+        "A": "Port security",
+        "B": "BPDU Guard",
+        "C": "DHCP snooping",
+        "D": "Dynamic ARP Inspection"
+      },
+      "correct": "B",
+      "explanation": "BPDU Guard disables a port if it receives a BPDU (Bridge Protocol Data Unit), preventing rogue devices from participating in STP elections and attempting to become the root bridge."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which Nmap flag enables OS detection, version scanning, script scanning, and traceroute in a single command?",
+      "options": {
+        "A": "-sS",
+        "B": "-A",
+        "C": "-sV",
+        "D": "-O"
+      },
+      "correct": "B",
+      "explanation": "Nmap's -A flag enables aggressive scanning which combines OS detection (-O), version detection (-sV), script scanning (-sC), and traceroute (--traceroute) in one comprehensive scan."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "When performing a dictionary attack with John the Ripper, which flag specifies the wordlist file to use?",
+      "options": {
+        "A": "--rules",
+        "B": "--wordlist=<file>",
+        "C": "--format=<type>",
+        "D": "--incremental"
+      },
+      "correct": "B",
+      "explanation": "The --wordlist flag followed by the path to a wordlist file tells John the Ripper to perform a dictionary attack using the specified wordlist instead of its default incremental (brute-force) mode."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester discovers LDAP on a target and successfully performs an anonymous query that returns user objects with their descriptions. Some descriptions contain passwords. What vulnerability has been found?",
+      "options": {
+        "A": "LDAP injection in a web application",
+        "B": "Sensitive information disclosure through LDAP anonymous bind combined with poor data hygiene",
+        "C": "An LDAP referral attack",
+        "D": "A pass-the-hash vulnerability in LDAP"
+      },
+      "correct": "B",
+      "explanation": "Allowing anonymous LDAP queries combined with storing sensitive information (like passwords) in user-readable attributes such as the description field is a common Active Directory misconfiguration that leads to credential exposure."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In an HTTP response, which header reveals the web server software and version, useful for banner grabbing?",
+      "options": {
+        "A": "Content-Type",
+        "B": "Server",
+        "C": "X-Powered-By",
+        "D": "Cache-Control"
+      },
+      "correct": "B",
+      "explanation": "The 'Server' response header typically reveals the web server software name and version (e.g., Apache/2.4.41 or nginx/1.18.0), providing valuable information for identifying known vulnerabilities."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which tool from the Impacket suite can be used to perform AS-REP Roasting against Active Directory accounts without pre-authentication?",
+      "options": {
+        "A": "secretsdump.py",
+        "B": "GetNPUsers.py",
+        "C": "GetUserSPNs.py",
+        "D": "psexec.py"
+      },
+      "correct": "B",
+      "explanation": "GetNPUsers.py from Impacket requests AS-REP data for accounts without Kerberos pre-authentication required, producing hashes that can be cracked offline to recover account passwords."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the MSSQL SA (System Administrator) account, and why is it a high-value target?",
+      "options": {
+        "A": "A read-only service account used for database monitoring",
+        "B": "The default highest-privileged database account with full control over the MSSQL instance, often able to execute OS commands",
+        "C": "A Windows domain account used for SQL Server replication",
+        "D": "A backup account that can only restore databases"
+      },
+      "correct": "B",
+      "explanation": "The SA account is the built-in MSSQL sysadmin account with unrestricted access to the database engine; compromising it allows enabling xp_cmdshell, accessing all databases, and often achieving OS-level command execution."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the security risk of VoIP call eavesdropping, and how is it typically performed?",
+      "options": {
+        "A": "An attacker exploits the PBX to place premium-rate calls at the organisation's expense",
+        "B": "An attacker captures RTP (Real-time Transport Protocol) packets containing the audio stream and reconstructs them to listen to conversations",
+        "C": "An attacker sends malformed SIP INVITE packets to crash the PBX",
+        "D": "An attacker uses DNS rebinding to redirect SIP traffic"
+      },
+      "correct": "B",
+      "explanation": "VoIP call audio is transmitted via RTP, often unencrypted; an attacker on the same network can capture RTP packets using tools like Wireshark and reconstruct the audio stream to eavesdrop on conversations."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which SIPVicious tool is used to brute-force SIP extension passwords?",
+      "options": {
+        "A": "svmap",
+        "B": "svwar",
+        "C": "svcrack",
+        "D": "svreport"
+      },
+      "correct": "C",
+      "explanation": "svcrack performs online password cracking against SIP accounts by attempting authentication with different passwords for a given SIP extension, supporting both REGISTER and INVITE methods."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which SMB enumeration technique allows listing available shares on a remote Windows host using a null session?",
+      "options": {
+        "A": "net view \\\\target or smbclient -L //target -N",
+        "B": "nmap -sV target",
+        "C": "dig axfr target",
+        "D": "showmount -e target"
+      },
+      "correct": "A",
+      "explanation": "'net view' on Windows or 'smbclient -L -N' (null session) on Linux lists available SMB shares on a remote host, revealing file shares, printers, and IPC$ shares that may contain sensitive data."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the significance of the IPC$ share in SMB null session enumeration?",
+      "options": {
+        "A": "IPC$ stores the server's Internet connection settings",
+        "B": "IPC$ (Inter-Process Communication) is used for named pipes and allows RPC calls, enabling user and group enumeration via null sessions",
+        "C": "IPC$ contains backup copies of all shared files",
+        "D": "IPC$ is the hidden administrative share for the C: drive"
+      },
+      "correct": "B",
+      "explanation": "The IPC$ share facilitates inter-process communication via named pipes; null session access to IPC$ enables attackers to make RPC calls for enumerating users, groups, shares, and domain policies."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "A penetration tester discovers that a DNS server responds to queries for internal domain names from external sources. What is this called?",
+      "options": {
+        "A": "DNS cache poisoning",
+        "B": "DNS information leakage through a split-horizon misconfiguration",
+        "C": "DNS zone walking",
+        "D": "DNS amplification"
+      },
+      "correct": "B",
+      "explanation": "When a DNS server configured for split-horizon DNS incorrectly serves internal records to external queries, it leaks internal hostnames and IP addresses that should only be visible within the organisation."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "In the context of SSH key-based authentication, what is the risk of a private key file with permissions 644?",
+      "options": {
+        "A": "The SSH server will encrypt it with a weaker algorithm",
+        "B": "Other users on the system can read the private key, potentially impersonating the key owner",
+        "C": "The key will expire more quickly due to excessive reads",
+        "D": "SSH will automatically generate a new key pair"
+      },
+      "correct": "B",
+      "explanation": "A private key with 644 permissions is readable by all users on the system; SSH clients typically refuse to use keys with overly permissive permissions, but if used, any local user could copy and use the key."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the purpose of the NFS 'root_squash' option, and what happens when it is enabled?",
+      "options": {
+        "A": "It compresses all files owned by root to save disk space",
+        "B": "It maps remote root user (UID 0) to the anonymous/nobody user, preventing remote root from having root privileges on the NFS server",
+        "C": "It prevents the root user from mounting NFS shares",
+        "D": "It encrypts all files owned by root on the NFS share"
+      },
+      "correct": "B",
+      "explanation": "root_squash is the default NFS security mechanism that maps the remote root user to nobody/nfsnobody, ensuring that a client's root user cannot read or write files as root on the server's filesystem."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which Hashcat flag specifies the hash type being cracked?",
+      "options": {
+        "A": "-a",
+        "B": "-m",
+        "C": "-r",
+        "D": "-o"
+      },
+      "correct": "B",
+      "explanation": "The -m flag in Hashcat specifies the hash mode (e.g., -m 0 for MD5, -m 1000 for NTLM, -m 5600 for NetNTLMv2), telling Hashcat which algorithm to use when attempting to crack the provided hashes."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "An attacker on a local network runs Responder and captures NTLMv2 hashes. The hashes resist cracking with a wordlist. What alternative attack can the attacker perform with these hashes?",
+      "options": {
+        "A": "Pass-the-hash directly to authenticate to SMB",
+        "B": "Relay the authentication in real-time to another target using ntlmrelayx (NTLM relay attack)",
+        "C": "Downgrade the hashes to LM format for easier cracking",
+        "D": "Convert the NTLMv2 hashes to Kerberos tickets"
+      },
+      "correct": "B",
+      "explanation": "Net-NTLMv2 hashes cannot be used for pass-the-hash (only NTLM hashes can), but the authentication can be relayed in real-time to other services using ntlmrelayx, gaining access without cracking the password."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which Linux password hashing algorithm is indicated by the $6$ prefix in /etc/shadow?",
+      "options": {
+        "A": "MD5",
+        "B": "Blowfish (bcrypt)",
+        "C": "SHA-256",
+        "D": "SHA-512"
+      },
+      "correct": "D",
+      "explanation": "The $6$ prefix in /etc/shadow indicates SHA-512 based hashing (sha512crypt); other prefixes include $1$ for MD5, $2a$/$2b$ for bcrypt, and $5$ for SHA-256."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which technique does an attacker use when they request Kerberos AS-REP responses for a list of usernames without needing valid credentials?",
+      "options": {
+        "A": "Kerberoasting",
+        "B": "AS-REP Roasting",
+        "C": "Golden Ticket forging",
+        "D": "Pass-the-Key"
+      },
+      "correct": "B",
+      "explanation": "AS-REP Roasting allows an attacker to request encrypted AS-REP data for any account with pre-authentication disabled, using only a list of usernames \u2014 no existing credentials are needed to initiate the request."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which MSSQL system stored procedure can be used to list the contents of a directory on the underlying operating system?",
+      "options": {
+        "A": "xp_cmdshell",
+        "B": "xp_dirtree",
+        "C": "sp_configure",
+        "D": "sp_linkedservers"
+      },
+      "correct": "B",
+      "explanation": "xp_dirtree lists the directory structure of a specified path on the OS filesystem; it requires fewer permissions than xp_cmdshell and can also be abused for UNC path injection to capture NTLM hashes."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What protocol does SNMP use for transport, and on which ports does it operate?",
+      "options": {
+        "A": "TCP on ports 161 (agent) and 162 (manager traps)",
+        "B": "UDP on ports 161 (agent) and 162 (manager traps)",
+        "C": "TCP on ports 25 (queries) and 26 (traps)",
+        "D": "UDP on ports 514 (queries) and 515 (traps)"
+      },
+      "correct": "B",
+      "explanation": "SNMP primarily uses UDP with port 161 for agent queries (GET/SET operations) and port 162 for receiving traps (unsolicited notifications from agents to the management station)."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the security concern with the HTTP PUT method being enabled on a web server?",
+      "options": {
+        "A": "PUT allows clients to upload or overwrite files on the server, potentially enabling web shell deployment",
+        "B": "PUT reveals the server's internal directory structure",
+        "C": "PUT allows cross-site scripting via uploaded headers",
+        "D": "PUT bypasses SSL/TLS encryption"
+      },
+      "correct": "A",
+      "explanation": "The HTTP PUT method allows clients to upload files directly to the web server; if enabled without proper authentication, an attacker can upload malicious files such as web shells to gain remote code execution."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "During an engagement, you identify a MySQL server running on port 3306 that accepts remote connections. Which Nmap script would you use to enumerate databases?",
+      "options": {
+        "A": "mysql-enum",
+        "B": "mysql-databases",
+        "C": "mysql-info",
+        "D": "mysql-brute"
+      },
+      "correct": "B",
+      "explanation": "The Nmap mysql-databases script connects to a MySQL server (with provided credentials) and lists all available databases, helping identify targets for further exploitation."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "What is the main advantage of using SFTP or SCP over traditional FTP for file transfer?",
+      "options": {
+        "A": "SFTP and SCP are faster than FTP due to compression",
+        "B": "SFTP and SCP encrypt all data and credentials in transit using SSH, while FTP transmits everything in cleartext",
+        "C": "SFTP and SCP support larger file sizes than FTP",
+        "D": "SFTP and SCP do not require authentication"
+      },
+      "correct": "B",
+      "explanation": "SFTP (SSH File Transfer Protocol) and SCP (Secure Copy Protocol) operate over an encrypted SSH channel, protecting both credentials and file data from interception, unlike FTP which sends everything in plaintext."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which Impacket tool can be used to remotely execute commands on a Windows system via SMB using a semi-interactive shell?",
+      "options": {
+        "A": "GetUserSPNs.py",
+        "B": "psexec.py",
+        "C": "GetNPUsers.py",
+        "D": "secretsdump.py"
+      },
+      "correct": "B",
+      "explanation": "Impacket's psexec.py uploads a service binary to the target via SMB, creates and starts a Windows service, and provides a semi-interactive command shell, similar to the Sysinternals PsExec tool."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which LDAP attribute in Active Directory stores the plaintext or reversible-encrypted password and is a common target during LDAP enumeration?",
+      "options": {
+        "A": "userPassword",
+        "B": "unicodePwd",
+        "C": "userAccountControl",
+        "D": "ms-MCS-AdmPwd (LAPS password)"
+      },
+      "correct": "D",
+      "explanation": "The ms-MCS-AdmPwd attribute stores the local administrator password set by LAPS (Local Administrator Password Solution); if LDAP permissions are misconfigured, non-privileged users may be able to read this attribute."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Why should Telnet services be specifically checked during a penetration test of IoT and embedded devices?",
+      "options": {
+        "A": "IoT devices use a proprietary encrypted version of Telnet",
+        "B": "Many IoT and embedded devices still ship with Telnet enabled using default or hardcoded credentials, providing easy initial access",
+        "C": "Telnet on IoT devices is immune to brute-force attacks",
+        "D": "IoT Telnet services always run on non-standard ports"
+      },
+      "correct": "B",
+      "explanation": "Despite being obsolete on servers, Telnet remains common on IoT devices, routers, and embedded systems, often with default or hardcoded credentials that provide immediate administrative access."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "question": "Which SMTP command is used to initiate a mail transaction by specifying the sender's email address?",
+      "options": {
+        "A": "RCPT TO",
+        "B": "DATA",
+        "C": "MAIL FROM",
+        "D": "HELO"
+      },
+      "correct": "C",
+      "explanation": "MAIL FROM specifies the sender's address (envelope sender) and begins a new mail transaction; this command is followed by one or more RCPT TO commands to specify recipients."
+    }
+  ]
+}

@@ -1,0 +1,870 @@
+{
+  "title": "CREST CCT \u2014 Soft Skills & Assessment Management",
+  "description": "Covers the Soft Skills and Assessment Management (PT001) domain of the CREST Certified Tester (CCT) examination. Topics include penetration testing methodologies, scoping and rules of engagement, legal and ethical considerations, report writing, client communication, and professional conduct.",
+  "based_on": "CREST CCT",
+  "created_by": "Claude (Anthropic)",
+  "difficulty": "MEDIUM",
+  "pass_mark": 70,
+  "time_limit": 60,
+  "num_questions": 30,
+  "links": [
+    {
+      "label": "CREST CCT Syllabus",
+      "url": "https://www.crest-approved.org/membership/crest-certified-tester/"
+    }
+  ],
+  "questions": [
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "At which stage of the penetration testing lifecycle should the delivery of the final report and subsequent consultancy work be formally defined?",
+      "options": {
+        "A": "During the post-exploitation phase",
+        "B": "Initial client contact and pre-engagement",
+        "C": "Only after high-risk vulnerabilities are found",
+        "D": "During the cleanup phase"
+      },
+      "correct": "B",
+      "explanation": "The structure of the test, including reporting and consultancy follow-ups, must be defined during the initial contract and scoping phase."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which methodology is specifically recognized for web application penetration testing?",
+      "options": {
+        "A": "IEEE 802.11",
+        "B": "OWASP (Open Web Application Security Project)",
+        "C": "The Richter Scale",
+        "D": "ISO 9001"
+      },
+      "correct": "B",
+      "explanation": "OWASP provides the industry-standard methodology for identifying and mitigating web-based vulnerabilities."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "An 'Intelligence-Led' test (Red Teaming) differs from a standard penetration test primarily because:",
+      "options": {
+        "A": "It uses more expensive laptops",
+        "B": "It simulates specific threat actors and focuses on detection/response capabilities",
+        "C": "It only tests printers",
+        "D": "It is done during the day instead of at night"
+      },
+      "correct": "B",
+      "explanation": "Intelligence-led testing uses TTPs (Tactics, Techniques, and Procedures) of real-world adversaries to test an organization's holistic defense."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the 'benefit' a penetration test brings to a client, which the tester must be able to explain?",
+      "options": {
+        "A": "It guarantees the system will never be hacked",
+        "B": "It provides a 'point-in-time' assessment of security posture and prioritizes remediation",
+        "C": "It replaces the need for an antivirus",
+        "D": "It makes the website load faster"
+      },
+      "correct": "B",
+      "explanation": "The primary benefit is identifying weaknesses and providing a roadmap for risk reduction."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which of the following best describes a 'White-Box' penetration test?",
+      "options": {
+        "A": "The tester has zero prior knowledge of the target system",
+        "B": "The tester is provided with full technical details, including source code and diagrams",
+        "C": "The test is only performed on printers and whiteboards",
+        "D": "The test is conducted without the client's knowledge"
+      },
+      "correct": "B",
+      "explanation": "White-box testing provides the analyst with complete transparency of the target environment to maximize coverage."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during engagement lifecycle?",
+      "options": {
+        "A": "A documented scope with change control and approval process",
+        "B": "Relying on verbal agreements only",
+        "C": "Allowing testers to decide scope dynamically",
+        "D": "Treating every discovered asset as in-scope by default"
+      },
+      "correct": "A",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "When conducting a penetration test for a multinational organization, what is the most critical legal complexity to consider regarding data transit?",
+      "options": {
+        "A": "The color of the ethernet cables used in the data center",
+        "B": "Differing data sovereignty and privacy laws across various jurisdictions",
+        "C": "The speed of the ISP in the host country",
+        "D": "The brand of firewall used by the client"
+      },
+      "correct": "B",
+      "explanation": "Multinational engagements often involve data crossing borders, triggering specific legal requirements like GDPR or local privacy acts that vary by country."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "If a tester discovers evidence of illegal activity (e.g., child abuse material) on a client's server, what is the appropriate action?",
+      "options": {
+        "A": "Delete the evidence to protect the client",
+        "B": "Follow pre-defined interaction requirements for law enforcement and notify the client's legal counsel",
+        "C": "Ignore it as it is outside the technical scope",
+        "D": "Copy it to a personal drive for further analysis"
+      },
+      "correct": "B",
+      "explanation": "Professional standards require clear paths for interacting with law enforcement when criminal activity is uncovered."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the primary purpose of a Non-Disclosure Agreement (NDA) in a penetration test?",
+      "options": {
+        "A": "To prevent the tester from using automated tools",
+        "B": "To protect sensitive client information discovered during the engagement",
+        "C": "To ensure the tester gets paid on time",
+        "D": "To allow the tester to share findings on social media"
+      },
+      "correct": "B",
+      "explanation": "NDAs are legally binding contracts ensuring that any confidential data or vulnerabilities found remain private."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which document serves as the legal 'Written Authority' to perform an attack on a system?",
+      "options": {
+        "A": "The company's mission statement",
+        "B": "The agreed Scope of Work and signed contract",
+        "C": "A verbal agreement with a developer",
+        "D": "The tester's business card"
+      },
+      "correct": "B",
+      "explanation": "A signed contract and defined scope provide the legal basis for what would otherwise be considered unauthorized access."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why is Professional Indemnity insurance important for a penetration tester?",
+      "options": {
+        "A": "It pays for the tester's hardware upgrades",
+        "B": "It provides financial protection against claims of negligence or accidental damage",
+        "C": "It guarantees that the tester finds all vulnerabilities",
+        "D": "It allows the tester to ignore legal requirements"
+      },
+      "correct": "B",
+      "explanation": "Insurance protects the practitioner and their firm if a test inadvertently causes a business disruption or loss."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during law and compliance?",
+      "options": {
+        "A": "A documented scope with change control and approval process",
+        "B": "Treating every discovered asset as in-scope by default",
+        "C": "Allowing testers to decide scope dynamically",
+        "D": "Relying on verbal agreements only"
+      },
+      "correct": "A",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which statement BEST reflects a safe legal/compliance posture during law and compliance?",
+      "options": {
+        "A": "Proceed if the client is unlikely to notice",
+        "B": "Act only within written authorisation and applicable law/regulation",
+        "C": "Proceed if the target is publicly accessible",
+        "D": "Proceed if the activity improves security outcomes"
+      },
+      "correct": "B",
+      "explanation": "Authorisation does not override the law; both must be satisfied."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during law and compliance?",
+      "options": {
+        "A": "Treating every discovered asset as in-scope by default",
+        "B": "Allowing testers to decide scope dynamically",
+        "C": "Relying on verbal agreements only",
+        "D": "A documented scope with change control and approval process"
+      },
+      "correct": "D",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which statement BEST reflects a safe legal/compliance posture during law and compliance?",
+      "options": {
+        "A": "Proceed if the target is publicly accessible",
+        "B": "Proceed if the client is unlikely to notice",
+        "C": "Act only within written authorisation and applicable law/regulation",
+        "D": "Proceed if the activity improves security outcomes"
+      },
+      "correct": "C",
+      "explanation": "Authorisation does not override the law; both must be satisfied."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "In the context of the UK Computer Misuse Act 1990, Section 1 primarily concerns:",
+      "options": {
+        "A": "Making or supplying articles for use in offenses",
+        "B": "Unauthorised access to computer material",
+        "C": "Unauthorised acts with intent to impair computer operation",
+        "D": "Modifying data for the purpose of fraud"
+      },
+      "correct": "B",
+      "explanation": "Section 1 is the basic 'hacking' offense, which a tester avoids by having valid written authority (permission)."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which legislation regulates the processing of personal data within the UK and EU, impacting how testers handle PII?",
+      "options": {
+        "A": "The Digital Millennium Copyright Act",
+        "B": "The GDPR / Data Protection Act 2018",
+        "C": "The Human Rights Act",
+        "D": "The Official Secrets Act"
+      },
+      "correct": "B",
+      "explanation": "GDPR (General Data Protection Regulation) dictates how personal data must be stored, handled, and purged during an engagement."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What constitutes 'Non-Compliance' when a tester discovers personal data during an audit?",
+      "options": {
+        "A": "Documenting the finding in the report",
+        "B": "Storing unencrypted PII on an unmanaged, unencrypted device",
+        "C": "Notifying the client of the discovery",
+        "D": "Deleting the data after the report is signed off"
+      },
+      "correct": "B",
+      "explanation": "Failure to secure personal data retrieved from a target is a significant violation of data protection laws."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A tester working for the UK Financial Sector might need to comply with which specific framework?",
+      "options": {
+        "A": "PCI DSS",
+        "B": "CBEST",
+        "C": "HIPAA",
+        "D": "NERC CIP"
+      },
+      "correct": "B",
+      "explanation": "CBEST is a framework specifically for intelligence-led testing in the UK financial services sector."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Under the UK Computer Misuse Act, Section 3 concerns:",
+      "options": {
+        "A": "Gaining access to read emails",
+        "B": "Unauthorised acts with intent to impair, or with recklessness as to impairing, operation of computer",
+        "C": "Borrowing a laptop without asking",
+        "D": "Forgot to sign an NDA"
+      },
+      "correct": "B",
+      "explanation": "Section 3 deals with acts like DoS attacks or data deletion that intentionally or recklessly impair a system."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A client requests a test but has a very limited budget. How should the tester handle this constraint?",
+      "options": {
+        "A": "Skip the reporting phase to save time",
+        "B": "Reduce the scope or depth of testing while clearly communicating the impact on effectiveness",
+        "C": "Perform the test for free to build rapport",
+        "D": "Ignore the budget and bill the client later"
+      },
+      "correct": "B",
+      "explanation": "Professional scoping requires balancing logistical/financial constraints without misleading the client about the test's security assurance."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which constraint is MOST likely to impact the 'effectiveness' of a test if not handled correctly?",
+      "options": {
+        "A": "The brand of coffee provided to the tester",
+        "B": "Logistical constraints like restricted testing windows (e.g., 2 AM to 4 AM only)",
+        "C": "The color of the terminal font",
+        "D": "The tester's keyboard layout"
+      },
+      "correct": "B",
+      "explanation": "Short windows or limited access times can prevent deep analysis or long-running automated tasks from completing."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is an 'Out-of-Scope' asset?",
+      "options": {
+        "A": "A server that is currently being tested",
+        "B": "A system that the client has explicitly forbidden the tester from interacting with",
+        "C": "A system that has no vulnerabilities",
+        "D": "A cloud-based storage bucket"
+      },
+      "correct": "B",
+      "explanation": "Interacting with out-of-scope assets can lead to legal issues and breach of contract."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "When defining a scope for an internal network test, why is a list of IP ranges essential?",
+      "options": {
+        "A": "To help the tester find the office building",
+        "B": "To ensure the tester only interacts with authorized target assets",
+        "C": "To allow the tester to bypass the firewall",
+        "D": "To determine the cost of the test based on IP count"
+      },
+      "correct": "B",
+      "explanation": "Accurate IP ranges prevent \"scope creep\" and accidental testing of third-party systems (like shared cloud hosts)."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A 'Black-Box' test requires more time for which phase compared to a 'White-Box' test?",
+      "options": {
+        "A": "Reporting",
+        "B": "Reconnaissance and Enumeration",
+        "C": "Exploitation",
+        "D": "Cleanup"
+      },
+      "correct": "B",
+      "explanation": "Without prior info, the tester must spend significant resources discovering assets and mapping the environment."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during scoping?",
+      "options": {
+        "A": "A documented scope with change control and approval process",
+        "B": "Treating every discovered asset as in-scope by default",
+        "C": "Allowing testers to decide scope dynamically",
+        "D": "Relying on verbal agreements only"
+      },
+      "correct": "A",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the most significant risk when performing an active vulnerability scan on a legacy production server?",
+      "options": {
+        "A": "The scan taking too long",
+        "B": "Unintentional Denial of Service (DoS) leading to system instability",
+        "C": "Improving the server's performance",
+        "D": "The server becoming too secure"
+      },
+      "correct": "B",
+      "explanation": "Active tools can overwhelm older services, making availability a primary risk that testers must mitigate."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A tester finds a vulnerability that could crash a critical service. What should they do before attempting to exploit it?",
+      "options": {
+        "A": "Exploit it immediately to see if it works",
+        "B": "Discuss the risk with the client and obtain specific authorization to proceed",
+        "C": "Wait until the end of the engagement to mention it",
+        "D": "Post the vulnerability details on a public forum"
+      },
+      "correct": "B",
+      "explanation": "Ethical testing requires mitigating risks to availability by communicating potential service disruptions to the client first."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A tester is offered a bribe by a developer to omit a critical finding from the report. What is this an example of?",
+      "options": {
+        "A": "A professional bonus",
+        "B": "An ethical risk and conflict of interest",
+        "C": "Good networking",
+        "D": "Standard business practice"
+      },
+      "correct": "B",
+      "explanation": "Integrity is core to penetration testing; omitting findings compromises the safety of the client."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the 'usual outcome' if a tester crashes a production database during business hours without prior warning?",
+      "options": {
+        "A": "The client gives them a promotion",
+        "B": "Significant financial loss for the client and potential termination of the testing contract",
+        "C": "The tester gets to go home early",
+        "D": "The database becomes faster after a reboot"
+      },
+      "correct": "B",
+      "explanation": "Unmanaged risks lead to business impact. This is why testing is often scheduled for out-of-hours or on staging systems."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which technique can help reduce the risk of a Denial of Service during a vulnerability scan?",
+      "options": {
+        "A": "Running the scan at the highest possible speed",
+        "B": "Throttling the scan rate and disabling 'unsafe' or 'intrusive' checks",
+        "C": "Running the scan from multiple machines at once",
+        "D": "Turning off the server during the scan"
+      },
+      "correct": "B",
+      "explanation": "Reducing the intensity of automated tools minimizes the likelihood of overwhelming target services."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during managing risk?",
+      "options": {
+        "A": "A documented scope with change control and approval process",
+        "B": "Allowing testers to decide scope dynamically",
+        "C": "Relying on verbal agreements only",
+        "D": "Treating every discovered asset as in-scope by default"
+      },
+      "correct": "A",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why are 'Daily Checkpoints' established during a penetration test?",
+      "options": {
+        "A": "To ensure the tester is awake",
+        "B": "To provide status updates, discuss critical findings, and manage escalation paths",
+        "C": "To change the contract price every day",
+        "D": "To install new hardware daily"
+      },
+      "correct": "B",
+      "explanation": "Regular communication ensures stakeholders are aware of progress and any emergency issues that arise in real-time."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which technology is recommended for securing email communications containing sensitive vulnerability data?",
+      "options": {
+        "A": "FTP",
+        "B": "PGP (Pretty Good Privacy) or S/MIME",
+        "C": "Plaintext SMS",
+        "D": "Snapchat"
+      },
+      "correct": "B",
+      "explanation": "Encryption standards like PGP ensure that sensitive findings remain confidential during transmission between the tester and client."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is an 'Out-of-Band' communication channel?",
+      "options": {
+        "A": "Using the same network that is being attacked to send messages",
+        "B": "A separate, secure channel (e.g., Signal or a different phone line) not part of the target infrastructure",
+        "C": "Talking loudly in the office",
+        "D": "Posting messages on the company's public website"
+      },
+      "correct": "B",
+      "explanation": "Out-of-band communication ensures that if the primary network is compromised or monitored, the test coordination remains secure."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A 'Critical' vulnerability is discovered on the first day of testing. What is the correct communication procedure?",
+      "options": {
+        "A": "Wait until the final report is written",
+        "B": "Notify the client immediately via the agreed escalation path",
+        "C": "Tell the developer in the cafeteria",
+        "D": "Post it on a bug bounty site"
+      },
+      "correct": "B",
+      "explanation": "High-impact findings must be communicated immediately to allow the client to start remediation as soon as possible."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the purpose of an 'Emergency Contact' list in a penetration test?",
+      "options": {
+        "A": "To call for a pizza delivery",
+        "B": "To reach technical staff if a system becomes unresponsive during a test",
+        "C": "To inform the tester's family where they are",
+        "D": "To contact the ISP if the internet is slow"
+      },
+      "correct": "B",
+      "explanation": "Emergency contacts ensure that if something breaks, the right people can be reached immediately to restore service."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during client communications?",
+      "options": {
+        "A": "Relying on verbal agreements only",
+        "B": "Treating every discovered asset as in-scope by default",
+        "C": "A documented scope with change control and approval process",
+        "D": "Allowing testers to decide scope dynamically"
+      },
+      "correct": "C",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why is accurate record keeping during a penetration test vital for the reporting phase?",
+      "options": {
+        "A": "To show off how many tools were used",
+        "B": "To ensure findings are reproducible and to provide an audit trail of actions taken",
+        "C": "To fill up the hard drive space",
+        "D": "To allow the tester to remember their password"
+      },
+      "correct": "B",
+      "explanation": "Records allow the analyst to reconstruct the attack chain and verify details during report writing."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the most secure way to store output from tools (e.g., scan results) during an engagement?",
+      "options": {
+        "A": "In a public GitHub repository",
+        "B": "On an encrypted volume with restricted access",
+        "C": "In a shared folder with 'Everyone' access",
+        "D": "On a USB stick left in the office kitchen"
+      },
+      "correct": "B",
+      "explanation": "Data retrieved during a test is sensitive and must be protected as carefully as the client's own production data."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the 'security requirement' for records after the final report is delivered?",
+      "options": {
+        "A": "They should be posted on the company's internal wiki",
+        "B": "They must be securely stored or destroyed according to the agreed retention policy",
+        "C": "They should be emailed to all employees",
+        "D": "They should be kept on the tester's desktop forever"
+      },
+      "correct": "B",
+      "explanation": "Retention policies define how long sensitive test data is kept before being securely purged."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What specific information is required in a record to make a vulnerability reproducible?",
+      "options": {
+        "A": "The time the tester had lunch",
+        "B": "The exact tool command, target IP/URL, and the payload used",
+        "C": "The tester's employee ID",
+        "D": "The number of lines of code in the tool"
+      },
+      "correct": "B",
+      "explanation": "Reproducibility requires knowing exactly how the flaw was triggered so the developer can verify the fix."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which type of standard might mandate specific record-keeping requirements for a penetration test?",
+      "options": {
+        "A": "ISO 27001 or PCI DSS",
+        "B": "ISO 9001 (Quality Management)",
+        "C": "The IEEE Wifi Standard",
+        "D": "The Unicode Standard"
+      },
+      "correct": "A",
+      "explanation": "Information security standards often have explicit requirements for how audits and tests are documented and stored."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during record keeping?",
+      "options": {
+        "A": "Treating every discovered asset as in-scope by default",
+        "B": "Allowing testers to decide scope dynamically",
+        "C": "A documented scope with change control and approval process",
+        "D": "Relying on verbal agreements only"
+      },
+      "correct": "C",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What are the three components of the 'CIA Triad' used to assess risk?",
+      "options": {
+        "A": "Central, Internal, Analytical",
+        "B": "Confidentiality, Integrity, Availability",
+        "C": "Complexity, Impact, Authority",
+        "D": "Cloud, Internet, Apps"
+      },
+      "correct": "B",
+      "explanation": "Risk is evaluated based on the impact on the Confidentiality, Integrity, and Availability of data."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "In CVSS v3.1, a score of 9.0 to 10.0 is classified as:",
+      "options": {
+        "A": "Low",
+        "B": "Critical",
+        "C": "Medium",
+        "D": "Informational"
+      },
+      "correct": "B",
+      "explanation": "The Common Vulnerability Scoring System (CVSS) uses 'Critical' for scores 9.0 and above."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A vulnerability that allows an anonymous user to execute code as root should be classified as:",
+      "options": {
+        "A": "Low",
+        "B": "High / Critical",
+        "C": "Medium",
+        "D": "Informational"
+      },
+      "correct": "B",
+      "explanation": "Remote Code Execution (RCE) with elevated privileges is the highest level of risk to a system."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "When interpreting CVSS v2, the 'Access Vector' (AV) metric describes:",
+      "options": {
+        "A": "The time of day the attack happened",
+        "B": "How the vulnerability is reached (e.g., Local, Network, Adjacent)",
+        "C": "The price of the exploit code",
+        "D": "The color of the server's lights"
+      },
+      "correct": "B",
+      "explanation": "Access Vector defines the 'location' from which an attacker must exploit the flaw."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why must a report explicitly state the 'Start' and 'End' dates of the testing period?",
+      "options": {
+        "A": "To calculate the tester's overtime",
+        "B": "To define the 'point-in-time' window for which the security assessment is valid",
+        "C": "To determine which version of Nmap was used",
+        "D": "To schedule the next year's test"
+      },
+      "correct": "B",
+      "explanation": "Security is dynamic; a test only reflects the state of the system during the specific dates documented."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is an 'Attack Chain' in a penetration testing report?",
+      "options": {
+        "A": "A list of all tools used in alphabetical order",
+        "B": "A sequence of multiple vulnerabilities exploited in order to reach a final objective",
+        "C": "A physical chain used to lock the server room",
+        "D": "A type of encryption algorithm"
+      },
+      "correct": "B",
+      "explanation": "Attack chains demonstrate how minor issues can be combined to achieve a high-impact compromise."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "The 'Executive Summary' of a report should be written for:",
+      "options": {
+        "A": "Technical experts only",
+        "B": "Non-technical stakeholders and management",
+        "C": "The general public",
+        "D": "The testers themselves"
+      },
+      "correct": "B",
+      "explanation": "The summary provides a high-level view of the risk and business impact without getting bogged down in technical jargon."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A 'Remediation' recommendation should be:",
+      "options": {
+        "A": "As vague as possible",
+        "B": "Detailed and actionable, providing clear steps to fix the issue",
+        "C": "A list of new servers the client should buy",
+        "D": "Written in a different language"
+      },
+      "correct": "B",
+      "explanation": "The goal of a test is to improve security; clear remediation steps are the most valuable part of the report."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which of the following describes the 'Likelihood' of a successful exploit?",
+      "options": {
+        "A": "How much data was stolen",
+        "B": "The probability that an attacker will find and successfully use the vulnerability",
+        "C": "The cost of the software",
+        "D": "The number of servers in the room"
+      },
+      "correct": "B",
+      "explanation": "Likelihood considers factors like exploit complexity and the attacker's required skill level."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why is it necessary to list every 'Affected Component' for each finding?",
+      "options": {
+        "A": "To make the report look more professional",
+        "B": "To ensure the system administrators know exactly where to apply patches or configuration changes",
+        "C": "To keep track of the company's inventory",
+        "D": "To allow the developer to blame someone else"
+      },
+      "correct": "B",
+      "explanation": "Specificity in findings prevents confusion and ensures that all instances of a vulnerability are addressed."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during reporting?",
+      "options": {
+        "A": "Treating every discovered asset as in-scope by default",
+        "B": "Relying on verbal agreements only",
+        "C": "A documented scope with change control and approval process",
+        "D": "Allowing testers to decide scope dynamically"
+      },
+      "correct": "C",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "In reporting for reporting, what is the BEST way to express risk to stakeholders?",
+      "options": {
+        "A": "Use severity labels without justification",
+        "B": "Describe impact and likelihood in business-relevant terms with evidence",
+        "C": "List only tool outputs without interpretation",
+        "D": "Exclude remediation guidance to remain neutral"
+      },
+      "correct": "B",
+      "explanation": "Stakeholders need contextualised risk statements supported by evidence and actionable remediation."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during reporting?",
+      "options": {
+        "A": "Allowing testers to decide scope dynamically",
+        "B": "Relying on verbal agreements only",
+        "C": "Treating every discovered asset as in-scope by default",
+        "D": "A documented scope with change control and approval process"
+      },
+      "correct": "D",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "In reporting for reporting, what is the BEST way to express risk to stakeholders?",
+      "options": {
+        "A": "List only tool outputs without interpretation",
+        "B": "Exclude remediation guidance to remain neutral",
+        "C": "Describe impact and likelihood in business-relevant terms with evidence",
+        "D": "Use severity labels without justification"
+      },
+      "correct": "C",
+      "explanation": "Stakeholders need contextualised risk statements supported by evidence and actionable remediation."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the primary role of a 'QA Review' in the reporting process?",
+      "options": {
+        "A": "To check for spelling errors only",
+        "B": "To ensure the report is accurate, professional, and meets client requirements",
+        "C": "To make the report longer",
+        "D": "To add more pictures of hackers"
+      },
+      "correct": "B",
+      "explanation": "Quality Assurance ensures that the technical findings are sound and the recommendations are clear."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "When performing a peer review of a colleague's report, what should a senior tester look for?",
+      "options": {
+        "A": "The brand of laptop the colleague uses",
+        "B": "Consistency between the technical evidence and the risk rating",
+        "C": "The number of emojis used in the text",
+        "D": "The color of the font in the header"
+      },
+      "correct": "B",
+      "explanation": "QA must verify that the risk rating accurately reflects the severity shown in the technical proof-of-concept."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "How can 'prior work' (past reports) influence a current test plan?",
+      "options": {
+        "A": "It allows the tester to copy-paste the old report",
+        "B": "It helps identify recurring issues or areas that were previously insecure for deeper investigation",
+        "C": "It makes the current test unnecessary",
+        "D": "It tells the tester which employees to talk to"
+      },
+      "correct": "B",
+      "explanation": "History helps focus current efforts on high-risk areas that have historically struggled with remediation."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is a common task in 'Security Reporting QA' before sending a report to a client?",
+      "options": {
+        "A": "Deleting the report and starting over",
+        "B": "Removing any internal tester notes or credentials not intended for the client",
+        "C": "Changing all 'Low' findings to 'Critical'",
+        "D": "Printing the report on golden paper"
+      },
+      "correct": "B",
+      "explanation": "Sanitization ensures that the client only receives the final, professional work product without internal metadata."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A QA reviewer notices a finding has no 'Remediation' section. What should they do?",
+      "options": {
+        "A": "Write 'Fix it' and send it off",
+        "B": "Reject the report and ask the author to provide a detailed, actionable fix",
+        "C": "Leave it as is, it's not important",
+        "D": "Delete the finding"
+      },
+      "correct": "B",
+      "explanation": "Findings without remediation are of limited value to the client; QA ensures the report is helpful and actionable."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during report qa?",
+      "options": {
+        "A": "Treating every discovered asset as in-scope by default",
+        "B": "Allowing testers to decide scope dynamically",
+        "C": "A documented scope with change control and approval process",
+        "D": "Relying on verbal agreements only"
+      },
+      "correct": "C",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "In reporting for report qa, what is the BEST way to express risk to stakeholders?",
+      "options": {
+        "A": "List only tool outputs without interpretation",
+        "B": "Describe impact and likelihood in business-relevant terms with evidence",
+        "C": "Exclude remediation guidance to remain neutral",
+        "D": "Use severity labels without justification"
+      },
+      "correct": "B",
+      "explanation": "Stakeholders need contextualised risk statements supported by evidence and actionable remediation."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Before starting a new engagement, why should a tester 'sanitize' their hard disk?",
+      "options": {
+        "A": "To make the laptop lighter",
+        "B": "To avoid data cross-contamination between different clients",
+        "C": "To install a newer version of Windows",
+        "D": "To remove dust from the fans"
+      },
+      "correct": "B",
+      "explanation": "Testers must ensure that no data from previous engagements remains on their testing platform to maintain confidentiality."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why is it important to ensure testing tools are 'relevant and up-to-date'?",
+      "options": {
+        "A": "To have the newest user interface",
+        "B": "To ensure they can detect the latest vulnerabilities and run reliably on modern OSs",
+        "C": "Because older tools are illegal",
+        "D": "To use more battery power"
+      },
+      "correct": "B",
+      "explanation": "Outdated tools may miss vulnerabilities or cause unexpected crashes on newer targets."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why must all commercial software used during a test be 'suitably licensed'?",
+      "options": {
+        "A": "To get a discount on the next version",
+        "B": "To ensure legal compliance and avoid compromising the tester's professional integrity",
+        "C": "To make the tools run faster",
+        "D": "Because unlicensed software has no icons"
+      },
+      "correct": "B",
+      "explanation": "Professional ethics and legal standards require that testers use legitimate, licensed software."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which hardware component is critical for a tester needing to connect to an 'Industrial Ethernet' network using legacy connectors?",
+      "options": {
+        "A": "A high-end graphics card",
+        "B": "Media converters or specialized network adapters",
+        "C": "A wireless mouse",
+        "D": "A second monitor"
+      },
+      "correct": "B",
+      "explanation": "Infrastructure testing often requires specialized physical interface hardware to bridge between a laptop and the target environment."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why should a testing laptop have 'Up-to-Date' Anti-Virus installed?",
+      "options": {
+        "A": "To stop the tester from visiting bad websites",
+        "B": "To protect the testing platform itself and ensure the tester doesn't accidentally spread malware to the client",
+        "C": "To make the laptop run faster",
+        "D": "To bypass the client's firewall"
+      },
+      "correct": "B",
+      "explanation": "Even testers need protection; their tools often handle live malware samples or exploits that could infect their own systems."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Which control is MOST effective for preventing scope drift during platform preparation?",
+      "options": {
+        "A": "A documented scope with change control and approval process",
+        "B": "Allowing testers to decide scope dynamically",
+        "C": "Relying on verbal agreements only",
+        "D": "Treating every discovered asset as in-scope by default"
+      },
+      "correct": "A",
+      "explanation": "Change control is the standard mechanism to manage additions/removals without ambiguity."
+    }
+  ]
+}

@@ -1,0 +1,1398 @@
+{
+  "title": "CREST CCT \u2014 Web Technologies",
+  "description": "Covers the Web Technologies (PT008) domain of the CREST Certified Tester (CCT) examination. Topics include HTTP/HTTPS protocols, web application vulnerabilities (OWASP Top 10), authentication mechanisms, session management, CORS, web proxies, and web application penetration testing techniques.",
+  "based_on": "CREST CCT",
+  "created_by": "Claude (Anthropic)",
+  "difficulty": "HARD",
+  "pass_mark": 70,
+  "time_limit": 90,
+  "num_questions": 40,
+  "links": [
+    {
+      "label": "CREST CCT Syllabus",
+      "url": "https://www.crest-approved.org/membership/crest-certified-tester/"
+    }
+  ],
+  "questions": [
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which HTTP method is specifically designed to determine the communication options available for a target resource, and is commonly used in CORS preflight requests?",
+      "options": {
+        "A": "TRACE",
+        "B": "HEAD",
+        "C": "OPTIONS",
+        "D": "CONNECT"
+      },
+      "correct": "C",
+      "explanation": "The OPTIONS method is used by browsers to send CORS preflight requests to determine which methods and headers are permitted for cross-origin requests. TRACE echoes back the request for debugging purposes."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester discovers a web application that reflects user input from a URL parameter directly into the HTML response without sanitisation. What type of XSS vulnerability is this?",
+      "options": {
+        "A": "Stored XSS",
+        "B": "DOM-based XSS",
+        "C": "Reflected XSS",
+        "D": "Mutation XSS"
+      },
+      "correct": "C",
+      "explanation": "Reflected XSS occurs when user-supplied input from the request is immediately echoed back in the server's response without proper encoding. Stored XSS persists the payload, while DOM-based XSS is handled entirely client-side."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "During a SQL injection test, a penetration tester submits ' OR 1=1-- and the application returns all records. The tester then uses UNION SELECT to extract data from other tables. What type of SQL injection is the UNION-based technique classified as?",
+      "options": {
+        "A": "Blind boolean-based SQL injection",
+        "B": "Error-based SQL injection",
+        "C": "In-band SQL injection",
+        "D": "Out-of-band SQL injection"
+      },
+      "correct": "C",
+      "explanation": "UNION-based SQL injection is an in-band technique where the attacker retrieves data through the same channel used to inject the SQL query, appending results from other tables into the application's normal response."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An attacker crafts a malicious web page that automatically submits a form to transfer funds on a banking site when a logged-in user visits it. Which vulnerability is being exploited?",
+      "options": {
+        "A": "XSS",
+        "B": "CSRF",
+        "C": "SSRF",
+        "D": "Clickjacking"
+      },
+      "correct": "B",
+      "explanation": "Cross-Site Request Forgery (CSRF) exploits the browser's automatic inclusion of cookies in cross-origin requests, causing the victim's browser to perform unintended actions on a site where they are authenticated."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which SameSite cookie attribute value prevents the cookie from being sent on all cross-site requests, including top-level navigations?",
+      "options": {
+        "A": "SameSite=None",
+        "B": "SameSite=Lax",
+        "C": "SameSite=Strict",
+        "D": "SameSite=Origin"
+      },
+      "correct": "C",
+      "explanation": "SameSite=Strict prevents the cookie from being sent on any cross-site request. SameSite=Lax allows cookies on top-level navigations with safe methods like GET, while SameSite=None permits all cross-site requests."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A tester exploits SSRF to access http://169.254.169.254/latest/meta-data/. What is the attacker targeting?",
+      "options": {
+        "A": "The application's internal database",
+        "B": "The cloud instance metadata service",
+        "C": "The application's session storage",
+        "D": "A neighbouring application on the same server"
+      },
+      "correct": "B",
+      "explanation": "The IP address 169.254.169.254 is the link-local address used by AWS, GCP, and Azure to serve instance metadata, which can contain IAM credentials, API keys, and other sensitive configuration data."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In an HTTP request smuggling attack, the CL.TE variant relies on which specific misconfiguration between a front-end and back-end server?",
+      "options": {
+        "A": "The front-end uses Transfer-Encoding and the back-end uses Content-Length",
+        "B": "The front-end uses Content-Length and the back-end uses Transfer-Encoding",
+        "C": "Both servers use Content-Length but disagree on the value",
+        "D": "Both servers use Transfer-Encoding but handle chunked encoding differently"
+      },
+      "correct": "B",
+      "explanation": "In a CL.TE attack, the front-end server processes the request using Content-Length while the back-end uses Transfer-Encoding: chunked, causing them to disagree on where the request body ends and enabling request smuggling."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An attacker modifies an API request from /api/users/42/profile to /api/users/43/profile and successfully accesses another user's data. What vulnerability class does this represent?",
+      "options": {
+        "A": "Broken authentication",
+        "B": "Insecure Direct Object Reference (IDOR)",
+        "C": "Server-Side Request Forgery",
+        "D": "Mass assignment"
+      },
+      "correct": "B",
+      "explanation": "IDOR occurs when an application exposes direct references to internal objects (like user IDs) without verifying that the requesting user is authorised to access them, enabling horizontal privilege escalation."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which HTTP response status code indicates that the server understood the request but refuses to authorise it, regardless of authentication status?",
+      "options": {
+        "A": "401 Unauthorized",
+        "B": "403 Forbidden",
+        "C": "405 Method Not Allowed",
+        "D": "407 Proxy Authentication Required"
+      },
+      "correct": "B",
+      "explanation": "403 Forbidden means the server understands the request but refuses to fulfill it, and re-authenticating will not help. 401 Unauthorized indicates that authentication is required or has failed."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester identifies a blind SQL injection vulnerability. The application does not return error messages or query results in the response. Which technique can confirm the vulnerability using time-based inference?",
+      "options": {
+        "A": "UNION SELECT NULL--",
+        "B": "' AND 1=CONVERT(int, @@version)--",
+        "C": "'; WAITFOR DELAY '0:0:5'--",
+        "D": "' OR 'x'='x"
+      },
+      "correct": "C",
+      "explanation": "Time-based blind SQL injection uses deliberate delays (like WAITFOR DELAY in MSSQL or SLEEP() in MySQL) to infer information. If the response is delayed by 5 seconds, the injection point is confirmed."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which XXE payload technique is used when the application does not display XML parsing results in the response?",
+      "options": {
+        "A": "Classic XXE with SYSTEM entity",
+        "B": "Blind XXE with out-of-band (OOB) data exfiltration",
+        "C": "XInclude injection",
+        "D": "XSLT injection"
+      },
+      "correct": "B",
+      "explanation": "When the application does not reflect XML parsing output, blind XXE via OOB exfiltration is used, where the attacker defines an external entity that causes the server to send data to an attacker-controlled server."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In OAuth 2.0, what is the purpose of the 'state' parameter in the authorisation request?",
+      "options": {
+        "A": "To encrypt the authorisation code during transit",
+        "B": "To prevent CSRF attacks by binding the request to the user's session",
+        "C": "To specify the requested scope of access",
+        "D": "To identify the resource server to the authorisation server"
+      },
+      "correct": "B",
+      "explanation": "The state parameter is a random value tied to the user's session that prevents CSRF attacks on the OAuth callback endpoint. Without it, an attacker could initiate an OAuth flow and have the victim complete it."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A JWT uses RS256 for signing. An attacker obtains the server's public key and changes the algorithm to HS256, then signs the token with the public key. What is this attack called?",
+      "options": {
+        "A": "Key injection attack",
+        "B": "Algorithm confusion attack",
+        "C": "Signature stripping",
+        "D": "Token replay attack"
+      },
+      "correct": "B",
+      "explanation": "The algorithm confusion attack works because if the server naively uses the configured key for verification, it will use the RSA public key as the HMAC secret, which the attacker also possesses, allowing them to forge valid signatures."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which HTTP header is used to prevent a web page from being loaded inside an iframe, mitigating clickjacking attacks?",
+      "options": {
+        "A": "Content-Security-Policy: script-src 'self'",
+        "B": "X-Frame-Options: DENY",
+        "C": "Strict-Transport-Security: max-age=31536000",
+        "D": "X-Content-Type-Options: nosniff"
+      },
+      "correct": "B",
+      "explanation": "X-Frame-Options: DENY prevents the page from being displayed in any iframe. The more modern equivalent is the CSP frame-ancestors directive, but X-Frame-Options remains widely used for clickjacking protection."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester finds a web application that includes user-supplied input in an OS command. The input '; ls -la' is appended to a filename parameter. What type of vulnerability is this?",
+      "options": {
+        "A": "SQL injection",
+        "B": "Server-Side Template Injection",
+        "C": "OS command injection",
+        "D": "XML injection"
+      },
+      "correct": "C",
+      "explanation": "OS command injection occurs when user input is incorporated into system commands without proper sanitisation. The semicolon terminates the original command and allows execution of arbitrary operating system commands."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which CORS misconfiguration allows an attacker to make authenticated cross-origin requests from any domain?",
+      "options": {
+        "A": "Access-Control-Allow-Origin: * with Access-Control-Allow-Credentials: true",
+        "B": "Access-Control-Allow-Origin: null with Access-Control-Allow-Credentials: true",
+        "C": "Reflecting the Origin header value with Access-Control-Allow-Credentials: true",
+        "D": "Access-Control-Allow-Methods: * without credentials"
+      },
+      "correct": "C",
+      "explanation": "Reflecting the request's Origin header as the Access-Control-Allow-Origin value while also setting Access-Control-Allow-Credentials: true allows any origin to make authenticated requests. Browsers block the wildcard (*) when credentials are enabled."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "During a file upload test, an attacker uploads a PHP webshell with a .php.jpg double extension. What defence mechanism is most likely being bypassed?",
+      "options": {
+        "A": "Server-side MIME type validation",
+        "B": "Client-side file size restrictions",
+        "C": "Extension blacklist that only checks the final extension",
+        "D": "Content-Disposition header validation"
+      },
+      "correct": "C",
+      "explanation": "A double extension like .php.jpg can bypass blacklists that only check the last extension. On misconfigured Apache servers with AddHandler, the .php extension may still cause execution despite the trailing .jpg."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the primary purpose of the HttpOnly flag on a cookie?",
+      "options": {
+        "A": "To prevent the cookie from being sent over HTTPS",
+        "B": "To prevent client-side JavaScript from accessing the cookie",
+        "C": "To restrict the cookie to same-site requests only",
+        "D": "To ensure the cookie is only sent with HTTP GET requests"
+      },
+      "correct": "B",
+      "explanation": "The HttpOnly flag prevents JavaScript from accessing the cookie via document.cookie, which mitigates the impact of XSS attacks by making it harder for an attacker to steal session cookies."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A tester discovers a Local File Inclusion (LFI) vulnerability. Which technique allows escalation to Remote Code Execution by injecting PHP code into a readable log file?",
+      "options": {
+        "A": "Path truncation",
+        "B": "Log poisoning",
+        "C": "Null byte injection",
+        "D": "PHP wrapper abuse"
+      },
+      "correct": "B",
+      "explanation": "Log poisoning involves injecting PHP code into log files (e.g., via the User-Agent header in access logs), then using the LFI vulnerability to include the log file, causing the injected PHP code to execute."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which sqlmap flag is used to specify the parameter to test for SQL injection?",
+      "options": {
+        "A": "--dbs",
+        "B": "-p",
+        "C": "--tables",
+        "D": "--os-shell"
+      },
+      "correct": "B",
+      "explanation": "The -p flag in sqlmap specifies which parameter to test for SQL injection (e.g., -p id). By default, sqlmap tests all parameters, but -p allows targeting a specific one for faster and more focused testing."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An application returns different error messages for 'Invalid username' and 'Invalid password'. What type of attack does this facilitate?",
+      "options": {
+        "A": "SQL injection",
+        "B": "Account enumeration",
+        "C": "Session fixation",
+        "D": "CSRF"
+      },
+      "correct": "B",
+      "explanation": "Different error messages for invalid usernames versus invalid passwords allow an attacker to enumerate valid usernames, which can then be used for targeted password attacks like credential stuffing or brute-forcing."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In a DOM-based XSS attack, where does the vulnerability exist?",
+      "options": {
+        "A": "In the server-side rendering logic",
+        "B": "In the database where malicious content is stored",
+        "C": "In the client-side JavaScript that processes user input",
+        "D": "In the HTTP response headers"
+      },
+      "correct": "C",
+      "explanation": "DOM-based XSS occurs entirely client-side when JavaScript reads from a source (e.g., location.hash) and writes to a dangerous sink (e.g., innerHTML) without sanitisation. The server never sees the malicious payload."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which directory traversal encoding can bypass a web application firewall that blocks literal '../' sequences?",
+      "options": {
+        "A": "%00../",
+        "B": "%2e%2e%2f",
+        "C": "....//",
+        "D": "All of the above can potentially bypass filters"
+      },
+      "correct": "D",
+      "explanation": "All three techniques are valid WAF bypass methods: URL-encoding (%2e%2e%2f), null byte injection (%00), and double-dot techniques (....// which becomes ../ after single-pass stripping) can each evade different filter implementations."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the HTTP status code 302 used for?",
+      "options": {
+        "A": "Permanent redirect to a new URL",
+        "B": "Temporary redirect to a different URL",
+        "C": "The resource has not been modified since the last request",
+        "D": "The server cannot process the request due to a client error"
+      },
+      "correct": "B",
+      "explanation": "HTTP 302 Found indicates a temporary redirect. The client should continue to use the original URL for future requests. HTTP 301 indicates a permanent redirect, while 304 means not modified."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester identifies that a WebSocket connection does not validate the Origin header. What attack is possible?",
+      "options": {
+        "A": "WebSocket buffer overflow",
+        "B": "Cross-Site WebSocket Hijacking (CSWSH)",
+        "C": "WebSocket protocol downgrade",
+        "D": "TLS stripping on WebSocket"
+      },
+      "correct": "B",
+      "explanation": "Cross-Site WebSocket Hijacking (CSWSH) exploits the lack of Origin validation, allowing an attacker's malicious page to establish a WebSocket connection to the target application using the victim's authenticated session."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which Content-Security-Policy directive controls which origins are allowed to frame the current page?",
+      "options": {
+        "A": "script-src",
+        "B": "frame-src",
+        "C": "frame-ancestors",
+        "D": "child-src"
+      },
+      "correct": "C",
+      "explanation": "The frame-ancestors CSP directive specifies valid parents that may embed the page using <frame>, <iframe>, or <object>. This is the modern replacement for X-Frame-Options and provides clickjacking protection."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is second-order SQL injection?",
+      "options": {
+        "A": "SQL injection that requires two separate vulnerable parameters",
+        "B": "Malicious input stored in the database that is later used unsafely in a different SQL query",
+        "C": "An injection that affects two database tables simultaneously",
+        "D": "SQL injection that only works after a second login attempt"
+      },
+      "correct": "B",
+      "explanation": "Second-order SQL injection occurs when user input is safely stored in the database but later retrieved and incorporated into a SQL query without proper sanitisation, triggering the injection in a different context."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A tester discovers that modifying the 'quantity' field to a negative value in an e-commerce checkout results in a credit being applied to the order total. What category of vulnerability is this?",
+      "options": {
+        "A": "SQL injection",
+        "B": "Integer overflow",
+        "C": "Business logic vulnerability",
+        "D": "IDOR"
+      },
+      "correct": "C",
+      "explanation": "Business logic vulnerabilities occur when the application fails to enforce expected business rules, such as validating that quantities must be positive. This allows manipulation of pricing and order calculations."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which SAML attack involves moving the signed assertion to a different location in the XML document while adding a malicious unsigned assertion?",
+      "options": {
+        "A": "SAML replay attack",
+        "B": "XML signature wrapping",
+        "C": "SAML token injection",
+        "D": "Assertion cloning"
+      },
+      "correct": "B",
+      "explanation": "XML signature wrapping attacks relocate the legitimately signed element and insert a malicious unsigned element in the position where the application expects to find the assertion, exploiting the disconnect between signature validation and data processing."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What does the Strict-Transport-Security (HSTS) header instruct the browser to do?",
+      "options": {
+        "A": "Block all JavaScript execution on the page",
+        "B": "Only communicate with the server over HTTPS for the specified duration",
+        "C": "Reject any cookies without the Secure flag",
+        "D": "Enforce Content-Security-Policy in strict mode"
+      },
+      "correct": "B",
+      "explanation": "HSTS tells the browser to only access the site over HTTPS for the duration specified by max-age, preventing protocol downgrade attacks and cookie hijacking via HTTP."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester uses the payload <?xml version=\"1.0\"?><!DOCTYPE foo [<!ENTITY xxe SYSTEM \"file:///etc/passwd\">]><data>&xxe;</data>. What is this attack?",
+      "options": {
+        "A": "XPath injection",
+        "B": "XML External Entity (XXE) injection",
+        "C": "XSLT injection",
+        "D": "XML bomb (Billion Laughs)"
+      },
+      "correct": "B",
+      "explanation": "This is an XXE attack that defines an external entity referencing a local file (/etc/passwd). When the XML parser processes the entity, it reads and includes the file contents in the response."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In OAuth 2.0, what vulnerability arises when the redirect_uri parameter is not strictly validated?",
+      "options": {
+        "A": "The authorisation server will reject all requests",
+        "B": "An attacker can redirect the authorisation code or token to their controlled endpoint",
+        "C": "The refresh token will be invalidated",
+        "D": "The scope of the access token will be elevated"
+      },
+      "correct": "B",
+      "explanation": "If redirect_uri is not strictly validated, an attacker can register a malicious redirect URI and trick the user into authorising a request that sends the authorisation code or access token to the attacker's server."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which HTTP header is used to specify the MIME type of the request or response body?",
+      "options": {
+        "A": "Accept",
+        "B": "Content-Type",
+        "C": "Content-Encoding",
+        "D": "Transfer-Encoding"
+      },
+      "correct": "B",
+      "explanation": "The Content-Type header indicates the media type of the resource or the data in the request/response body (e.g., application/json, text/html). Accept specifies what types the client is willing to receive."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A session fixation attack works by:",
+      "options": {
+        "A": "Stealing a valid session token from a logged-in user",
+        "B": "Setting a known session ID before the victim authenticates, then using that ID after login",
+        "C": "Predicting the next session ID based on sequential patterns",
+        "D": "Injecting a malicious cookie into the victim's browser via XSS"
+      },
+      "correct": "B",
+      "explanation": "Session fixation involves the attacker setting a known session ID (e.g., via URL parameter or cookie injection) before the victim logs in. If the application does not regenerate the session ID after authentication, the attacker can use the pre-set ID."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the difference between horizontal and vertical privilege escalation in the context of IDOR?",
+      "options": {
+        "A": "Horizontal accesses data across multiple databases; vertical accesses data in a single database",
+        "B": "Horizontal accesses another user's data at the same privilege level; vertical accesses higher-privilege functionality",
+        "C": "Horizontal works across subdomains; vertical works within a single application",
+        "D": "Horizontal requires authentication; vertical does not"
+      },
+      "correct": "B",
+      "explanation": "Horizontal privilege escalation means accessing resources belonging to another user at the same privilege level. Vertical privilege escalation means accessing functionality or data intended for a higher-privilege role (e.g., admin functions)."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester wants to detect blind command injection. Which technique would confirm command execution without visible output?",
+      "options": {
+        "A": "Appending '; echo vulnerable' to the input",
+        "B": "Using time-based detection such as '; sleep 10'",
+        "C": "Submitting a UNION SELECT query",
+        "D": "Injecting <script>alert(1)</script>"
+      },
+      "correct": "B",
+      "explanation": "Blind command injection is confirmed via observable side effects. A time delay ('; sleep 10') causes the response to be delayed by 10 seconds if the command executes, confirming the injection without requiring output in the response."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which CSP directive, if set to 'unsafe-inline', allows execution of inline scripts and undermines XSS protection?",
+      "options": {
+        "A": "default-src",
+        "B": "script-src",
+        "C": "style-src",
+        "D": "img-src"
+      },
+      "correct": "B",
+      "explanation": "Setting script-src to 'unsafe-inline' allows inline <script> blocks and event handlers to execute, which effectively negates CSP's XSS protection since attackers can inject and execute inline scripts."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is password spraying?",
+      "options": {
+        "A": "Trying all possible passwords against a single account",
+        "B": "Using a few commonly used passwords against many accounts simultaneously",
+        "C": "Extracting password hashes from a database and cracking them offline",
+        "D": "Injecting password reset tokens into a login form"
+      },
+      "correct": "B",
+      "explanation": "Password spraying tests a small number of commonly used passwords (e.g., 'Password1', 'Summer2024!') against many accounts. This avoids account lockout thresholds that would trigger with brute-force attacks against individual accounts."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the X-Forwarded-For header commonly used for, and why is it security-relevant?",
+      "options": {
+        "A": "It encrypts the client's IP address in transit",
+        "B": "It identifies the original client IP when requests pass through proxies, and can be spoofed to bypass IP-based access controls",
+        "C": "It forwards authentication credentials to upstream servers",
+        "D": "It specifies the forwarding protocol (HTTP or HTTPS)"
+      },
+      "correct": "B",
+      "explanation": "X-Forwarded-For records the originating client IP address through proxy chains. Since it is a client-controllable header, applications that trust it for access control or rate limiting can be bypassed by spoofing the header value."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which HTTP status code indicates that the server received the request but the method is not supported for the target resource?",
+      "options": {
+        "A": "400 Bad Request",
+        "B": "403 Forbidden",
+        "C": "405 Method Not Allowed",
+        "D": "501 Not Implemented"
+      },
+      "correct": "C",
+      "explanation": "405 Method Not Allowed indicates that the HTTP method used is known by the server but not supported for the requested resource. 501 means the server does not recognise the method at all."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester discovers that an application accepts XML input. To test for XXE, the tester wants to exfiltrate data when the application does not return XML parsing results. Which approach should be used?",
+      "options": {
+        "A": "Use a CDATA section to wrap the output",
+        "B": "Use a parameter entity to send data to an external DTD hosted on the attacker's server",
+        "C": "Use XPath injection to query internal data",
+        "D": "Use an XInclude directive to embed a remote file"
+      },
+      "correct": "B",
+      "explanation": "For blind XXE, the attacker uses parameter entities to load an external DTD from their server. This DTD instructs the parser to send the target file contents to the attacker's server via an HTTP request, enabling out-of-band data exfiltration."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which sqlmap option is used to enumerate the databases on the backend DBMS after confirming a SQL injection vulnerability?",
+      "options": {
+        "A": "-p",
+        "B": "--dbs",
+        "C": "--tables",
+        "D": "--dump"
+      },
+      "correct": "B",
+      "explanation": "The --dbs flag instructs sqlmap to enumerate all databases on the backend DBMS. After identifying databases, --tables and --columns can be used to further enumerate the schema, and --dump extracts data."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In the context of CORS, what happens when Access-Control-Allow-Origin is set to 'null' with Access-Control-Allow-Credentials: true?",
+      "options": {
+        "A": "No cross-origin requests are permitted",
+        "B": "Only requests from sandboxed iframes or local files (which have a null origin) are trusted with credentials",
+        "C": "All origins are granted access",
+        "D": "The server returns a 403 Forbidden response"
+      },
+      "correct": "B",
+      "explanation": "Trusting the 'null' origin with credentials is dangerous because sandboxed iframes and redirected requests have a null origin. An attacker can use a sandboxed iframe to send credentialed requests to the target."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which technique exploits a Remote File Inclusion (RFI) vulnerability?",
+      "options": {
+        "A": "Including a URL to an attacker-hosted malicious script in a file inclusion parameter",
+        "B": "Uploading a malicious file through a file upload form",
+        "C": "Injecting SQL into a file path parameter",
+        "D": "Using directory traversal to access /etc/shadow"
+      },
+      "correct": "A",
+      "explanation": "RFI occurs when the application includes a file from a remote URL specified in user input (e.g., ?page=http://evil.com/shell.php). The attacker hosts a malicious script that gets included and executed by the target server."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the primary risk when an OAuth 2.0 implicit flow is used for authentication?",
+      "options": {
+        "A": "The refresh token is exposed in the URL fragment",
+        "B": "The access token is exposed in the URL fragment and browser history, and cannot be verified by the client",
+        "C": "The authorisation code can be intercepted by a man-in-the-middle",
+        "D": "The client secret is sent in the redirect URI"
+      },
+      "correct": "B",
+      "explanation": "The implicit flow returns the access token directly in the URL fragment (#access_token=...), which is exposed in browser history and can be leaked via the Referer header. It also lacks a mechanism to verify the token's intended audience."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A tester discovers that submitting a TRACE request to a web server returns the full request including cookies and authorisation headers. What attack does this enable?",
+      "options": {
+        "A": "HTTP response splitting",
+        "B": "Cross-Site Tracing (XST)",
+        "C": "Request smuggling",
+        "D": "Cache poisoning"
+      },
+      "correct": "B",
+      "explanation": "Cross-Site Tracing (XST) uses the TRACE method to reflect request headers (including HttpOnly cookies) back to the client. Combined with XSS, this can bypass the HttpOnly flag and expose session cookies."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In a mass assignment vulnerability, what does the attacker exploit?",
+      "options": {
+        "A": "The ability to modify multiple database records in a single request",
+        "B": "An API endpoint that binds user-supplied data to internal object properties without filtering, allowing modification of unintended fields",
+        "C": "A race condition that allows simultaneous write operations",
+        "D": "An insecure deserialization flaw that creates arbitrary objects"
+      },
+      "correct": "B",
+      "explanation": "Mass assignment occurs when an API automatically binds request parameters to internal model properties. An attacker can add unexpected parameters (e.g., isAdmin=true) that modify sensitive fields the developer did not intend to expose."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which Referrer-Policy value completely prevents the Referer header from being sent with any request?",
+      "options": {
+        "A": "no-referrer-when-downgrade",
+        "B": "same-origin",
+        "C": "no-referrer",
+        "D": "strict-origin"
+      },
+      "correct": "C",
+      "explanation": "no-referrer instructs the browser to never send the Referer header with any request, preventing leakage of sensitive URL parameters. Other policies selectively include the referrer based on conditions like origin or protocol."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester wants to bypass a WAF that blocks common SQL injection keywords. Which technique could help evade detection?",
+      "options": {
+        "A": "Using comments to break up keywords, e.g., SEL/**/ECT",
+        "B": "Using lowercase instead of uppercase SQL keywords",
+        "C": "Adding extra whitespace between keywords",
+        "D": "Encoding the entire query in Base64"
+      },
+      "correct": "A",
+      "explanation": "Inline comments (/**/) can break up SQL keywords to evade signature-based WAF detection while remaining valid SQL. The database parser ignores the comments, but the WAF fails to recognise the keyword pattern."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which LFI technique leverages /proc/self/environ to achieve code execution on a Linux system?",
+      "options": {
+        "A": "Reading /proc/self/environ to discover database credentials",
+        "B": "Poisoning the HTTP_USER_AGENT environment variable with PHP code, then including /proc/self/environ via LFI",
+        "C": "Overwriting /proc/self/environ with a reverse shell",
+        "D": "Using /proc/self/environ to bypass chroot restrictions"
+      },
+      "correct": "B",
+      "explanation": "On Linux, /proc/self/environ contains the process's environment variables including HTTP headers. An attacker can inject PHP code via the User-Agent header, then include /proc/self/environ via LFI to execute the injected code."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the HTTP 502 status code used for?",
+      "options": {
+        "A": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+        "B": "The server, acting as a gateway, received an invalid response from the upstream server",
+        "C": "The client request was too large for the server to process",
+        "D": "The requested service is temporarily unavailable due to maintenance"
+      },
+      "correct": "B",
+      "explanation": "502 Bad Gateway indicates that the server, while acting as a gateway or proxy, received an invalid response from an upstream server. 500 Internal Server Error indicates a generic server-side failure."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An attacker sends a crafted request that is interpreted as one request by the front-end proxy but as two requests by the back-end server. What vulnerability is being exploited?",
+      "options": {
+        "A": "HTTP parameter pollution",
+        "B": "HTTP request smuggling",
+        "C": "HTTP response splitting",
+        "D": "HTTP verb tampering"
+      },
+      "correct": "B",
+      "explanation": "HTTP request smuggling exploits discrepancies between how front-end and back-end servers parse HTTP request boundaries, allowing the attacker to 'smuggle' a second request inside the first, potentially poisoning other users' requests."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which cookie attribute ensures a cookie is only sent with requests originating from the same site, but allows top-level GET navigations from external sites?",
+      "options": {
+        "A": "SameSite=Strict",
+        "B": "SameSite=Lax",
+        "C": "SameSite=None",
+        "D": "SameSite=Origin"
+      },
+      "correct": "B",
+      "explanation": "SameSite=Lax allows cookies to be sent with top-level navigations using safe HTTP methods (GET) but blocks them on cross-site subrequests (like POST forms, iframes, and AJAX), providing partial CSRF protection."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A stored XSS payload is injected into a profile page that is viewed by administrators. What is the most impactful attack the stored XSS can enable?",
+      "options": {
+        "A": "Defacing the attacker's own profile page",
+        "B": "Hijacking the administrator's session cookie and escalating to administrative privileges",
+        "C": "Causing a denial of service by redirecting all users",
+        "D": "Modifying the application's CSS styles"
+      },
+      "correct": "B",
+      "explanation": "Stored XSS targeting administrators can steal their session cookies (if HttpOnly is not set) or perform actions on their behalf, leading to full account takeover and administrative privilege escalation."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which of the following describes a SAML replay attack?",
+      "options": {
+        "A": "Modifying the SAML assertion to change the authenticated user",
+        "B": "Capturing a valid SAML response and resubmitting it to authenticate as the victim",
+        "C": "Injecting malicious XML into the SAML metadata",
+        "D": "Downgrading the SAML protocol version to an insecure implementation"
+      },
+      "correct": "B",
+      "explanation": "A SAML replay attack captures a legitimately issued SAML response and re-uses it to authenticate. This is prevented by implementing assertion expiry timestamps, one-time-use constraints, and audience restrictions."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A web application uses the Authorization header with a Bearer token. What type of authentication mechanism is typically being used?",
+      "options": {
+        "A": "HTTP Basic authentication",
+        "B": "NTLM authentication",
+        "C": "Token-based authentication (e.g., OAuth 2.0 access tokens or JWTs)",
+        "D": "Digest authentication"
+      },
+      "correct": "C",
+      "explanation": "The Bearer scheme in the Authorization header carries an access token, typically from OAuth 2.0 or a JWT-based authentication system. HTTP Basic uses Base64-encoded credentials, and Digest uses a challenge-response hash."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An API endpoint accepts a JSON request with user-controllable fields. An attacker adds a 'role': 'admin' field to the registration request and successfully creates an admin account. What vulnerability is this?",
+      "options": {
+        "A": "IDOR",
+        "B": "Privilege escalation via mass assignment",
+        "C": "JSON injection",
+        "D": "Broken access control in the API gateway"
+      },
+      "correct": "B",
+      "explanation": "Mass assignment occurs when the API blindly binds all request parameters to the internal data model. The attacker exploits this by including fields like 'role' that the developer did not intend users to control."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the purpose of the HEAD HTTP method?",
+      "options": {
+        "A": "To submit data to the server without expecting a response body",
+        "B": "To request only the headers of a response, identical to GET but without the response body",
+        "C": "To check if a resource supports conditional requests",
+        "D": "To retrieve metadata about the server's configuration"
+      },
+      "correct": "B",
+      "explanation": "The HEAD method is identical to GET except the server must not return a message body. It is used to check resource existence, verify content type, or test if a URL is reachable without downloading the full content."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester encounters a web application that blocks the string '../' but does not handle URL-encoded input. Which payload could bypass this filter?",
+      "options": {
+        "A": "..\\",
+        "B": "..;/",
+        "C": "%2e%2e%2f",
+        "D": ".../"
+      },
+      "correct": "C",
+      "explanation": "%2e%2e%2f is the URL-encoded form of '../'. If the filter checks for the literal string '../' but the web server decodes URL encoding before processing the path, the filter is bypassed while the traversal still works."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which of the following is the most reliable way to prevent CSRF in a modern web application?",
+      "options": {
+        "A": "Checking the Referer header",
+        "B": "Using synchronizer tokens (CSRF tokens) bound to the user's session",
+        "C": "Using CAPTCHA on every form",
+        "D": "Requiring HTTPS for all requests"
+      },
+      "correct": "B",
+      "explanation": "Synchronizer tokens (CSRF tokens) are unpredictable values tied to the user's session that must be included in state-changing requests. The server validates the token, ensuring the request originated from the legitimate application."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester finds a blind SSRF vulnerability where no response content is returned. How can they confirm the vulnerability?",
+      "options": {
+        "A": "By observing DNS lookups or HTTP requests to an attacker-controlled server",
+        "B": "By checking the HTTP status code of the response",
+        "C": "By analysing the Content-Length header of the response",
+        "D": "By injecting JavaScript into the SSRF parameter"
+      },
+      "correct": "A",
+      "explanation": "Blind SSRF is confirmed using out-of-band techniques. The attacker supplies a URL pointing to their controlled server (e.g., Burp Collaborator) and monitors for incoming DNS queries or HTTP requests from the target server."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which HTTP method is used to partially update a resource?",
+      "options": {
+        "A": "PUT",
+        "B": "POST",
+        "C": "PATCH",
+        "D": "UPDATE"
+      },
+      "correct": "C",
+      "explanation": "PATCH is used for partial modifications to a resource, unlike PUT which replaces the entire resource. UPDATE is not a standard HTTP method."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is credential stuffing?",
+      "options": {
+        "A": "Testing default credentials against a list of known services",
+        "B": "Using username/password pairs leaked from breaches on other sites to attempt login on a target application",
+        "C": "Brute-forcing passwords using a wordlist with rule-based mutations",
+        "D": "Injecting credentials into HTTP headers to bypass authentication"
+      },
+      "correct": "B",
+      "explanation": "Credential stuffing uses previously breached username/password combinations to attempt login on other services, exploiting password reuse across sites. It differs from brute-forcing by using known valid credential pairs."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In a UNION-based SQL injection attack, why must the attacker match the number of columns in the original query?",
+      "options": {
+        "A": "To avoid syntax errors, as UNION requires both SELECT statements to have the same number of columns",
+        "B": "To ensure the injected data is stored in the database",
+        "C": "To bypass the application's parameterised query mechanism",
+        "D": "To prevent the database from logging the query"
+      },
+      "correct": "A",
+      "explanation": "SQL UNION operations require both SELECT statements to return the same number of columns with compatible data types. Mismatched columns cause a syntax error, revealing the injection but failing to extract data."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which technique can an attacker use to enumerate valid usernames via timing differences?",
+      "options": {
+        "A": "Observing that the server takes longer to process requests for valid usernames due to password hashing",
+        "B": "Checking for differences in the Content-Length header for different usernames",
+        "C": "Monitoring the server's CPU usage remotely",
+        "D": "Comparing TLS handshake times for different login attempts"
+      },
+      "correct": "A",
+      "explanation": "If the application only performs expensive operations (like bcrypt hashing) when the username is valid, the response time for valid usernames will be measurably longer, allowing enumeration through timing analysis."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An e-commerce application allows users to apply a discount code. A tester discovers that applying the code multiple times in rapid succession stacks the discount. What type of vulnerability is this?",
+      "options": {
+        "A": "SQL injection",
+        "B": "Race condition / business logic vulnerability",
+        "C": "CSRF",
+        "D": "IDOR"
+      },
+      "correct": "B",
+      "explanation": "This is a business logic vulnerability combined with a race condition (TOCTOU issue). The application fails to enforce that a discount code can only be applied once, and concurrent requests bypass single-use checks."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What does the X-Content-Type-Options: nosniff header prevent?",
+      "options": {
+        "A": "Cross-site scripting attacks",
+        "B": "MIME type sniffing, where the browser ignores the declared Content-Type and interprets the content differently",
+        "C": "Clickjacking attacks",
+        "D": "Man-in-the-middle attacks"
+      },
+      "correct": "B",
+      "explanation": "X-Content-Type-Options: nosniff prevents browsers from MIME-sniffing a response away from the declared Content-Type, which could otherwise allow an attacker to execute malicious content uploaded as an innocuous file type."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A tester finds a file upload feature that validates the Content-Type header but not the actual file content. How can they bypass this to upload a PHP webshell?",
+      "options": {
+        "A": "Set Content-Type to image/jpeg while uploading a .php file",
+        "B": "Compress the PHP file into a ZIP archive",
+        "C": "Encode the PHP code in Base64",
+        "D": "Rename the file to .php.disabled"
+      },
+      "correct": "A",
+      "explanation": "If the application only validates the Content-Type header (which is client-controlled), setting it to image/jpeg while uploading a PHP webshell with a .php extension can bypass the check while the server still executes the PHP file."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the impact of a CSP that includes 'unsafe-eval' in the script-src directive?",
+      "options": {
+        "A": "It allows inline event handlers but blocks eval()",
+        "B": "It allows the use of eval(), Function(), and other dynamic code execution methods, weakening XSS protection",
+        "C": "It permits loading scripts from any external domain",
+        "D": "It disables the CSP entirely for script resources"
+      },
+      "correct": "B",
+      "explanation": "'unsafe-eval' allows JavaScript's eval(), Function(), setTimeout(string), and setInterval(string), enabling attackers to execute dynamically constructed code strings, which significantly weakens CSP's protection against XSS."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which of the following best describes an error-based SQL injection technique?",
+      "options": {
+        "A": "Injecting SQL that causes the database to return error messages containing extracted data",
+        "B": "Exploiting application error handling to bypass authentication",
+        "C": "Using errors in the application code to find SQL injection points",
+        "D": "Triggering a database error to cause a denial of service"
+      },
+      "correct": "A",
+      "explanation": "Error-based SQL injection deliberately triggers database error messages that contain extracted data. For example, using EXTRACTVALUE() or UPDATEXML() in MySQL to embed query results within error messages returned to the user."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In a REST API penetration test, a tester changes the HTTP method from GET to PUT on an endpoint and successfully modifies data. What does this indicate?",
+      "options": {
+        "A": "The API uses proper RESTful conventions",
+        "B": "The API does not enforce method-level access controls",
+        "C": "The API has a CSRF vulnerability",
+        "D": "The API uses stateless authentication"
+      },
+      "correct": "B",
+      "explanation": "If changing the HTTP method from GET to PUT allows data modification, the API lacks proper method-level authorisation checks. A secure API should validate that the authenticated user is authorised for each specific HTTP method."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester exploits an SSRF vulnerability to access http://localhost:6379 and sends Redis commands. What is the attacker attempting?",
+      "options": {
+        "A": "Exploiting a SQL injection in the Redis database",
+        "B": "Using SSRF to interact with an internal Redis service to read/write data or achieve code execution",
+        "C": "Performing a DNS rebinding attack against the Redis instance",
+        "D": "Exploiting a buffer overflow in the Redis protocol parser"
+      },
+      "correct": "B",
+      "explanation": "SSRF to localhost:6379 targets the Redis service. Redis often runs without authentication on internal networks, and attackers can use it to read sensitive data, write SSH keys, or exploit cron-based code execution."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the PATCH method's primary difference from PUT in RESTful APIs?",
+      "options": {
+        "A": "PATCH creates a new resource while PUT updates an existing one",
+        "B": "PATCH applies a partial modification while PUT replaces the entire resource",
+        "C": "PATCH is idempotent while PUT is not",
+        "D": "PATCH requires authentication while PUT does not"
+      },
+      "correct": "B",
+      "explanation": "PATCH applies partial modifications to a resource, sending only the fields to be changed. PUT replaces the entire resource with the provided representation. PATCH is not necessarily idempotent, while PUT is."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A web application returns a 301 status code. What does this mean for a penetration tester examining the application's behaviour?",
+      "options": {
+        "A": "The resource has been permanently moved to a new URL, and the browser will cache this redirect",
+        "B": "The request was malformed and rejected by the server",
+        "C": "The user needs to authenticate before accessing the resource",
+        "D": "The server encountered a temporary error and the request should be retried"
+      },
+      "correct": "A",
+      "explanation": "301 Moved Permanently indicates the resource has been permanently relocated. Browsers cache 301 redirects, which is relevant for testing as it can mask subsequent requests to the original URL."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An attacker crafts an XSS payload that reads document.cookie and sends it to their server. Which cookie attribute would prevent this specific attack from capturing the session token?",
+      "options": {
+        "A": "Secure",
+        "B": "HttpOnly",
+        "C": "SameSite=Strict",
+        "D": "Path=/"
+      },
+      "correct": "B",
+      "explanation": "HttpOnly prevents JavaScript from accessing the cookie via document.cookie, so even if XSS executes, the session token cannot be read and exfiltrated. The Secure flag only controls transport encryption."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In an OAuth 2.0 flow, what happens if the implicit grant type is used and the access token leaks via the Referer header?",
+      "options": {
+        "A": "Nothing, as the token is encrypted",
+        "B": "The attacker obtains the access token and can impersonate the user for the token's lifetime",
+        "C": "The authorisation server automatically revokes the token",
+        "D": "The client application detects the leak and refreshes the token"
+      },
+      "correct": "B",
+      "explanation": "Implicit flow tokens in URL fragments can leak via the Referer header to third-party resources. The attacker gains a valid access token with no mechanism for detection or automatic revocation by the authorisation server."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which Boolean-based blind SQL injection payload would extract the first character of the database version string?",
+      "options": {
+        "A": "' AND SUBSTRING(@@version,1,1)='5'--",
+        "B": "' UNION SELECT @@version--",
+        "C": "' OR 1=1--",
+        "D": "'; DROP TABLE users--"
+      },
+      "correct": "A",
+      "explanation": "Boolean-based blind SQL injection uses conditional expressions that change the application's response (true/false). SUBSTRING extracts individual characters for comparison, allowing data extraction one character at a time."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An application allows users to upload profile images. Which server-side validation is most effective at preventing webshell uploads?",
+      "options": {
+        "A": "Checking only the file extension against a whitelist",
+        "B": "Validating the Content-Type header from the upload request",
+        "C": "Verifying the file's magic bytes and re-encoding/re-processing the image",
+        "D": "Limiting the file size to under 1MB"
+      },
+      "correct": "C",
+      "explanation": "Checking magic bytes (file signatures) and re-processing the image through an image library strips any embedded code. Extension whitelists can be bypassed, and Content-Type headers are client-controlled."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the primary security concern with GraphQL introspection queries being enabled in production?",
+      "options": {
+        "A": "They allow direct SQL injection into the database",
+        "B": "They expose the entire API schema including all types, fields, and relationships, aiding reconnaissance",
+        "C": "They allow authentication bypass",
+        "D": "They enable file upload through arbitrary fields"
+      },
+      "correct": "B",
+      "explanation": "GraphQL introspection reveals the complete API schema, including hidden or undocumented fields and mutations. This significantly reduces the time needed for reconnaissance and helps attackers identify sensitive operations."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester intercepts a JWT and notices the 'alg' field is set to 'HS256'. The tester has access to the server's RSA public key. How might the tester exploit the algorithm confusion vulnerability?",
+      "options": {
+        "A": "Change the algorithm to RS256 and sign with the public key",
+        "B": "Change the algorithm to HS256 (keeping it the same) and sign with the RSA public key as the HMAC secret",
+        "C": "Remove the signature entirely",
+        "D": "Change the algorithm to HS512 for a stronger signature"
+      },
+      "correct": "B",
+      "explanation": "If the server originally uses RS256, the attacker changes alg to HS256 and signs the token using the RSA public key as the HMAC secret. The server may verify using the same public key with HMAC, accepting the forged token."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which CORS header specifies whether the browser should include credentials (cookies, HTTP authentication) in cross-origin requests?",
+      "options": {
+        "A": "Access-Control-Allow-Origin",
+        "B": "Access-Control-Allow-Credentials",
+        "C": "Access-Control-Allow-Methods",
+        "D": "Access-Control-Expose-Headers"
+      },
+      "correct": "B",
+      "explanation": "Access-Control-Allow-Credentials: true tells the browser it is permitted to include credentials in cross-origin requests. Without this header, cookies and auth headers are stripped from CORS requests even if the origin is allowed."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which command injection payload uses an out-of-band channel to confirm code execution when there is no visible output?",
+      "options": {
+        "A": "; id",
+        "B": "| nslookup attacker-controlled-domain.com",
+        "C": "&& cat /etc/passwd",
+        "D": "; echo vulnerable"
+      },
+      "correct": "B",
+      "explanation": "Out-of-band detection uses DNS or HTTP requests to an attacker-controlled server. If the server receives a DNS lookup for the specified domain, it confirms command execution even when the application returns no visible output."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What vulnerability does the DELETE HTTP method pose when unrestricted on a REST API?",
+      "options": {
+        "A": "Information disclosure through error messages",
+        "B": "Unauthorised deletion of resources if access controls do not verify the user's permissions",
+        "C": "Buffer overflow in the request parser",
+        "D": "Server-side request forgery through URL manipulation"
+      },
+      "correct": "B",
+      "explanation": "If DELETE is unrestricted, any authenticated (or unauthenticated) user can delete arbitrary resources. Proper authorisation checks must verify that the requesting user has permission to delete each specific resource."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester finds that a web application reflects user input within a JavaScript string context: var x = 'USER_INPUT';. Which XSS payload would break out of this context?",
+      "options": {
+        "A": "<script>alert(1)</script>",
+        "B": "';alert(1);//",
+        "C": "<img src=x onerror=alert(1)>",
+        "D": "javascript:alert(1)"
+      },
+      "correct": "B",
+      "explanation": "The payload ';alert(1);// closes the string with a single quote, terminates the statement with a semicolon, executes alert(1), and comments out the remaining code with //. The context requires breaking out of the JS string."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the security risk of a web application that allows users to control the 'Host' header and uses it to generate password reset links?",
+      "options": {
+        "A": "SQL injection in the Host header processing",
+        "B": "Host header injection allowing the attacker to poison password reset URLs with their controlled domain",
+        "C": "Denial of service through malformed Host headers",
+        "D": "XSS through Host header reflection"
+      },
+      "correct": "B",
+      "explanation": "If the application uses the Host header to construct password reset URLs, an attacker can inject their controlled domain. The victim receives a reset link pointing to the attacker's server, which captures the reset token."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which null byte injection technique was historically used to truncate file paths in PHP LFI attacks?",
+      "options": {
+        "A": "Adding %00 before the enforced file extension to terminate the string early",
+        "B": "Using %0d%0a to inject a newline into the file path",
+        "C": "Encoding the entire path in UTF-16 with null bytes between characters",
+        "D": "Inserting a null byte at the beginning of the file path"
+      },
+      "correct": "A",
+      "explanation": "In older PHP versions (< 5.3.4), appending %00 to the file path truncated the string at the null byte, effectively removing any appended extension (e.g., .php). This allowed including files without the forced extension."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A tester discovers that a GraphQL endpoint accepts a mutation that modifies a user's role without requiring admin privileges. What type of vulnerability is this?",
+      "options": {
+        "A": "Injection",
+        "B": "Broken access control",
+        "C": "Insecure deserialization",
+        "D": "Security misconfiguration"
+      },
+      "correct": "B",
+      "explanation": "This is a broken access control vulnerability. The GraphQL mutation should enforce authorisation checks to ensure only administrators can modify user roles, regardless of the API's schema exposure."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which of the following correctly describes the TE.CL variant of HTTP request smuggling?",
+      "options": {
+        "A": "The front-end uses Transfer-Encoding: chunked and the back-end uses Content-Length",
+        "B": "The front-end uses Content-Length and the back-end uses Transfer-Encoding: chunked",
+        "C": "Both servers use Transfer-Encoding but with different chunk sizes",
+        "D": "The front-end strips the Transfer-Encoding header before forwarding"
+      },
+      "correct": "A",
+      "explanation": "In TE.CL smuggling, the front-end processes the request using Transfer-Encoding: chunked while the back-end uses Content-Length. The attacker crafts a request where the chunked encoding hides a smuggled request from the front-end."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the main risk of using a wildcard (*) for Access-Control-Allow-Origin without also setting Access-Control-Allow-Credentials?",
+      "options": {
+        "A": "Any site can make cross-origin requests, but only unauthenticated ones since browsers block credentials with wildcard origins",
+        "B": "All cross-origin requests are blocked",
+        "C": "Authenticated requests from any origin are permitted",
+        "D": "The wildcard is ignored by all modern browsers"
+      },
+      "correct": "A",
+      "explanation": "A wildcard Access-Control-Allow-Origin allows any site to read the response, but browsers refuse to send credentials (cookies, auth headers) when the origin is a wildcard. The risk is limited to exposing unauthenticated data."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An attacker exploits an XXE vulnerability to perform SSRF. Which payload enables this?",
+      "options": {
+        "A": "<!ENTITY xxe SYSTEM \"http://internal-server/admin\">",
+        "B": "<!ENTITY xxe SYSTEM \"file:///etc/passwd\">",
+        "C": "<!ENTITY xxe PUBLIC \"-//W3C//DTD HTML//EN\">",
+        "D": "<!ENTITY xxe SYSTEM \"data:text/plain,test\">"
+      },
+      "correct": "A",
+      "explanation": "Using the SYSTEM keyword with an HTTP URL in an XXE entity causes the XML parser to make an HTTP request to the specified internal server, effectively using XXE as an SSRF vector to access internal services."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester identifies that an application uses sequential integer session IDs. What attack does this enable?",
+      "options": {
+        "A": "Session fixation",
+        "B": "Session prediction",
+        "C": "Session replay",
+        "D": "Session poisoning"
+      },
+      "correct": "B",
+      "explanation": "Sequential or predictable session IDs allow an attacker to predict valid session IDs of other users by observing the pattern. Session IDs should be cryptographically random to prevent prediction attacks."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which HTTP response header instructs the browser to enforce HTTPS for a specified duration, including subdomains?",
+      "options": {
+        "A": "Content-Security-Policy: upgrade-insecure-requests",
+        "B": "Strict-Transport-Security: max-age=31536000; includeSubDomains",
+        "C": "X-Content-Type-Options: nosniff",
+        "D": "X-XSS-Protection: 1; mode=block"
+      },
+      "correct": "B",
+      "explanation": "HSTS with includeSubDomains forces the browser to use HTTPS for the domain and all subdomains for the specified max-age period, preventing protocol downgrade attacks across the entire domain hierarchy."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester discovers that an application workflow allows skipping the payment step by directly accessing the order confirmation URL. What type of vulnerability is this?",
+      "options": {
+        "A": "Broken authentication",
+        "B": "IDOR",
+        "C": "Business logic vulnerability \u2014 workflow bypass",
+        "D": "Session fixation"
+      },
+      "correct": "C",
+      "explanation": "This is a business logic vulnerability where the application fails to enforce the expected sequence of steps. Proper workflow enforcement should verify that all prerequisite steps (including payment) were completed before allowing progression."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In a CSRF token implementation, where should the token be placed in the request to prevent extraction by an attacker?",
+      "options": {
+        "A": "In the URL query string",
+        "B": "In a hidden form field or custom HTTP header",
+        "C": "In the cookie",
+        "D": "In the Referer header"
+      },
+      "correct": "B",
+      "explanation": "CSRF tokens should be placed in hidden form fields or custom HTTP headers because these cannot be set by cross-origin requests. Placing tokens in cookies alone is insufficient since cookies are automatically included in cross-origin requests."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which of the following accurately describes the difference between rate limiting bypass via IP rotation and via header manipulation?",
+      "options": {
+        "A": "IP rotation changes the source IP while header manipulation uses X-Forwarded-For to spoof the apparent client IP",
+        "B": "IP rotation is server-side while header manipulation is client-side",
+        "C": "IP rotation only works on HTTP while header manipulation works on HTTPS",
+        "D": "There is no meaningful difference between the two techniques"
+      },
+      "correct": "A",
+      "explanation": "IP rotation uses proxies or VPNs to change the actual source IP, while X-Forwarded-For spoofing tricks applications that trust this header for rate limiting into treating each request as coming from a different client."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A web application uses DOM manipulation via innerHTML with user-controlled data from window.location.hash. What vulnerability type does this create?",
+      "options": {
+        "A": "Reflected XSS",
+        "B": "Stored XSS",
+        "C": "DOM-based XSS",
+        "D": "Server-side template injection"
+      },
+      "correct": "C",
+      "explanation": "Using innerHTML as a sink with window.location.hash as a source creates a DOM-based XSS vulnerability. The payload never reaches the server \u2014 the client-side JavaScript processes the hash value and writes it to the DOM unsafely."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "When testing for SQL injection using sqlmap, which tamper script can help bypass a WAF that blocks spaces in SQL queries?",
+      "options": {
+        "A": "--tamper=space2comment",
+        "B": "--tamper=base64encode",
+        "C": "--tamper=randomcase",
+        "D": "--tamper=htmlencode"
+      },
+      "correct": "A",
+      "explanation": "The space2comment tamper script replaces spaces with inline comments (/**/), which are valid SQL whitespace equivalents. This bypasses WAFs that specifically block space characters in SQL injection patterns."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A clickjacking attack places a transparent iframe over a visible button. What user interaction is being exploited?",
+      "options": {
+        "A": "The user unknowingly clicks the framed page's button thinking they are clicking the visible page's button",
+        "B": "The user's mouse movements are recorded through the iframe",
+        "C": "The user's keystrokes are intercepted by the iframe",
+        "D": "The user's cookies are stolen through the iframe"
+      },
+      "correct": "A",
+      "explanation": "Clickjacking uses a transparent iframe positioned over a legitimate-looking page so that when users click what they see, they actually interact with the hidden iframe, performing unintended actions on the framed site."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An application uses a price value submitted from a hidden HTML form field. A tester modifies this value to 0.01 before submitting. What vulnerability category does this fall under?",
+      "options": {
+        "A": "XSS",
+        "B": "Business logic vulnerability \u2014 price manipulation",
+        "C": "SQL injection",
+        "D": "CSRF"
+      },
+      "correct": "B",
+      "explanation": "Trusting client-side price values is a business logic vulnerability. The application should calculate prices server-side and never trust hidden form fields, as attackers can easily modify client-side values before submission."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which CSP directive would prevent all forms of clickjacking while allowing the page to be framed only by same-origin pages?",
+      "options": {
+        "A": "frame-src 'self'",
+        "B": "frame-ancestors 'self'",
+        "C": "child-src 'self'",
+        "D": "default-src 'self'"
+      },
+      "correct": "B",
+      "explanation": "frame-ancestors 'self' restricts which origins can frame the page, allowing only same-origin framing. frame-src and child-src control what the page itself can frame, not what can frame the page."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which technique can bypass a CSP that allows scripts from a CDN (e.g., script-src cdn.example.com)?",
+      "options": {
+        "A": "Hosting a malicious script on the allowed CDN or finding a JSONP endpoint on that CDN",
+        "B": "Using data: URIs to inject scripts",
+        "C": "Injecting inline event handlers",
+        "D": "Using meta tags to override the CSP"
+      },
+      "correct": "A",
+      "explanation": "If CSP allows scripts from a CDN, an attacker can host malicious JS on that CDN (if it allows user uploads) or abuse JSONP/callback endpoints on the CDN to execute arbitrary JavaScript. CSP cannot be overridden by meta tags once set via headers."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the impact of an SSRF vulnerability that can access the AWS instance metadata endpoint at http://169.254.169.254/latest/meta-data/iam/security-credentials/?",
+      "options": {
+        "A": "Disclosure of the EC2 instance's hostname only",
+        "B": "Retrieval of temporary IAM credentials that can be used to access other AWS services",
+        "C": "Full root access to the underlying EC2 host",
+        "D": "Modification of the instance's security group rules"
+      },
+      "correct": "B",
+      "explanation": "Accessing the IAM security credentials endpoint via SSRF returns temporary AWS access keys and session tokens. These credentials can be used outside the instance to access AWS services with the permissions of the attached IAM role."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "When performing a SQL injection test against a PostgreSQL database, which function can be used to concatenate strings for data exfiltration?",
+      "options": {
+        "A": "CONCAT()",
+        "B": "|| (double pipe operator)",
+        "C": "+ (plus operator)",
+        "D": "STRING_AGG()"
+      },
+      "correct": "B",
+      "explanation": "PostgreSQL uses the || operator for string concatenation (e.g., 'a' || 'b'). While CONCAT() also works in modern PostgreSQL, the || operator is the traditional and universally supported method across PostgreSQL versions."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester discovers that an application's SAML implementation does not check the NotOnOrAfter timestamp. What attack does this enable?",
+      "options": {
+        "A": "XML signature wrapping",
+        "B": "SAML assertion replay",
+        "C": "SAML token modification",
+        "D": "Identity provider impersonation"
+      },
+      "correct": "B",
+      "explanation": "Without checking NotOnOrAfter, a captured SAML assertion can be replayed indefinitely. The timestamp validation ensures assertions are only valid within a specific time window, preventing replay attacks."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In a JWT, what is the purpose of the 'exp' claim?",
+      "options": {
+        "A": "To specify the token's encryption algorithm",
+        "B": "To define the expiration time after which the token must not be accepted",
+        "C": "To indicate the expected audience of the token",
+        "D": "To record when the token was last used"
+      },
+      "correct": "B",
+      "explanation": "The 'exp' (expiration time) claim identifies the time after which the JWT must not be accepted for processing. Servers should reject tokens with an exp value in the past to limit the window for token theft and replay."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What is the primary risk of an application that sets Access-Control-Allow-Origin based on a regex that only checks if the origin starts with a trusted domain?",
+      "options": {
+        "A": "The CORS configuration is too restrictive",
+        "B": "An attacker can register a subdomain like trusted-domain.evil.com to bypass the check",
+        "C": "The regex will cause performance issues",
+        "D": "All cross-origin requests will be blocked"
+      },
+      "correct": "B",
+      "explanation": "A regex that checks if the origin starts with 'trusted-domain.com' would also match 'trusted-domain.com.evil.com'. Proper validation must check the exact origin or use strict domain matching to prevent subdomain spoofing."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which of the following is the most reliable indicator of a successful blind SSRF when no direct response is returned?",
+      "options": {
+        "A": "A change in the HTTP response status code",
+        "B": "An incoming DNS query or HTTP request to an attacker-controlled server from the target's IP",
+        "C": "A difference in the response time",
+        "D": "An error message in the response body"
+      },
+      "correct": "B",
+      "explanation": "Receiving an out-of-band DNS query or HTTP request from the target server to the attacker's infrastructure definitively confirms SSRF. Time-based detection and status code analysis are less reliable indicators."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester exploits LFI using the php://filter wrapper with the payload: php://filter/convert.base64-encode/resource=config.php. What does this achieve?",
+      "options": {
+        "A": "It executes config.php with elevated privileges",
+        "B": "It reads the source code of config.php by base64-encoding the output, preventing PHP execution",
+        "C": "It uploads a new config.php to the server",
+        "D": "It deletes the config.php file from the server"
+      },
+      "correct": "B",
+      "explanation": "The php://filter wrapper with base64-encode reads the raw source code of PHP files without executing them. The output is base64-encoded, which the tester decodes to reveal sensitive configuration details like database credentials."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "In WebSocket security testing, what does the Sec-WebSocket-Key header provide?",
+      "options": {
+        "A": "Encryption key for WebSocket traffic",
+        "B": "A nonce for the handshake to prevent proxy caching, not authentication or security",
+        "C": "Authentication credentials for the WebSocket connection",
+        "D": "A session token for WebSocket communication"
+      },
+      "correct": "B",
+      "explanation": "Sec-WebSocket-Key is a base64-encoded random value used during the upgrade handshake to ensure the server supports WebSocket. It provides no authentication or encryption \u2014 it only prevents caching proxies from replaying WebSocket upgrades."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "An API returns different response times for valid versus invalid API keys. What attack technique leverages this behaviour?",
+      "options": {
+        "A": "Brute-force attack with timing-based enumeration",
+        "B": "SQL injection",
+        "C": "SSRF",
+        "D": "Cache poisoning"
+      },
+      "correct": "A",
+      "explanation": "Timing-based enumeration uses measurable differences in response times to distinguish valid from invalid API keys. If valid keys trigger additional processing (e.g., database lookups), the response is consistently slower."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which of the following HTTP headers can be used to specify the allowed HTTP methods in a CORS preflight response?",
+      "options": {
+        "A": "Access-Control-Allow-Origin",
+        "B": "Access-Control-Allow-Methods",
+        "C": "Access-Control-Request-Method",
+        "D": "Allow"
+      },
+      "correct": "B",
+      "explanation": "Access-Control-Allow-Methods in the preflight response specifies which HTTP methods are permitted for cross-origin requests. Access-Control-Request-Method is sent by the browser in the preflight request, not the response."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A penetration tester wants to exploit an XXE vulnerability but the server has disabled external entity loading. Which alternative XXE technique might still work?",
+      "options": {
+        "A": "Using XInclude to include external files",
+        "B": "Using a DTD-less XML document",
+        "C": "Switching to JSON content type",
+        "D": "Using CDATA sections to wrap the payload"
+      },
+      "correct": "A",
+      "explanation": "XInclude allows embedding external documents within XML and may work even when external entities are disabled, as it is processed differently. The payload uses <xi:include> elements rather than DOCTYPE entity declarations."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "What does the HTTP 500 Internal Server Error status code indicate to a penetration tester?",
+      "options": {
+        "A": "The request was properly authenticated but unauthorised",
+        "B": "An unhandled exception occurred on the server, which may reveal information in verbose error messages",
+        "C": "The server is temporarily overloaded",
+        "D": "The request was malformed and rejected by the WAF"
+      },
+      "correct": "B",
+      "explanation": "500 Internal Server Error indicates an unhandled server-side exception. For testers, this can reveal stack traces, database queries, file paths, and technology details if verbose error handling is enabled."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "A tester finds that adding a trailing slash to a restricted endpoint (/admin/) returns 200 instead of 403 for /admin. What type of bypass is this?",
+      "options": {
+        "A": "HTTP method tampering",
+        "B": "Path normalisation bypass",
+        "C": "Authentication bypass",
+        "D": "Session hijacking"
+      },
+      "correct": "B",
+      "explanation": "Path normalisation bypass exploits inconsistencies between how the access control layer and the application server handle URL paths. Adding trailing slashes, double slashes, or path segments like /admin/./  may bypass URL-based access rules."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "question": "Which of the following best describes out-of-band SQL injection?",
+      "options": {
+        "A": "SQL injection that uses a different network protocol to exfiltrate data",
+        "B": "SQL injection triggered by the database making an external connection (DNS or HTTP) to an attacker-controlled server to exfiltrate data",
+        "C": "SQL injection performed through a different application that shares the same database",
+        "D": "SQL injection that operates outside of normal request-response timing"
+      },
+      "correct": "B",
+      "explanation": "Out-of-band SQL injection uses database functions (like xp_dirtree in MSSQL or UTL_HTTP in Oracle) to make the database server send data to an attacker-controlled server via DNS or HTTP when in-band and time-based methods are not viable."
+    }
+  ]
+}
