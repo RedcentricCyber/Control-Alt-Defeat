@@ -10,6 +10,7 @@
   </div>
 
   <form action="/start" method="POST" id="start-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
     <!-- Alias input -->
     <div class="panel fade-in fade-in-delay-1" data-label="STEP 01 // IDENTIFY YOURSELF">

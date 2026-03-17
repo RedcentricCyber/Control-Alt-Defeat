@@ -1,16 +1,33 @@
 import json
+import logging
 import os
 import random
+import secrets
 import sqlite3
 import time
 import uuid
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
-from flask import Flask, make_response, render_template, request, session, redirect, url_for
+from flask import Flask, abort, make_response, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "cyberpunk-secret-key-change-in-prod")
+
+# ── Logging ───────────────────────────────────────────────────
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+logger = logging.getLogger(__name__)
+
+_DEFAULT_SECRET = "cyberpunk-secret-key-change-in-prod"
+if app.secret_key == _DEFAULT_SECRET:
+    logger.warning(
+        "SECRET_KEY is set to the default development value — "
+        "set the SECRET_KEY environment variable before deploying to production!"
+    )
 
 EXAMS_DIR = Path(__file__).parent / "exams"
 DB_PATH = Path(os.environ.get("HISTORY_DB", Path(__file__).parent / "data" / "history.db"))
@@ -19,6 +36,67 @@ CLIENT_ID_COOKIE = "cad_client_id"
 ALIAS_COOKIE     = "cad_alias"
 CLIENT_ID_MAX_AGE = 365 * 24 * 3600  # 1 year
 GITHUB_REPO = os.environ.get("GITHUB_REPO", "x41x41x41/Control-Alt-Defeat")
+
+# ── Rate limiting ─────────────────────────────────────────────
+# Simple in-memory store: client_id → last submit timestamp.
+# Note: not shared across gunicorn workers; provides per-worker limiting.
+
+_submit_times: dict = {}
+_SUBMIT_COOLDOWN = 10  # seconds between submissions per client
+
+
+def _check_rate_limit(client_id: str) -> bool:
+    """Return True if the request is within the allowed rate, False if throttled."""
+    now = time.time()
+    last = _submit_times.get(client_id, 0)
+    if now - last < _SUBMIT_COOLDOWN:
+        return False
+    _submit_times[client_id] = now
+    # Prune stale entries to avoid unbounded growth
+    if len(_submit_times) > 5000:
+        cutoff = now - _SUBMIT_COOLDOWN * 2
+        stale = [k for k, v in _submit_times.items() if v < cutoff]
+        for k in stale:
+            del _submit_times[k]
+    return True
+
+
+# ── CSRF ──────────────────────────────────────────────────────
+
+def _get_csrf_token() -> str:
+    """Return (and lazily create) the per-session CSRF token."""
+    if "csrf_token" not in session:
+        session["csrf_token"] = secrets.token_hex(32)
+    return session["csrf_token"]
+
+
+def _check_csrf():
+    """Abort 403 if the submitted CSRF token doesn't match the session token."""
+    token = request.form.get("csrf_token", "")
+    if not token or token != session.get("csrf_token"):
+        logger.warning("CSRF check failed — remote_addr=%s", request.remote_addr)
+        abort(403)
+
+
+# ── Security headers ──────────────────────────────────────────
+
+@app.after_request
+def set_security_headers(response):
+    csp = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline'; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data:; "
+        "frame-ancestors 'none'; "
+        "base-uri 'self'; "
+        "form-action 'self';"
+    )
+    response.headers["Content-Security-Policy"] = csp
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
 
 
 # ── Database ─────────────────────────────────────────────────
@@ -186,7 +264,8 @@ def list_exams():
                 "time_limit": data.get("time_limit", 0),
                 "links": data.get("links", []),
             })
-        except (json.JSONDecodeError, KeyError):
+        except (json.JSONDecodeError, KeyError) as exc:
+            logger.error("Failed to load exam %s: %s", path.name, exc)
             continue
     return exams
 
@@ -256,13 +335,22 @@ def index():
     client_id, _ = _ensure_client_id(resp)
     history = get_history(client_id)
     saved_alias = request.cookies.get(ALIAS_COOKIE, "")
-    resp.response = [render_template("index.html", exams=exams, history=history, saved_alias=saved_alias).encode()]
+    csrf_token = _get_csrf_token()
+    resp.response = [render_template(
+        "index.html",
+        exams=exams,
+        history=history,
+        saved_alias=saved_alias,
+        csrf_token=csrf_token,
+    ).encode()]
     resp.content_type = "text/html"
     return resp
 
 
 @app.route("/start", methods=["POST"])
 def start():
+    _check_csrf()
+
     alias = request.form.get("alias", "").strip()
     exam_id = request.form.get("exam_id", "").strip()
 
@@ -285,6 +373,8 @@ def start():
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
     session["start_time"] = int(time.time())
+
+    logger.info("Exam started — alias=%r exam=%r questions=%d", alias, exam_id, len(question_indices))
 
     resp = redirect(url_for("exam"))
     resp.set_cookie(ALIAS_COOKIE, alias, max_age=CLIENT_ID_MAX_AGE, samesite="Lax", httponly=True)
@@ -311,13 +401,22 @@ def exam():
         alias=session.get("alias"),
         token=session.get("session_token"),
         github_repo=GITHUB_REPO,
+        csrf_token=_get_csrf_token(),
     )
 
 
 @app.route("/submit", methods=["POST"])
 def submit():
+    _check_csrf()
+
     if not session.get("started"):
         return redirect(url_for("index"))
+
+    client_id = request.cookies.get(CLIENT_ID_COOKIE, str(uuid.uuid4()))
+
+    if not _check_rate_limit(client_id):
+        logger.warning("Rate limit hit on /submit — client_id=%s", client_id)
+        return render_template("429.html"), 429
 
     exam_id = session.get("exam_id")
     exam = load_exam(exam_id)
@@ -354,9 +453,8 @@ def submit():
     percentage = round((score / total) * 100) if total > 0 else 0
     passed = percentage >= pass_mark
     grade = _grade(percentage)
+    time_taken = int(time.time()) - session.get("start_time", int(time.time()))
 
-    # Persist to DB
-    client_id = request.cookies.get(CLIENT_ID_COOKIE, str(uuid.uuid4()))
     entry_id = insert_history(client_id, {
         "exam_title": session.get("exam_title", exam_id),
         "alias": session.get("alias", "UNKNOWN"),
@@ -368,8 +466,13 @@ def submit():
         "grade_label": grade["label"],
         "grade_class": grade["class"],
         "token": session.get("session_token", "--------"),
-        "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
-    }, answers=results, time_taken=int(time.time()) - session.get("start_time", int(time.time())))
+        "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+    }, answers=results, time_taken=time_taken)
+
+    logger.info(
+        "Exam submitted — alias=%r exam=%r score=%d/%d (%.0f%%) passed=%s entry_id=%d",
+        session.get("alias"), exam_id, score, total, percentage, passed, entry_id,
+    )
 
     session["started"] = False
 
@@ -446,6 +549,29 @@ def history_detail(entry_id):
 def reset():
     session.clear()
     return redirect(url_for("index"))
+
+
+# ── Error handlers ────────────────────────────────────────────
+
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template("403.html"), 403
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html"), 404
+
+
+@app.errorhandler(429)
+def too_many_requests(e):
+    return render_template("429.html"), 429
+
+
+@app.errorhandler(500)
+def server_error(e):
+    logger.exception("Internal server error")
+    return render_template("500.html"), 500
 
 
 if __name__ == "__main__":
