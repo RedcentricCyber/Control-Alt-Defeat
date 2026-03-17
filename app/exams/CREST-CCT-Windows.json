@@ -1,0 +1,497 @@
+{
+  "title": "CREST CCT \u2014 Windows Security & Desktop Lockdown",
+  "description": "Covers Microsoft Windows Security Assessment (PT006) and Windows Desktop Lockdown (PT018) domains of the CREST CCT examination. Topics include Active Directory attacks, Kerberos abuse, NTLM relay, lateral movement, privilege escalation, credential harvesting, BloodHound, ADCS, and Windows hardening.",
+  "based_on": "CREST CCT",
+  "created_by": "Claude (Anthropic)",
+  "difficulty": "HARD",
+  "pass_mark": 70,
+  "time_limit": 90,
+  "num_questions": 40,
+  "links": [
+    {"label": "CREST CCT Syllabus", "url": "https://www.crest-approved.org/membership/crest-certified-tester/"}
+  ],
+  "questions": [
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Kerberos attack requests a Ticket Granting Service (TGS) ticket for an account with a registered SPN and cracks it offline to recover the plaintext password?",
+      "options": {"A": "AS-REP Roasting", "B": "Pass-the-Ticket", "C": "Kerberoasting", "D": "Golden Ticket"},
+      "correct": "C",
+      "explanation": "Kerberoasting requests TGS tickets for accounts with SPNs registered; these tickets are encrypted with the account's password hash and can be cracked offline. AS-REP Roasting targets accounts with pre-authentication disabled."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which attack targets Kerberos accounts that have the 'Do not require Kerberos preauthentication' flag set, allowing an attacker to request an AS-REP encrypted blob without knowing the password?",
+      "options": {"A": "Kerberoasting", "B": "AS-REP Roasting", "C": "Silver Ticket", "D": "Overpass-the-Hash"},
+      "correct": "B",
+      "explanation": "AS-REP Roasting exploits accounts where pre-authentication is disabled; the KDC returns an AS-REP containing data encrypted with the user's key, which can be cracked offline without requiring prior authentication."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "An attacker has compromised the KRBTGT account hash. Which attack can they perform to generate forged Kerberos tickets that grant arbitrary access to any service in the domain?",
+      "options": {"A": "Silver Ticket", "B": "Pass-the-Ticket", "C": "Golden Ticket", "D": "Overpass-the-Hash"},
+      "correct": "C",
+      "explanation": "A Golden Ticket is forged using the KRBTGT hash and can grant access to any service in the domain with any privileges, as the KDC cannot distinguish it from a legitimate TGT."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Mimikatz command is used to dump plaintext credentials and NTLM hashes from LSASS memory?",
+      "options": {"A": "lsadump::sam", "B": "sekurlsa::logonpasswords", "C": "lsadump::dcsync", "D": "kerberos::list"},
+      "correct": "B",
+      "explanation": "sekurlsa::logonpasswords reads credentials from LSASS memory, revealing plaintext passwords, NTLM hashes, and Kerberos tickets for interactively logged-on users."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "LLMNR/NBT-NS poisoning using Responder captures which type of credential?",
+      "options": {"A": "Kerberos TGT tickets", "B": "NTLMv2 challenge-response hashes", "C": "Plaintext passwords", "D": "LDAP bind credentials"},
+      "correct": "B",
+      "explanation": "When a host fails DNS resolution and broadcasts LLMNR/NBT-NS queries, Responder responds and captures NTLMv2 challenge-response hashes which can then be cracked offline or relayed."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Windows privilege allows a user to impersonate the security context of another user, commonly exploited by Potato-family attacks to escalate to SYSTEM?",
+      "options": {"A": "SeDebugPrivilege", "B": "SeBackupPrivilege", "C": "SeImpersonatePrivilege", "D": "SeTakeOwnershipPrivilege"},
+      "correct": "C",
+      "explanation": "SeImpersonatePrivilege allows a process to impersonate a client's security token. Exploits like JuicyPotato and PrintSpoofer abuse this privilege to coerce a SYSTEM token and escalate privileges."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "An attacker runs: Get-NetUser -SPN | select samaccountname,serviceprincipalname. What is this the first step of?",
+      "options": {"A": "AS-REP Roasting", "B": "DCSync", "C": "Kerberoasting", "D": "LDAP injection"},
+      "correct": "C",
+      "explanation": "Enumerating accounts with registered Service Principal Names (SPNs) is the first step of Kerberoasting — these accounts' TGS tickets can be requested and cracked offline."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Windows event ID indicates a successful Kerberos TGT request (AS-REQ)?",
+      "options": {"A": "4624", "B": "4769", "C": "4768", "D": "4771"},
+      "correct": "C",
+      "explanation": "Event ID 4768 is logged on the domain controller when a Kerberos authentication ticket (TGT) is requested. Event 4769 covers TGS requests, and 4771 covers pre-authentication failures."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which BloodHound edge/relationship means the source principal can reset the target account's password without knowing the current password?",
+      "options": {"A": "GenericAll", "B": "ForceChangePassword", "C": "WriteDACL", "D": "AllExtendedRights"},
+      "correct": "B",
+      "explanation": "ForceChangePassword indicates the source principal has the DS-Force-Change-Password extended right on the target object, allowing a password reset without knowing the current password."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What is a DCSync attack?",
+      "options": {
+        "A": "Synchronising domain controllers to replicate malicious GPOs",
+        "B": "Using DS-Replication-Get-Changes rights to impersonate a DC and pull NTLM hashes from Active Directory",
+        "C": "Forcing a DC to synchronise its clock for Kerberos ticket forgery",
+        "D": "Creating a rogue domain controller to intercept authentication"
+      },
+      "correct": "B",
+      "explanation": "DCSync abuses Active Directory replication rights (DS-Replication-Get-Changes and DS-Replication-Get-Changes-All) to request password data from a DC as if the attacker were another DC, without needing local access to the DC."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which tool is used to collect Active Directory data (users, groups, ACLs, sessions, trusts) and visualise attack paths to Domain Admin?",
+      "options": {"A": "PowerView", "B": "BloodHound/SharpHound", "C": "CrackMapExec", "D": "Impacket"},
+      "correct": "B",
+      "explanation": "BloodHound uses graph theory to identify attack paths in Active Directory. SharpHound is the data collector that gathers AD objects, ACLs, sessions, and trust relationships for BloodHound to visualise."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "An attacker has an NTLM hash but not the plaintext password. Which technique allows them to authenticate to Windows services using the hash directly?",
+      "options": {"A": "Kerberoasting", "B": "Pass-the-Hash", "C": "Pass-the-Ticket", "D": "Silver Ticket"},
+      "correct": "B",
+      "explanation": "Pass-the-Hash uses the NTLM hash directly in the NTLM authentication protocol without cracking it, allowing authentication to services like SMB, WMI, and RDP (NLA disabled) that accept NTLM."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Windows service configuration vulnerability exists when the binary path contains spaces and is not enclosed in quotes, allowing attackers to place a malicious executable at an intermediate path?",
+      "options": {"A": "Weak service ACL", "B": "AlwaysInstallElevated", "C": "Unquoted service path", "D": "DLL hijacking"},
+      "correct": "C",
+      "explanation": "Unquoted service paths cause Windows to try executing binaries at each space-delimited path component. An attacker with write access to an intermediate directory can place a malicious executable that runs as the service account."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What does the ZeroLogon vulnerability (CVE-2020-1472) allow an unauthenticated attacker to do?",
+      "options": {
+        "A": "Execute code remotely via SMBv1",
+        "B": "Set the domain controller's machine account password to an empty string and take over the domain",
+        "C": "Forge Kerberos tickets using a weak RC4 cipher",
+        "D": "Bypass UAC on domain-joined systems"
+      },
+      "correct": "B",
+      "explanation": "ZeroLogon exploits a cryptographic flaw in the Netlogon protocol's use of AES-CFB8 to set the DC's machine account password to empty, enabling an attacker to authenticate as the DC and perform a DCSync."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which ADCS attack scenario allows an attacker to enrol for a certificate on behalf of any user (including Domain Admin) using a misconfigured certificate template?",
+      "options": {"A": "ESC4", "B": "ESC1", "C": "ESC8", "D": "ESC6"},
+      "correct": "B",
+      "explanation": "ESC1 occurs when a certificate template allows the enrollee to specify a Subject Alternative Name (SAN); an attacker can request a certificate with any UPN (e.g., Administrator@domain.com) and use it to authenticate as that user."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which tool can be used to perform NTLM relay attacks, capturing authentication from one host and relaying it to another?",
+      "options": {"A": "Responder", "B": "ntlmrelayx (Impacket)", "C": "CrackMapExec", "D": "Evil-WinRM"},
+      "correct": "B",
+      "explanation": "ntlmrelayx (part of Impacket) performs NTLM relay attacks by intercepting NTLM authentication and relaying it to target hosts. Responder is used for poisoning to capture the hashes, while ntlmrelayx handles the relay."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Windows registry key, when set to 1 for both HKLM and HKCU, causes the Windows Installer to run all installations with elevated (SYSTEM) privileges, enabling privilege escalation?",
+      "options": {
+        "A": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Installer\\DisableMSI",
+        "B": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Installer\\AlwaysInstallElevated",
+        "C": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters\\RequireSecuritySignature",
+        "D": "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\EnableLUA"
+      },
+      "correct": "B",
+      "explanation": "AlwaysInstallElevated, when set to 1 in both HKLM and HKCU, allows any user to install MSI packages with SYSTEM privileges. Attackers exploit this by crafting a malicious MSI that adds a user or executes a payload."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which protocol does PrintNightmare (CVE-2021-1675 / CVE-2021-34527) exploit to achieve remote code execution or local privilege escalation?",
+      "options": {"A": "SMB", "B": "RPC/Windows Print Spooler", "C": "LDAP", "D": "WMI"},
+      "correct": "B",
+      "explanation": "PrintNightmare exploits the Windows Print Spooler service (spoolsv.exe) via RPC calls to AddPrinterDriverEx or AddPrintProcessor, allowing a low-privileged user to load an arbitrary DLL as SYSTEM."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "An attacker uses rpcclient to connect to a domain controller and runs 'enumdomusers'. What protocol is being used?",
+      "options": {"A": "LDAP", "B": "SMB/MSRPC", "C": "Kerberos", "D": "WinRM"},
+      "correct": "B",
+      "explanation": "rpcclient uses the SMB protocol with MS-RPC to communicate with Windows services. enumdomusers calls the SAMR (Security Account Manager Remote) protocol to enumerate domain user accounts."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What Windows event ID is generated on the domain controller when a Kerberos service ticket (TGS) is requested?",
+      "options": {"A": "4624", "B": "4768", "C": "4769", "D": "4776"},
+      "correct": "C",
+      "explanation": "Event ID 4769 (A Kerberos service ticket was requested) is logged on the DC when a TGS is issued. Monitoring for RC4 encryption type (0x17) in these events can help detect Kerberoasting."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Active Directory object attribute, when misconfigured with excessive permissions (e.g., GenericAll), can be abused via the AdminSDHolder mechanism to persist elevated access?",
+      "options": {"A": "msDS-GroupManagedServiceAccount", "B": "nTSecurityDescriptor on the AdminSDHolder container", "C": "msDS-AllowedToActOnBehalfOfOtherIdentity", "D": "servicePrincipalName"},
+      "correct": "B",
+      "explanation": "AdminSDHolder is a special AD container whose ACL is periodically propagated to protected accounts (Domain Admins, etc.). An attacker with WriteDACL on AdminSDHolder can add a backdoor ACE that persists after the SDProp process runs."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Mimikatz command performs a DCSync attack to extract the NTLM hash of the domain Administrator account?",
+      "options": {
+        "A": "sekurlsa::logonpasswords /all",
+        "B": "lsadump::dcsync /domain:corp.local /user:Administrator",
+        "C": "lsadump::sam /patch",
+        "D": "kerberos::golden /user:Administrator"
+      },
+      "correct": "B",
+      "explanation": "lsadump::dcsync impersonates a domain controller and uses the MS-DRSR protocol to request replication of the specified account's credentials, extracting the NTLM hash without needing LSASS access on the DC."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What does the BloodHound 'GenericWrite' edge allow an attacker to do to the target object?",
+      "options": {
+        "A": "Read all properties of the object",
+        "B": "Modify non-protected attributes, such as setting an SPN (enabling Kerberoasting) or modifying logon scripts",
+        "C": "Delete the object from Active Directory",
+        "D": "Assume the identity of the object via token impersonation"
+      },
+      "correct": "B",
+      "explanation": "GenericWrite grants write access to non-protected attributes of an AD object. For user objects, this can be used to set an SPN (making the account Kerberoastable) or modify scriptPath for logon script hijacking."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "MS17-010 (EternalBlue) exploits a vulnerability in which Windows service?",
+      "options": {"A": "IIS", "B": "SMBv1 (Server service)", "C": "RDP (Terminal Services)", "D": "DNS Server"},
+      "correct": "B",
+      "explanation": "EternalBlue exploits a buffer overflow in the SMBv1 implementation in Windows' Server service (srv.sys), allowing unauthenticated remote code execution. It was famously used by WannaCry ransomware."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which tool is specifically used for WinRM-based lateral movement, providing a PowerShell-like shell over WinRM to a Windows target?",
+      "options": {"A": "PsExec", "B": "CrackMapExec", "C": "Evil-WinRM", "D": "smbexec"},
+      "correct": "C",
+      "explanation": "Evil-WinRM provides an interactive shell over WinRM (port 5985/5986) using PowerShell remoting, supporting file upload/download, script loading, and pass-the-hash authentication."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "An attacker with SeDebugPrivilege can do which of the following that directly enables credential theft?",
+      "options": {
+        "A": "Write to protected registry keys",
+        "B": "Open and read the memory of LSASS with any access rights",
+        "C": "Install unsigned kernel drivers",
+        "D": "Modify system time to bypass Kerberos clock skew"
+      },
+      "correct": "B",
+      "explanation": "SeDebugPrivilege grants the ability to open any process, including LSASS, with full access rights regardless of that process's security descriptor. This allows credential dumping tools like Mimikatz to read LSASS memory."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What is Overpass-the-Hash?",
+      "options": {
+        "A": "Cracking an NTLM hash using rainbow tables",
+        "B": "Using an NTLM hash to request a Kerberos TGT, converting hash-based access into a Kerberos ticket",
+        "C": "Forging a Kerberos ticket using a service account's hash",
+        "D": "Relaying an NTLM hash to a different service than where it was captured"
+      },
+      "correct": "B",
+      "explanation": "Overpass-the-Hash (also called Pass-the-Key) uses an NTLM hash or AES key to perform Kerberos pre-authentication, requesting a TGT. This converts an NTLM hash into a Kerberos TGT that can be used for further attacks."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Windows event ID indicates a new service was installed on a system, commonly used to detect PsExec-style lateral movement?",
+      "options": {"A": "4624", "B": "4697", "C": "7045", "D": "4672"},
+      "correct": "C",
+      "explanation": "Event ID 7045 (System log) is generated when a new service is installed. PsExec and similar tools create a temporary service on the target system, making this event valuable for detecting lateral movement."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which PetitPotam technique coerces a Windows machine to authenticate to an attacker-controlled host?",
+      "options": {
+        "A": "Exploiting a buffer overflow in the LSASS process",
+        "B": "Abusing the MS-EFSR (Encrypting File System Remote) protocol to trigger NTLM authentication",
+        "C": "Sending a crafted Kerberos ticket to the KDC",
+        "D": "Using WMI to execute a payload that connects back to the attacker"
+      },
+      "correct": "B",
+      "explanation": "PetitPotam abuses the MS-EFSR (EfsRpcOpenFileRaw) RPC call to force a Windows machine to authenticate to an attacker-specified UNC path, capturing the machine's NTLM hash for relay attacks."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What information does the SAM (Security Account Manager) database store on a Windows system?",
+      "options": {
+        "A": "Kerberos TGT tickets for all logged-on users",
+        "B": "NTLM hashes of local user account passwords",
+        "C": "Domain user credentials synchronised from the domain controller",
+        "D": "Encrypted LSA secrets for service accounts"
+      },
+      "correct": "B",
+      "explanation": "The SAM database stores NTLM hashes of local user account passwords. On domain controllers, the NTDS.dit file serves this function for domain accounts. The SAM is protected by SYSKEY encryption."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "A Silver Ticket attack forges a TGS ticket encrypted with which key?",
+      "options": {
+        "A": "The KRBTGT account's NTLM hash",
+        "B": "The target service account's NTLM hash",
+        "C": "The Domain Admin's NTLM hash",
+        "D": "A session key derived from the client's password"
+      },
+      "correct": "B",
+      "explanation": "A Silver Ticket is forged using the service account's NTLM hash (not KRBTGT), granting access only to that specific service. It bypasses the KDC but only provides access to the targeted service, unlike the Golden Ticket which grants domain-wide access."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which CrackMapExec command would enumerate SMB shares across a subnet using a set of credentials?",
+      "options": {
+        "A": "crackmapexec smb 192.168.1.0/24 -u user -p pass --shares",
+        "B": "crackmapexec ldap 192.168.1.0/24 --kerberoast output.txt",
+        "C": "crackmapexec winrm 192.168.1.0/24 -u user -H hash -x whoami",
+        "D": "crackmapexec smb 192.168.1.0/24 --gen-relay-list targets.txt"
+      },
+      "correct": "A",
+      "explanation": "The --shares flag with the SMB module in CrackMapExec enumerates accessible SMB shares on the targets using the provided credentials, showing share names and access permissions."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What is the purpose of the DPAPI (Data Protection API) in a Windows penetration test?",
+      "options": {
+        "A": "It encrypts the SAM database to prevent offline hash extraction",
+        "B": "It protects credentials stored in browser saved passwords, Windows Credential Manager, and certificates — which can be decrypted with the master key or user password",
+        "C": "It implements mandatory integrity control for LSASS",
+        "D": "It signs PowerShell scripts to prevent execution of unsigned code"
+      },
+      "correct": "B",
+      "explanation": "DPAPI is used by Windows to encrypt sensitive data like browser credentials, WiFi passwords, and certificates. Attackers use tools like Mimikatz (dpapi::) or SharpDPAPI to extract and decrypt these secrets using recovered master keys."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Active Directory trust attribute, combined with a compromised child domain, can allow an attacker to forge inter-realm tickets and escalate to Enterprise Admin in the parent domain?",
+      "options": {
+        "A": "SID filtering (Quarantine attribute)",
+        "B": "SID history and the absence of SID filtering on parent-child trusts",
+        "C": "Transitive Kerberos delegation",
+        "D": "NTLM fallback on external trusts"
+      },
+      "correct": "B",
+      "explanation": "Parent-child Active Directory trusts have SID filtering disabled by default. An attacker who compromises a child domain can forge a Golden Ticket with the Enterprise Admins SID (of the parent) in the SID history field to escalate to the forest root."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Windows security feature, introduced in Windows 10, stores credentials in an isolated Hyper-V container to protect them from LSASS memory dumping?",
+      "options": {"A": "Windows Defender Credential Guard", "B": "Secure Boot", "C": "LSASS Protected Process Light (PPL)", "D": "Virtual Secure Mode (VSM)"},
+      "correct": "A",
+      "explanation": "Windows Defender Credential Guard uses Virtualization-Based Security (VBS) to isolate LSASS in a separate Hyper-V container (LSAIso), preventing tools like Mimikatz from extracting NTLM hashes or Kerberos tickets from LSASS."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What is the default port for WinRM (HTTP) used by Evil-WinRM and PowerShell remoting?",
+      "options": {"A": "3389", "B": "445", "C": "5985", "D": "47001"},
+      "correct": "C",
+      "explanation": "WinRM uses port 5985 for HTTP transport and 5986 for HTTPS. PowerShell remoting and tools like Evil-WinRM default to port 5985."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "When an attacker uses 'Invoke-ACLpwn' or similar tooling after running BloodHound, they are automating what type of attack?",
+      "options": {
+        "A": "Automated password spraying against all domain users",
+        "B": "Automated exploitation of ACL-based privilege escalation paths in Active Directory",
+        "C": "Automated extraction of all Group Policy Objects",
+        "D": "Automated enumeration of all service principal names"
+      },
+      "correct": "B",
+      "explanation": "BloodHound identifies ACL-based attack paths (e.g., WriteDACL → GenericAll → ForceChangePassword) to high-value targets. Invoke-ACLpwn automates the exploitation of these paths, modifying ACLs and escalating through the AD graph."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which Impacket script can be used to perform remote command execution on Windows hosts using SMB without creating a service (using MMC COM objects)?",
+      "options": {"A": "psexec.py", "B": "smbexec.py", "C": "dcomexec.py", "D": "wmiexec.py"},
+      "correct": "C",
+      "explanation": "dcomexec.py uses DCOM (Distributed Component Object Model) objects like MMC20, ShellWindows, or ShellBrowserWindow to execute commands remotely, leaving fewer forensic artefacts than service-based execution."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "An ESC8 ADCS attack involves which technique?",
+      "options": {
+        "A": "Exploiting a misconfigured certificate template to enrol on behalf of any user",
+        "B": "Relaying NTLM authentication to the AD CS HTTP enrollment endpoint to obtain a certificate for the relayed account",
+        "C": "Modifying the CA's certificate template to add universal enrollment rights",
+        "D": "Stealing the CA's private key from the filesystem"
+      },
+      "correct": "B",
+      "explanation": "ESC8 exploits the AD CS web enrollment interface (certsrv) which supports NTLM authentication. By relaying NTLM credentials (e.g., from a coerced DC authentication via PetitPotam) to this endpoint, an attacker can obtain a certificate for the DC computer account and then perform a DCSync."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "What is the effect of the 'GenericAll' BloodHound edge from principal A to a user object B?",
+      "options": {
+        "A": "A can read all properties of B but cannot modify them",
+        "B": "A has full control over B, including the ability to reset B's password, modify B's group memberships, or add an SPN",
+        "C": "A can add B to any group in the domain",
+        "D": "A can impersonate B using Kerberos constrained delegation"
+      },
+      "correct": "B",
+      "explanation": "GenericAll grants full control over the target object, equivalent to being the object owner with all permissions. Against a user object, this allows password resets, SPN manipulation for Kerberoasting, adding to groups, and more."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "question": "Which event ID is generated when a user account is locked out due to too many failed authentication attempts?",
+      "options": {"A": "4625", "B": "4740", "C": "4771", "D": "4776"},
+      "correct": "B",
+      "explanation": "Event ID 4740 (A user account was locked out) is logged on the domain controller and the originating machine. Event 4625 indicates a failed logon, and 4771 indicates Kerberos pre-authentication failure."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which Windows feature, when enabled via Group Policy, prevents the installation of any software not matching a defined whitelist of rules?",
+      "options": {"A": "Windows Defender SmartScreen", "B": "AppLocker", "C": "User Account Control (UAC)", "D": "Software Restriction Policies (SRP)"},
+      "correct": "B",
+      "explanation": "AppLocker allows administrators to define rules (path, hash, publisher) that control which executables, scripts, Windows Installer files, and DLLs can run. It supersedes the older Software Restriction Policies."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "A penetration tester finds that AppLocker blocks execution from C:\\Users but allows scripts from C:\\Windows. Which well-known AppLocker bypass leverages a writable path within C:\\Windows?",
+      "options": {
+        "A": "Executing payloads from %APPDATA%\\Microsoft\\Windows",
+        "B": "Writing and executing from C:\\Windows\\Tasks or C:\\Windows\\Temp (if writable)",
+        "C": "Using msiexec /quiet to install from any location",
+        "D": "Compiling C# inline with csc.exe in the user's temp directory"
+      },
+      "correct": "B",
+      "explanation": "Several directories under C:\\Windows (such as C:\\Windows\\Tasks, C:\\Windows\\Temp, and C:\\Windows\\tracing) may be writable by standard users and are in AppLocker allow-listed paths, enabling payload execution."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "What does LAPS (Local Administrator Password Solution) protect against?",
+      "options": {
+        "A": "Pass-the-Ticket attacks in domain environments",
+        "B": "Lateral movement using shared local administrator passwords across multiple machines",
+        "C": "NTLM relay attacks targeting domain controllers",
+        "D": "Brute force attacks against domain user accounts"
+      },
+      "correct": "B",
+      "explanation": "LAPS randomises local administrator passwords on each domain-joined machine, preventing attackers from using a single compromised local admin hash (Pass-the-Hash) to authenticate to all other machines with the same password."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which technique bypasses the Antimalware Scan Interface (AMSI) by patching the AmsiScanBuffer function in memory to always return a clean result?",
+      "options": {
+        "A": "Base64-encoding the payload before execution",
+        "B": "In-memory patching of amsi.dll's AmsiScanBuffer to return AMSI_RESULT_CLEAN",
+        "C": "Disabling Windows Defender through Group Policy",
+        "D": "Executing from an AppLocker-excluded directory"
+      },
+      "correct": "B",
+      "explanation": "AMSI bypass via memory patching works by locating the AmsiScanBuffer function in the loaded amsi.dll and overwriting its first bytes with instructions that force it to return 0 (AMSI_RESULT_CLEAN), preventing script content from being inspected."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "What is the primary purpose of Windows Defender Application Control (WDAC) compared to AppLocker?",
+      "options": {
+        "A": "WDAC operates at the kernel level via the Windows Hypervisor Code Integrity (HVCI) and cannot be bypassed by admin-level processes, offering stronger enforcement than AppLocker",
+        "B": "WDAC only controls DLL loading while AppLocker controls all executable types",
+        "C": "WDAC requires Microsoft Intune to deploy policies while AppLocker uses Group Policy",
+        "D": "WDAC is the consumer version of AppLocker intended for home editions of Windows"
+      },
+      "correct": "A",
+      "explanation": "WDAC policies are enforced by the Windows kernel and, with HVCI enabled, by the hypervisor itself. This makes WDAC significantly harder to bypass than AppLocker, which can be bypassed by a local administrator."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which UAC bypass technique uses the auto-elevated fodhelper.exe binary and a registry hijack to execute arbitrary code as a high-integrity process?",
+      "options": {
+        "A": "DLL hijacking of a system32 process",
+        "B": "fodhelper.exe registry hijack via HKCU\\Software\\Classes\\ms-settings\\shell\\open\\command",
+        "C": "Token duplication from an elevated process",
+        "D": "CMSTP.exe INF file execution"
+      },
+      "correct": "B",
+      "explanation": "fodhelper.exe is an auto-elevated binary that reads shell command associations from HKCU before HKLM, which a standard user can write to. Placing a malicious command in HKCU\\Software\\Classes\\ms-settings\\shell\\open\\command causes it to run with high integrity without a UAC prompt."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "An organisation uses BitLocker with TPM-only (no PIN) to encrypt workstation drives. What is the primary residual risk?",
+      "options": {
+        "A": "The encryption key can be extracted from RAM during a cold boot attack",
+        "B": "An attacker with physical access can boot the machine normally and access data without any additional authentication",
+        "C": "BitLocker TPM-only mode does not encrypt the OS volume",
+        "D": "The TPM chip can be bypassed using a Thunderbolt DMA attack against the PCIe bus"
+      },
+      "correct": "B",
+      "explanation": "With TPM-only BitLocker, the encryption key is released automatically at boot without user interaction. An attacker with physical access who boots the machine (e.g., to the Windows login screen) can leverage other attack vectors without needing to decrypt the drive."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which Group Policy setting prevents users from executing programs from the Run dialog, taskbar, Start menu, and Windows Explorer when set?",
+      "options": {
+        "A": "Do not run specified Windows applications",
+        "B": "Prevent access to the command prompt",
+        "C": "Restrict users to the specifically permitted list of snap-ins",
+        "D": "Run only specified Windows applications"
+      },
+      "correct": "D",
+      "explanation": "'Run only specified Windows applications' (a whitelist) allows only listed executables to launch, blocking all others via Explorer and the Run dialog. 'Do not run specified Windows applications' is a blacklist approach and less secure."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which AMSI bypass technique evades detection by splitting a malicious string literal across multiple concatenated variables, preventing the full signature from appearing in a single buffer scan?",
+      "options": {
+        "A": "Reflective DLL injection into a trusted process",
+        "B": "String concatenation / obfuscation to fragment the malicious signature",
+        "C": "Disabling ETW (Event Tracing for Windows) via NtTraceEvent patch",
+        "D": "Using COM scriptlet (SCT) files hosted on a remote server"
+      },
+      "correct": "B",
+      "explanation": "AMSI scans the buffer of script content. By splitting malicious strings across multiple variables that are only concatenated at runtime, the full signature never appears in a single scan buffer, evading AMSI's pattern-matching detection."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "What is the purpose of the 'Credential Guard' feature in a locked-down Windows environment?",
+      "options": {
+        "A": "It prevents users from saving passwords in web browsers",
+        "B": "It uses Virtualization-Based Security to protect NTLM hashes and Kerberos tickets in an isolated process (LSAIso), preventing Pass-the-Hash and Pass-the-Ticket",
+        "C": "It enforces password complexity requirements via Group Policy",
+        "D": "It encrypts the Windows credential store with a user-supplied PIN"
+      },
+      "correct": "B",
+      "explanation": "Credential Guard isolates LSA secrets (NTLM hashes, Kerberos TGTs) in a separate VBS-protected process (LSAIso). Even with SYSTEM-level access, attackers cannot dump these credentials from LSASS because they reside in the isolated hypervisor container."
+    }
+  ]
+}

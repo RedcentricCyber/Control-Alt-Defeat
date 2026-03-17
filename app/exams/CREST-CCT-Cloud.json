@@ -1,0 +1,424 @@
+{
+  "title": "CREST CCT \u2014 Cloud, Containers & Virtualisation",
+  "description": "Covers Cloud Security (PT012), Containerisation (PT011), and Virtualisation (PT010) domains of the CREST CCT examination. Topics include AWS/Azure/GCP attack surfaces, IAM abuse, Kubernetes exploitation, Docker escapes, hypervisor attacks, and cloud misconfiguration assessment.",
+  "based_on": "CREST CCT",
+  "created_by": "Claude (Anthropic)",
+  "difficulty": "HARD",
+  "pass_mark": 70,
+  "time_limit": 90,
+  "num_questions": 40,
+  "links": [
+    {"label": "CREST CCT Syllabus", "url": "https://www.crest-approved.org/membership/crest-certified-tester/"}
+  ],
+  "questions": [
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An attacker exploits an SSRF vulnerability on an EC2 instance to reach http://169.254.169.254/latest/meta-data/iam/security-credentials/. What are they attempting to retrieve?",
+      "options": {
+        "A": "The AMI ID of the running instance",
+        "B": "Temporary AWS credentials (Access Key ID, Secret Access Key, Session Token) for the attached IAM role",
+        "C": "The SSH private key used to launch the instance",
+        "D": "The instance's VPC security group rules"
+      },
+      "correct": "B",
+      "explanation": "The EC2 Instance Metadata Service (IMDS) at 169.254.169.254 exposes temporary credentials for the IAM role attached to the instance. IMDSv1 is vulnerable to SSRF as it requires no additional headers; IMDSv2 mitigates this with a session token."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What is the key security improvement of IMDSv2 (Instance Metadata Service v2) over IMDSv1?",
+      "options": {
+        "A": "IMDSv2 encrypts credentials with the instance's TLS certificate",
+        "B": "IMDSv2 requires a PUT request to obtain a session token before GET requests, mitigating SSRF attacks",
+        "C": "IMDSv2 limits metadata access to the root user only",
+        "D": "IMDSv2 restricts metadata access to the instance's VPC CIDR range"
+      },
+      "correct": "B",
+      "explanation": "IMDSv2 requires a two-step process: first a PUT request to create a session token (with a TTL), then GET requests must include that token in the X-aws-ec2-metadata-token header. This prevents SSRF exploitation since SSRFs typically cannot follow the PUT→GET flow."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which AWS CLI command lists all IAM policies attached directly to a user, helping enumerate over-privileged accounts?",
+      "options": {
+        "A": "aws iam list-user-policies --user-name <username>",
+        "B": "aws iam get-user --user-name <username>",
+        "C": "aws iam list-attached-user-policies --user-name <username>",
+        "D": "aws iam simulate-principal-policy --policy-source-arn <arn>"
+      },
+      "correct": "C",
+      "explanation": "list-attached-user-policies returns managed policies directly attached to a user. list-user-policies returns inline policies. Both should be checked during IAM enumeration to understand a user's effective permissions."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An attacker discovers a publicly accessible S3 bucket containing sensitive data. Which AWS S3 configuration caused this exposure?",
+      "options": {
+        "A": "The bucket has versioning enabled",
+        "B": "The bucket policy grants s3:GetObject to Principal: \"*\" or the bucket ACL grants public read",
+        "C": "The bucket is in a region with weaker encryption standards",
+        "D": "The bucket uses SSE-S3 instead of SSE-KMS for server-side encryption"
+      },
+      "correct": "B",
+      "explanation": "S3 buckets become publicly accessible when the bucket policy grants GetObject to Principal '*' (all principals) or the ACL grants public-read. AWS now also requires the Account Public Access Block to be disabled for either to take effect."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which tool is specifically designed for AWS cloud penetration testing and can enumerate IAM permissions, find S3 buckets, and perform privilege escalation in AWS environments?",
+      "options": {"A": "ScoutSuite", "B": "Prowler", "C": "Pacu", "D": "CloudMapper"},
+      "correct": "C",
+      "explanation": "Pacu is an open-source AWS exploitation framework designed for offensive security testing. It provides modules for enumeration, privilege escalation, persistence, and exfiltration across AWS services. ScoutSuite and Prowler are primarily assessment/auditing tools."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An attacker with the 'iam:CreatePolicyVersion' permission and 'iam:SetDefaultPolicyVersion' can perform which privilege escalation technique?",
+      "options": {
+        "A": "Attach an existing AdministratorAccess policy to their user",
+        "B": "Create a new policy version granting AdministratorAccess and set it as the default",
+        "C": "Assume any IAM role in the account using STS",
+        "D": "Enumerate all users and groups without logging the action in CloudTrail"
+      },
+      "correct": "B",
+      "explanation": "With iam:CreatePolicyVersion, an attacker can add a new version of an existing policy (e.g., one attached to their own user) granting full admin access, then use iam:SetDefaultPolicyVersion to activate it, escalating their own privileges."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which AWS service logs API calls made to AWS services and is the primary audit trail for detecting malicious activity in an AWS account?",
+      "options": {"A": "AWS Config", "B": "VPC Flow Logs", "C": "AWS CloudTrail", "D": "Amazon GuardDuty"},
+      "correct": "C",
+      "explanation": "CloudTrail records API calls made to AWS services, including the caller identity, time, source IP, and request/response parameters. Attackers often attempt to disable CloudTrail or create trails in unused regions to evade detection."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An attacker compromises a Lambda function and finds environment variables containing AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY. What is the most likely impact?",
+      "options": {
+        "A": "Read-only access to the Lambda function's code",
+        "B": "Access to AWS services using the Lambda execution role's permissions, potentially including S3, DynamoDB, or EC2 depending on the role",
+        "C": "Access only to the specific Lambda function, limited by function-level isolation",
+        "D": "No impact since Lambda credentials are automatically rotated every hour"
+      },
+      "correct": "B",
+      "explanation": "Lambda functions run with an IAM execution role whose temporary credentials are injected as environment variables. Compromising these grants an attacker the same AWS permissions as the Lambda function's role for the duration of the credential's TTL."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which Azure service is analogous to AWS IAM for managing identities, and what is the primary attack target when testing Azure environments?",
+      "options": {
+        "A": "Azure Key Vault — storing and managing cryptographic keys",
+        "B": "Azure Active Directory (Azure AD / Entra ID) — managing users, service principals, and managed identities",
+        "C": "Azure Security Center — monitoring and threat detection",
+        "D": "Azure Resource Manager — deploying and managing resources"
+      },
+      "correct": "B",
+      "explanation": "Azure AD (now Microsoft Entra ID) is the identity platform for Azure. Compromising service principals, managed identities, or app registrations with excessive permissions is a primary attack path in Azure penetration testing."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What is a 'managed identity' in Azure, and why is it a common target in cloud penetration tests?",
+      "options": {
+        "A": "A pre-configured VM template managed by Microsoft, targeted for image tampering",
+        "B": "An automatically managed Azure AD identity assigned to an Azure resource (VM, App Service, etc.) that can obtain tokens to access other Azure services without storing credentials",
+        "C": "A shared service account managed by an Azure AD administrator for multiple services",
+        "D": "A federated identity from an on-premises Active Directory synced to Azure AD"
+      },
+      "correct": "B",
+      "explanation": "Managed identities provide Azure resources with an automatic, credential-less identity. From a compromised resource (e.g., a VM or App Service), an attacker can request access tokens from the metadata endpoint to access other Azure services based on the identity's assigned roles."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which GCP attack involves abusing a service account key file that was committed to a public GitHub repository?",
+      "options": {
+        "A": "Workload Identity federation abuse",
+        "B": "Long-lived service account key exfiltration and use to authenticate to GCP APIs",
+        "C": "Cloud Storage bucket ACL manipulation",
+        "D": "GCP metadata server SSRF"
+      },
+      "correct": "B",
+      "explanation": "GCP service account key files are JSON files containing a private key that can authenticate to GCP APIs indefinitely (they don't expire unless manually rotated or deleted). Keys committed to public repos are a common misconfiguration that grants full service account access."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which cloud security tool performs multi-cloud assessments, auditing AWS, Azure, and GCP against CIS benchmarks and other security frameworks?",
+      "options": {"A": "Pacu", "B": "CloudSploit", "C": "ScoutSuite", "D": "Enumerate-IAM"},
+      "correct": "C",
+      "explanation": "ScoutSuite is a multi-cloud security auditing tool that assesses AWS, Azure, GCP, and other cloud providers against security best practices. It generates an HTML report highlighting misconfigurations, unlike Pacu which is an exploitation framework."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An attacker finds an EC2 user-data script (via the metadata service) that contains: export DB_PASSWORD=Sup3rS3cret. What is the impact?",
+      "options": {
+        "A": "The password is hashed and cannot be recovered",
+        "B": "The plaintext database password is exposed and can be used to directly access the database",
+        "C": "The password is only valid for the EC2 instance boot process",
+        "D": "User-data is encrypted and only accessible by the instance owner"
+      },
+      "correct": "B",
+      "explanation": "EC2 user-data is stored in plaintext and accessible via the IMDSv1 metadata service without authentication. Secrets hardcoded in user-data scripts (environment variables, passwords, API keys) are a common cloud misconfiguration."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What is a security risk of using overly broad IAM permission wildcards such as 's3:*' or 'ec2:*' in an IAM policy?",
+      "options": {
+        "A": "Wildcards cause CloudTrail logging to fail for those API calls",
+        "B": "An attacker who compromises that identity gains all S3 or EC2 permissions, violating least privilege and expanding the blast radius",
+        "C": "Wildcard policies cannot be applied to IAM roles, only users",
+        "D": "AWS bills more for API calls made under wildcard policies"
+      },
+      "correct": "B",
+      "explanation": "Overly broad IAM policies violate the principle of least privilege. If an identity with 's3:*' is compromised, the attacker gains full S3 access (read, write, delete, bucket policy modification), far exceeding what the application likely needs."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "During a CI/CD pipeline assessment, an attacker finds a GitHub Actions workflow that uses a self-hosted runner and can trigger the workflow via a pull request. What is the risk?",
+      "options": {
+        "A": "The attacker can read the repository's README file",
+        "B": "The attacker can execute arbitrary code on the self-hosted runner, potentially accessing secrets, cloud credentials, or the internal network",
+        "C": "The attacker can merge code without a code review",
+        "D": "The attacker can access the GitHub Actions SaaS infrastructure"
+      },
+      "correct": "B",
+      "explanation": "Self-hosted runners execute workflow code in the organisation's environment. An attacker who can trigger a workflow (e.g., via a pull request to a public repo) can inject malicious steps that run on the runner, accessing secrets, credentials, or the internal network."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which AWS privilege escalation path exploits the ability to create a new IAM user and attach the AdministratorAccess policy?",
+      "options": {
+        "A": "iam:CreateUser + iam:AttachUserPolicy",
+        "B": "iam:PassRole + lambda:CreateFunction",
+        "C": "iam:CreateRole + sts:AssumeRole",
+        "D": "iam:UpdateAssumeRolePolicy + sts:AssumeRole"
+      },
+      "correct": "A",
+      "explanation": "With iam:CreateUser and iam:AttachUserPolicy permissions, an attacker can create a new IAM user and attach the AdministratorAccess managed policy to it, then create access keys for that user to gain full AWS access."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which container escape technique exploits access to /var/run/docker.sock mounted inside a container?",
+      "options": {
+        "A": "Overwriting the host's /etc/passwd via a shared volume",
+        "B": "Using the Docker API through the socket to launch a new privileged container with the host filesystem mounted, then chrooting to it",
+        "C": "Sending a kernel exploit payload through the socket to the host kernel",
+        "D": "Reading the host's /proc/keys through the socket to steal encryption keys"
+      },
+      "correct": "B",
+      "explanation": "The Docker socket provides unauthenticated access to the Docker daemon API. An attacker can use it to launch a new container with the host filesystem mounted and privileged access, then chroot or nsenter into the host, effectively escaping the container."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "A container is started with 'docker run --privileged'. What security boundary does this effectively remove?",
+      "options": {
+        "A": "Network isolation between the container and the host",
+        "B": "All Linux capability and seccomp restrictions; the container has nearly equivalent access to the host kernel as a root process on the host",
+        "C": "Filesystem isolation, allowing the container to access all host files",
+        "D": "Process isolation, making the container's processes visible in the host's process list"
+      },
+      "correct": "B",
+      "explanation": "The --privileged flag grants all Linux capabilities and disables seccomp, AppArmor, and other security profiles. A privileged container can mount the host filesystem, load kernel modules, manipulate cgroups, and perform other host-level operations."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "CVE-2019-5736 (runc overwrite) allowed container escape by exploiting which behaviour?",
+      "options": {
+        "A": "A heap overflow in the Docker daemon that allows arbitrary command execution on the host",
+        "B": "The ability of a malicious container to overwrite the host runc binary during execution, achieving host code execution on the next container launch",
+        "C": "An SSRF vulnerability in the container registry that allows pushing malicious images",
+        "D": "A race condition in cgroup v1 that allows privilege escalation to root within the container"
+      },
+      "correct": "B",
+      "explanation": "CVE-2019-5736 exploited the fact that runc opens itself via /proc/self/exe inside the container. A malicious container could overwrite the runc binary on the host by writing to /proc/self/exe while it was being executed, causing the next container launch to execute attacker-controlled code."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which Kubernetes RBAC misconfiguration is most dangerous and grants an attacker full control over the cluster?",
+      "options": {
+        "A": "Binding the 'view' ClusterRole to an unauthenticated user",
+        "B": "Binding the 'cluster-admin' ClusterRole to a service account, user, or group (especially system:authenticated or system:unauthenticated)",
+        "C": "Granting 'get' permissions on Secrets in the default namespace",
+        "D": "Allowing 'list' access to Pods across all namespaces"
+      },
+      "correct": "B",
+      "explanation": "The cluster-admin ClusterRole grants full access to all resources. Binding it to system:authenticated or system:unauthenticated means any authenticated (or unauthenticated) user has full cluster control. Binding it to a compromised service account similarly grants full access."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which kubelet port, if exposed without authentication, allows an attacker to execute commands in any pod on the node?",
+      "options": {"A": "6443", "B": "2379", "C": "10250", "D": "8080"},
+      "correct": "C",
+      "explanation": "The kubelet's HTTPS API on port 10250 allows executing commands in pods and reading logs. If exposed without authentication (anonymous-auth: true), attackers can use the /exec endpoint to run arbitrary commands in any pod on the node."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "An attacker compromises a pod and finds the file /var/run/secrets/kubernetes.io/serviceaccount/token. What can they do with this?",
+      "options": {
+        "A": "Decrypt etcd data stored in the cluster",
+        "B": "Authenticate to the Kubernetes API server with the service account's permissions",
+        "C": "Access the container registry to pull other images",
+        "D": "Generate new service account tokens for other namespaces"
+      },
+      "correct": "B",
+      "explanation": "Every Kubernetes pod by default has a service account token mounted at this path. This JWT token can be used to authenticate to the Kubernetes API server. If the service account has excessive RBAC permissions, the attacker can escalate within the cluster."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which container escape technique uses the cgroup v1 release_agent to achieve code execution on the host?",
+      "options": {
+        "A": "Writing a shell script to /sys/fs/cgroup/memory/release_agent and triggering it by spawning then killing a process in a new cgroup",
+        "B": "Mounting the host's /proc filesystem and modifying kernel parameters",
+        "C": "Using the Docker socket to call the cgroup API",
+        "D": "Exploiting a race condition in cgroup v2 namespace isolation"
+      },
+      "correct": "A",
+      "explanation": "The cgroup v1 release_agent escape works by writing a malicious script to the release_agent file in a writable cgroup directory, then triggering it by creating a child cgroup, placing a process in it, and killing that process. The release_agent runs on the host as root when the cgroup becomes empty."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "etcd is a critical component of Kubernetes. Why is an unencrypted or unauthenticated etcd endpoint particularly dangerous?",
+      "options": {
+        "A": "etcd stores Kubernetes Secrets in base64-encoded plaintext; direct access allows reading all secrets including service account tokens and TLS certificates",
+        "B": "etcd controls pod scheduling and a compromise causes denial of service",
+        "C": "etcd stores the container runtime configuration including image signing keys",
+        "D": "etcd is the source of truth for network policies, and compromise allows network pivoting"
+      },
+      "correct": "A",
+      "explanation": "Kubernetes Secrets are stored in etcd as base64-encoded values (not encrypted by default unless etcd encryption at rest is configured). Direct access to etcd (port 2379) allows reading all cluster secrets, including service account tokens, TLS certs, and application credentials."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which Docker security mechanism restricts the system calls a container can make to the host kernel?",
+      "options": {"A": "AppArmor", "B": "seccomp profiles", "C": "Linux capabilities", "D": "cgroups"},
+      "correct": "B",
+      "explanation": "seccomp (Secure Computing Mode) profiles restrict which system calls a container process can invoke on the host kernel, reducing the attack surface for kernel exploits. Docker applies a default seccomp profile that blocks dangerous syscalls like unshare and ptrace."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which kubectl command allows an attacker to execute a shell in a running pod, similar to docker exec?",
+      "options": {
+        "A": "kubectl attach -it <pod> -c <container>",
+        "B": "kubectl exec -it <pod> -- /bin/bash",
+        "C": "kubectl run shell --image=alpine --restart=Never -it",
+        "D": "kubectl port-forward <pod> 4444:4444"
+      },
+      "correct": "B",
+      "explanation": "kubectl exec -it <pod> -- /bin/bash opens an interactive shell in a running container, equivalent to docker exec. This requires 'pods/exec' RBAC permission and is commonly used in both legitimate operations and post-compromise lateral movement."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "A container is running as root (UID 0) inside the container and has no user namespace mapping configured. What is the security implication?",
+      "options": {
+        "A": "The container root maps to the host's root (UID 0), meaning any container escape results in full host root access",
+        "B": "The container root is isolated from the host and maps to an unprivileged UID",
+        "C": "The container cannot read host files even if it escapes due to MAC policy enforcement",
+        "D": "The container root only has reduced capabilities compared to host root"
+      },
+      "correct": "A",
+      "explanation": "Without user namespace remapping, UID 0 inside a container is the same UID 0 on the host. If a container escape vulnerability is exploited, the attacker immediately has root on the host system. User namespaces remap container UIDs to unprivileged host UIDs, limiting this risk."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "What type of hypervisor runs directly on the physical hardware without an underlying OS, such as VMware ESXi or Microsoft Hyper-V?",
+      "options": {"A": "Type 2 hypervisor", "B": "Paravirtualised hypervisor", "C": "Type 1 (bare-metal) hypervisor", "D": "Hosted hypervisor"},
+      "correct": "C",
+      "explanation": "Type 1 (bare-metal) hypervisors run directly on the host hardware and manage guest VMs directly, providing better performance and security isolation. Examples include VMware ESXi, Microsoft Hyper-V, and Xen. Type 2 hypervisors run on top of a host OS."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "VENOM (CVE-2015-3456) was a critical VM escape vulnerability affecting which virtual device?",
+      "options": {
+        "A": "The virtual network interface card (vNIC) driver",
+        "B": "The virtual Floppy Disk Controller (FDC) in QEMU/KVM and other hypervisors",
+        "C": "The Virtual Machine Communication Interface (VMCI)",
+        "D": "The virtual USB controller"
+      },
+      "correct": "B",
+      "explanation": "VENOM (Virtualized Environment Neglected Operations Manipulation) was a heap overflow in QEMU's virtual Floppy Disk Controller that allowed a guest VM to escape to the host. It affected QEMU, KVM, Xen, and VirtualBox since they all used the vulnerable QEMU FDC code."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "Which VMware ESXi vulnerability (CVE-2021-21985) allowed unauthenticated remote code execution through which interface?",
+      "options": {
+        "A": "The ESXi SSH service on port 22",
+        "B": "The vCenter Server vSphere Client (HTML5) via a vulnerable plugin",
+        "C": "The VMware vSphere Update Manager service",
+        "D": "The ESXi Fault Domain Manager (FDM) agent"
+      },
+      "correct": "B",
+      "explanation": "CVE-2021-21985 was a remote code execution vulnerability in the vSphere Client (HTML5) caused by lack of input validation in the Virtual SAN Health Check plugin. It allowed unauthenticated attackers with network access to port 443 on vCenter Server to execute commands."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "A VM escape via DMA (Direct Memory Access) attack through Thunderbolt/PCIe is mitigated by which hardware security feature?",
+      "options": {
+        "A": "Secure Boot (UEFI)",
+        "B": "IOMMU (Input-Output Memory Management Unit) / Intel VT-d or AMD-Vi",
+        "C": "TPM (Trusted Platform Module)",
+        "D": "Intel TXT (Trusted Execution Technology)"
+      },
+      "correct": "B",
+      "explanation": "IOMMU (Intel VT-d or AMD-Vi) restricts which physical memory addresses a PCIe device can access, preventing DMA attacks from malicious or compromised devices from reading/writing arbitrary host memory. Without IOMMU, Thunderbolt devices can perform DMA attacks."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "In a VMware environment, the VMware Tools 'shared clipboard' and 'drag-and-drop' features represent what security risk?",
+      "options": {
+        "A": "They allow a compromised guest to exfiltrate data to the hypervisor's management network",
+        "B": "They create data transfer channels between guest VMs and the host that could leak sensitive information or be used to transfer attack tools across the isolation boundary",
+        "C": "They expose the VMware VMCI socket interface to guest kernel exploits",
+        "D": "They allow guests to mount host filesystem paths directly"
+      },
+      "correct": "B",
+      "explanation": "Shared clipboard and drag-and-drop features in VMware Tools create intentional data transfer channels across the VM-host boundary. In sensitive environments, these features should be disabled in the VM's .vmx configuration to enforce strict isolation."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "An attacker gains access to a VMware datastore and finds a .vmdk (virtual machine disk) file. What can they do with it?",
+      "options": {
+        "A": "Nothing useful — VMDK files are encrypted by default",
+        "B": "Mount the VMDK file to access the guest filesystem, extract credentials, and read sensitive data offline",
+        "C": "Inject code into the running VM by modifying the VMDK while it is live",
+        "D": "Use the VMDK to clone the VM and run it on the attacker's infrastructure"
+      },
+      "correct": "B",
+      "explanation": "VMDK files are virtual hard disk images. An attacker with access to the datastore can mount them using tools like vmware-mount or Linux loopback devices, gaining full filesystem access to extract credentials, configuration files, and sensitive data — especially valuable for offline password cracking."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "Which VMware ESXi management interface, if exposed to untrusted networks, is the primary target for attackers seeking to compromise the entire virtualisation layer?",
+      "options": {
+        "A": "VMware vSphere Web Services API (port 443) / vCenter Server management interface",
+        "B": "ESXi Shell (SSH on port 22) for individual host management",
+        "C": "VMware vSphere Replication (port 31031)",
+        "D": "VMware Fault Tolerance logging port (port 8100)"
+      },
+      "correct": "A",
+      "explanation": "The vCenter Server management interface (typically port 443) controls the entire virtual infrastructure — all hosts, VMs, networking, and storage. Compromise of vCenter provides an attacker with control over every VM in the environment, making it the highest-value target."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "What is 'VM sprawl' and why is it a security risk?",
+      "options": {
+        "A": "VMs consuming excessive CPU, causing denial of service to other VMs on the same host",
+        "B": "The uncontrolled proliferation of VMs that may be forgotten, unpatched, and running outdated software, expanding the attack surface",
+        "C": "A network storm caused by too many virtual switches on a single host",
+        "D": "The risk of a VM snapshot consuming all available datastore space"
+      },
+      "correct": "B",
+      "explanation": "VM sprawl occurs when VMs are created but not properly tracked, managed, or decommissioned. Forgotten VMs running outdated OS and application versions become vulnerable targets. They are often not covered by patch management or monitoring processes."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "In Xen hypervisor architecture, which privileged VM has direct access to physical hardware and manages device drivers on behalf of other VMs?",
+      "options": {"A": "Dom1", "B": "HVM domain", "C": "Dom0", "D": "The Xen Security Module (XSM)"},
+      "correct": "C",
+      "explanation": "Dom0 (Domain 0) is the privileged management domain in Xen that runs a full OS and has direct access to physical hardware. It manages the hypervisor, runs device drivers, and provides I/O services to unprivileged guest domains (DomU). Compromising Dom0 gives control of the entire hypervisor."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "Which virtual networking attack involves configuring a VM's virtual NIC in promiscuous mode on a misconfigured virtual switch (vSwitch) to capture traffic from other VMs?",
+      "options": {
+        "A": "ARP spoofing across virtual switches",
+        "B": "Promiscuous mode sniffing on virtual port groups that allow it",
+        "C": "VLAN hopping via 802.1Q double-tagging on vSwitches",
+        "D": "MAC flooding of the virtual switch's forwarding table"
+      },
+      "correct": "B",
+      "explanation": "VMware vSwitches have a 'Promiscuous Mode' setting on port groups. If allowed (set to Accept), VMs on that port group can see all traffic on the vSwitch segment, not just their own. This is disabled by default but misconfiguration exposes inter-VM traffic."
+    }
+  ]
+}
