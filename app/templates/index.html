@@ -36,41 +36,17 @@
 
       <div class="exam-grid mt-16" id="exam-grid">
         {% for exam in exams %}
-        <label class="exam-card" id="card-{{ exam.id }}" for="exam-{{ exam.id }}"
-               data-pool-size="{{ exam.pool_size }}"
-               data-default-questions="{{ exam.num_questions }}"
-               data-default-time="{{ exam.time_limit }}">
-          <input
-            type="radio"
-            name="exam_id"
-            id="exam-{{ exam.id }}"
-            value="{{ exam.id }}"
-            required
-          >
-          <div class="exam-title">{{ exam.title }}</div>
-          <div class="exam-desc">{{ exam.description }}</div>
-          <div class="exam-meta">
+        <div class="exam-card exam-card-{{ exam.difficulty | lower }}" id="card-{{ exam.id }}">
+          <input type="radio" name="exam_id" id="exam-{{ exam.id }}" value="{{ exam.id }}">
+
+          <div class="card-top">
+            <div class="exam-title">{{ exam.title }}</div>
             <span class="tag tag-{{ exam.difficulty | lower }}">{{ exam.difficulty }}</span>
-            <span class="tag tag-count">QUESTIONS: {{- exam.num_questions }}</span>
-            {%- if exam.pool_size > exam.num_questions %}<span class="tag tag-count">TOTAL QUESTION POOL: {{ exam.pool_size }}</span>{%- endif -%}</span>
-            <span class="tag tag-passmark">PASS MARK: {{ exam.pass_mark }}%</span>
-            {% if exam.time_limit %}<span class="tag tag-timer">MINUTES: {{ exam.time_limit }}</span>{% endif %}
           </div>
-          {% if exam.based_on or exam.created_by or exam.categories %}
-          <div class="exam-attribution">
-            {% if exam.based_on %}<span>&gt; BASED ON: {{ exam.based_on }}</span>{% endif %}
-            {% if exam.created_by %}<span>&gt; CREATED BY: {{ exam.created_by }}</span>{% endif %}
-            {% if exam.categories %}<span>&gt; TOPICS: {{ exam.categories | join(' · ') }}</span>{% endif %}
-          </div>
-          {% endif %}
-          {% if exam.links %}
-          <div class="exam-links" onclick="event.stopPropagation()">
-            {% for link in exam.links %}
-            <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>
-            {% endfor %}
-          </div>
-          {% endif %}
-          <div class="card-config" style="display:none;" onclick="event.stopPropagation()">
+
+          <div class="exam-desc">{{ exam.description }}</div>
+
+          <div class="card-config">
             <div class="config-grid">
               <div>
                 <span class="cfg-label">Questions</span>
@@ -80,30 +56,35 @@
                 </div>
               </div>
               <div>
-                <span class="cfg-label">Time <span class="text-dim" style="font-size:12px;">(minutes — 0 for untimed)</span></span>
+                <span class="cfg-label">Time <span class="text-dim" style="font-size:11px;">(min — 0 for untimed)</span></span>
                 <input type="number" class="cfg-number-input card-time-val" min="0" max="999" value="{{ exam.time_limit }}">
               </div>
             </div>
           </div>
-        </label>
-        {% else %}
-        <div class="text-dim" style="padding:20px;">
-          &gt; NO EXAM MODULES FOUND IN DATABANK
+
+          <div class="card-meta-row">
+            <span>Pass: <span class="text-green">{{ exam.pass_mark }}%</span></span>
+            {% if exam.based_on %}<span>{{ exam.based_on }}</span>{% endif %}
+            {% if exam.categories %}<span>{{ exam.categories[:3] | join(' · ') }}{% if exam.categories | length > 3 %} +{{ exam.categories | length - 3 }} more{% endif %}</span>{% endif %}
+            {% if exam.links %}{% for link in exam.links %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>{% endfor %}{% endif %}
+          </div>
+
+          <div class="card-actions">
+            <button type="button" class="btn btn-primary card-launch-btn"
+                    onclick="launchExam('{{ exam.id }}')">
+              <span>&gt;&gt;</span> LAUNCH MISSION
+            </button>
+          </div>
         </div>
+        {% else %}
+        <div class="text-dim" style="padding:20px;">&gt; NO EXAM MODULES FOUND IN DATABANK</div>
         {% endfor %}
       </div>
     </div>
 
-    <!-- Hidden fields populated by JS from the selected card's config -->
+    <!-- Populated by JS before form submit -->
     <input type="hidden" name="num_questions" id="num-questions-hidden" value="">
     <input type="hidden" name="time_limit_override" id="time-limit-hidden" value="">
-
-    <!-- Submit -->
-    <div class="fade-in fade-in-delay-3">
-      <button type="submit" class="btn btn-primary" id="launch-btn" disabled>
-        <span>&gt;&gt;</span> INITIATE EXAM SEQUENCE
-      </button>
-    </div>
 
   </form>
 
