@@ -13,8 +13,8 @@
   --neon-magenta:  #ff00ff;
   --neon-yellow:   #ffe600;
   --neon-red:      #ff003c;
-  --text-primary:  #c8ffc8;
-  --text-dim:      #7ab87a;
+  --text-primary:  #d8ffd8;
+  --text-dim:      #90c490;
   --border-dim:    #1a3a1a;
   --border-bright: #00ff41;
   --glow-green:    0 0 8px #00ff41, 0 0 20px #00ff4155;
@@ -33,8 +33,8 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-mono);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.75;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -147,7 +147,7 @@ header {
 
 .page-subtitle {
   color: var(--text-dim);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 2px;
   margin-bottom: 32px;
 }
@@ -267,10 +267,10 @@ header {
 }
 
 .exam-desc {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-dim);
   margin-bottom: 10px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .exam-meta {
@@ -390,6 +390,8 @@ input[type="text"]:focus {
   margin-bottom: 20px;
   padding: 22px;
   transition: border-color 0.2s;
+  /* Prevents the sticky bar from overlapping when scrolled into view */
+  scroll-margin-top: 72px;
 }
 
 .question-card:hover { border-color: rgba(0,255,65,0.3); }
@@ -691,10 +693,10 @@ input[type="text"]:focus {
 }
 
 .question-text {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--text-primary);
-  margin-bottom: 18px;
-  line-height: 1.75;
+  margin-bottom: 20px;
+  line-height: 1.8;
 }
 
 .options-list {
@@ -753,10 +755,10 @@ input[type="text"]:focus {
 }
 
 .option-text {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-primary);
   flex: 1;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
 /* ── Progress bar ───────────────────────────────────────────── */
@@ -844,7 +846,7 @@ input[type="text"]:focus {
 }
 
 .grade-msg {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-dim);
   letter-spacing: 1px;
 }
@@ -866,9 +868,9 @@ input[type="text"]:focus {
 .result-q.wrong   { border-left: 3px solid var(--neon-red);   }
 
 .result-q-text {
-  font-size: 15px;
-  line-height: 1.75;
-  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 12px;
   color: var(--text-primary);
 }
 
@@ -884,11 +886,12 @@ input[type="text"]:focus {
 }
 
 .explanation {
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 12px;
+  padding: 12px;
   border-left: 2px solid var(--text-dim);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-dim);
+  line-height: 1.7;
 }
 
 /* ── Utilities ──────────────────────────────────────────────── */

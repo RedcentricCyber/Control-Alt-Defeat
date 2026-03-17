@@ -24,7 +24,7 @@
       </div>
       {% for entry in history %}
       <a href="/history/{{ entry.id }}" class="history-row history-row-link {% if entry.passed %}history-pass{% else %}history-fail{% endif %}">
-        <span class="text-dim" style="font-size:10px;">{{ entry.token }}</span>
+        <span class="text-dim" style="font-size:12px;">{{ entry.token }}</span>
         <span>{{ entry.alias }}</span>
         <span style="font-size:11px;">{{ entry.exam_title }}</span>
         <span>
@@ -38,7 +38,7 @@
             <span class="verdict-fail">✕ FAILED</span>
           {% endif %}
         </span>
-        <span class="text-dim" style="font-size:10px;">{{ entry.timestamp }}</span>
+        <span class="text-dim" style="font-size:12px;">{{ entry.timestamp }}</span>
       </a>
       {% endfor %}
     </div>
