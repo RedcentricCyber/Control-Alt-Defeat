@@ -7,9 +7,9 @@ A cyberpunk-themed multiple-choice exam app built with Flask. Pick an exam, answ
 **Docker (recommended):**
 
 ```bash
-docker-compose up --build   # first run
-docker-compose up           # subsequent runs
-docker-compose down         # stop
+docker compose up --build   # first run
+docker compose up           # subsequent runs
+docker compose down         # stop
 ```
 
 The app will be available at **http://localhost:5000**.
