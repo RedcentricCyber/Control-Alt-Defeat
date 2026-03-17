@@ -870,6 +870,12 @@ input[type="text"]:focus {
   letter-spacing: 1px;
 }
 
+.score-meta {
+  font-size: 14px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
 .grade-elite    { color: var(--neon-green);   text-shadow: var(--glow-green);   }
 .grade-netrunner{ color: var(--neon-cyan);    text-shadow: var(--glow-cyan);    }
 .grade-scriptkid{ color: var(--neon-yellow);  text-shadow: 0 0 8px var(--neon-yellow); }
