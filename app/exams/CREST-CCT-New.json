@@ -7457,6 +7457,426 @@
       },
       "correct": "B",
       "explanation": "Loading docks regularly receive IT equipment deliveries. A tester dressed as a delivery driver with a convincing delivery order (matching expected vendor names), hi-vis clothing, and a hand truck with boxes is a high-success pretext \u2014 security staff are accustomed to waving such deliveries through."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is 'shift-left security' and what does it aim to achieve?",
+      "options": {
+        "A": "Moving security testing to the left side of the dashboard in project management tools",
+        "B": "Integrating security testing and review earlier in the SDLC (design, coding, CI) rather than at the end, reducing the cost and complexity of fixing vulnerabilities",
+        "C": "Assigning security responsibility to the DevOps team instead of a dedicated security team",
+        "D": "Performing penetration tests before deployment rather than after"
+      },
+      "correct": "B",
+      "explanation": "Shift-left moves security earlier into the development lifecycle. Fixing a vulnerability found during design costs far less than fixing one found post-deployment. It includes threat modelling, peer code review, SAST in CI pipelines, and developer security training."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "Which OWASP project provides a checklist of security requirements for verifying web application security, used in SecDevOps to define security acceptance criteria?",
+      "options": {
+        "A": "OWASP Top 10",
+        "B": "OWASP SAMM",
+        "C": "OWASP ASVS (Application Security Verification Standard)",
+        "D": "OWASP WSTG"
+      },
+      "correct": "C",
+      "explanation": "OWASP ASVS provides a framework of security requirements (Level 1, 2, 3) for web applications. It is used to define security acceptance criteria in user stories, automated test cases, and penetration test scopes within a SecDevOps context."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "A developer uses 'os.system(user_input)' in Python to process filenames. What vulnerability does this introduce?",
+      "options": {
+        "A": "SQL injection",
+        "B": "OS command injection \u2014 user-controlled input is passed directly to a shell, allowing execution of arbitrary commands via metacharacters like ; | && >",
+        "C": "Path traversal",
+        "D": "Insecure deserialization"
+      },
+      "correct": "B",
+      "explanation": "Passing user-controlled data to os.system(), subprocess.call(shell=True), or similar functions allows OS command injection. An attacker can break out of the intended command using shell metacharacters (e.g., ; rm -rf /, | curl attacker.com). subprocess.run() with a list (no shell=True) is the safe alternative."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is 'insecure deserialization' and what is a real-world example?",
+      "options": {
+        "A": "Storing passwords in base64 instead of proper hashing",
+        "B": "Deserialising attacker-controlled data using a Java/PHP/Python deserializer that executes code embedded in the serialized object, e.g., Java RMI/RCE via crafted serialized Java objects",
+        "C": "Sending sensitive data in HTTP response bodies without encryption",
+        "D": "Improper parsing of XML external entities"
+      },
+      "correct": "B",
+      "explanation": "Insecure deserialization occurs when applications deserialise untrusted data without validation. Attacker-crafted serialized objects can trigger code execution during deserialization. Java RMI, Apache Commons Collections gadget chains, and PHP unserialize() attacks are classic examples (OWASP A08)."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "Which tool performs static analysis of Python code to detect security issues such as hardcoded passwords and SQL injection vulnerabilities?",
+      "options": {
+        "A": "Trivy",
+        "B": "Bandit",
+        "C": "Checkov",
+        "D": "Safety"
+      },
+      "correct": "B",
+      "explanation": "Bandit is a Python SAST tool that scans source code for common security issues: hardcoded passwords, use of MD5/SHA-1, subprocess with shell=True, SQL string formatting, and other patterns from the OWASP Top 10. It integrates easily into CI pipelines."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is a 'software bill of materials' (SBOM) and why is it relevant to SecDevOps?",
+      "options": {
+        "A": "A cost breakdown of software development resources",
+        "B": "A machine-readable inventory of all software components and dependencies in an application, used to quickly identify whether a known-vulnerable component (e.g., Log4Shell) is present",
+        "C": "A list of approved software vendors for procurement",
+        "D": "A record of all code changes and their security review status"
+      },
+      "correct": "B",
+      "explanation": "An SBOM (in formats like SPDX or CycloneDX) lists all components, libraries, and transitive dependencies with their versions. When a new CVE is published (e.g., Log4j), an SBOM allows immediate determination of whether the vulnerable component is present in any application."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "Which security control specifically prevents a compromised npm package from executing arbitrary code on developer machines during 'npm install'?",
+      "options": {
+        "A": "Using package-lock.json to lock dependency versions",
+        "B": "Disabling or auditing npm lifecycle scripts (preinstall, postinstall) that execute during package installation",
+        "C": "Running npm install with --save-dev flag",
+        "D": "Using npm audit to check for vulnerabilities before installing"
+      },
+      "correct": "B",
+      "explanation": "npm package lifecycle scripts (preinstall, install, postinstall) execute automatically during npm install. Malicious packages use these to run code on developer machines. Organisations can use --ignore-scripts flag or tools like npm-safe-publish to mitigate this risk."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What does the term 'secrets sprawl' mean in the context of SecDevOps?",
+      "options": {
+        "A": "Encrypted secrets being distributed across too many team members",
+        "B": "Sensitive credentials (API keys, passwords, tokens) appearing across multiple uncontrolled locations: code repos, CI logs, Docker images, Slack messages, Confluence pages",
+        "C": "Secrets manager keys that expire and are not rotated",
+        "D": "Over-permissioned service accounts used across multiple services"
+      },
+      "correct": "B",
+      "explanation": "Secrets sprawl describes the proliferation of credentials across unmanaged locations. A single AWS key may be found in 5 different git repos, 3 CI/CD systems, and 2 internal wikis. Secret scanning tools (truffleHog, gitleaks) and centralised secrets management (Vault, AWS Secrets Manager) address this."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "Which container security benchmark provides hardening guidance for Docker and Kubernetes configurations?",
+      "options": {
+        "A": "OWASP Docker Top 10",
+        "B": "CIS Docker Benchmark and CIS Kubernetes Benchmark",
+        "C": "NIST SP 800-190",
+        "D": "Both B and C"
+      },
+      "correct": "D",
+      "explanation": "CIS Benchmarks for Docker and Kubernetes provide specific, actionable hardening guidance. NIST SP 800-190 (Application Container Security Guide) provides broader guidance on container security throughout the lifecycle. kube-bench automates the CIS Kubernetes Benchmark checks."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "A developer uses pickle.loads(user_data) in Python to deserialise user-submitted data. Why is this a critical vulnerability?",
+      "options": {
+        "A": "pickle.loads is slow and causes denial of service under high load",
+        "B": "pickle.loads executes arbitrary Python code embedded in the data during deserialisation, allowing remote code execution if attacker-controlled data is deserialised",
+        "C": "pickle format cannot handle Unicode characters, causing data corruption",
+        "D": "pickle.loads bypasses Python's GIL, causing race conditions"
+      },
+      "correct": "B",
+      "explanation": "Python's pickle module can deserialise objects that execute arbitrary code during the __reduce__ method. Attackers craft malicious pickle payloads that run shell commands when loaded. Never deserialise untrusted data with pickle; use safe formats like JSON or protobuf instead."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is 'path traversal' and how is it exploited?",
+      "options": {
+        "A": "An attack that traverses the network path between client and server to intercept data",
+        "B": "Manipulating file path inputs (e.g., ../../etc/passwd) to access files outside the intended directory, reading sensitive files on the server",
+        "C": "Traversing an application's URL structure to discover hidden admin pages",
+        "D": "Exploiting a race condition in file system operations"
+      },
+      "correct": "B",
+      "explanation": "Path traversal (directory traversal) uses ../ sequences to navigate up the directory tree. If a web application reads files based on user input (e.g., /files?name=report.pdf), an attacker can supply ../../../etc/passwd to read arbitrary files. Mitigated by canonicalising paths and validating they remain within the intended directory."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "Which DevSecOps practice involves automatically testing the security of API endpoints in CI/CD using tools that check for OWASP API Security Top 10 vulnerabilities?",
+      "options": {
+        "A": "DAST integration using tools like OWASP ZAP or StackHawk in the CI pipeline",
+        "B": "Running SAST on the API specification (OpenAPI/Swagger) file only",
+        "C": "Manual penetration testing of APIs before each production release",
+        "D": "Code review of all API controller functions"
+      },
+      "correct": "A",
+      "explanation": "DAST tools (ZAP, StackHawk, Burp Suite CI/CD integration) can be run automatically in CI/CD pipelines against deployed test environments. They send malicious payloads to running API endpoints and detect vulnerabilities like injection, broken auth, and excessive data exposure."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is the purpose of a Content Security Policy (CSP) HTTP header and how does it help SecDevOps teams?",
+      "options": {
+        "A": "It encrypts the HTTP response body to prevent interception",
+        "B": "It tells browsers which sources of scripts, styles, and other resources are trusted, significantly reducing XSS impact by blocking execution of injected scripts from untrusted origins",
+        "C": "It authenticates the web server's identity to the browser",
+        "D": "It prevents CSRF attacks by validating the Referer header"
+      },
+      "correct": "B",
+      "explanation": "A strict CSP (e.g., default-src 'self'; script-src 'self') instructs browsers to only execute scripts from the application's own origin. Even if an attacker injects a <script> tag, the browser blocks it if the source isn't whitelisted \u2014 a key defence-in-depth control against XSS."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is 'DREAD' scoring and how does it compare to CVSS in a development context?",
+      "options": {
+        "A": "DREAD is a newer replacement for CVSS that is used by all major vulnerability databases",
+        "B": "DREAD (Damage, Reproducibility, Exploitability, Affected users, Discoverability) is a qualitative threat risk scoring model used during threat modelling; CVSS scores discovered vulnerabilities \u2014 both provide different perspectives on risk",
+        "C": "DREAD scores only apply to physical security risks while CVSS covers digital vulnerabilities",
+        "D": "DREAD is identical to CVSS but uses different terminology"
+      },
+      "correct": "B",
+      "explanation": "DREAD is used proactively during threat modelling to prioritise potential threats. CVSS scores specific vulnerabilities after they're found. In SecDevOps, DREAD helps developers understand what to build securely; CVSS helps prioritise what to patch."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "A Terraform plan shows: resource 'aws_s3_bucket_acl' with acl = 'public-read'. Which IaC security tool would flag this as a misconfiguration?",
+      "options": {
+        "A": "Terraform validate",
+        "B": "Checkov or tfsec",
+        "C": "Terraform fmt",
+        "D": "AWS CloudFormation Guard"
+      },
+      "correct": "B",
+      "explanation": "Checkov and tfsec are IaC SAST tools that analyse Terraform configurations against security best practices. Both would flag an S3 bucket ACL set to public-read as a HIGH or CRITICAL severity finding, preventing it from reaching deployment if integrated in CI."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is 'pretexting' in the context of social engineering?",
+      "options": {
+        "A": "Sending an email before calling to increase credibility",
+        "B": "Creating a fabricated scenario (pretext) \u2014 a convincing backstory and identity \u2014 to manipulate a target into taking a desired action or revealing information",
+        "C": "Using pre-written text templates for phishing emails",
+        "D": "Gathering information via text messages (SMS)"
+      },
+      "correct": "B",
+      "explanation": "Pretexting is the practice of creating a fabricated scenario to engage a target. Examples: posing as IT helpdesk to request password resets, pretending to be a vendor auditor to access server rooms, or claiming to be a new employee who needs help with system access."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "A targeted phishing email uses the recipient's name, references their job role and a recent company event. This type of highly personalised phishing is called what?",
+      "options": {
+        "A": "Whaling",
+        "B": "Smishing",
+        "C": "Spear-phishing",
+        "D": "Clone phishing"
+      },
+      "correct": "C",
+      "explanation": "Spear-phishing uses personalised information (name, role, recent events, colleagues' names) gathered through OSINT to increase credibility and success rate. Unlike generic phishing, each email is tailored to the individual, making it significantly harder to detect."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "Which Cialdini principle of influence does an attacker exploit when they say: 'Everyone in your department has already completed this verification \u2014 you're the last one'?",
+      "options": {
+        "A": "Scarcity",
+        "B": "Authority",
+        "C": "Social proof",
+        "D": "Reciprocity"
+      },
+      "correct": "C",
+      "explanation": "Social proof exploits the human tendency to conform to what others are doing. Creating the impression that colleagues have already complied reduces the target's resistance and critical thinking, making them more likely to follow the crowd."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is 'clone phishing'?",
+      "options": {
+        "A": "Creating a fake website that is a pixel-perfect copy of a legitimate one",
+        "B": "Taking a legitimate email previously sent to the victim, replacing the link/attachment with a malicious one, and resending it appearing to come from the same sender",
+        "C": "Registering a domain that looks similar to the target organisation's domain",
+        "D": "Cloning the victim's email account to intercept their correspondence"
+      },
+      "correct": "B",
+      "explanation": "Clone phishing duplicates a real, previously delivered email but replaces legitimate links or attachments with malicious ones. The familiarity of the email (same subject, sender, content structure) increases the likelihood of the target clicking the malicious link."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "During a vishing call, an attacker uses caller ID spoofing to display '0800-IT-SUPPORT'. What psychological principle makes this effective?",
+      "options": {
+        "A": "Scarcity",
+        "B": "Liking",
+        "C": "Authority and legitimacy",
+        "D": "Reciprocity"
+      },
+      "correct": "C",
+      "explanation": "A caller ID showing an internal IT support number implies the call is from a trusted authority within the organisation. This exploits Cialdini's principle of authority \u2014 people are more likely to comply with requests from apparent figures of authority or trusted institutions."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is 'watering hole' attack and how does it combine social engineering with technical exploitation?",
+      "options": {
+        "A": "Sending phishing emails that link to fake water utility websites",
+        "B": "Compromising a website frequently visited by the target group, then serving exploits to visitors \u2014 using knowledge of the targets' interests to predict which sites they visit",
+        "C": "Placing a physical device near a water cooler where employees gather",
+        "D": "Exploiting a shared resource (shared network drive) used by the target group"
+      },
+      "correct": "B",
+      "explanation": "A watering hole attack compromises legitimate websites known to be frequently visited by the target group (e.g., an industry forum or supplier portal). When targets visit, they are served drive-by exploits. It uses social knowledge (what sites the target frequents) combined with technical exploitation."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "Which OSINT tool specifically searches for email addresses, subdomains, and employee names associated with a target domain?",
+      "options": {
+        "A": "Maltego",
+        "B": "theHarvester",
+        "C": "Shodan",
+        "D": "Recon-ng"
+      },
+      "correct": "B",
+      "explanation": "theHarvester collects email addresses, subdomains, IP addresses, and employee names from public sources (Google, Bing, LinkedIn, PGP key servers, DNS). It is specifically designed for reconnaissance during the initial phases of a penetration test or social engineering engagement."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "An attacker sends a text message claiming to be from a bank: 'Your account has been locked. Verify identity at: bank-secure-verify.com'. What is this attack?",
+      "options": {
+        "A": "Vishing",
+        "B": "Spear-phishing",
+        "C": "Smishing",
+        "D": "Pharming"
+      },
+      "correct": "C",
+      "explanation": "Smishing (SMS phishing) uses text messages to deliver phishing lures, typically with a sense of urgency and a malicious URL. SMS messages are often trusted more than emails because people associate them with their bank's genuine OTP messages."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is the goal of a 'pretext call' during a social engineering assessment?",
+      "options": {
+        "A": "To test whether the company's phone system can be exploited via DTMF injection",
+        "B": "To gather intelligence or manipulate staff into taking actions (disclosing credentials, resetting passwords, installing software) through a fabricated telephone conversation",
+        "C": "To record calls for later playback during the debrief",
+        "D": "To check whether voicemail systems are protected with a PIN"
+      },
+      "correct": "B",
+      "explanation": "Pretext calls involve calling target employees under a false identity (IT helpdesk, vendor, senior manager) to elicit sensitive information or manipulate them into actions that support the attack. Testing whether staff verify callers' identities and follow callback procedures is a key objective."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "After a successful social engineering engagement, which finding would indicate the MOST significant organisational security culture failure?",
+      "options": {
+        "A": "An employee held a door open for the tester when their hands were full",
+        "B": "An employee verbally disclosed their password to an impersonated IT support caller without requesting a callback or ticket number",
+        "C": "A visitor badge was left unattended on a desk",
+        "D": "A printer contained an uncollected confidential document"
+      },
+      "correct": "B",
+      "explanation": "Verbally disclosing credentials to an unverified caller is the most critical failure \u2014 it represents a complete breakdown of the human firewall. The other findings indicate procedural weaknesses, but credential disclosure directly enables account compromise and bypasses all technical controls."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What should be included in the 'scope' section of a penetration test authorisation document?",
+      "options": {
+        "A": "Only the IP addresses of servers to be tested",
+        "B": "Explicit IP ranges, domains, applications, and systems in scope; excluded systems; permitted and prohibited testing techniques; testing windows; and emergency contact details",
+        "C": "The tester's hourly rate and project timeline",
+        "D": "A list of all known vulnerabilities in the target environment"
+      },
+      "correct": "B",
+      "explanation": "A comprehensive scope document protects both tester and client. It must define exactly what is in and out of scope, what types of testing are permitted (e.g., no DoS, no social engineering), testing hours, and who to contact if an incident occurs during testing."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A penetration tester discovers a critical vulnerability that is actively being exploited. What should they do?",
+      "options": {
+        "A": "Continue testing and include it in the final report",
+        "B": "Immediately notify the client via the agreed emergency contact channel, even outside normal hours, documenting the discovery and halting further exploitation",
+        "C": "Exploit it fully to demonstrate impact before reporting",
+        "D": "Wait until the debrief meeting to reveal the finding"
+      },
+      "correct": "B",
+      "explanation": "Critical findings with active exploitation evidence (or evidence of prior compromise) must be escalated immediately via the pre-agreed emergency contact. Delaying this notification could result in ongoing harm. The tester should document what was found without further exploitation."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What distinguishes a 'vulnerability assessment' from a 'penetration test'?",
+      "options": {
+        "A": "A vulnerability assessment uses automated tools; a penetration test is always manual",
+        "B": "A vulnerability assessment identifies and ranks vulnerabilities without exploiting them; a penetration test actively exploits vulnerabilities to demonstrate real-world impact and assess the depth of compromise achievable",
+        "C": "A penetration test only covers web applications; a vulnerability assessment covers the whole infrastructure",
+        "D": "A vulnerability assessment is performed remotely; a penetration test requires physical presence"
+      },
+      "correct": "B",
+      "explanation": "Vulnerability assessments identify, rank, and report vulnerabilities but don't exploit them, providing a broad picture of exposure. Penetration tests actively exploit vulnerabilities to achieve objectives (e.g., domain admin, data access), demonstrating real business impact and testing detective controls."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the purpose of a 'debrief' meeting at the end of a penetration test?",
+      "options": {
+        "A": "For the tester to hand over all tools and exploits used during the test",
+        "B": "To walk the client through findings, answer questions, clarify severity ratings, and help prioritise remediation \u2014 ensuring findings are understood before the written report is finalised",
+        "C": "To negotiate the final invoice payment",
+        "D": "To delete all data captured during the test from the client's systems"
+      },
+      "correct": "B",
+      "explanation": "The debrief bridges technical findings and business understanding. Testers present findings to technical and management stakeholders, explain impact in business terms, and discuss remediation priorities. This ensures the report is actionable and findings are not misinterpreted."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "A penetration tester accidentally causes a production server to crash during testing. What is the appropriate response?",
+      "options": {
+        "A": "Quietly continue testing and mention it in passing in the report appendix",
+        "B": "Immediately notify the client via the emergency contact, document the exact actions that caused the crash, and assist with recovery if possible",
+        "C": "Attempt to restore the server without notifying the client",
+        "D": "Stop all testing and leave the engagement"
+      },
+      "correct": "B",
+      "explanation": "Accidental impact on production systems must be immediately disclosed to the client, even if embarrassing. The tester must document precisely what action caused the outage. Good professional conduct and contractual obligations require transparency; attempting to hide the incident would be a serious breach of trust."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the 'rules of engagement' (RoE) document in the context of a penetration test?",
+      "options": {
+        "A": "A legal document that transfers liability from the tester to the client",
+        "B": "A document defining the specific parameters of testing: permitted techniques, testing hours, communication protocols, escalation procedures, and what constitutes success",
+        "C": "A standard contract template from CREST used for all engagements",
+        "D": "A list of CVEs that the tester is authorised to use"
+      },
+      "correct": "B",
+      "explanation": "Rules of Engagement document the technical and procedural boundaries of the assessment, agreed upon before testing starts. It covers testing windows, permitted techniques (no DoS, social engineering allowed/not), handling of discovered sensitive data, and notification procedures."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "Why must penetration testers securely delete or return all data obtained from client systems after an engagement?",
+      "options": {
+        "A": "To avoid exceeding storage limits on testing machines",
+        "B": "Because contractual, legal, and professional obligations require it; retaining client data (credentials, PII, business data) creates liability and trust issues",
+        "C": "Because the data is encrypted and becomes useless after the engagement key expires",
+        "D": "Only if the data was classified as 'Confidential' or higher"
+      },
+      "correct": "B",
+      "explanation": "Penetration testers routinely access highly sensitive data (credentials, PII, financial records, IP). Contractual obligations (typically in the Statement of Work) and professional ethics require all client data to be securely deleted after the engagement and confirmed in writing."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What should a penetration test report's executive summary contain?",
+      "options": {
+        "A": "A full technical description of every vulnerability found with proof-of-concept code",
+        "B": "A high-level overview of the engagement, key findings, overall risk rating, and prioritised remediation recommendations \u2014 written for non-technical senior management",
+        "C": "A breakdown of the hours spent on each phase of testing",
+        "D": "Raw tool output from Nmap, Nessus, and Burp Suite scans"
+      },
+      "correct": "B",
+      "explanation": "The executive summary is written for C-level and board audiences who need to understand business risk without technical detail. It should cover: what was tested, overall security posture, critical issues, and top remediation priorities \u2014 all in business language without jargon."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "What is the primary legal document that authorises a penetration tester to perform testing on a client's systems?",
+      "options": {
+        "A": "The penetration tester's CREST certification",
+        "B": "A signed Statement of Work (SoW) or contract that explicitly authorises the testing activities against the defined scope",
+        "C": "An NDA signed by the tester",
+        "D": "An email from the client's IT manager requesting the test"
+      },
+      "correct": "B",
+      "explanation": "Without explicit written authorisation (SoW, contract, or a specific 'permission to test' letter from the system owner), any penetration testing activity \u2014 even well-intentioned \u2014 may constitute an offence under the Computer Misuse Act (UK) or equivalent legislation. A signed SoW is essential."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "question": "During a grey-box penetration test, what information is typically provided to the tester prior to testing?",
+      "options": {
+        "A": "No information \u2014 the tester must discover everything autonomously",
+        "B": "Full source code, architecture diagrams, and all credentials",
+        "C": "Partial information such as IP ranges, application user credentials, or high-level architecture \u2014 simulating a partially informed attacker such as a malicious insider",
+        "D": "Only the name of the target organisation"
+      },
+      "correct": "C",
+      "explanation": "Grey-box testing provides partial knowledge \u2014 typically the information a privileged insider or a compromised low-level account would have. This is the most common type of penetration test as it balances realistic threat simulation with testing efficiency."
     }
   ]
 }
