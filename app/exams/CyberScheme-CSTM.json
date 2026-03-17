@@ -278,7 +278,7 @@
     },
     {
       "category": "CURRENT TECHNOLOGY",
-      "question": "Explain the purpose of a Remote Authentication Dial-In User Service (RADUIS) server",
+      "question": "Explain the purpose of a Remote Authentication Dial-In User Service (RADIUS) server",
       "options": {
         "A": "To host web applications behind a reverse proxy.",
         "B": "To perform DNS zone transfers between authoritative servers.",
@@ -842,7 +842,7 @@
     },
     {
       "category": "NETWORKING",
-      "question": "Where would you find the hosts file and what is its purpose of this file?",
+      "question": "Where would you find the hosts file and what is its purpose?",
       "options": {
         "A": "It is stored only on DNS servers and defines authoritative zones.",
         "B": "It is stored in the browser cache and defines TLS certificates.",
