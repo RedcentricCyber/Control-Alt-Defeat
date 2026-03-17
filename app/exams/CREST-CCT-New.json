@@ -7877,6 +7877,294 @@
       },
       "correct": "C",
       "explanation": "Grey-box testing provides partial knowledge \u2014 typically the information a privileged insider or a compromised low-level account would have. This is the most common type of penetration test as it balances realistic threat simulation with testing efficiency."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which Group Policy setting prevents users from accessing the Windows Registry editor (regedit.exe)?",
+      "options": {
+        "A": "Restrict access to registry editing tools",
+        "B": "Prevent access to the command prompt",
+        "C": "Do not run specified Windows applications",
+        "D": "Remove Run menu from Start menu"
+      },
+      "correct": "A",
+      "explanation": "The 'Prevent access to registry editing tools' Group Policy setting (User Configuration > Administrative Templates > System) disables regedit.exe and regedt32.exe. Attackers may try to circumvent this by using reg.exe from the command line instead."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "A locked-down Windows desktop has AppLocker enforced but a user finds they can run msbuild.exe to compile and execute C# code. What class of bypass is this?",
+      "options": {
+        "A": "A DLL sideloading attack",
+        "B": "A 'living off the land' (LOLBins) AppLocker bypass using a trusted Microsoft-signed binary that can execute arbitrary code",
+        "C": "A kernel driver exploit bypassing AppLocker enforcement",
+        "D": "A UAC bypass used to disable AppLocker"
+      },
+      "correct": "B",
+      "explanation": "msbuild.exe is a Microsoft-signed binary (LOLBin) that can build and execute inline C# or VB.NET from a project file. Because it is a trusted signed binary allowed by default AppLocker rules, it bypasses application whitelisting controls."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "What is the purpose of LAPS (Local Administrator Password Solution) in a locked-down desktop environment?",
+      "options": {
+        "A": "It removes the local administrator account from all domain-joined machines",
+        "B": "It automatically sets unique, random local administrator passwords per machine, stored in AD and rotated on a schedule, preventing lateral movement via shared local admin credentials",
+        "C": "It enforces a minimum password length of 25 characters for all domain accounts",
+        "D": "It encrypts local administrator credentials using BitLocker"
+      },
+      "correct": "B",
+      "explanation": "LAPS solves the problem of all machines sharing the same local admin password \u2014 if one is compromised, all are. It randomises each machine's local admin password, stores it in a confidential AD attribute, and rotates it automatically, defeating Pass-the-Hash lateral movement."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which Windows 10/11 feature, when enabled, runs the browser in an isolated Hyper-V container to prevent malware from accessing the host?",
+      "options": {
+        "A": "Windows Defender SmartScreen",
+        "B": "Microsoft Defender Application Guard (MDAG)",
+        "C": "Windows Sandbox",
+        "D": "Controlled Folder Access"
+      },
+      "correct": "B",
+      "explanation": "Microsoft Defender Application Guard opens untrusted websites in a hardware-isolated Hyper-V container. Even if a drive-by download fully compromises the browser session, the host system remains protected because the container is destroyed after the session ends."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "What does 'Controlled Folder Access' in Windows Defender protect against?",
+      "options": {
+        "A": "Unauthorised network connections from untrusted applications",
+        "B": "Ransomware and untrusted applications modifying files in protected folders (Documents, Desktop, Pictures) by blocking write access for non-whitelisted processes",
+        "C": "Users accessing system folders without administrative rights",
+        "D": "Outbound data exfiltration from sensitive directories"
+      },
+      "correct": "B",
+      "explanation": "Controlled Folder Access blocks untrusted processes from modifying files in protected folders. This is a direct anti-ransomware control \u2014 even if malware runs on the system, it cannot encrypt files in protected locations unless it is explicitly whitelisted."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "A penetration tester on a locked-down Windows desktop uses 'certutil -decode base64.txt payload.exe'. What are they exploiting?",
+      "options": {
+        "A": "A vulnerability in Windows Certificate Services",
+        "B": "certutil.exe as a LOLBin \u2014 a trusted, signed Microsoft binary that can decode base64 and download files, bypassing application whitelisting",
+        "C": "A misconfigured certificate template in Active Directory",
+        "D": "The Windows PKI trust store to sign a malicious executable"
+      },
+      "correct": "B",
+      "explanation": "certutil.exe is a Microsoft-signed binary with multiple dual-use capabilities: base64 encoding/decoding, file downloading (-urlcache -split -f), and hash computation. It is widely abused as a LOLBin to download or decode payloads on systems where direct downloads or unsigned executables are blocked."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which AppLocker rule type provides the strongest and most tamper-resistant control for blocking unsigned executables?",
+      "options": {
+        "A": "Path rules based on folder location (e.g., block C:\\Users\\*)",
+        "B": "Publisher rules based on the software's digital signature (code signing certificate)",
+        "C": "Hash rules based on the SHA-256 hash of the file",
+        "D": "File extension rules blocking .exe and .dll"
+      },
+      "correct": "B",
+      "explanation": "Publisher rules are the most maintainable and tamper-resistant: they allow software from a trusted publisher (e.g., Microsoft) to run even after updates change the binary's hash. Path rules can be bypassed by placing executables in allowed paths; hash rules break on every update."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "What is the risk of enabling 'Run as Administrator' without UAC prompt for specific applications using a scheduled task with highest privilege?",
+      "options": {
+        "A": "The scheduled task consumes excessive CPU resources",
+        "B": "Any user can trigger the scheduled task (if permissions allow), running code as SYSTEM/Administrator without a UAC elevation prompt, providing a UAC bypass path",
+        "C": "The application cannot access network resources when running elevated",
+        "D": "Scheduled tasks with highest privilege automatically expose port 445"
+      },
+      "correct": "B",
+      "explanation": "Creating a scheduled task that runs a writable application with highest privilege is a common UAC bypass and privilege escalation technique. If the task's executable or configuration is writable by standard users, they can hijack it to run arbitrary code as SYSTEM without a UAC prompt."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which Group Policy setting prevents users from installing printer drivers, reducing the risk of PrintNightmare-style attacks on workstations?",
+      "options": {
+        "A": "Point and Print Restrictions \u2014 require elevated credentials for all printer driver installation",
+        "B": "Disable the Print Spooler service entirely via GPO",
+        "C": "Block inbound TCP 445 via Windows Firewall policy",
+        "D": "Apply WDAC policy blocking driver installation"
+      },
+      "correct": "A",
+      "explanation": "The Point and Print Restrictions GPO (Computer Configuration > Policies > Windows Settings) controls which print servers users can install drivers from and whether elevation is required. Properly configuring this prevents unprivileged users from triggering malicious driver installations."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Windows Defender Exploit Guard includes Attack Surface Reduction (ASR) rules. Which ASR rule directly blocks a common macro-based malware delivery technique?",
+      "options": {
+        "A": "Block executable content from email client and webmail",
+        "B": "Block Office applications from creating child processes (preventing cmd.exe/powershell.exe spawned by Word/Excel macros)",
+        "C": "Block credential stealing from the Windows local security authority subsystem",
+        "D": "Use advanced protection against ransomware"
+      },
+      "correct": "B",
+      "explanation": "The ASR rule 'Block Office applications from creating child processes' (GUID: D4F940AB-401B-4EFC-AADC-AD5F3C50688A) prevents Word, Excel, and PowerPoint from spawning cmd.exe, powershell.exe, or wscript.exe \u2014 the typical chain used by malicious macros to deliver payloads."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "A standard user on a locked-down Windows desktop finds that wmic.exe is not blocked by AppLocker. How can they abuse this?",
+      "options": {
+        "A": "wmic.exe cannot be used for offensive purposes on modern Windows",
+        "B": "wmic.exe process call create 'cmd.exe' can spawn processes (including cmd.exe or PowerShell) as a LOLBin AppLocker bypass",
+        "C": "wmic.exe can be used to bypass BitLocker drive encryption",
+        "D": "wmic.exe can dump LSASS memory for credential extraction"
+      },
+      "correct": "B",
+      "explanation": "wmic.exe process call create executes arbitrary processes through WMI. As a signed Microsoft binary, it is allowed by many AppLocker policies. Attackers use it to spawn cmd.exe, run PowerShell, or execute other payloads, bypassing application whitelisting."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "What is the purpose of Microsoft's 'Attack Surface Reduction' (ASR) rules as part of a desktop lockdown strategy?",
+      "options": {
+        "A": "To reduce the number of open network ports on workstations",
+        "B": "A set of configurable rules in Microsoft Defender that block specific high-risk behaviours (e.g., Office macros spawning shells, credential theft, ransomware patterns) independent of signature-based AV detection",
+        "C": "To limit the number of installed applications on each workstation",
+        "D": "To restrict USB device access and removable media"
+      },
+      "correct": "B",
+      "explanation": "ASR rules block specific behaviours commonly observed in malware \u2014 macro-spawned processes, Office injecting into other processes, credential theft from LSASS, persistence via WMI subscriptions \u2014 providing behavioural protection that works even against previously unseen malware."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "When testing a locked-down Windows desktop, a tester finds PowerShell is in Constrained Language Mode. What does this restrict?",
+      "options": {
+        "A": "PowerShell can only run scripts shorter than 1000 lines",
+        "B": "PowerShell blocks .NET type access, COM objects, and many API calls that enable advanced attacks, significantly limiting post-exploitation capabilities",
+        "C": "PowerShell cannot connect to remote systems via WinRM",
+        "D": "PowerShell scripts cannot be longer than 1MB in size"
+      },
+      "correct": "B",
+      "explanation": "Constrained Language Mode (CLM) restricts PowerShell to basic operations \u2014 it blocks access to .NET types, COM objects, direct API calls, and advanced features used by offensive tools (Invoke-Mimikatz, PowerView). It is enforced automatically by WDAC policies and significantly raises the bar for attackers."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "Which Windows security feature encrypts the contents of a specific folder (rather than the whole drive) using the logged-in user's credentials, and is transparent to the user?",
+      "options": {
+        "A": "BitLocker",
+        "B": "EFS (Encrypting File System)",
+        "C": "Windows Information Protection (WIP)",
+        "D": "Credential Guard"
+      },
+      "correct": "B",
+      "explanation": "EFS encrypts individual files and folders using the current user's certificate. The encryption is transparent when the user is logged in but protects files if the drive is accessed offline or by another OS account. Attackers target the EFS certificate (stored in DPAPI) to decrypt EFS-protected files."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "question": "A hardened Windows build blocks execution of unsigned scripts via PowerShell execution policy. A tester bypasses this with: powershell -ExecutionPolicy Bypass -File script.ps1. What does this demonstrate?",
+      "options": {
+        "A": "A vulnerability in PowerShell's cryptographic signature verification",
+        "B": "Execution policy is not a security boundary \u2014 it is a user convenience feature easily bypassed with command-line flags or by piping script content to powershell.exe; only WDAC or AppLocker prevent unsigned script execution",
+        "C": "That PowerShell must be uninstalled on locked-down systems",
+        "D": "A UAC bypass that elevates the script to administrator privileges"
+      },
+      "correct": "B",
+      "explanation": "PowerShell execution policy (Restricted, AllSigned, RemoteSigned, etc.) is not a security control \u2014 it can be trivially bypassed. Only WDAC script enforcement or AppLocker script rules (using SRP-based enforcement) can actually prevent unsigned PowerShell scripts from running."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is 'business email compromise' (BEC) and why is it particularly difficult to detect?",
+      "options": {
+        "A": "Malware delivered via a business email attachment that compromises the recipient's machine",
+        "B": "A fraud where attackers impersonate executives or business partners via spoofed or compromised email accounts to authorise fraudulent payments or data disclosures \u2014 it contains no malware, bypassing technical email filters",
+        "C": "Mass phishing targeting business email accounts with credential-stealing links",
+        "D": "Compromising a business email server to intercept all internal communications"
+      },
+      "correct": "B",
+      "explanation": "BEC relies on social deception rather than malware. Emails impersonate the CEO, CFO, or a trusted supplier requesting urgent wire transfers or invoice changes. Because there are no malicious links or attachments, BEC often bypasses email security gateways and AV scanning."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "An attacker registers the domain 'paypa1.com' (with a number 1 instead of letter l) to conduct phishing. What is this technique called?",
+      "options": {
+        "A": "DNS hijacking",
+        "B": "Typosquatting",
+        "C": "Homograph attack",
+        "D": "Subdomain takeover"
+      },
+      "correct": "B",
+      "explanation": "Typosquatting registers domains that are common misspellings or visual substitutions of legitimate domains. Combined with a convincing clone of the real website, it captures credentials from users who mistype or are deceived by the similar-looking domain name."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is a 'homograph attack' in the context of phishing?",
+      "options": {
+        "A": "Sending identical phishing emails to a large group of people simultaneously",
+        "B": "Using Unicode characters that look visually identical (or very similar) to ASCII characters to register deceptive domain names (e.g., using Cyrillic '\u0430' instead of Latin 'a')",
+        "C": "Cloning a legitimate website's HTML and CSS exactly",
+        "D": "Using the same email template as a previous legitimate communication"
+      },
+      "correct": "B",
+      "explanation": "Homograph (or IDN homograph) attacks exploit Unicode internationalised domain names where characters from different scripts look identical. For example, '\u0430pple.com' using Cyrillic '\u0430' (U+0430) is visually indistinguishable from 'apple.com' but is a completely different domain."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "Which social engineering countermeasure specifically addresses the risk of vishing (voice phishing) attacks on a helpdesk?",
+      "options": {
+        "A": "Deploying email filtering with DKIM and SPF",
+        "B": "Implementing a callback procedure: hang up and call back the requester using a number from the official directory, never the number provided by the caller",
+        "C": "Requiring all password resets to be submitted via the self-service portal",
+        "D": "Training staff not to answer calls from unknown numbers"
+      },
+      "correct": "B",
+      "explanation": "The callback procedure defeats vishing by breaking the attacker's communication channel. Even if an attacker spoofs the caller ID, calling back via an independently verified number (from the staff directory, not from the caller) ensures communication is with the legitimate person."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "An attacker harvests information from LinkedIn, company websites, and job postings before a phishing engagement. Which category of information is MOST valuable for crafting a convincing spear-phish?",
+      "options": {
+        "A": "The company's public financial statements",
+        "B": "Employee names, roles, reporting lines, current projects, technology stack (from job postings), and the email naming convention (e.g., first.last@company.com)",
+        "C": "The office building's street address and CCTV positions",
+        "D": "The company's IT vendor list from their website's privacy policy"
+      },
+      "correct": "B",
+      "explanation": "Employee names, hierarchies, and current projects enable highly personalised and credible spear-phishing lures. The email naming convention from visible addresses or LinkedIn allows constructing valid email addresses for targeted employees. Technology stack from job postings helps craft IT-related pretexts."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is the 'authority' principle in Cialdini's influence framework, and how do attackers exploit it?",
+      "options": {
+        "A": "People comply with requests from people they are attracted to; attackers use flattery",
+        "B": "People tend to comply with requests from perceived authority figures (managers, IT, police, auditors); attackers impersonate these roles to lower resistance to unusual requests",
+        "C": "People comply with requests when they feel they owe something; attackers offer small gifts before making requests",
+        "D": "People follow the behaviour of their peers; attackers claim everyone else has already complied"
+      },
+      "correct": "B",
+      "explanation": "The authority principle exploits the ingrained tendency to obey perceived authority figures. Attackers impersonate senior management, IT security, regulators, or law enforcement to make targets comply with requests they would otherwise refuse (password disclosure, clicking links, granting access)."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "During a red team engagement, an operator calls an employee and says 'I'm from IT security, we've detected suspicious activity on your account and need you to install a remote access tool immediately to investigate.' Which defence would most effectively stop this?",
+      "options": {
+        "A": "Email filtering that blocks executable attachments",
+        "B": "Security awareness training that teaches staff IT will never call asking them to install software, combined with a verification procedure (call back via the official IT number to confirm)",
+        "C": "Endpoint Detection and Response (EDR) that blocks remote access tools",
+        "D": "Multi-factor authentication on all accounts"
+      },
+      "correct": "B",
+      "explanation": "Technical controls (EDR, MFA) help but don't prevent the initial social engineering step. Training staff with specific 'tells' (IT never requests remote access via unsolicited calls) and a call-back verification procedure addresses the human vulnerability directly."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "What is 'open source intelligence' (OSINT) and name two tools used for corporate OSINT?",
+      "options": {
+        "A": "Proprietary intelligence purchased from commercial providers; tools: Mandiant, Recorded Future",
+        "B": "Intelligence gathered from publicly available sources including websites, social media, DNS, and public filings; tools include theHarvester (email/domain enumeration) and Maltego (relationship mapping)",
+        "C": "Intelligence gathered from scanning target IP ranges; tools: Nmap and Shodan",
+        "D": "Intelligence gathered from human sources; tools: LinkedIn and Facebook"
+      },
+      "correct": "B",
+      "explanation": "OSINT uses publicly available information \u2014 no hacking required. For corporate targets, theHarvester collects emails, subdomains, and employee names; Maltego visualises entity relationships. Other OSINT sources include LinkedIn, Shodan (internet-facing assets), WHOIS, Certificate Transparency logs, and GitHub."
+    },
+    {
+      "category": "Social Engineering (PT019)",
+      "question": "A social engineering assessment report finds that 40% of employees clicked a phishing link. What metric should be tracked over time to measure the effectiveness of security awareness training?",
+      "options": {
+        "A": "The total number of phishing emails blocked by the email gateway",
+        "B": "The click-through rate on simulated phishing campaigns over successive monthly or quarterly campaigns, tracking whether the rate decreases after training",
+        "C": "The number of employees who completed the mandatory security awareness e-learning module",
+        "D": "The score on the annual security policy knowledge quiz"
+      },
+      "correct": "B",
+      "explanation": "Click-through rates on simulated phishing are the most direct behavioural metric for security awareness. Completion rates for training courses measure exposure, not behaviour change. Tracking click rates before and after targeted training shows whether training actually changes employee behaviour."
     }
   ]
 }
