@@ -6485,6 +6485,498 @@
       },
       "correct": "B",
       "explanation": "Robust identity verification requires out-of-band confirmation through a separate pre-established channel. Calling back a verified phone number or requiring manager authorisation prevents attackers from obtaining account access through impersonation over a single communication channel."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which AWS IAM action, if granted to an attacker, allows them to attach the AdministratorAccess policy to themselves and gain full AWS access?",
+      "options": {
+        "A": "iam:GetPolicy",
+        "B": "iam:AttachUserPolicy",
+        "C": "iam:ListPolicies",
+        "D": "iam:GetUser"
+      },
+      "correct": "B",
+      "explanation": "iam:AttachUserPolicy allows attaching any managed IAM policy to a user. Combined with access to the AdministratorAccess ARN, an attacker can grant themselves full AWS access without creating new resources."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An attacker discovers an AWS Lambda function with the environment variable DATABASE_PASSWORD set in plaintext. How can this be remediated?",
+      "options": {
+        "A": "Base64-encode the password in the environment variable",
+        "B": "Store the secret in AWS Secrets Manager or SSM Parameter Store and retrieve it at runtime via the SDK",
+        "C": "Encrypt the environment variable with the Lambda function's execution role key",
+        "D": "Move the password to the Lambda function's dead letter queue"
+      },
+      "correct": "B",
+      "explanation": "Secrets should never be stored as plaintext environment variables. AWS Secrets Manager or SSM Parameter Store (SecureString) provide encrypted, audited, and rotatable secret storage retrieved by the function at runtime."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which AWS attack technique uses the iam:PassRole permission combined with ec2:RunInstances to escalate privileges?",
+      "options": {
+        "A": "Launch an EC2 instance with a higher-privileged IAM instance profile than the attacker's current role, then access its IMDS credentials",
+        "B": "Use iam:PassRole to directly assume any IAM role in the account",
+        "C": "Create a new IAM user with administrator permissions using the passed role",
+        "D": "Attach a privilege-escalation policy to the EC2 service principal"
+      },
+      "correct": "A",
+      "explanation": "iam:PassRole allows assigning an IAM role to an AWS service. With ec2:RunInstances, an attacker can launch an EC2 instance with a more privileged instance profile than they currently hold, then retrieve its temporary credentials from the IMDS endpoint."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What is the risk of a publicly accessible AWS EBS snapshot?",
+      "options": {
+        "A": "The snapshot can be used to DDoS the originating EC2 instance",
+        "B": "Anyone can create a volume from the snapshot and mount it to access all data on the original disk, including credentials, source code, and databases",
+        "C": "Public snapshots allow arbitrary code execution on the source EC2 instance",
+        "D": "The snapshot exposes the instance's network interfaces to the public internet"
+      },
+      "correct": "B",
+      "explanation": "Public EBS snapshots can be copied or used to create volumes by any AWS account. An attacker mounts the resulting volume to their own EC2 instance and gets full read access to the original disk \u2014 a significant data exposure risk."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which AWS service, when misconfigured with a resource-based policy that includes 'Principal: *', creates an unauthenticated access risk?",
+      "options": {
+        "A": "AWS CloudTrail",
+        "B": "Amazon SQS queue policy",
+        "C": "AWS IAM password policy",
+        "D": "AWS Config rules"
+      },
+      "correct": "B",
+      "explanation": "SQS queue policies (and similarly S3, SNS, Lambda, etc.) can include resource-based policies with Principal: *, granting public access. A publicly readable SQS queue leaks messages; a publicly writable queue enables queue poisoning."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What does the 'enumerate-iam' tool do during an AWS penetration test?",
+      "options": {
+        "A": "Dumps all IAM users and their password hashes",
+        "B": "Brute-forces which IAM actions are permitted for a given set of credentials by making API calls and checking for AccessDenied vs success responses",
+        "C": "Automatically escalates IAM privileges using known misconfiguration chains",
+        "D": "Exports all IAM policies to a local file for offline analysis"
+      },
+      "correct": "B",
+      "explanation": "enumerate-iam calls a wide range of AWS API actions with the provided credentials and categorises results as allowed or denied. This enumerates the effective permissions of a compromised identity without needing iam:SimulatePrincipalPolicy."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An Azure penetration tester runs: az account get-access-token. What does the returned JWT token contain?",
+      "options": {
+        "A": "The user's plaintext Azure AD password",
+        "B": "A signed OAuth 2.0 bearer token encoding the user's identity and Azure RBAC permissions, usable to authenticate to Azure REST APIs",
+        "C": "The subscription's billing account ID",
+        "D": "A Kerberos TGT for Azure AD authentication"
+      },
+      "correct": "B",
+      "explanation": "The Azure access token is a JWT bearer token containing claims about the authenticated identity (oid, upn, roles) and is accepted by Azure Resource Manager and other Azure APIs. Stolen tokens allow impersonation for the token's lifetime (typically 1 hour)."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which Azure RBAC role is the most privileged and should be restricted to break-glass accounts only?",
+      "options": {
+        "A": "Contributor",
+        "B": "Owner",
+        "C": "Global Administrator (at Azure AD level)",
+        "D": "User Access Administrator"
+      },
+      "correct": "B",
+      "explanation": "The Owner role grants full access to all resources and the ability to manage access. Global Administrator is an Azure AD role (not RBAC) that can elevate to Owner. Both should be restricted; Owner on a subscription with sensitive resources is a critical finding."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which attack abuses a GCP service account's default permissions to access the metadata server and escalate within a GCP project?",
+      "options": {
+        "A": "From a compromised GCE instance, query http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token to retrieve the access token for the attached service account",
+        "B": "Use gcloud to list all service accounts and brute-force their passwords",
+        "C": "Abuse the GCP Cloud Interconnect to pivot between projects",
+        "D": "Exploit a GCP IAM policy inheritance bug to gain project-wide admin"
+      },
+      "correct": "A",
+      "explanation": "Like AWS IMDS, GCP's metadata server provides access tokens for the attached service account. Unlike AWS IMDSv2, GCP metadata requires the Metadata-Flavor: Google header but not a session token, making it exploitable via SSRF."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What security risk does a GitHub Actions workflow secret pose if the workflow has 'pull_request' as a trigger from a public fork?",
+      "options": {
+        "A": "Forks can read secrets directly from the repository settings page",
+        "B": "Secrets are not passed to workflows triggered by pull_request from a fork by default, so the risk is low for this specific trigger",
+        "C": "Any public fork can exfiltrate all secrets by reading the workflow YAML",
+        "D": "GitHub automatically exposes secrets as environment variables in all workflow steps"
+      },
+      "correct": "B",
+      "explanation": "GitHub intentionally does not pass secrets to pull_request workflows triggered from public forks to prevent secret exfiltration. The risk comes from pull_request_target (which does pass secrets) or when maintainers approve workflow runs from first-time contributors."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What is a 'confused deputy' attack in the context of AWS cross-account role assumption?",
+      "options": {
+        "A": "Exploiting a misconfigured SCP to bypass AWS Organizations guardrails",
+        "B": "Tricking a service (the 'deputy') that has permissions to act on behalf of another account into performing actions on the attacker's behalf by abusing aws:SourceAccount or aws:SourceArn conditions",
+        "C": "Using stolen credentials to assume a role in a different AWS account",
+        "D": "Creating a cross-account trust relationship to pivot between AWS accounts"
+      },
+      "correct": "B",
+      "explanation": "A confused deputy attack exploits a trusted intermediary (e.g., a Lambda or S3 service) that lacks proper caller validation. Without aws:SourceAccount or aws:SourceArn conditions in the trust policy, any account can trick the service into acting on their behalf."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Prowler is used to assess AWS environments against which standards?",
+      "options": {
+        "A": "Only the AWS Well-Architected Framework",
+        "B": "CIS AWS Foundations Benchmark, GDPR, HIPAA, SOC 2, PCI-DSS, and custom security checks",
+        "C": "Only NIST 800-53 controls",
+        "D": "Only the AWS Security Hub findings format"
+      },
+      "correct": "B",
+      "explanation": "Prowler is an open-source AWS/Azure/GCP security tool that checks environments against CIS Benchmarks, GDPR, HIPAA, SOC 2, PCI-DSS, and many other compliance frameworks, generating reports on misconfigurations and security gaps."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An attacker with 'lambda:UpdateFunctionCode' permission on an existing Lambda function can do what?",
+      "options": {
+        "A": "Change the function's IAM execution role to one with more permissions",
+        "B": "Replace the function's code with malicious code that runs with the function's existing IAM role permissions, potentially exfiltrating secrets or pivoting to other AWS services",
+        "C": "Trigger the function on a custom schedule using EventBridge",
+        "D": "Increase the function's memory to exhaust the account's Lambda limits"
+      },
+      "correct": "B",
+      "explanation": "lambda:UpdateFunctionCode allows replacing the function's code without changing its configuration. An attacker can deploy malicious code that exfiltrates environment variable secrets, calls other AWS services using the function's IAM role, or establishes a reverse shell."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which AWS CloudTrail finding most strongly indicates an attacker is attempting to blind the monitoring system?",
+      "options": {
+        "A": "cloudtrail:DescribeTrails called from an unknown IP",
+        "B": "cloudtrail:StopLogging or cloudtrail:DeleteTrail called from an IP not associated with normal admin operations",
+        "C": "s3:GetBucketLogging called on the CloudTrail S3 bucket",
+        "D": "iam:ListUsers called with a large number of results"
+      },
+      "correct": "B",
+      "explanation": "cloudtrail:StopLogging and cloudtrail:DeleteTrail disable or remove audit logging. These are strong indicators of post-compromise defense evasion \u2014 attackers disable CloudTrail to prevent their subsequent actions from being logged."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What is the purpose of AWS Service Control Policies (SCPs) in an AWS Organizations environment?",
+      "options": {
+        "A": "They define what IAM users in a single account can do",
+        "B": "They set maximum permission boundaries for all accounts in an organization or OU, preventing even account-level administrators from exceeding the SCP-defined limits",
+        "C": "They automatically remediate security misconfigurations across all accounts",
+        "D": "They encrypt data at rest across all S3 buckets in the organization"
+      },
+      "correct": "B",
+      "explanation": "SCPs act as guardrails on AWS Organizations accounts/OUs. Even if an IAM policy in a member account grants a permission, an SCP that denies it takes precedence. SCPs are used to prevent actions like disabling CloudTrail or leaving regions, regardless of local IAM policies."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "An S3 bucket has 'Block Public Access' settings all set to OFF and a bucket policy granting 's3:GetObject' to 'Principal: *'. An attacker lists all objects and downloads sensitive files. Which AWS feature, if enabled at the account level, would have prevented this?",
+      "options": {
+        "A": "S3 default encryption",
+        "B": "S3 Account-level Block Public Access",
+        "C": "S3 Object Lock",
+        "D": "S3 Versioning"
+      },
+      "correct": "B",
+      "explanation": "The S3 Account-level Block Public Access settings override bucket-level ACLs and policies, preventing any bucket in the account from being made publicly accessible. Even if a bucket policy grants public access, the account-level block prevents it from taking effect."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which cloud attack technique involves creating an IAM role with a trust policy that allows an external AWS account to assume it, establishing persistent backdoor access?",
+      "options": {
+        "A": "Cross-account shadow admin via trust policy manipulation",
+        "B": "IAM credential stuffing",
+        "C": "STS token replay attack",
+        "D": "IAM federation abuse"
+      },
+      "correct": "A",
+      "explanation": "An attacker with iam:CreateRole and iam:AttachRolePolicy can create a role that trusts an external account they control, providing persistent access that survives password changes and MFA reset. This is a common cloud persistence technique."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "What is 'resource-based policy' confusion and why does it matter for AWS penetration testing?",
+      "options": {
+        "A": "When IAM policies conflict with resource-based policies, always the most permissive policy wins",
+        "B": "Resource-based policies (on S3, SQS, Lambda, etc.) can grant cross-account or public access independently of IAM identity-based policies, creating attack vectors even when IAM is correctly configured",
+        "C": "Resource-based policies are deprecated and replaced by IAM permission boundaries",
+        "D": "Resource-based policies only apply within a single AWS account"
+      },
+      "correct": "B",
+      "explanation": "Resource-based policies attached to AWS resources (S3 bucket policies, Lambda resource policies, SQS queue policies) grant access directly and can allow external accounts or public principals regardless of the IAM identity-based policies of the accessing entity."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "During a cloud assessment, an attacker finds an EC2 instance running as the 'default' service account with no custom IAM role. What permissions does this instance have?",
+      "options": {
+        "A": "Full EC2 and S3 access by default",
+        "B": "No IAM permissions at all \u2014 an instance without an attached IAM instance profile has no AWS API credentials available via IMDS",
+        "C": "Read-only access to all AWS services in the account",
+        "D": "Access to the same permissions as the account root user"
+      },
+      "correct": "B",
+      "explanation": "EC2 instances only receive IAM credentials via the IMDS if an IAM instance profile is attached. Without one, the IMDS returns an error for credential requests, and the instance has no AWS API permissions. This is a security best practice \u2014 attach only the minimum required role."
+    },
+    {
+      "category": "Cloud Security (PT012)",
+      "question": "Which attack technique abuses AWS STS (Security Token Service) temporary credentials that have already expired?",
+      "options": {
+        "A": "Expired STS credentials can still be used if the attacker crafts the request with a backdated timestamp",
+        "B": "Expired STS credentials cannot be used \u2014 they are cryptographically validated and rejected by AWS APIs after their expiration time",
+        "C": "Expired STS credentials can be refreshed without re-authenticating using the RefreshCredentials API",
+        "D": "Expired STS credentials remain valid for 7 days in offline scenarios"
+      },
+      "correct": "B",
+      "explanation": "AWS STS credentials have an expiration time enforced server-side. Once expired, the credentials are rejected regardless of client-side manipulation. This is a key security property \u2014 stolen credentials have a limited window of usefulness (typically 1-12 hours for assumed role credentials)."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which Kubernetes network policy configuration represents the most secure baseline for a production namespace?",
+      "options": {
+        "A": "No network policies applied (default allow-all)",
+        "B": "A default-deny-all ingress and egress policy, with explicit allow rules for required traffic only",
+        "C": "A policy allowing all traffic within the namespace but denying cross-namespace traffic",
+        "D": "A policy denying all ingress but allowing all egress"
+      },
+      "correct": "B",
+      "explanation": "A default-deny policy that blocks all ingress and egress unless explicitly allowed implements the principle of least privilege for network traffic. This limits lateral movement if a pod is compromised and prevents data exfiltration via unexpected egress paths."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "What is the risk of running containers with hostPID=true?",
+      "options": {
+        "A": "The container can see and potentially interact with all processes on the host, enabling ptrace-based attacks against host processes",
+        "B": "The container shares the host's network stack",
+        "C": "The container can read the host's /etc/passwd file",
+        "D": "The container's PID namespace is visible to other containers"
+      },
+      "correct": "A",
+      "explanation": "hostPID=true places the container's processes in the host's PID namespace, allowing the container to see all host processes. An attacker can use ptrace to inject code into privileged host processes or send signals (including SIGKILL) to any process on the host."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which Kubernetes admission controller prevents pods from running as root or with dangerous capabilities?",
+      "options": {
+        "A": "RBAC",
+        "B": "NetworkPolicy",
+        "C": "Pod Security Admission (PSA) / PodSecurityPolicy (deprecated)",
+        "D": "OPA/Gatekeeper"
+      },
+      "correct": "C",
+      "explanation": "Pod Security Admission (PSA, replacing the deprecated PodSecurityPolicy) enforces security standards at the namespace level. Profiles (privileged, baseline, restricted) control whether pods can run as root, use host namespaces, or request dangerous capabilities."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "An attacker on a Kubernetes pod can reach the API server at https://kubernetes.default.svc. What does this allow if the pod has a default service account with no custom RBAC?",
+      "options": {
+        "A": "The pod has no Kubernetes API access since the default service account has no permissions",
+        "B": "Full cluster-admin access since default service accounts are highly privileged",
+        "C": "Read access to all secrets in the cluster",
+        "D": "Only access to list pods in the same namespace"
+      },
+      "correct": "A",
+      "explanation": "In modern Kubernetes (1.22+), the default service account has no RBAC permissions by default. However, older clusters or those with permissive ClusterRoleBindings may grant excessive access. The token is always present; whether it can do anything depends on RBAC."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which tool is used to scan Docker images for known CVEs in OS packages and application dependencies?",
+      "options": {
+        "A": "Checkov",
+        "B": "Trivy",
+        "C": "Falco",
+        "D": "kube-bench"
+      },
+      "correct": "B",
+      "explanation": "Trivy is an open-source vulnerability scanner that scans container images, filesystems, and IaC for known CVEs in OS packages (Alpine, Debian, Ubuntu, RHEL) and application dependencies (npm, pip, Maven, Go modules)."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "What is Falco used for in a Kubernetes environment?",
+      "options": {
+        "A": "Scanning container images for vulnerabilities before deployment",
+        "B": "Runtime security monitoring that detects anomalous behaviour (e.g., shells spawned in containers, sensitive file reads) using eBPF/kernel module",
+        "C": "Enforcing network policies between pods",
+        "D": "Managing secrets and certificates for pods"
+      },
+      "correct": "B",
+      "explanation": "Falco is a cloud-native runtime security tool that monitors system calls using eBPF or a kernel module. It detects container escape attempts, unexpected shell spawning, privilege escalation, and sensitive file access in real-time."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which Kubernetes component stores the cluster state (all objects, secrets, and configuration) and is a critical target during a penetration test?",
+      "options": {
+        "A": "kube-scheduler",
+        "B": "kube-proxy",
+        "C": "etcd",
+        "D": "kubelet"
+      },
+      "correct": "C",
+      "explanation": "etcd is the distributed key-value store that holds all Kubernetes cluster state, including Secrets (base64-encoded), ConfigMaps, RBAC policies, and pod definitions. Direct access to etcd (port 2379) bypasses all Kubernetes RBAC and exposes all cluster secrets."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "A container image's Dockerfile contains: RUN echo 'DB_PASSWORD=secret123' >> /app/.env. What is the security risk?",
+      "options": {
+        "A": "The password is only in the build cache and not in the final image",
+        "B": "The password is baked into an image layer and visible to anyone who can pull the image, even if a later layer deletes the file",
+        "C": "The password is encrypted by Docker's layer encryption",
+        "D": "The password is only accessible by processes running as root inside the container"
+      },
+      "correct": "B",
+      "explanation": "Docker images are composed of immutable layers. Even if a later RUN layer deletes /app/.env, the file persists in the earlier layer and is accessible via docker history, docker save, or by running the earlier layer. Secrets must never be added in Dockerfile RUN instructions."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which kubectl command checks whether a service account can perform a specific action, useful for assessing RBAC permissions during a Kubernetes pentest?",
+      "options": {
+        "A": "kubectl describe rolebinding",
+        "B": "kubectl auth can-i get secrets -n kube-system --as=system:serviceaccount:default:default",
+        "C": "kubectl get clusterrolebinding -o yaml",
+        "D": "kubectl explain rbac"
+      },
+      "correct": "B",
+      "explanation": "kubectl auth can-i tests whether the current user (or a specified --as identity) can perform an action. This is essential for RBAC enumeration during K8s pentests, allowing testers to systematically check what a compromised service account can do."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "What is the security significance of a Kubernetes pod with 'automountServiceAccountToken: true' (the default)?",
+      "options": {
+        "A": "The pod automatically receives TLS certificates from cert-manager",
+        "B": "A service account token is automatically mounted at /var/run/secrets/kubernetes.io/serviceaccount/token, which an attacker can use to authenticate to the Kubernetes API",
+        "C": "The pod can automatically request additional RBAC permissions at runtime",
+        "D": "Service account tokens are rotated every 30 minutes automatically"
+      },
+      "correct": "B",
+      "explanation": "By default, every pod gets a service account token mounted. This token authenticates to the Kubernetes API and can be stolen by an attacker who compromises the pod. Applications that don't need API access should set automountServiceAccountToken: false."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "Which Linux capability, if granted to a container, allows it to load kernel modules and effectively break out of the container isolation?",
+      "options": {
+        "A": "CAP_NET_ADMIN",
+        "B": "CAP_SYS_PTRACE",
+        "C": "CAP_SYS_MODULE",
+        "D": "CAP_CHOWN"
+      },
+      "correct": "C",
+      "explanation": "CAP_SYS_MODULE allows loading and unloading kernel modules (insmod/rmmod). A container with this capability can load a malicious kernel module that disables container namespaces or creates a backdoor at the kernel level, completely bypassing container isolation."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "Which attack targets the VMware vCenter Server Single Sign-On (SSO) service to extract credentials for the entire virtualisation infrastructure?",
+      "options": {
+        "A": "Dumping the vCenter PostgreSQL database containing hashed SSO passwords",
+        "B": "Exploiting the vCenter Server SSO LDAP bind using stolen ldap.keytab or extracting the idm.domain database",
+        "C": "Pass-the-Ticket against the vCenter Kerberos realm",
+        "D": "LDAP injection against the vCenter SSO LDAP endpoint"
+      },
+      "correct": "B",
+      "explanation": "vCenter SSO credentials are stored in the embedded LDAP directory (vmdir). Attackers who gain filesystem access to the vCenter appliance can extract the vmdir database or keytab files to obtain SSO administrator credentials, which control the entire vSphere environment."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "What is the difference between a Type 1 and Type 2 hypervisor from an attack surface perspective?",
+      "options": {
+        "A": "Type 1 has a larger attack surface because it runs more services",
+        "B": "Type 2 has a larger attack surface because the host OS adds an additional layer that can be compromised to affect the hypervisor and all VMs",
+        "C": "Both have identical attack surfaces as they use the same virtualisation APIs",
+        "D": "Type 1 is vulnerable to guest-to-host escapes while Type 2 is not"
+      },
+      "correct": "B",
+      "explanation": "Type 2 hypervisors (VMware Workstation, VirtualBox) run on top of a host OS, meaning any compromise of the host OS also compromises the hypervisor and all VMs. Type 1 hypervisors have a smaller attack surface as they run directly on hardware without a general-purpose OS layer."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "In a VMware environment, what is the purpose of vMotion and what security risk does it introduce?",
+      "options": {
+        "A": "vMotion replicates VM backups; attackers can access backup data",
+        "B": "vMotion live-migrates running VMs between hosts; if the vMotion network is unencrypted and not isolated, an attacker with network access can capture the VM's memory contents mid-migration",
+        "C": "vMotion provides VM snapshots; snapshots contain plaintext credentials",
+        "D": "vMotion manages VM licensing; attackers can disable VMs by revoking licenses"
+      },
+      "correct": "B",
+      "explanation": "vMotion transfers a running VM's entire memory state between ESXi hosts. Without encryption (enabled in vSphere 6.5+) and network isolation, an attacker who can intercept vMotion traffic can capture the full VM memory, including encryption keys and credentials."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "Which tool can be used to perform memory forensics on a VMware ESXi host by reading a running VM's memory without pausing it?",
+      "options": {
+        "A": "volatility with ESXi memory acquisition plugins",
+        "B": "The VMware vSphere API's QueryMemory method combined with vmss2core to convert the memory into an analysable format",
+        "C": "Directly reading /vmfs/volumes/<datastore>/<vm>/<vm>.vmem on the ESXi host",
+        "D": "Using VMware's Memory Forensics Toolkit (MFT)"
+      },
+      "correct": "C",
+      "explanation": "The .vmem file on the ESXi datastore is the raw memory of a running or suspended VM. An attacker with ESXi host access can copy this file and analyse it with Volatility to extract encryption keys, credentials, and process memory without the VM being aware."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "What does 'anti-affinity rules' bypassing represent in a cloud provider's virtualisation layer?",
+      "options": {
+        "A": "Placing VMs from different security zones on the same physical host, enabling side-channel attacks like cache timing attacks between tenants",
+        "B": "Disabling VM snapshot creation to prevent forensic analysis",
+        "C": "Bypassing network isolation between VMs on different VLANs",
+        "D": "Circumventing resource limits to cause DoS on neighbouring VMs"
+      },
+      "correct": "A",
+      "explanation": "Anti-affinity rules prevent VMs from co-locating on the same physical host. Co-location enables cross-VM side-channel attacks like Flush+Reload or Meltdown/Spectre variants that exploit shared CPU cache, TLB, or DRAM to leak data between isolated VMs."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "A penetration tester has access to an ESXi host's SSH interface. Which command lists all running VMs?",
+      "options": {
+        "A": "vmware -l",
+        "B": "esxcli vm process list",
+        "C": "vim-cmd vmsvc/getallvms",
+        "D": "esxtop"
+      },
+      "correct": "C",
+      "explanation": "vim-cmd vmsvc/getallvms lists all registered VMs on an ESXi host. esxcli vm process list shows only running VM processes. These commands are essential during an ESXi post-compromise assessment to enumerate target VMs."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "What is the 'TOCTOU' (Time-of-Check to Time-of-Use) vulnerability class in the context of VM escape exploits?",
+      "options": {
+        "A": "Attacking the hypervisor's NTP synchronisation to manipulate VM clocks",
+        "B": "Exploiting a race condition where the hypervisor checks a value (e.g., a shared memory pointer) before using it, allowing a malicious guest to change it between the check and use",
+        "C": "Timing attacks against the hypervisor's TLS certificate validation",
+        "D": "Using CPU timing differences to extract encryption keys from the hypervisor"
+      },
+      "correct": "B",
+      "explanation": "TOCTOU race conditions in hypervisors occur when the hypervisor validates a guest-provided value (e.g., a buffer address or length) at one point in time but uses it later, allowing the guest to replace it with a malicious value between validation and use."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "Which network architecture decision significantly reduces the risk of VM-to-VM attacks in a virtualised environment?",
+      "options": {
+        "A": "Using the same VLAN for all VMs to simplify routing",
+        "B": "Separating VMs into different VLANs/port groups based on security classification and enforcing micro-segmentation with a distributed virtual firewall",
+        "C": "Disabling promiscuous mode on all vSwitches",
+        "D": "Using NAT for all VM network traffic"
+      },
+      "correct": "B",
+      "explanation": "Micro-segmentation with distributed virtual firewalls (e.g., VMware NSX) enforces security policies at the vNIC level, restricting east-west traffic between VMs regardless of VLAN. This limits lateral movement if one VM is compromised, implementing zero-trust within the virtual network."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "What is 'guest-to-host' privilege escalation in the context of VirtualBox or VMware Workstation?",
+      "options": {
+        "A": "Escalating from a standard user to administrator within the guest VM OS",
+        "B": "Exploiting a vulnerability in the hypervisor or shared component (e.g., 3D acceleration, shared folders, copy-paste) to execute code on the host OS outside the VM boundary",
+        "C": "Using host-only networking to access host services",
+        "D": "Accessing host files through the VMware shared folders feature"
+      },
+      "correct": "B",
+      "explanation": "Guest-to-host escapes exploit vulnerabilities in the hypervisor's emulated hardware (sound cards, network cards, USB controllers) or shared feature code to execute arbitrary code on the host OS. VENOM (CVE-2015-3456) and various VirtualBox CVEs are examples."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "Which ESXi configuration change would help prevent an attacker who has compromised a guest VM from using the vmxnet3 driver vulnerability to affect the hypervisor?",
+      "options": {
+        "A": "Disable vMotion on the affected host",
+        "B": "Apply vendor patches for the vmxnet3 driver and restrict guest-initiated hardware-level interactions by disabling unnecessary virtual hardware",
+        "C": "Disable all virtual network adapters on the affected VM",
+        "D": "Move the VM to an isolated VLAN"
+      },
+      "correct": "B",
+      "explanation": "Patching is the primary defence against virtual hardware driver vulnerabilities. Disabling unnecessary virtual devices (3D acceleration, drag-and-drop, shared clipboard, USB passthrough) reduces the attack surface exposed to guest code."
     }
   ]
 }
