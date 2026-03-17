@@ -41,38 +41,53 @@
 
           <div class="card-top">
             <div class="exam-title">{{ exam.title }}</div>
-            <span class="tag tag-{{ exam.difficulty | lower }}">{{ exam.difficulty }}</span>
+            <div class="card-top-badges">
+              <span class="tag tag-{{ exam.difficulty | lower }}">{{ exam.difficulty }}</span>
+              <span class="tag tag-passmark">Pass {{ exam.pass_mark }}%</span>
+            </div>
           </div>
 
           <div class="exam-desc">{{ exam.description }}</div>
 
-          <div class="card-config">
-            <div class="config-grid">
-              <div>
-                <span class="cfg-label">Questions</span>
-                <div class="cfg-slider-row">
-                  <input type="range" class="card-q-range" min="1" max="{{ exam.pool_size }}" value="{{ exam.num_questions }}">
-                  <span class="cfg-val"><span class="card-q-val">{{ exam.num_questions }}</span><span class="text-dim"> / {{ exam.pool_size }}</span></span>
-                </div>
-              </div>
-              <div>
-                <span class="cfg-label">Time <span class="text-dim" style="font-size:11px;">(min — 0 for untimed)</span></span>
-                <input type="number" class="cfg-number-input card-time-val" min="0" max="999" value="{{ exam.time_limit }}">
-              </div>
+          {% if exam.based_on %}
+          <div class="card-source">
+            <span class="card-source-label">Based on: </span>{{ exam.based_on }}{% if exam.created_by %} <span class="card-source-label">— by</span> {{ exam.created_by }}{% endif %}
+          </div>
+          {% endif %}
+
+          {% if exam.categories %}
+          <div class="card-tags">
+            {% for cat in exam.categories %}
+            <span class="card-tag{% if loop.index > 3 %} card-tag-overflow{% endif %}">{{ cat }}</span>
+            {% endfor %}
+            {% if exam.categories | length > 3 %}
+            <button type="button" class="card-tags-more" onclick="expandTags(this)">+{{ exam.categories | length - 3 }} more</button>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          {% if exam.links %}
+          <div class="card-links">
+            {% for link in exam.links %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="card-footer">
+            <div class="card-footer-field">
+              <span class="cfg-label">Questions <span class="text-dim" style="font-size:11px;">/ {{ exam.pool_size }}</span></span>
+              <input type="number" class="cfg-number-input card-q-input"
+                     min="1" max="{{ exam.pool_size }}" value="{{ exam.num_questions }}">
             </div>
-          </div>
-
-          <div class="card-meta-row">
-            <span>Pass: <span class="text-green">{{ exam.pass_mark }}%</span></span>
-            {% if exam.based_on %}<span>{{ exam.based_on }}</span>{% endif %}
-            {% if exam.categories %}<span>{{ exam.categories[:3] | join(' · ') }}{% if exam.categories | length > 3 %} +{{ exam.categories | length - 3 }} more{% endif %}</span>{% endif %}
-            {% if exam.links %}{% for link in exam.links %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="exam-link">{{ link.text }}</a>{% endfor %}{% endif %}
-          </div>
-
-          <div class="card-actions">
+            <div class="card-footer-field">
+              <span class="cfg-label">Time <span class="text-dim" style="font-size:11px;">(min — 0 untimed)</span></span>
+              <input type="number" class="cfg-number-input card-time-val"
+                     min="0" max="999" value="{{ exam.time_limit }}">
+            </div>
             <button type="button" class="btn btn-primary card-launch-btn"
                     onclick="launchExam('{{ exam.id }}')">
-              <span>&gt;&gt;</span> LAUNCH MISSION
+              <span>&gt;&gt;</span> LAUNCH
             </button>
           </div>
         </div>

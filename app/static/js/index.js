@@ -12,6 +12,15 @@
     });
   }
 
+  // Expand hidden category tags
+  window.expandTags = function (btn) {
+    var tagsRow = btn.parentElement;
+    tagsRow.querySelectorAll('.card-tag-overflow').forEach(function (el) {
+      el.classList.remove('card-tag-overflow');
+    });
+    btn.remove();
+  };
+
   // Called by each card's launch button
   window.launchExam = function (examId) {
     if (!aliasOk) {
@@ -26,10 +35,10 @@
     var radio = document.getElementById('exam-' + examId);
     if (radio) radio.checked = true;
 
-    var card    = document.getElementById('card-' + examId);
-    var qSlider = card && card.querySelector('.card-q-range');
-    var tInput  = card && card.querySelector('.card-time-val');
-    if (qHidden && qSlider) qHidden.value  = qSlider.value;
+    var card   = document.getElementById('card-' + examId);
+    var qInput = card && card.querySelector('.card-q-input');
+    var tInput = card && card.querySelector('.card-time-val');
+    if (qHidden && qInput) qHidden.value  = qInput.value;
     if (tlHidden && tInput) tlHidden.value = tInput.value;
 
     if (card) {
@@ -41,12 +50,4 @@
       document.getElementById('start-form').submit();
     }
   };
-
-  // Keep the slider count label in sync as the user drags
-  document.addEventListener('input', function (e) {
-    if (e.target.classList.contains('card-q-range')) {
-      var valEl = e.target.closest('.cfg-slider-row').querySelector('.card-q-val');
-      if (valEl) valEl.textContent = e.target.value;
-    }
-  });
 })();

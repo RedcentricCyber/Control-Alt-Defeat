@@ -249,13 +249,22 @@ header {
 
 .exam-card input[type="radio"] { display: none; }
 
-/* Card header: title (left) + difficulty tag (right) */
+/* Card header: title (left) + badges group (right) */
 .card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 10px;
+}
+
+.card-top-badges {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .exam-title {
@@ -273,16 +282,68 @@ header {
   line-height: 1.65;
 }
 
-/* Meta row: pass mark, attribution, links */
-.card-meta-row {
+/* Source line: "Based on: X" */
+.card-source {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 10px;
+}
+
+.card-source-label {
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+
+/* Tags row */
+.card-tags {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 16px;
-  font-size: 13px;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.card-tag {
+  padding: 2px 7px;
+  border: 1px solid var(--border-dim);
+  font-size: 11px;
   color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+.card-tag-overflow {
+  display: none;
+}
+
+.card-tags-more {
+  background: none;
+  border: 1px solid var(--text-dim);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 7px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.card-tags-more:hover {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+}
+
+/* Links row */
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* Separator before footer */
+.card-info-sep {
   margin-top: 14px;
-  padding-top: 12px;
+  padding-top: 0;
   border-top: 1px solid var(--border-dim);
 }
 
@@ -870,6 +931,12 @@ input[type="text"]:focus {
   letter-spacing: 1px;
 }
 
+.score-meta {
+  font-size: 14px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
 .grade-elite    { color: var(--neon-green);   text-shadow: var(--glow-green);   }
 .grade-netrunner{ color: var(--neon-cyan);    text-shadow: var(--glow-cyan);    }
 .grade-scriptkid{ color: var(--neon-yellow);  text-shadow: 0 0 8px var(--neon-yellow); }
@@ -1244,14 +1311,22 @@ a.history-row-link:hover {
   animation: blink 0.6s step-end infinite;
 }
 
-/* ── Exam config (question count + time limit) ──────────────── */
-.card-config {
+/* ── Card footer: question count | time limit | launch button ── */
+.card-footer {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid var(--border-dim);
 }
 
-/* card-config is always visible — no display:none needed */
+.card-footer-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 
 .cfg-label {
   display: block;
@@ -1259,33 +1334,11 @@ a.history-row-link:hover {
   color: var(--text-dim);
   letter-spacing: 1px;
   margin-bottom: 8px;
-}
-
-.config-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 28px;
-  align-items: start;
-}
-
-.cfg-slider-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.cfg-val {
-  font-family: var(--font-display);
-  font-size: 13px;
-  color: var(--neon-green);
   white-space: nowrap;
-  letter-spacing: 1px;
-  min-width: 72px;
 }
 
 .cfg-number-input {
-  width: 100px;
+  width: 100%;
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--neon-green);
@@ -1303,37 +1356,9 @@ a.history-row-link:hover {
   box-shadow: 0 1px 0 var(--neon-cyan);
 }
 
-/* Range slider */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 3px;
-  background: var(--border-dim);
-  outline: none;
-  cursor: pointer;
-  flex: 1;
-  border: none;
-  padding: 0;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  background: var(--neon-green);
-  box-shadow: 0 0 6px var(--neon-green);
-  cursor: pointer;
-  border-radius: 0;
-}
-
-input[type="range"]::-moz-range-thumb {
-  border: none;
-  border-radius: 0;
-  width: 14px;
-  height: 14px;
-  background: var(--neon-green);
-  box-shadow: 0 0 6px var(--neon-green);
-  cursor: pointer;
+.card-launch-btn {
+  flex: 2;
+  justify-content: center;
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
@@ -1351,7 +1376,8 @@ input[type="range"]::-moz-range-thumb {
     font-size: 12px;
   }
   .history-header { display: none; }
-  .config-grid { grid-template-columns: 1fr; }
+  .card-footer { flex-wrap: wrap; }
+  .card-launch-btn { flex: 1 0 100%; }
 }
 
 /* -- HUMAN ADDED STUFF -- */
