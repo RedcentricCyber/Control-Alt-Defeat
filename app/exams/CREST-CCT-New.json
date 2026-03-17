@@ -6977,6 +6977,486 @@
       },
       "correct": "B",
       "explanation": "Patching is the primary defence against virtual hardware driver vulnerabilities. Disabling unnecessary virtual devices (3D acceleration, drag-and-drop, shared clipboard, USB passthrough) reduces the attack surface exposed to guest code."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "A time-based blind SQL injection payload uses SLEEP(5) in MySQL. What does the tester observe to confirm the injection?",
+      "options": {
+        "A": "A database error message containing 'sleep'",
+        "B": "The HTTP response is delayed by approximately 5 seconds, confirming the SQL is executed",
+        "C": "The application returns an empty response",
+        "D": "The server's CPU usage spikes to 100%"
+      },
+      "correct": "B",
+      "explanation": "Time-based blind SQLi infers execution by measuring response time. If SLEEP(5) is injected and the response takes ~5 seconds longer than normal, the SQL code ran in the database context, confirming the injection point even when no data is returned."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which MSSQL technique allows an attacker to execute commands as a different database user by using the EXECUTE AS LOGIN statement?",
+      "options": {
+        "A": "Linked server pivoting",
+        "B": "Impersonation via EXECUTE AS",
+        "C": "CLR assembly injection",
+        "D": "SQL Agent job abuse"
+      },
+      "correct": "B",
+      "explanation": "MSSQL's EXECUTE AS LOGIN/USER allows switching execution context to another login. If the IMPERSONATE permission is granted on a higher-privileged login (e.g., sa or a sysadmin), an attacker can escalate privileges within the database without knowing the target's password."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "What is a UNION-based SQL injection attack and what prerequisite must be met for it to work?",
+      "options": {
+        "A": "The application must return error messages; the UNION joins error output with attacker-controlled data",
+        "B": "The application must reflect query results in the response; the injected UNION SELECT must have the same number of columns as the original query",
+        "C": "The database must be MySQL; UNION-based injection only works on MySQL",
+        "D": "The attacker must have read access to the information_schema database"
+      },
+      "correct": "B",
+      "explanation": "UNION-based SQLi appends a second SELECT to the original query using UNION. For it to work, the application must display query results, and the appended SELECT must have the same number of columns (with compatible data types) as the original query."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "An attacker retrieves the MySQL users table via SQL injection: SELECT user, authentication_string FROM mysql.user. The passwords are stored as what?",
+      "options": {
+        "A": "Plaintext passwords",
+        "B": "Salted SHA-256 hashes (MySQL 8.0+: caching_sha2_password; older: mysql_native_password SHA-1 derived hash)",
+        "C": "NTLM hashes compatible with Pass-the-Hash",
+        "D": "bcrypt hashes"
+      },
+      "correct": "B",
+      "explanation": "MySQL stores password verifiers, not plaintext. MySQL 8.0+ uses caching_sha2_password (SHA-256 based). Older versions use mysql_native_password (a double-SHA-1 hash). Neither is bcrypt, making them faster to crack than well-hashed application passwords."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which PostgreSQL system view contains a list of all databases, tables, and columns, useful for SQL injection enumeration?",
+      "options": {
+        "A": "sys.objects",
+        "B": "information_schema.columns and pg_catalog.pg_tables",
+        "C": "ALL_TABLES (Oracle-specific)",
+        "D": "INFORMATION_SCHEMA.INNODB_TABLES"
+      },
+      "correct": "B",
+      "explanation": "PostgreSQL's information_schema.columns and pg_catalog.pg_tables provide metadata about databases, schemas, tables, and columns. During SQL injection, attackers enumerate these to map the database structure before extracting data."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "What does a 'stacked query' (or 'batched query') SQL injection technique enable that simple injection does not?",
+      "options": {
+        "A": "Bypassing input length restrictions",
+        "B": "Executing multiple SQL statements in one request, enabling INSERT, UPDATE, DELETE, or stored procedure calls, not just SELECT",
+        "C": "Exfiltrating data out-of-band via DNS",
+        "D": "Bypassing WAF rules that filter SELECT statements"
+      },
+      "correct": "B",
+      "explanation": "Stacked queries use a semicolon to terminate the original query and append additional statements (e.g., ; EXEC xp_cmdshell('whoami')). Not all databases/drivers support this, but when available it enables write operations, OS command execution, and other destructive actions."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "An Oracle database is vulnerable to SQL injection. Which function is equivalent to MySQL's SLEEP() for time-based blind injection?",
+      "options": {
+        "A": "WAITFOR DELAY",
+        "B": "pg_sleep()",
+        "C": "DBMS_PIPE.RECEIVE_MESSAGE()",
+        "D": "UTL_HTTP.REQUEST()"
+      },
+      "correct": "C",
+      "explanation": "Oracle doesn't have a direct SLEEP() equivalent. DBMS_PIPE.RECEIVE_MESSAGE('x', 5) will wait up to 5 seconds for a non-existent pipe message, effectively creating a time delay for blind injection. Alternatively, heavy queries using the DUAL table can cause measurable delays."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "What information does the MySQL information_schema.tables table provide during SQL injection enumeration?",
+      "options": {
+        "A": "The usernames and password hashes of database users",
+        "B": "The names of all databases (TABLE_SCHEMA) and tables (TABLE_NAME) accessible to the current user",
+        "C": "The stored procedure source code",
+        "D": "The database server's version and configuration settings"
+      },
+      "correct": "B",
+      "explanation": "information_schema.tables lists all tables and their schemas visible to the current MySQL user. After confirming SQL injection, attackers typically query this to enumerate the database structure: SELECT table_schema, table_name FROM information_schema.tables."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which Redis attack vector allows OS command execution when Redis is running as root and is accessible without authentication?",
+      "options": {
+        "A": "Redis EVAL command executing Lua scripts that call os.execute()",
+        "B": "Writing a crontab or SSH authorized_keys file by changing the Redis dump directory and using CONFIG SET / SAVE",
+        "C": "Exploiting a buffer overflow in the Redis RESP protocol parser",
+        "D": "Using the Redis SLAVEOF command to exfiltrate the entire database"
+      },
+      "correct": "B",
+      "explanation": "An unauthenticated Redis instance allows using CONFIG SET dir /var/spool/cron and CONFIG SET dbfilename root, then writing a crontab entry with the SET command and SAVE. When cron executes it, the attacker gets OS command execution as the Redis user (potentially root)."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "What does the sqlmap flag '--level=5 --risk=3' do?",
+      "options": {
+        "A": "Limits the scan to 5 injection points and uses 3 threads",
+        "B": "Increases the number of payloads tested (level) and enables more aggressive/potentially harmful payloads (risk), including heavy time-based tests and OR-based injections that could modify data",
+        "C": "Tests 5 parameters with 3 different encoding techniques",
+        "D": "Performs 5 retries with 3-second timeouts between requests"
+      },
+      "correct": "B",
+      "explanation": "sqlmap's --level (1-5) controls the number of tested parameters and payload complexity. --risk (1-3) controls payload aggressiveness; risk=3 enables OR-based payloads (e.g., OR 1=1) that could modify database data and should only be used with permission."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "An MSSQL linked server allows a low-privilege attacker on Server A to query Server B. What attack chain is possible?",
+      "options": {
+        "A": "Only read access to Server B's public tables",
+        "B": "If the linked server connection uses a privileged account on Server B, the attacker can execute xp_cmdshell on Server B via EXECUTE AT [ServerB], achieving OS command execution on a remote host",
+        "C": "The attacker can replicate Server B's database to their own server",
+        "D": "The attacker can capture Server B's NTLM hash via the linked server connection"
+      },
+      "correct": "B",
+      "explanation": "Linked servers often authenticate with a service account that has DBA-level privileges on the remote server. Using EXECUTE('EXEC xp_cmdshell ''whoami''') AT [LinkedServer], an attacker can execute OS commands on the remote server if xp_cmdshell is enabled there."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "What is the purpose of the 'LOAD_FILE()' function in MySQL during a SQL injection attack?",
+      "options": {
+        "A": "Load the contents of a local file on the attacker's machine",
+        "B": "Read a file from the database server's filesystem and return its contents as a string, subject to FILE privilege and file_priv setting",
+        "C": "Import a CSV file into a MySQL table",
+        "D": "Load a MySQL plugin from a shared library file"
+      },
+      "correct": "B",
+      "explanation": "MySQL's LOAD_FILE() reads a file from the server's filesystem and returns it as a string. Injecting SELECT LOAD_FILE('/etc/passwd') can read sensitive files if the MySQL user has FILE privilege and the server's secure_file_priv variable is empty or set to a permissive path."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "Which SQL injection defence is MOST effective at preventing injection entirely, rather than filtering or escaping input?",
+      "options": {
+        "A": "Input validation with a blacklist of dangerous characters",
+        "B": "Web Application Firewall (WAF) rules",
+        "C": "Parameterised queries / prepared statements",
+        "D": "Stored procedures (without dynamic SQL inside them)"
+      },
+      "correct": "C",
+      "explanation": "Parameterised queries completely separate SQL logic from data \u2014 the query structure is compiled before user input is added as a typed parameter. Input validation and WAFs can be bypassed; stored procedures are safe only if they don't use dynamic SQL internally."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "During an Oracle SQL injection, an attacker uses the payload: ' OR 1=1 UNION SELECT NULL FROM DUAL-- . Why is FROM DUAL necessary?",
+      "options": {
+        "A": "DUAL is Oracle's system table that must be referenced in all subqueries",
+        "B": "Oracle requires a FROM clause in every SELECT statement; DUAL is a special single-row dummy table used when no real table is needed",
+        "C": "DUAL is Oracle's equivalent of MySQL's information_schema",
+        "D": "DUAL disables Oracle's SQL injection detection mechanisms"
+      },
+      "correct": "B",
+      "explanation": "Unlike MySQL which allows SELECT without a FROM clause, Oracle requires a FROM clause in every SELECT statement. DUAL is a special single-row, single-column dummy table (owned by SYS) used in Oracle when no actual table data is needed in the SELECT."
+    },
+    {
+      "category": "Databases (PT009)",
+      "question": "What is an 'out-of-band' SQL injection technique and when is it used?",
+      "options": {
+        "A": "Injecting SQL into HTTP headers rather than URL parameters",
+        "B": "Exfiltrating data via a separate channel (DNS lookups, HTTP requests) triggered by the database itself, used when in-band responses are unavailable or filtered",
+        "C": "Testing for SQL injection outside business hours to avoid detection",
+        "D": "Using a second SQL injection point to exfiltrate data from the first"
+      },
+      "correct": "B",
+      "explanation": "Out-of-band SQLi uses database functions (e.g., xp_dirtree in MSSQL, UTL_HTTP in Oracle, LOAD_FILE with a UNC path in MySQL) to make the database server initiate an outbound connection carrying exfiltrated data, bypassing response-based filtering."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS command-line tool lists all running launch agents and daemons, useful for identifying malicious persistence?",
+      "options": {
+        "A": "launchctl list",
+        "B": "ps aux | grep LaunchAgent",
+        "C": "find /Library/LaunchAgents -name '*.plist'",
+        "D": "defaults read /Library/LaunchDaemons"
+      },
+      "correct": "A",
+      "explanation": "launchctl list shows all loaded launch jobs (agents and daemons) with their PID and exit status. During a macOS security assessment, this reveals active persistence mechanisms that may not be visible through standard process listing."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS extended attribute, set by Safari/Chrome/Firefox when downloading files, causes Gatekeeper to quarantine and inspect the file?",
+      "options": {
+        "A": "com.apple.security.provenance",
+        "B": "com.apple.quarantine",
+        "C": "com.apple.metadata:kMDItemDownloadedDate",
+        "D": "com.apple.FinderInfo"
+      },
+      "correct": "B",
+      "explanation": "The com.apple.quarantine extended attribute is set on files downloaded from the internet. When the user tries to open it, Gatekeeper checks for a valid developer signature and notarisation. Removing this attribute (xattr -d com.apple.quarantine file) bypasses Gatekeeper."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "A macOS payload uses a .command file. What is the execution behaviour when a user double-clicks it?",
+      "options": {
+        "A": "It opens in TextEdit as a text file",
+        "B": "macOS opens it in Terminal.app and executes it as a shell script, showing a terminal window",
+        "C": "It is blocked by Gatekeeper without an Apple developer signature",
+        "D": "It requires explicit Terminal permission before execution"
+      },
+      "correct": "B",
+      "explanation": ".command files are shell scripts that macOS automatically opens in Terminal when double-clicked, executing the contents. They are a common macOS payload delivery method, though they will trigger Gatekeeper if downloaded and unsigned."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS security feature specifically protects user data (camera, microphone, location, contacts) from unauthorised access by requiring explicit consent prompts?",
+      "options": {
+        "A": "Gatekeeper",
+        "B": "Notarisation",
+        "C": "TCC (Transparency, Consent and Control)",
+        "D": "System Integrity Protection"
+      },
+      "correct": "C",
+      "explanation": "TCC manages user consent for access to protected resources (camera, microphone, Photos, Contacts, Calendar, etc.). The TCC database at ~/Library/Application Support/com.apple.TCC/TCC.db records user decisions. Attackers may attempt to manipulate this database if SIP is disabled."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "What is the macOS equivalent of the Windows Registry for storing application and system preferences?",
+      "options": {
+        "A": "Property list (.plist) files in ~/Library/Preferences and /Library/Preferences",
+        "B": "A central SQLite database at /var/db/preferences.db",
+        "C": "The com.apple.systempreferences bundle",
+        "D": "A YAML configuration file at /etc/macos-config.yaml"
+      },
+      "correct": "A",
+      "explanation": "macOS uses .plist (Property List) XML or binary files in ~/Library/Preferences (user) and /Library/Preferences (system) to store preferences. The 'defaults' command line tool reads and writes these, and they are a target for attackers looking for stored credentials or configuration."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS privilege escalation technique exploits a SUID binary to gain root?",
+      "options": {
+        "A": "Any SUID binary can be exploited on macOS because SIP does not protect SUID bits",
+        "B": "Identifying a SUID binary that has a GTFOBins-style method (e.g., invoking shell commands or reading files as root), or one with a known vulnerability",
+        "C": "Writing to the SUID binary's directory to replace it with a malicious version",
+        "D": "Using DYLD_INSERT_LIBRARIES to inject code into the SUID binary at startup"
+      },
+      "correct": "B",
+      "explanation": "On macOS, SUID binaries can be abused similarly to Linux \u2014 finding one that invokes a shell (find, vim, python, etc.) allows spawning a root shell. However, DYLD_INSERT_LIBRARIES is ignored for SUID binaries as a security measure."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "A macOS malware sample creates a file at ~/Library/Application Support/com.legitimate-company.app/update. What persistence mechanism might this be?",
+      "options": {
+        "A": "A Launch Agent plist",
+        "B": "A Login Item registration",
+        "C": "A browser extension manifest",
+        "D": "An application bundle modification"
+      },
+      "correct": "A",
+      "explanation": "Malware commonly uses ~/Library/LaunchAgents/ to persist, naming plist files with legitimate-sounding reverse-domain names to blend in. The ~/Library/Application Support directory may contain supplementary files like the payload binary referenced by the LaunchAgent plist."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which osquery SQL query would list all user-level Launch Agents on a macOS system?",
+      "options": {
+        "A": "SELECT * FROM processes WHERE name LIKE 'LaunchAgent%';",
+        "B": "SELECT path, label FROM launchd WHERE path LIKE '%LaunchAgents%';",
+        "C": "SELECT * FROM file WHERE directory LIKE '/Users/%/Library/LaunchAgents/';",
+        "D": "SELECT * FROM launchd_overrides WHERE disabled = 0;"
+      },
+      "correct": "B",
+      "explanation": "osquery's launchd table exposes all loaded launch jobs with their labels, paths, and status. Querying WHERE path LIKE '%LaunchAgents%' specifically shows user-level agents, useful for detecting persistence during macOS security assessments."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Why is macOS's Hardened Runtime a security improvement for application security?",
+      "options": {
+        "A": "It prevents applications from accessing the network",
+        "B": "It restricts code injection, DYLD_INSERT_LIBRARIES, and unsigned code execution within the app's process \u2014 required for notarisation",
+        "C": "It enforces that all application code is signed with an Apple Developer ID",
+        "D": "It sandboxes applications from accessing files outside their designated containers"
+      },
+      "correct": "B",
+      "explanation": "Hardened Runtime (a requirement for notarisation) restricts dynamic code loading, DYLD environment variables, JIT compilation (without entitlements), and debugging by default. It prevents classic code injection techniques that work against non-hardened binaries."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "An attacker uses the macOS 'security' command with the 'find-generic-password' subcommand. What are they doing?",
+      "options": {
+        "A": "Enumerating all user accounts on the system",
+        "B": "Querying the macOS Keychain for stored passwords (e.g., WiFi passwords, application credentials) if the Keychain is unlocked",
+        "C": "Searching for weak file permissions on sensitive system files",
+        "D": "Finding all processes running with root privileges"
+      },
+      "correct": "B",
+      "explanation": "The 'security' CLI tool interfaces with the macOS Keychain. 'security find-generic-password -s ServiceName -w' retrieves stored passwords. On an unlocked Keychain (e.g., user logged in), this can extract credentials stored by applications, browsers, and the OS."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "Which macOS feature, introduced to replace kernel extensions (kexts), runs code in user space with elevated privileges and is harder to exploit than kernel code?",
+      "options": {
+        "A": "System Extensions",
+        "B": "DriverKit",
+        "C": "EndpointSecurity framework",
+        "D": "Hypervisor framework"
+      },
+      "correct": "B",
+      "explanation": "DriverKit allows hardware drivers to run in user space instead of the kernel, using the system extensions framework. This significantly reduces the impact of driver vulnerabilities \u2014 a compromised DriverKit driver cannot directly compromise the kernel."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "After gaining code execution on a macOS system, an attacker wants to check if the system is an MDM-enrolled corporate device. Which command provides this information?",
+      "options": {
+        "A": "defaults read /Library/Preferences/com.apple.mdm",
+        "B": "profiles status -type enrollment",
+        "C": "system_profiler SPConfigurationProfileDataType",
+        "D": "mdmclient QueryInstalledProfiles"
+      },
+      "correct": "B",
+      "explanation": "profiles status -type enrollment shows whether the device is enrolled in MDM and if the enrolment is user-approved or device-supervised. This helps an attacker understand monitoring capabilities and whether the device has additional MDM-enforced security policies."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "Which technique involves using a thin piece of metal or plastic to press against the back of a padlock shackle to release the locking mechanism?",
+      "options": {
+        "A": "Raking",
+        "B": "Shimming",
+        "C": "Bumping",
+        "D": "Impressioning"
+      },
+      "correct": "B",
+      "explanation": "Shimming is a technique used against spring-loaded padlocks where a thin strip of metal (shim) is inserted into the shackle hole to depress the locking pawl, releasing the shackle without a key. It bypasses cheap padlocks that rely solely on spring tension."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "An attacker clones an HID Prox (125 kHz) RFID card using a Proxmark3 and attempts to use it at a reader. What additional security control would defeat this attack?",
+      "options": {
+        "A": "Installing a faster card reader with shorter read time",
+        "B": "Implementing multi-factor physical access: card + PIN (or biometric), and upgrading to encrypted RFID (HID iCLASS SE/Seos or Mifare DESFire)",
+        "C": "Replacing the HID Prox cards with identical HID Prox cards from a different batch",
+        "D": "Adding a security camera to the card reader location"
+      },
+      "correct": "B",
+      "explanation": "HID 125 kHz cards broadcast their credential in plaintext and are trivially clonable. The mitigations are: (1) MFA (card + PIN) so a cloned card alone doesn't grant access, and (2) upgrading to encrypted cards (DESFire, iCLASS SE) that implement mutual authentication."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "During physical reconnaissance, a tester photographs a building's exterior and notes the positions of CCTV cameras. What is this phase called?",
+      "options": {
+        "A": "Social engineering",
+        "B": "Open Source Intelligence (OSINT)",
+        "C": "Physical reconnaissance / surveillance",
+        "D": "Pretexting"
+      },
+      "correct": "C",
+      "explanation": "Physical reconnaissance involves observing and documenting a target facility \u2014 camera positions, access points, guard schedules, employee behaviour, smoking areas (where staff prop doors open). This information informs the physical intrusion plan."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "Which lock-picking method uses a specially cut key and a mallet to momentarily bounce pins to the shear line by exploiting the spring mechanism?",
+      "options": {
+        "A": "Raking",
+        "B": "Impressioning",
+        "C": "Single Pin Picking",
+        "D": "Bump key"
+      },
+      "correct": "D",
+      "explanation": "A bump key is a specially cut key with all peaks cut to the maximum depth. When inserted and struck (bumped), the kinetic energy transfers through the key pins to the driver pins, momentarily jumping them to the shear line and allowing the cylinder to rotate."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "What is 'social engineering' in the context of physical penetration testing?",
+      "options": {
+        "A": "Hacking social media accounts of employees to gather intelligence",
+        "B": "Manipulating people through deception, impersonation, and psychological techniques to gain physical access or sensitive information",
+        "C": "Engineering social media posts to lure employees to malicious websites",
+        "D": "Creating fake social media profiles to build rapport with employees"
+      },
+      "correct": "B",
+      "explanation": "Social engineering exploits human psychology rather than technical vulnerabilities. In physical assessments, testers impersonate IT support, delivery personnel, or new employees to convince staff to grant physical access, bypassing technical security controls."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "A red team operator wants to capture access card credentials from employees using an 'evil portal' attack. Which device broadcasts a fake WiFi network to capture credentials from mobile devices that auto-connect?",
+      "options": {
+        "A": "Proxmark3",
+        "B": "WiFi Pineapple",
+        "C": "Flipper Zero",
+        "D": "O.MG cable"
+      },
+      "correct": "B",
+      "explanation": "The WiFi Pineapple creates rogue access points that mimic known SSIDs. Mobile devices with auto-connect enabled join the fake network, redirecting their traffic through a captive portal that captures credentials. This combines physical presence with wireless interception."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "Which document should a physical penetration tester always carry during an engagement to show security if challenged?",
+      "options": {
+        "A": "A fake employee ID matching their cover story",
+        "B": "A 'get out of jail' letter \u2014 authorisation document from the client's CISO/legal team confirming the engagement scope and emergency contact details",
+        "C": "Their personal driving licence",
+        "D": "The CREST standard physical assessment methodology"
+      },
+      "correct": "B",
+      "explanation": "A 'get out of jail' letter (authorisation letter) documents the scope, dates, and authorised activities of the engagement, along with emergency contacts who can verify it. Testers must carry this at all times to avoid criminal charges if challenged by security or police."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "What is 'dumpster diving' in the context of physical penetration testing?",
+      "options": {
+        "A": "Climbing into waste disposal areas to access underground server rooms",
+        "B": "Searching through discarded materials (trash, recycling) for sensitive information such as printed documents, hardware, or media containing credentials",
+        "C": "A social engineering technique where testers pose as waste disposal workers",
+        "D": "Accessing discarded compute instances in cloud environments"
+      },
+      "correct": "B",
+      "explanation": "Dumpster diving recovers sensitive information from improperly disposed materials \u2014 printed documents, sticky notes with passwords, decommissioned hardware, or backup media. Organisations should use cross-cut shredders and secure hard drive destruction processes."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "A physical security assessment finds that server room doors use electronic locks with a manual override accessible from inside without authentication. What is the risk?",
+      "options": {
+        "A": "Fire safety regulations require manual override; this is acceptable",
+        "B": "An attacker who gains initial access to the building (e.g., via a social engineering pretext) can easily exit the server room, but the key risk is egress rather than ingress",
+        "C": "An attacker trapped inside the server room can exit and escape, but more critically, a fire egress override on the outside panel could be abused to unlock the door from outside without credentials",
+        "D": "There is no risk if the manual override only allows exit"
+      },
+      "correct": "C",
+      "explanation": "Request-to-exit (REX) sensors and manual override mechanisms are required by fire codes. The risk is when these mechanisms can be triggered from outside (e.g., by sliding a tool under the door to trigger a floor-mounted REX sensor or accessing the request-to-exit button through a gap)."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "Which physical attack uses a long flexible cable inserted under a door to press the interior door release handle?",
+      "options": {
+        "A": "Loiding",
+        "B": "Under-door attack",
+        "C": "Shimming",
+        "D": "Bypass attack"
+      },
+      "correct": "B",
+      "explanation": "The under-door attack uses a specialised tool (under-door tool or 'hook and camera') slid under a door to press interior lever handles or push-button releases that are accessible from the interior but not the exterior. It bypasses access control without touching the electronic lock."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "What is the OSSTMM (Open Source Security Testing Methodology Manual) and how is it relevant to physical penetration testing?",
+      "options": {
+        "A": "A software development methodology used to build penetration testing tools",
+        "B": "A security testing methodology that covers physical security testing alongside network, wireless, and human security vectors, with defined metrics for measuring security posture",
+        "C": "A hardware testing standard for evaluating physical security devices",
+        "D": "An open-source tool for automating physical access control testing"
+      },
+      "correct": "B",
+      "explanation": "OSSTMM provides a structured methodology for security testing across multiple channels including physical (facilities, personnel), and defines measurable security metrics (RAV - Risk Assessment Value). It is one of the industry methodologies referenced in professional physical security assessments."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "A Flipper Zero device is used during a physical security assessment. Which of the following can it NOT do?",
+      "options": {
+        "A": "Read and emulate 125 kHz RFID cards",
+        "B": "Capture and replay infrared remote control signals",
+        "C": "Read NFC cards and emulate some NFC tags",
+        "D": "Lock pick electronic combination locks via brute force signal injection"
+      },
+      "correct": "D",
+      "explanation": "The Flipper Zero is a multi-tool for wireless protocols supporting sub-GHz (garage doors, remotes), 125 kHz RFID, NFC, infrared, iButton, and GPIO. It cannot physically manipulate combination locks via signal injection \u2014 lock picking requires physical mechanical interaction."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "What social engineering pretext is most likely to succeed for gaining access to a data centre loading dock?",
+      "options": {
+        "A": "Claiming to be a fire inspector during normal business hours",
+        "B": "Posing as a delivery driver for a known IT equipment supplier with a plausible delivery order and appropriate hi-vis clothing",
+        "C": "Claiming to be a visiting executive from the parent company",
+        "D": "Presenting a forged police warrant"
+      },
+      "correct": "B",
+      "explanation": "Loading docks regularly receive IT equipment deliveries. A tester dressed as a delivery driver with a convincing delivery order (matching expected vendor names), hi-vis clothing, and a hand truck with boxes is a high-success pretext \u2014 security staff are accustomed to waving such deliveries through."
     }
   ]
 }
