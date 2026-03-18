@@ -8165,6 +8165,258 @@
       },
       "correct": "B",
       "explanation": "Click-through rates on simulated phishing are the most direct behavioural metric for security awareness. Completion rates for training courses measure exposure, not behaviour change. Tracking click rates before and after targeted training shows whether training actually changes employee behaviour."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "An attacker on a guest VM exploits a vulnerability that allows them to write to host memory outside the VM's allocated range. What class of attack is this?",
+      "options": {
+        "A": "A privilege escalation attack within the guest OS",
+        "B": "A VM escape / hypervisor breakout \u2014 the guest crosses the isolation boundary to affect the host or other VMs",
+        "C": "A denial-of-service attack against the hypervisor scheduler",
+        "D": "A side-channel attack leaking host memory contents to the guest"
+      },
+      "correct": "B",
+      "explanation": "VM escape exploits vulnerabilities in the hypervisor or virtualised device emulation (e.g., VENOM in QEMU's floppy controller) to break out of the guest sandbox and execute code in the host context, compromising all VMs on that host."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "What is the purpose of virtualisation-based security (VBS) in Windows, and how does it use the hypervisor?",
+      "options": {
+        "A": "VBS uses the hypervisor to sandbox untrusted applications in isolated VMs automatically",
+        "B": "VBS uses the Hyper-V hypervisor to create an isolated secure world (Virtual Secure Mode) that protects sensitive data \u2014 such as LSASS credentials via Credential Guard \u2014 even from a compromised kernel",
+        "C": "VBS uses virtualisation to snapshot the OS state for quick recovery after a ransomware attack",
+        "D": "VBS uses the hypervisor to enforce AppLocker policies at the hardware level"
+      },
+      "correct": "B",
+      "explanation": "VBS runs the Windows kernel in a less-privileged VM and places sensitive security components (Credential Guard, HVCI) in a separate, more-privileged Virtual Secure Mode. Even if the OS kernel is compromised, attackers cannot extract LSASS credentials because they are stored in the isolated VSM world."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "A type-1 (bare-metal) hypervisor differs from a type-2 hypervisor in which key way that affects security?",
+      "options": {
+        "A": "Type-1 hypervisors can only run Windows VMs; type-2 can run any OS",
+        "B": "Type-1 runs directly on hardware with no host OS layer (smaller attack surface); type-2 runs on top of a host OS, meaning a compromised host OS can compromise all guest VMs",
+        "C": "Type-1 hypervisors do not support snapshots; type-2 do",
+        "D": "Type-2 hypervisors are always more performant than type-1"
+      },
+      "correct": "B",
+      "explanation": "Type-1 hypervisors (VMware ESXi, Xen, Hyper-V) have a smaller attack surface with no general-purpose host OS beneath them. Type-2 hypervisors (VMware Workstation, VirtualBox) rely on the host OS, so any kernel compromise in the host can affect all VMs."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "What is a 'snapshot revert' security risk in virtualised environments used for security testing?",
+      "options": {
+        "A": "Reverting a snapshot can introduce unpatched vulnerabilities by rolling back to an older, unpatched OS state",
+        "B": "Snapshot revert encrypts all data on the VM, causing data loss",
+        "C": "Reverting a snapshot increases VM CPU utilisation to 100%",
+        "D": "Snapshot revert exposes the VM to other hypervisor tenants"
+      },
+      "correct": "A",
+      "explanation": "Reverting to an old snapshot restores the VM to its state at snapshot time \u2014 including unpatched software, expired certificates, revoked credentials, or previously-disabled security features. This can re-introduce vulnerabilities that were subsequently patched."
+    },
+    {
+      "category": "Virtualisation (PT010)",
+      "question": "In VMware ESXi environments, what is the risk of leaving the ESXi Shell and SSH access enabled on hypervisor hosts?",
+      "options": {
+        "A": "It has no security impact \u2014 ESXi is a hypervisor, not a general-purpose OS",
+        "B": "ESXi Shell and SSH provide direct hypervisor command-line access; if compromised (via credential theft or brute force), an attacker has full control over all hosted VMs, VM files, and the host network",
+        "C": "Enabling SSH on ESXi disables vSphere High Availability (HA) automatically",
+        "D": "The ESXi Shell exposes management traffic to guest VM network interfaces"
+      },
+      "correct": "B",
+      "explanation": "ESXi Shell and SSH give root-level access to the hypervisor itself \u2014 not just a guest. An attacker with ESXi root access can power off, clone, or exfiltrate all VMs, access VM disks directly, capture VM memory (including running credentials), and pivot to the management network."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "macOS Gatekeeper prevents unsigned applications from running. What is the standard technique to bypass Gatekeeper when distributing a malicious application?",
+      "options": {
+        "A": "Exploit a kernel vulnerability to disable Gatekeeper system-wide",
+        "B": "Obtain an Apple developer certificate (free or paid), sign the application, optionally notarise it with Apple \u2014 or socially engineer the user into right-click > Open to bypass the quarantine check",
+        "C": "Modify the /etc/gatekeeper.conf file to add an exception",
+        "D": "Install a malicious kernel extension to disable code signing checks"
+      },
+      "correct": "B",
+      "explanation": "The most practical bypass for most attacks is obtaining a legitimate (or stolen) Apple developer certificate to sign the payload, or tricking users into using right-click > Open which bypasses the Gatekeeper block. The quarantine attribute (com.apple.quarantine) applied to downloaded files triggers Gatekeeper; files received through non-browser methods (AirDrop, etc.) may not get this attribute."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "What is Transparency, Consent and Control (TCC) on macOS and how do attackers attempt to bypass it?",
+      "options": {
+        "A": "TCC is Apple's App Store review process; attackers submit malicious apps that pass review",
+        "B": "TCC is a macOS privacy framework requiring user consent before apps can access Camera, Microphone, Contacts, Location, and full disk. Attackers bypass it by injecting into TCC-approved processes (e.g., Finder, Terminal) or exploiting vulnerabilities that reset TCC databases",
+        "C": "TCC is the macOS firewall component; attackers bypass it with kernel exploits",
+        "D": "TCC controls code signing; attackers bypass it by stripping the code signature from binaries"
+      },
+      "correct": "B",
+      "explanation": "TCC enforces user-consent gates on sensitive resources. A common bypass is to inject code into a process that already has TCC permissions (e.g., inject into Terminal which has full disk access). Historical TCC bypasses include direct database manipulation (before SIP protected it) and exploiting migration tools."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "What does System Integrity Protection (SIP) on macOS protect, and what are the limits of this protection?",
+      "options": {
+        "A": "SIP encrypts all user data on the system volume; it does not protect system binaries",
+        "B": "SIP prevents modification of core OS directories (/System, /usr, /bin, /sbin) and system processes even by root; however, it does not protect user directories, third-party software, or network traffic",
+        "C": "SIP is a firewall that prevents unauthorised inbound connections to system services",
+        "D": "SIP prevents applications from running without a valid Apple notarisation ticket"
+      },
+      "correct": "B",
+      "explanation": "SIP (rootless mode) restricts even root from modifying protected OS paths, loading unsigned kernel extensions, or attaching to system processes with a debugger. It does not protect user home directories, /Applications (third-party), or application data \u2014 so malware can still persist in LaunchAgents and user directories."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "An attacker wants to persist on a compromised macOS system without root. Which persistence mechanism is available to standard user accounts?",
+      "options": {
+        "A": "Installing a LaunchDaemon in /Library/LaunchDaemons/ (requires root)",
+        "B": "Adding a LaunchAgent plist to ~/Library/LaunchAgents/ \u2014 this runs automatically at login for the user without requiring any elevated privileges",
+        "C": "Modifying /etc/rc.common (requires root)",
+        "D": "Installing a kernel extension in /Library/Extensions/ (requires root and SIP bypass)"
+      },
+      "correct": "B",
+      "explanation": "~/Library/LaunchAgents/ is writable by the user and any plist placed there is executed by launchd at login. It is the standard user-level persistence location for macOS malware, analogous to HKCU\\Run in Windows. LaunchDaemons require root and run as root at boot."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "question": "What is the macOS Keychain and what attack technique targets it during a post-exploitation engagement?",
+      "options": {
+        "A": "Keychain is the macOS update mechanism; attackers manipulate it to prevent security updates",
+        "B": "Keychain is the macOS credential store for passwords, certificates, and private keys. Post-exploitation, attackers use security dump-keychain or tools like Chainbreaker to extract stored credentials \u2014 the user's login password often unlocks the login keychain",
+        "C": "Keychain is the macOS firewall rule database; attackers modify it to allow reverse shells",
+        "D": "Keychain stores FileVault encryption keys; attackers extract it to decrypt the disk offline"
+      },
+      "correct": "B",
+      "explanation": "The macOS Keychain stores Wi-Fi passwords, website credentials, certificates, and application secrets. Tools like `security dump-keychain -d` (when run in the user's session context) or Chainbreaker can extract credentials. Many keychain items are unlocked when the user logs in, making post-exploitation keychain dumping very productive."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "What is 'tailgating' (also called 'piggybacking') and what is the most effective control to prevent it?",
+      "options": {
+        "A": "Following a target vehicle into a secured car park; prevented by ANPR (Automatic Number Plate Recognition)",
+        "B": "Following an authorised person through a secured door without presenting credentials yourself; best prevented by mantrap/airlock entry systems with single-person detection (one person per authentication)",
+        "C": "Intercepting wireless credentials by following an employee home; prevented by WPA3 Enterprise",
+        "D": "Cloning an RFID badge by walking close to someone; prevented by Faraday badge sleeves"
+      },
+      "correct": "B",
+      "explanation": "Tailgating exploits social conventions (holding a door open) to bypass physical access controls. Mantrap/airlock doors \u2014 where only one person can enter per badge swipe \u2014 are the most effective technical control. Staff training to challenge tailgaters also helps but relies on human compliance."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "An attacker successfully reads an employee's HID Prox Card from 30cm away using a commercially available reader. What class of attack is this and how is it mitigated?",
+      "options": {
+        "A": "A relay attack; mitigated by distance-bounding protocols",
+        "B": "An RFID skimming attack against low-frequency (125kHz) proximity cards which transmit credentials without encryption; mitigated by upgrading to MIFARE DESFire or similar high-frequency encrypted smart cards (13.56MHz) and using Faraday shielding sleeves",
+        "C": "A brute-force attack against the card's PIN; mitigated by increasing PIN complexity",
+        "D": "A man-in-the-middle attack; mitigated by certificate pinning on the card reader"
+      },
+      "correct": "B",
+      "explanation": "HID Prox and EM4100 proximity cards broadcast their card number in cleartext with no authentication or encryption. Tools like the Proxmark can read and clone these cards from short distances. The mitigation is replacing them with cryptographically authenticated smart cards (MIFARE DESFire EV2/EV3, iCLASS Seos)."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "What is a 'rubber ducky' style attack in the context of physical security testing?",
+      "options": {
+        "A": "Using a squeaky toy to distract security guards",
+        "B": "Inserting a device (USB Rubber Ducky, Bash Bunny) that masquerades as a USB keyboard and automatically types a pre-programmed payload at high speed when plugged in, bypassing application whitelisting that only blocks executables",
+        "C": "Planting a Wi-Fi pineapple in a rubber duck decoy to conduct wireless attacks",
+        "D": "A social engineering technique where an attacker pretends to be a helpless visitor to gain entry"
+      },
+      "correct": "B",
+      "explanation": "HID-emulation attacks (USB Rubber Ducky, Bash Bunny in HID mode) present as a standard keyboard. The OS trusts keyboard input implicitly, so the device types commands at superhuman speed (opening PowerShell, running a payload) in seconds. Mitigations include USB device management policies, port blocking, and disabling AutoRun/AutoPlay."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "During a physical penetration test, a tester photographs the underside of keyboards and the area under monitors. What are they looking for?",
+      "options": {
+        "A": "Evidence of USB keyloggers attached between the keyboard cable and the PC",
+        "B": "Passwords written on sticky notes \u2014 a common finding that can give immediate access to systems without any technical attack",
+        "C": "MAC addresses written on equipment labels",
+        "D": "Asset tags for inventory enumeration"
+      },
+      "correct": "B",
+      "explanation": "Written credentials are one of the most common findings in physical security assessments. Employees write passwords on sticky notes attached to monitors, keyboards, or stored in unlocked drawers. These immediately compromise accounts without any technical exploitation. The finding demonstrates that password complexity requirements drive users toward insecure storage."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "question": "What is 'lock picking' in the context of a physical penetration test and what is its legal and ethical requirement before conducting it?",
+      "options": {
+        "A": "Lock picking is illegal in all jurisdictions and should never be included in a penetration test",
+        "B": "Lock picking involves manipulating lock mechanisms (using picks, tension wrenches, bump keys, or bypass tools) to open locked doors without the key. It requires explicit written authorisation covering the specific locks and locations to be tested, before any attempt is made",
+        "C": "Lock picking refers to social engineering a locksmith to grant access, requiring no special authorisation",
+        "D": "Lock picking is only legal if conducted by a licensed locksmith and so the penetration tester must hold a locksmith qualification"
+      },
+      "correct": "B",
+      "explanation": "Physical penetration testing techniques including lock picking require explicit, written authorisation that clearly defines scope (which buildings, which locks, what hours). Without this, the activity constitutes criminal damage or breaking and entering. Legal requirements vary by jurisdiction \u2014 some countries restrict lock-pick tool possession itself."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "What security risk arises from running a Docker container with the --privileged flag?",
+      "options": {
+        "A": "The container can only be accessed by root on the host",
+        "B": "The --privileged flag disables all Linux namespace and capability isolation, giving the container full access to host devices and kernel features \u2014 effectively the same as root on the host, enabling a trivial container escape",
+        "C": "The container is restricted to using 100% of one CPU core",
+        "D": "The --privileged flag exposes container ports directly to the internet"
+      },
+      "correct": "B",
+      "explanation": "A privileged container has access to all host devices (/dev), can load kernel modules, and has every Linux capability enabled. Escape is trivial: mount the host filesystem via /dev/sda, write a cron job or SSH key, and exit the container. Containers should run with minimal capabilities (--cap-drop ALL, --cap-add only what is needed)."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "An attacker compromises a container and finds that the Docker socket (/var/run/docker.sock) is mounted inside it. How can this be exploited?",
+      "options": {
+        "A": "The attacker can only stop and restart containers, not escape to the host",
+        "B": "The Docker socket gives the container control of the Docker daemon on the host. The attacker runs a new privileged container mounting the host filesystem, chroots into it, and achieves full host root access \u2014 a complete container escape",
+        "C": "Mounting the Docker socket allows the container to pull images from Docker Hub only",
+        "D": "The attacker can read other container logs but cannot modify the host"
+      },
+      "correct": "B",
+      "explanation": "Mounting the Docker socket inside a container is equivalent to giving it root on the host. The container can issue Docker API commands to start new privileged containers, mount /host-root into them, then chroot out of the container to interact with the full host OS. This is a common misconfiguration in CI/CD pipelines and monitoring agents."
+    },
+    {
+      "category": "Containerisation (PT011)",
+      "question": "What is a 'distroless' container image and what security benefit does it provide?",
+      "options": {
+        "A": "A container image with no operating system at all, used only for data storage",
+        "B": "A minimal container image containing only the application and its runtime dependencies \u2014 no shell, package manager, or debug tools. This significantly reduces the attack surface because attackers cannot use common post-exploitation tools even if they achieve code execution",
+        "C": "A container image that automatically removes itself after the container stops",
+        "D": "A container image built without any Linux distribution branding, indistinguishable from other distributions"
+      },
+      "correct": "B",
+      "explanation": "Distroless images (popularised by Google) omit shells (/bin/sh), package managers (apt, apk), and other OS utilities. Post-exploitation activities that rely on bash, curl, wget, or package installation are blocked. Combined with read-only filesystems and no-new-privileges flags, distroless images significantly harden container deployments."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is a 'software supply chain attack' and which high-profile incident demonstrated its risk?",
+      "options": {
+        "A": "An attack on the physical logistics chain delivering hardware components; demonstrated by the Bloomberg Supermicro hardware implant claims",
+        "B": "Compromising a software vendor, build system, or dependency so that malicious code is distributed to downstream users through a trusted update mechanism; demonstrated by the SolarWinds Orion compromise (SUNBURST backdoor, 2020)",
+        "C": "Exploiting weak supplier contracts to access customer data; demonstrated by the Target HVAC vendor breach",
+        "D": "Attacking the software escrow service holding source code for critical infrastructure"
+      },
+      "correct": "B",
+      "explanation": "In the SolarWinds attack, threat actors compromised the build pipeline and injected the SUNBURST backdoor into legitimate Orion software updates, signed with SolarWinds' own certificate. 18,000 organisations installed the trojanised update. This exemplifies supply chain attacks: the distribution mechanism itself is weaponised."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "What is the purpose of SAST (Static Application Security Testing) and at which stage of the SDLC should it be applied?",
+      "options": {
+        "A": "SAST analyses running applications by sending malicious inputs; applied in production during staging",
+        "B": "SAST analyses source code or compiled bytecode without executing it, detecting vulnerabilities (SQL injection patterns, hardcoded secrets, unsafe functions) at development or CI/CD pipeline stage \u2014 'shift left' before code reaches production",
+        "C": "SAST tests the application's security headers by making HTTP requests; applied pre-release",
+        "D": "SAST monitors production application logs for attack patterns; applied continuously in production"
+      },
+      "correct": "B",
+      "explanation": "SAST is a 'white-box' technique that inspects source code, bytecode, or binary without executing it. It is most valuable when integrated into CI/CD pipelines so developers get security feedback on every commit \u2014 the 'shift left' security principle. Tools include Semgrep, SonarQube, Checkmarx, and Bandit (Python)."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "question": "A developer accidentally commits an AWS access key to a public GitHub repository. What should be the FIRST action taken, and why?",
+      "options": {
+        "A": "Use git rebase to remove the commit from history \u2014 this is sufficient because the commit is removed",
+        "B": "Immediately revoke/rotate the AWS key in the AWS console \u2014 the key should be treated as fully compromised because automated scanners (GitGuardian, truffleHog bots) detect and harvest secrets from public commits within seconds of publication",
+        "C": "Make the repository private immediately \u2014 this prevents any further exposure",
+        "D": "Open a GitHub support ticket to have the commit removed from GitHub's servers"
+      },
+      "correct": "B",
+      "explanation": "Automated secret-harvesting bots scan public GitHub pushes in real time. Even if the commit is deleted or the repo made private within minutes, the secret must be assumed compromised and revoked immediately. Git history rewriting is secondary \u2014 the revocation/rotation is the critical first step."
     }
   ]
 }
