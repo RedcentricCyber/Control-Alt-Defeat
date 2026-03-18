@@ -1,6 +1,6 @@
 {
-  "title": "CREST CCT Practice Exam",
-  "description": "Comprehensive question bank covering all 17 topics and 180 skills of the CREST Certified Tester (CCT) syllabus across both Infrastructure and Application domains.",
+  "title": "CREST CCT Multichoice Preparation"
+  "description": "Comprehensive question bank covering 17 topics and 180 skills of the CREST Certified Tester (CCT) syllabus across both Infrastructure and Application domains.",
   "based_on": "CREST CCT",
   "created_by": "Chat GPT / Claude (Anthropic)",
   "difficulty": "HARD",
