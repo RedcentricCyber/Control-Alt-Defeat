@@ -20160,7 +20160,7 @@
       "explanation": "/etc/hosts.equiv defines system-wide trusted host and user combinations for r-services, while ~/.rhosts defines per-user trusted relationships. If a host is listed in either file, users from that host can log in without password authentication. This trust model is inherently insecure as it relies on IP addresses for authentication. /etc/hosts.allow is for TCP Wrappers, not r-services trust."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "Virtual Private Clouds",
       "question": "An organisation has established VPC peering between VPC-A (10.0.0.0/16) and VPC-B (172.16.0.0/16). A penetration tester in VPC-A attempts to reach a host in VPC-C (192.168.0.0/16) which is peered with VPC-B. What is the expected outcome?",
       "options": {
@@ -20173,7 +20173,7 @@
       "explanation": "VPC peering connections are non-transitive. Even if VPC-A is peered with VPC-B and VPC-B is peered with VPC-C, traffic from VPC-A cannot traverse VPC-B to reach VPC-C. A direct peering connection between VPC-A and VPC-C must be established and route tables updated accordingly."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "Virtual Private Clouds",
       "question": "A security group attached to an EC2 instance allows inbound SSH (port 22) from 10.0.1.0/24. The subnet's Network ACL has an explicit DENY rule for all traffic from 10.0.1.50/32 at rule number 50, and an ALLOW rule for all traffic from 10.0.1.0/24 at rule number 100. What happens when 10.0.1.50 attempts to SSH to the instance?",
       "options": {
@@ -20186,7 +20186,7 @@
       "explanation": "Network ACLs are evaluated in rule number order, lowest first. Rule 50 (DENY from 10.0.1.50/32) is processed before rule 100 (ALLOW from 10.0.1.0/24), so the traffic is denied at the NACL level before it ever reaches the security group. NACLs are stateless and evaluated in numeric order, unlike security groups which are stateful and evaluate all rules collectively."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "Logging and Monitoring",
       "question": "During a cloud penetration test, you want to determine whether your reconnaissance activities against AWS resources are being detected. Which combination of AWS services would most comprehensively detect API enumeration, unusual network traffic, and anomalous IAM behaviour?",
       "options": {
@@ -20199,7 +20199,7 @@
       "explanation": "CloudTrail logs all API calls across AWS services, providing visibility into enumeration activities. GuardDuty uses machine learning and threat intelligence to detect anomalous behaviour including unusual API calls, compromised credentials, and network anomalies. CloudWatch Alarms can trigger on specific metrics such as failed authentication attempts or unusual API call volumes. This combination provides the most comprehensive detection of penetration testing reconnaissance activity."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "Denial of Service and Resource Exhaustion",
       "question": "A penetration tester discovers that an AWS Lambda function is triggered by S3 PUT events and processes uploaded files without any concurrency limits or input validation. Which attack vector represents the greatest financial risk to the target organisation?",
       "options": {
@@ -20212,7 +20212,7 @@
       "explanation": "Without concurrency limits (reserved concurrency), rapidly uploading many files triggers thousands of simultaneous Lambda invocations. Each invocation incurs compute charges, and the cascading effect (e.g., downstream API calls, database writes, further Lambda triggers) can amplify costs exponentially. This is a classic cloud resource exhaustion attack that translates directly to financial damage. While option D is a serious security issue, the question specifically asks about financial risk from resource exhaustion."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "Denial of Service and Resource Exhaustion",
       "question": "During a cloud penetration test, you identify an API Gateway endpoint with no rate limiting or throttling configured. The API triggers a chain of downstream services: Lambda, DynamoDB, and SQS. What is the most effective way to demonstrate the resource exhaustion risk without causing prolonged outage?",
       "options": {
@@ -20225,7 +20225,7 @@
       "explanation": "A controlled burst demonstrates the vulnerability without causing extended disruption. When DynamoDB's provisioned read/write capacity is exceeded, it returns ProvisionedThroughputExceededException errors, causing Lambda retries, SQS dead-letter queue accumulation, and user-facing errors. Documenting this cascading failure with a brief test provides sufficient evidence. Prolonged attacks (option A) exceed responsible testing boundaries, and directly modifying infrastructure (option C) is typically out of scope."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "Denial of Service and Resource Exhaustion",
       "question": "Which AWS service feature is specifically designed to absorb volumetric DDoS attacks at the network and transport layers without additional cost to standard AWS customers?",
       "options": {
@@ -20238,7 +20238,7 @@
       "explanation": "AWS Shield Standard is automatically enabled at no additional cost for all AWS customers. It provides protection against the most common Layer 3 and Layer 4 DDoS attacks, including SYN floods, UDP reflection attacks, and other volumetric attacks. AWS WAF (option A) operates at Layer 7 and requires separate configuration and cost. Shield Advanced provides enhanced protections but requires a paid subscription."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "General Host to Cloud Transition",
       "question": "An organisation is migrating on-premises Windows servers to AWS using a lift-and-shift approach. Which security concern is most commonly overlooked during this type of migration?",
       "options": {
@@ -20251,7 +20251,7 @@
       "explanation": "During lift-and-shift migrations, organisations frequently replicate permissive on-premises firewall rules directly into security groups without rationalisation. Additionally, embedded credentials, service accounts with static passwords, and legacy trust relationships are migrated unchanged, creating significant exposure in the cloud where the network boundary assumptions of the on-premises environment no longer apply. VPC networking requires explicit configuration and does not automatically mirror on-premises VLAN segmentation."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "General Cloud Secrets Management",
       "question": "A penetration tester discovers that an application running on EC2 stores database credentials in a plaintext configuration file at /etc/app/db.conf. Which remediation recommendation best aligns with AWS cloud-native secrets management practices?",
       "options": {
@@ -20264,7 +20264,7 @@
       "explanation": "AWS Secrets Manager and SSM Parameter Store (SecureString type) provide centralised, encrypted secrets storage with fine-grained IAM access control. Secrets Manager additionally supports automatic credential rotation via Lambda functions. The EC2 instance should use an IAM instance profile with least-privilege permissions to retrieve secrets at runtime, eliminating the need for static credentials on disk. Options A, C, and D all leave credentials exposed or lack rotation capabilities."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Cloud Reconnaissance",
       "question": "During AWS reconnaissance, a penetration tester discovers an open S3 bucket using the URL format https://s3.amazonaws.com/target-backup-2024. Which enumeration technique would most effectively identify additional buckets belonging to the same organisation?",
       "options": {
@@ -20277,7 +20277,7 @@
       "explanation": "Organisations typically follow consistent naming conventions for S3 buckets. By analysing the pattern of discovered buckets and generating permutations (year variants, environment names, service names), testers can efficiently discover additional buckets. DNS CNAME records may also reveal bucket names when custom domains point to S3 endpoints. Option C requires valid credentials with s3:ListBuckets permission. Option D is ineffective since S3 is a shared service and IP scanning will not identify specific buckets."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Cloud Reconnaissance",
       "question": "A penetration tester has gained access to an EC2 instance and queries the Instance Metadata Service at http://169.254.169.254/latest/meta-data/iam/security-credentials/. The response includes an IAM role name. What is the next step to leverage this for further enumeration?",
       "options": {
@@ -20290,7 +20290,7 @@
       "explanation": "The Instance Metadata Service (IMDS) at the security-credentials endpoint returns temporary AWS credentials (AccessKeyId, SecretAccessKey, and Token) for the IAM role attached to the instance. These credentials can be exported as environment variables and used with the AWS CLI or boto3 to enumerate the account: listing S3 buckets, EC2 instances, IAM users, and other resources according to the role's permissions. This is a critical post-exploitation step in cloud penetration testing."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Cloud Reconnaissance",
       "question": "When using boto3 for AWS account enumeration with compromised credentials, which API call sequence provides the broadest initial situational awareness with the least likelihood of triggering GuardDuty alerts?",
       "options": {
@@ -20303,7 +20303,7 @@
       "explanation": "Starting with sts:GetCallerIdentity is a low-noise call that reveals the AWS account ID, the ARN of the current principal, and the user/role identity. Following this with a check of the principal's own attached policies helps understand available permissions before making broader API calls. GuardDuty is more likely to alert on rapid cross-region enumeration (option C) or large-scale IAM enumeration (options B and D). A targeted approach based on known permissions is both stealthier and more efficient."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Cloud Reconnaissance",
       "question": "A penetration tester wants to determine if IMDSv1 is enabled on a target EC2 instance they have command execution on. Which command confirms that the unprotected metadata service is accessible?",
       "options": {
@@ -20316,7 +20316,7 @@
       "explanation": "IMDSv1 allows simple HTTP GET requests to the metadata endpoint without any session token. If curl returns metadata without a PUT request to obtain a token first, IMDSv1 is enabled. IMDSv2 requires a session token obtained via a PUT request with a TTL header (X-aws-ec2-metadata-token-ttl-seconds), and subsequent requests must include this token. SSRF vulnerabilities are significantly more exploitable when IMDSv1 is enabled because attackers can retrieve credentials with a single GET request."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Host to Cloud Transition",
       "question": "An organisation is establishing AWS Direct Connect to extend their on-premises network into a VPC. From a security testing perspective, which risk is most critical to assess?",
       "options": {
@@ -20329,7 +20329,7 @@
       "explanation": "AWS Direct Connect provides a dedicated network connection between an on-premises environment and AWS, but it does not encrypt traffic in transit by default. Data traverses a private connection through a Direct Connect partner or AWS colocation facility, but is not encrypted at the link layer. For sensitive workloads, a site-to-site VPN should be established over the Direct Connect connection to provide IPsec encryption. This is a commonly misunderstood security property of Direct Connect."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Host to Cloud Transition",
       "question": "During a hybrid environment assessment, you discover that an AWS Site-to-Site VPN is configured with a static routing table rather than BGP dynamic routing. What security implication should be reported?",
       "options": {
@@ -20342,7 +20342,7 @@
       "explanation": "While static routing avoids BGP-specific attacks, it introduces operational security risks. Without dynamic route updates, failover between redundant VPN tunnels may not occur automatically, potentially causing traffic blackholes or routing through stale paths. In a penetration testing context, this could mean security monitoring traffic fails to reach its destination during a tunnel failure, creating blind spots. Additionally, manual route management increases the risk of misconfigurations that create unintended network paths."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Host to Cloud Transition",
       "question": "An organisation uses AWS Application Migration Service (MGN) to migrate on-premises servers to EC2. During a security assessment of the migration process, which finding represents the highest risk?",
       "options": {
@@ -20355,7 +20355,7 @@
       "explanation": "An overly permissive staging area security group combined with a broadly privileged IAM role creates significant risk during migration. If a replication server is compromised, the attacker gains unrestricted network egress and broad AWS API access. The staging environment is a transient but high-value target because it processes complete server images. The replication server IAM role should follow least privilege, and the staging security group should restrict both inbound and outbound traffic to only what is required for replication."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Host to Cloud Transition",
       "question": "When testing the security of an AWS Transit Gateway that connects multiple VPCs and on-premises networks, which misconfiguration would allow a compromised workload in a development VPC to reach production resources?",
       "options": {
@@ -20368,7 +20368,7 @@
       "explanation": "Transit Gateway route tables control traffic flow between attached VPCs and on-premises networks. If a single route table with a default route is associated with all VPC attachments, any attached VPC can route to any other, defeating network segmentation. The correct architecture uses separate route tables for different security zones (production, development, shared services) with specific route entries controlling which networks can communicate. This is a critical finding in cloud security assessments of multi-VPC environments."
     },
     {
-      "category": "Cloud Security",
+      "category": "Cloud Security (PT012)",
       "skill": "AWS Host to Cloud Transition",
       "question": "An organisation maintains a hybrid DNS architecture with Route 53 Resolver endpoints connecting on-premises DNS servers and AWS VPC DNS. During a penetration test, which attack vector is specific to this hybrid configuration?",
       "options": {
@@ -20381,7 +20381,7 @@
       "explanation": "Route 53 Resolver inbound endpoints allow on-premises networks to resolve AWS private DNS names, but they also create a bridge that a compromised EC2 instance can use to query on-premises DNS servers. If the Resolver forwarding rules are overly broad, an attacker can enumerate internal hostnames, discover on-premises network topology, and identify additional targets. This cross-environment DNS resolution is a unique attack surface in hybrid architectures that does not exist in purely on-premises or purely cloud environments."
     },
     {
-      "category": "Containerisation",
+      "category": "Containerisation (PT011)",
       "skill": "LXD",
       "question": "A penetration tester discovers that a low-privileged user is a member of the 'lxd' group on a Linux host. Which technique allows escalation to root on the host system?",
       "options": {
@@ -20394,7 +20394,7 @@
       "explanation": "Membership in the 'lxd' group grants the ability to create and manage LXD containers, which is equivalent to root access. The attack involves importing a lightweight image (e.g., Alpine), creating a privileged container that mounts the host's root filesystem as a disk device, and then starting the container. Inside the container, the attacker has full read/write access to the host filesystem at the mount point, allowing them to add SSH keys, modify /etc/shadow, create SUID binaries, or perform any other action as root on the host."
     },
     {
-      "category": "Core Technical Skills",
+      "category": "Core Technical Skills (PT002)",
       "skill": "Pivoting",
       "question": "A penetration tester has SSH access to a compromised Linux host (Host A, 10.0.1.5) and needs to access a web application on an internal host (Host B, 10.0.2.10:8080) that is only reachable from Host A. Which SSH command establishes a local port forward to access Host B's web application from the tester's machine?",
       "options": {
@@ -20407,7 +20407,7 @@
       "explanation": "The -L flag creates a local port forward: ssh -L [local_port]:[destination_host]:[destination_port] [jump_host]. This binds port 8080 on the tester's localhost and tunnels traffic through Host A (10.0.1.5) to Host B (10.0.2.10) on port 8080. The tester then accesses http://localhost:8080 in their browser. Option A (-R) creates a reverse tunnel, option C (-D) creates a SOCKS proxy (useful but not a direct port forward), and option D has the syntax reversed."
     },
     {
-      "category": "Core Technical Skills",
+      "category": "Core Technical Skills (PT002)",
       "skill": "Pivoting",
       "question": "During an internal penetration test with multiple network segments, a tester has compromised Host A (accessible from the tester's machine) and Host B (only accessible from Host A). A third host (Host C, 172.16.3.20) is only accessible from Host B. Which approach enables the tester to port scan Host C?",
       "options": {
@@ -20420,7 +20420,7 @@
       "explanation": "Multi-hop pivoting requires chaining tunnels through each intermediary host. Since Host C is only reachable from Host B, a single tunnel through Host A (options A and B) cannot reach Host C. The correct approach chains tunnels: either nested SSH tunnels, ProxyJump (-J HostA,HostB) to create a multi-hop connection, or establishing a SOCKS proxy on each hop and chaining them via proxychains. Option D would only work if Meterpreter sessions existed on both hosts, which the question does not state."
     },
     {
-      "category": "Core Technical Skills",
+      "category": "Core Technical Skills (PT002)",
       "skill": "Hardware Security",
       "question": "During a hardware security assessment, a penetration tester identifies a 4-pin header on a target device's PCB labelled with TDI, TDO, TMS, and TCK. Which interface does this represent, and what is the immediate next step?",
       "options": {
@@ -20433,7 +20433,7 @@
       "explanation": "TDI (Test Data In), TDO (Test Data Out), TMS (Test Mode Select), and TCK (Test Clock) are the four mandatory JTAG (IEEE 1149.1) signals. The immediate next step is to connect a JTAG adapter (such as a Bus Pirate, JTAGulator, or dedicated debugger) and scan the chain by shifting in the IDCODE instruction. This identifies all devices on the scan chain by their manufacturer and part number, informing subsequent actions such as reading flash memory, halting the processor for debugging, or extracting firmware."
     },
     {
-      "category": "Core Technical Skills",
+      "category": "Core Technical Skills (PT002)",
       "skill": "Hardware Security",
       "question": "A penetration tester has identified UART test points on an embedded device and connected a USB-to-serial adapter. The terminal shows garbled characters when the device boots. What is the most likely cause and resolution?",
       "options": {
@@ -20446,7 +20446,7 @@
       "explanation": "Garbled output on a UART connection most commonly indicates a baud rate mismatch between the adapter and the target device. The standard approach is to use a tool like baudrate.py (which cycles through common baud rates), a logic analyser to measure bit timing, or manually try common rates (9600, 19200, 38400, 57600, 115200). While swapped TX/RX (option A) would produce no output rather than garbled text, and voltage mismatches (option C) can cause issues, garbled but visible characters are the hallmark of an incorrect baud rate."
     },
     {
-      "category": "Core Technical Skills",
+      "category": "Core Technical Skills (PT002)",
       "skill": "Hardware Security",
       "question": "A penetration tester needs to extract firmware from a SPI NOR flash chip on an IoT device's PCB. The chip is an 8-pin SOIC package. Which approach is correct for extracting the firmware?",
       "options": {
@@ -20459,7 +20459,7 @@
       "explanation": "SPI NOR flash chips in SOIC-8 packages can be read either by desoldering and using an external programmer, or preferably by using a SOIC-8 test clip to connect in-circuit without desoldering. Tools like flashrom support numerous SPI programmer hardware interfaces (CH341A, Bus Pirate, Raspberry Pi SPI). The extracted firmware binary can then be analysed with binwalk for filesystem extraction. JTAG (option B) is a different interface. Power analysis (option D) is used for cryptographic key extraction, not firmware dumping."
     },
     {
-      "category": "Core Technical Skills",
+      "category": "Core Technical Skills (PT002)",
       "skill": "OS Fingerprinting",
       "question": "During passive OS fingerprinting, a penetration tester observes TCP packets from a target with an initial TTL of 128 and a TCP window size of 65535. Which operating system is this most consistent with?",
       "options": {
@@ -20472,7 +20472,7 @@
       "explanation": "Default initial TTL values are a primary indicator in passive OS fingerprinting. Microsoft Windows systems typically use a TTL of 128, while Linux and FreeBSD default to 64, and Cisco IOS/network devices typically use 255. Combined with the TCP window size of 65535 (common in Windows), this strongly suggests a Windows system. The observed TTL may be lower than the initial value due to hop count, so the closest standard value above the observed TTL is used for identification."
     },
     {
-      "category": "Core Technical Skills",
+      "category": "Core Technical Skills (PT002)",
       "skill": "OS Fingerprinting",
       "question": "A penetration tester is using nmap's OS detection feature (-O) against a target host but receives the message 'No exact OS matches for host'. Which technique would improve the accuracy of nmap's OS fingerprinting?",
       "options": {
@@ -20485,7 +20485,7 @@
       "explanation": "Nmap's OS detection engine requires at least one open and one closed TCP port to perform its full suite of TCP/IP stack fingerprinting probes. The --osscan-guess flag makes nmap report its closest match even when it cannot find an exact signature in its database. Additionally, ensuring the scan covers enough ports to find both open and closed ports significantly improves fingerprinting accuracy. Option B's aggressive timing can actually reduce accuracy due to dropped probes, and options C and D do not provide equivalent OS detection capabilities."
     },
     {
-      "category": "Core Technical Skills",
+      "category": "Core Technical Skills (PT002)",
       "skill": "OS Fingerprinting",
       "question": "The passive OS fingerprinting tool p0f observes a SYN packet with the following TCP/IP characteristics: TTL 64, window size 29200, MSS 1460, window scaling factor 7, and selective acknowledgement permitted. Which operating system does this signature most likely indicate?",
       "options": {
@@ -20498,7 +20498,7 @@
       "explanation": "p0f fingerprints operating systems by analysing multiple TCP/IP stack characteristics simultaneously. The combination of TTL 64, initial window size of 29200 (a value introduced in Linux kernel 3.x as the default tcp_init_cwnd), MSS 1460 (standard for Ethernet), window scaling factor 7, and SACK permitted is a distinctive signature of modern Linux kernels. While macOS also uses TTL 64, it has different window size defaults. p0f maintains a signature database that matches these combined attributes to specific OS versions."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "Ethernet Protocol",
       "question": "What is the minimum and maximum size of an Ethernet II (DIX) frame payload, excluding the preamble, SFD, and FCS?",
       "options": {
@@ -20511,7 +20511,7 @@
       "explanation": "The Ethernet II frame payload (data field) has a minimum size of 46 bytes and a maximum of 1500 bytes (the standard MTU). Frames with fewer than 46 bytes of data are padded to meet the minimum. The total frame size (including 14-byte header and 4-byte FCS) is therefore 64 to 1518 bytes. Option B describes the total frame size, not the payload. Option D describes jumbo frames which are a non-standard extension. Option C is incorrect because the minimum payload is 46 bytes, not 0."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "Ethernet Protocol",
       "question": "During a penetration test, a tester captures an Ethernet frame with the EtherType field set to 0x0806. What protocol is encapsulated in this frame?",
       "options": {
@@ -20524,7 +20524,7 @@
       "explanation": "EtherType 0x0806 identifies the Address Resolution Protocol (ARP), which maps IPv4 addresses to MAC addresses on a local network segment. Key EtherType values for penetration testers to know include: 0x0800 (IPv4), 0x0806 (ARP), 0x86DD (IPv6), 0x8100 (802.1Q VLAN tagging). ARP frames are significant in penetration testing because ARP spoofing/poisoning is a common technique for man-in-the-middle attacks on local networks."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "Ethernet Protocol",
       "question": "A penetration tester is performing ARP spoofing on a switched network. What is the primary function of ARP in the context of Ethernet networking, and why does spoofing succeed?",
       "options": {
@@ -20537,7 +20537,7 @@
       "explanation": "ARP (Address Resolution Protocol) resolves IPv4 addresses to 48-bit MAC (hardware) addresses on the local network. ARP spoofing succeeds because the protocol includes no authentication: any host can send an ARP reply (including unsolicited gratuitous ARP), and receiving hosts will update their ARP cache with the new mapping. This allows an attacker to associate their MAC address with another host's IP address, redirecting traffic through their machine. Mitigations include Dynamic ARP Inspection (DAI) on managed switches."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "Ethernet Protocol",
       "question": "An Ethernet frame is captured with a destination MAC address of FF:FF:FF:FF:FF:FF. What type of frame is this, and how do network switches handle it?",
       "options": {
@@ -20550,7 +20550,7 @@
       "explanation": "The destination MAC address FF:FF:FF:FF:FF:FF is the Ethernet broadcast address. When a switch receives a frame with this destination, it floods the frame out all ports within the same VLAN, except the port on which the frame was received. Broadcast frames are used by protocols such as ARP (requesting the MAC address of an IP), DHCP (discovery messages), and NetBIOS. Excessive broadcast traffic can be used as a denial-of-service technique, and broadcast domains are bounded by VLANs or routers."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "Ethernet Protocol",
       "question": "What is the purpose of the Frame Check Sequence (FCS) in an Ethernet frame, and what algorithm is used to compute it?",
       "options": {
@@ -20563,7 +20563,7 @@
       "explanation": "The Frame Check Sequence (FCS) is a 4-byte (32-bit) field at the end of an Ethernet frame computed using the CRC-32 algorithm over the entire frame (destination MAC, source MAC, EtherType/Length, and payload). The receiver recalculates the CRC and compares it to the received FCS; if they do not match, the frame is silently discarded. FCS detects transmission errors but provides no authentication, encryption, or ordering guarantees. Corrupted frames are dropped at Layer 2 without notification to higher layers."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv4",
       "question": "A penetration tester needs to determine the number of usable host addresses in a /26 subnet. How many usable addresses are available?",
       "options": {
@@ -20576,7 +20576,7 @@
       "explanation": "A /26 subnet has 32 - 26 = 6 host bits, giving 2^6 = 64 total addresses. Two addresses are reserved: the network address (all host bits 0) and the broadcast address (all host bits 1), leaving 64 - 2 = 62 usable host addresses. Understanding CIDR subnetting is essential for penetration testers to correctly scope target ranges, identify broadcast addresses, and understand network boundaries."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv4",
       "question": "Which of the following is a valid RFC 1918 private IPv4 address range?",
       "options": {
@@ -20589,7 +20589,7 @@
       "explanation": "RFC 1918 defines three private IPv4 address ranges: 10.0.0.0/8 (10.0.0.0 - 10.255.255.255), 172.16.0.0/12 (172.16.0.0 - 172.31.255.255), and 192.168.0.0/16 (192.168.0.0 - 192.168.255.255). Option A (192.0.0.0/8) is incorrect as the private range is 192.168.0.0/16, not the entire /8. Option C (10.0.0.0/16) incorrectly narrows the 10.x.x.x range which is actually a /8. Option D (169.254.0.0/16) is the link-local range (APIPA), not an RFC 1918 private range."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv4",
       "question": "A penetration tester observes fragmented IPv4 packets during a network capture. Which field in the IPv4 header identifies fragments belonging to the same original datagram?",
       "options": {
@@ -20602,7 +20602,7 @@
       "explanation": "The 16-bit Identification field in the IPv4 header is set by the sender and shared across all fragments of the same original datagram. The receiving host uses the Identification field together with the source IP, destination IP, and protocol number to reassemble fragments into the complete original packet. The Fragment Offset field indicates where each fragment belongs in the original datagram, and the More Fragments (MF) flag indicates whether additional fragments follow. IP fragmentation has been exploited in attacks such as the teardrop attack and can be used to evade IDS/IPS systems."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv4",
       "question": "What is the CIDR notation for the classful Class B default subnet mask, and what range of first-octet values identifies a Class B address?",
       "options": {
@@ -20615,7 +20615,7 @@
       "explanation": "In classful IPv4 addressing, Class B addresses have a first octet in the range 128-191 and a default subnet mask of 255.255.0.0 (/16). Class A uses /8 with first octets 1-126, Class C uses /24 with first octets 192-223. While classful addressing has been superseded by CIDR, understanding the legacy classifications helps penetration testers interpret network designs and documentation that still reference class-based terminology."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv4",
       "question": "A penetration tester needs to scan all hosts in the 10.50.96.0/20 subnet. What is the broadcast address and last usable host address in this range?",
       "options": {
@@ -20628,7 +20628,7 @@
       "explanation": "For 10.50.96.0/20: the /20 mask is 255.255.240.0, leaving 12 host bits. The network address is 10.50.96.0 (third octet 96 = 0110 0000 in binary; the mask covers the upper 4 bits of the third octet). The broadcast address is found by setting all host bits to 1: 10.50.96.0 OR 0.0.15.255 = 10.50.111.255. Therefore the last usable host is 10.50.111.254. The subnet spans 10.50.96.0 through 10.50.111.255, encompassing 4094 usable addresses."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv6",
       "question": "A host on an IPv6 network uses SLAAC (Stateless Address Autoconfiguration) to configure its address. Which protocol provides the router advertisements that SLAAC relies upon, and what information do they convey?",
       "options": {
@@ -20641,7 +20641,7 @@
       "explanation": "SLAAC relies on ICMPv6 Router Advertisement (RA) messages, which are part of the Neighbor Discovery Protocol (NDP, RFC 4861). Routers periodically multicast RAs (or send them in response to Router Solicitation messages) containing one or more prefix information options, prefix lengths, valid and preferred lifetimes, and the router's link-local address as the default gateway. The host combines the advertised prefix with a self-generated interface identifier (using EUI-64 or RFC 7217 stable privacy addresses) to form a complete IPv6 address. ARP does not exist in IPv6."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv6",
       "question": "What is the IPv6 link-local address prefix, and under what circumstances are link-local addresses used?",
       "options": {
@@ -20654,7 +20654,7 @@
       "explanation": "IPv6 link-local addresses use the prefix fe80::/10 and are automatically assigned to every IPv6-enabled network interface without any manual configuration or DHCP. They are scoped to the local network segment (link) and are not routable beyond it. Link-local addresses are essential for NDP operations (neighbor solicitation/advertisement, router solicitation/advertisement), routing protocol neighbor adjacencies (OSPFv3, BGP), and serve as default gateway addresses. They are mandatory in IPv6 \u2014 a host always has a link-local address even without global connectivity."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv6",
       "question": "In IPv6, the Neighbor Discovery Protocol (NDP) replaces several protocols used in IPv4. Which IPv4 protocol is NOT replaced by NDP?",
       "options": {
@@ -20667,7 +20667,7 @@
       "explanation": "NDP (RFC 4861) replaces ARP with Neighbor Solicitation/Advertisement messages, replaces ICMP Router Discovery with Router Solicitation/Advertisement, and provides SLAAC as an alternative to DHCP for address configuration. However, DNS remains an independent protocol in IPv6, resolving domain names to AAAA records (128-bit IPv6 addresses) just as it resolves A records for IPv4. NDP also provides Duplicate Address Detection (DAD) and redirect functionality, but DNS resolution is not part of its scope."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv6",
       "question": "An IPv6 packet has a 40-byte fixed header. Compared to the IPv4 header, which field was removed from the IPv6 header to simplify router processing?",
       "options": {
@@ -20680,7 +20680,7 @@
       "explanation": "IPv6 eliminated the Header Checksum field that existed in IPv4. In IPv4, routers must recalculate the header checksum at every hop because the TTL field changes, adding processing overhead. IPv6 removes this requirement, relying instead on Layer 2 error detection (e.g., Ethernet FCS/CRC-32) and upper-layer checksums (TCP, UDP, ICMPv6 all include pseudo-header checksums that cover source and destination addresses). This design decision significantly improves router forwarding performance."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "IPv6",
       "question": "An organisation is running a dual-stack network during their IPv4 to IPv6 transition. A penetration tester discovers that IPv6 is enabled on all hosts but the network security controls (firewall rules, IDS signatures) only cover IPv4 traffic. Which attack is most feasible in this scenario?",
       "options": {
@@ -20693,7 +20693,7 @@
       "explanation": "On dual-stack networks where IPv6 security controls are not implemented, an attacker can send forged Router Advertisement messages to become the network's IPv6 default gateway. Hosts using SLAAC will accept these RAs and route IPv6 traffic through the attacker. Since many modern operating systems prefer IPv6 over IPv4 (per RFC 6724), DNS queries that return both A and AAAA records will cause hosts to connect via IPv6 through the attacker, completely bypassing IPv4 firewalls and IDS. This is commonly performed using tools like mitm6 or THC-IPv6."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "UDP",
       "question": "A penetration tester sends a UDP datagram to a closed port on a target host and receives an ICMP Destination Unreachable (Port Unreachable) message. However, when scanning many UDP ports, some ports show as 'open|filtered' in nmap. Why does this ambiguity occur?",
       "options": {
@@ -20706,7 +20706,7 @@
       "explanation": "UDP is connectionless, so there is no SYN/SYN-ACK/RST handshake to definitively determine port state. When a UDP probe receives no response, nmap cannot distinguish between an open port (where the service silently discarded the unexpected probe) and a filtered port (where a firewall dropped the packet). Only a closed port generates a definitive ICMP Port Unreachable response. Using service-specific probes (nmap -sUV or --version-intensity) can help, as legitimate services respond to properly formatted requests, reducing open|filtered ambiguity."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "Service Identification",
       "question": "A penetration tester runs nmap with the -sV flag and discovers that port 8443 returns a banner identifying itself as 'Apache httpd 2.4.49'. However, the tester suspects the banner may have been modified. Which additional technique best verifies the actual service and version?",
       "options": {
@@ -20719,7 +20719,7 @@
       "explanation": "Banners can be easily modified or spoofed as a defensive measure. Nmap's version detection (-sV) goes beyond banner grabbing by sending protocol-specific probes and analysing responses against its nmap-service-probes signature database. Additional verification includes: examining TLS certificates for organisation and hostname details, analysing HTTP headers for technology fingerprints, checking default error pages and favicon hashes, and using tools like WhatWeb or Wappalyzer. Behavioural fingerprinting is significantly harder to fake than modifying a banner string."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "Host Discovery",
       "question": "A penetration tester is performing host discovery on an internal network where ICMP echo requests are blocked by host-based firewalls on most machines. Which nmap host discovery technique is most likely to identify live hosts in this environment?",
       "options": {
@@ -20732,7 +20732,7 @@
       "explanation": "When ICMP is blocked, TCP-based discovery probes are more effective. TCP SYN probes (-PS) to common ports elicit SYN/ACK (open) or RST (closed) responses, and TCP ACK probes (-PA) elicit RST responses from live hosts. Combining multiple probe types and targeting common service ports (SSH, HTTP, HTTPS, SMB) maximises the chance of receiving a response. On internal networks, port 445 (SMB) is particularly effective for discovering Windows hosts. Using multiple discovery techniques simultaneously provides the most comprehensive results."
     },
     {
-      "category": "Networks",
+      "category": "Networks (PT004)",
       "skill": "SCTP",
       "question": "A penetration tester discovers that a target telecom system uses SCTP (Stream Control Transmission Protocol) on several ports. Which characteristic of SCTP's connection establishment process makes it more resistant to SYN flood attacks compared to TCP?",
       "options": {
