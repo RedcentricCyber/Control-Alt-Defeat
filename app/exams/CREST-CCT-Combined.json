@@ -1,6 +1,6 @@
 {
   "title": "CREST CCT \u2014 Combined Practice Exam",
-  "description": "Comprehensive question bank covering all 17 topics and 180 skills of the CREST Certified Tester (CCT) syllabus across both Infrastructure and Application domains. Includes Soft Skills (PT001), Core Technical Skills (PT002), Internet Recon (PT003), Networks (PT004), Network Services (PT005), Windows (PT006), Linux/UNIX (PT007), Web Technologies (PT008), Databases (PT009), Virtualisation (PT010), Containerisation (PT011), Cloud Security (PT012), Physical Security (PT014), Secure DevOps (PT015), Desktop Lockdown (PT018), Social Engineering (PT019), and macOS (PT020).",
+  "description": "Comprehensive question bank covering all 17 topics and 180 skills of the CREST Certified Tester (CCT) syllabus across both Infrastructure and Application domains.",
   "based_on": "CREST CCT",
   "created_by": "Chat GPT / Claude (Anthropic)",
   "difficulty": "HARD",
