@@ -20743,6 +20743,721 @@
       },
       "correct": "B",
       "explanation": "SCTP's four-way handshake includes a cookie mechanism that protects against resource exhaustion attacks analogous to TCP SYN floods. When a client sends INIT, the server responds with INIT-ACK containing a state cookie (a cryptographic token encoding connection parameters) but does NOT allocate any Transmission Control Block (TCB) resources. Only when the client echoes the valid cookie back in COOKIE-ECHO does the server create state and respond with COOKIE-ACK. This means an attacker cannot exhaust server memory by sending INITs with spoofed source addresses, as the server holds no per-connection state until the handshake completes. SCTP is commonly found on telecom infrastructure using protocols like SIGTRAN, Diameter, and SS7-over-IP."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Windows Reconnaissance",
+      "question": "Which built-in Windows command provides detailed system information including OS version, hotfixes installed, and network configuration during initial reconnaissance?",
+      "options": {
+        "A": "ipconfig /all",
+        "B": "systeminfo",
+        "C": "tasklist /v",
+        "D": "net accounts"
+      },
+      "correct": "B",
+      "explanation": "The 'systeminfo' command provides comprehensive system details including OS name/version, registered owner, system manufacturer, processor information, installed hotfixes, and network card configurations \u2014 making it the most complete single reconnaissance command."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Active Directory Enumeration",
+      "question": "Which BloodHound edge represents the ability to perform a DCSync attack to replicate directory data including password hashes?",
+      "options": {
+        "A": "GenericAll",
+        "B": "GetChanges and GetChangesAll",
+        "C": "ForceChangePassword",
+        "D": "WriteDacl"
+      },
+      "correct": "B",
+      "explanation": "DCSync requires both DS-Replication-Get-Changes and DS-Replication-Get-Changes-All extended rights. In BloodHound, these are represented as GetChanges and GetChangesAll edges, which together allow replication of password data from a domain controller."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Windows Passwords",
+      "question": "What is the primary risk of the WDigest authentication protocol on older Windows systems, and how can it be exploited post-compromise?",
+      "options": {
+        "A": "WDigest stores passwords in reversible encryption in the SAM file",
+        "B": "WDigest caches plaintext credentials in LSASS memory, extractable with tools like mimikatz",
+        "C": "WDigest transmits passwords in cleartext over the network",
+        "D": "WDigest disables account lockout policies allowing brute force"
+      },
+      "correct": "B",
+      "explanation": "WDigest authentication (enabled by default on Windows 7/2008R2 and earlier) stores plaintext credentials in LSASS process memory. Post-compromise, attackers can extract these using mimikatz's 'sekurlsa::wdigest' command. Microsoft addressed this with KB2871997 allowing WDigest to be disabled via registry."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Windows Processes",
+      "question": "During a penetration test, which technique involves injecting malicious code into a suspended process by unmapping its legitimate code and replacing it with shellcode?",
+      "options": {
+        "A": "DLL side-loading",
+        "B": "Process hollowing (RunPE)",
+        "C": "AppInit DLL injection",
+        "D": "Thread execution hijacking"
+      },
+      "correct": "B",
+      "explanation": "Process hollowing (also called RunPE) creates a process in a suspended state, unmaps its legitimate executable image using NtUnmapViewOfSection, writes malicious code to the process memory, then resumes execution. This makes the malicious code appear to run under a legitimate process name."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Windows File Permissions",
+      "question": "Which Windows command-line tool can display and modify discretionary access control lists (DACLs) on files and directories?",
+      "options": {
+        "A": "attrib",
+        "B": "icacls",
+        "C": "cipher",
+        "D": "fsutil"
+      },
+      "correct": "B",
+      "explanation": "icacls (Integrity Control Access Control Lists) is the modern Windows tool for viewing and modifying DACLs. It replaced the older cacls command and supports features like inheritance, integrity levels, and saving/restoring ACLs. It can grant, deny, and remove permissions on files and directories."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Windows Remote Exploitation",
+      "question": "Which vulnerability, tracked as CVE-2020-1472 (Zerologon), allows an unauthenticated attacker to gain domain admin privileges?",
+      "options": {
+        "A": "A buffer overflow in the SMB protocol handler",
+        "B": "A cryptographic flaw in the Netlogon protocol (MS-NRPC) allowing authentication bypass",
+        "C": "An RCE vulnerability in the Print Spooler service",
+        "D": "A privilege escalation via Windows Task Scheduler"
+      },
+      "correct": "B",
+      "explanation": "Zerologon (CVE-2020-1472) exploits a flaw in the Netlogon Remote Protocol's (MS-NRPC) use of AES-CFB8 encryption. By sending Netlogon messages with all-zero client credentials, an attacker can set the domain controller's machine account password to empty, gaining full domain admin access without authentication."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Windows Local Exploitation",
+      "question": "Which Windows privilege, when assigned to a service account, allows an attacker to impersonate any user's token for privilege escalation?",
+      "options": {
+        "A": "SeBackupPrivilege",
+        "B": "SeImpersonatePrivilege",
+        "C": "SeLoadDriverPrivilege",
+        "D": "SeDebugPrivilege"
+      },
+      "correct": "B",
+      "explanation": "SeImpersonatePrivilege allows a process to impersonate a client's security token. Tools like JuicyPotato, PrintSpoofer, and GodPotato exploit this privilege (commonly assigned to service accounts and IIS application pools) to escalate from service account to SYSTEM by coercing a SYSTEM-level process to authenticate."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Advanced Local Exploitation",
+      "question": "Which technique exploits a vulnerable kernel-mode driver to read and write arbitrary kernel memory for privilege escalation?",
+      "options": {
+        "A": "Token impersonation via named pipes",
+        "B": "Bring Your Own Vulnerable Driver (BYOVD)",
+        "C": "UAC bypass via fodhelper.exe",
+        "D": "DLL search order hijacking"
+      },
+      "correct": "B",
+      "explanation": "BYOVD (Bring Your Own Vulnerable Driver) involves loading a legitimately signed but vulnerable kernel driver onto the target system. The attacker then exploits the driver's vulnerabilities (such as arbitrary read/write primitives) to modify kernel structures like process tokens, escalating privileges to SYSTEM."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Windows Post Exploitation",
+      "question": "Which Windows persistence mechanism survives reboots by storing a DLL path in the registry key HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_DLLs?",
+      "options": {
+        "A": "COM object hijacking",
+        "B": "AppInit DLL persistence",
+        "C": "WMI event subscription",
+        "D": "Scheduled task backdoor"
+      },
+      "correct": "B",
+      "explanation": "AppInit_DLLs is a registry value that causes the listed DLLs to be loaded into every process that loads user32.dll. While modern Windows versions require the DLLs to be code-signed (and the feature can be disabled via Secure Boot), it remains a viable persistence vector on older or misconfigured systems."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Windows Patch Management",
+      "question": "Which tool can a penetration tester use to identify missing Windows patches by comparing installed hotfixes against known vulnerabilities?",
+      "options": {
+        "A": "Sherlock / Watson PowerShell scripts",
+        "B": "ProcMon",
+        "C": "AccessChk",
+        "D": "Autoruns"
+      },
+      "correct": "A",
+      "explanation": "Sherlock (and its successor Watson) are PowerShell scripts that check which patches are installed on a Windows system and compare them against a database of known privilege escalation vulnerabilities, identifying missing patches that could be exploited for local privilege escalation."
+    },
+    {
+      "category": "Microsoft Windows Security Assessment (PT006)",
+      "skill": "Common Windows Applications",
+      "question": "Which attack against Microsoft Exchange Server allows an attacker to impersonate any user by exploiting the EWS (Exchange Web Services) SSRF vulnerability known as ProxyLogon?",
+      "options": {
+        "A": "Exploiting OWA login form for credential harvesting",
+        "B": "Chaining CVE-2021-26855 (SSRF) with CVE-2021-27065 (arbitrary file write) for unauthenticated RCE",
+        "C": "Brute-forcing the Exchange admin panel",
+        "D": "Exploiting autodiscover.xml for credential theft"
+      },
+      "correct": "B",
+      "explanation": "ProxyLogon chains CVE-2021-26855 (a pre-auth SSRF in Exchange's server-side request handlers) with CVE-2021-27065 (an arbitrary file write via Exchange Unified Messaging). Together, these allow an unauthenticated attacker to execute arbitrary commands as SYSTEM on the Exchange server."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "Unencrypted Services",
+      "question": "During a network assessment, you capture traffic on port 23 and observe plaintext credentials being transmitted. Which protocol is in use and what is the recommended secure alternative?",
+      "options": {
+        "A": "FTP; replace with SFTP",
+        "B": "Telnet; replace with SSH",
+        "C": "SNMP v1; replace with SNMP v3",
+        "D": "HTTP; replace with HTTPS"
+      },
+      "correct": "B",
+      "explanation": "Port 23 is the default port for Telnet, which transmits all data including credentials in cleartext. SSH (port 22) provides encrypted communication and should always be used instead of Telnet for remote administration."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "Management Services",
+      "question": "Which protocol provides out-of-band hardware management capabilities including remote console access, power control, and sensor monitoring, but is frequently misconfigured with default credentials?",
+      "options": {
+        "A": "SNMP v3",
+        "B": "IPMI (Intelligent Platform Management Interface)",
+        "C": "WinRM",
+        "D": "JMX (Java Management Extensions)"
+      },
+      "correct": "B",
+      "explanation": "IPMI provides out-of-band management via a Baseboard Management Controller (BMC), allowing remote power cycling, console access, and hardware monitoring even when the OS is unresponsive. IPMI implementations (Dell iDRAC, HP iLO, Supermicro) are frequently found with default credentials and known vulnerabilities."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "Desktop Access",
+      "question": "Which vulnerability in RDP's Network Level Authentication (NLA) implementation could allow an attacker to perform a man-in-the-middle attack if the target's certificate is not properly validated?",
+      "options": {
+        "A": "BlueKeep (CVE-2019-0708)",
+        "B": "Self-signed certificate acceptance without verification",
+        "C": "CredSSP elevation of privilege (CVE-2018-0886)",
+        "D": "RDP session hijacking via tscon.exe"
+      },
+      "correct": "C",
+      "explanation": "CVE-2018-0886 is a vulnerability in the Credential Security Support Provider (CredSSP) used by RDP's NLA. An attacker in a MITM position could exploit this to relay credentials and execute code on the target server, as CredSSP did not properly validate the server's identity during the authentication handshake."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "IPsec",
+      "question": "During an IPsec VPN assessment, which IKE aggressive mode vulnerability allows an attacker to capture the pre-shared key hash for offline cracking?",
+      "options": {
+        "A": "The responder sends its identity and hash in cleartext in the first reply",
+        "B": "IKE uses DES encryption by default",
+        "C": "The Diffie-Hellman exchange is performed without authentication",
+        "D": "Phase 2 Quick Mode transmits session keys unencrypted"
+      },
+      "correct": "A",
+      "explanation": "In IKE aggressive mode, the responder sends its identity and a hash of the pre-shared key in the first response message (unencrypted). An attacker can capture this hash using tools like ike-scan and crack it offline with tools like psk-crack or hashcat, recovering the VPN pre-shared key."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "Berkeley R* Services",
+      "question": "Which file on a Unix system, when misconfigured, allows remote users to execute commands via rsh without password authentication?",
+      "options": {
+        "A": "/etc/hosts.allow",
+        "B": "~/.rhosts or /etc/hosts.equiv",
+        "C": "/etc/securetty",
+        "D": "~/.ssh/authorized_keys"
+      },
+      "correct": "B",
+      "explanation": "The ~/.rhosts file (per-user) and /etc/hosts.equiv (system-wide) define trusted host/user combinations for Berkeley r-commands (rsh, rlogin, rexec). Entries like '+ +' grant access from any host as any user, allowing unauthenticated remote command execution."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "X",
+      "question": "What is the security risk of running 'xhost +' on an X11 server, and how can an attacker exploit it?",
+      "options": {
+        "A": "It enables X11 forwarding over SSH, exposing the session to MITM",
+        "B": "It disables access controls, allowing any host to connect and capture keystrokes or screenshots",
+        "C": "It opens a reverse shell via the X11 display manager",
+        "D": "It shares the clipboard contents over the network"
+      },
+      "correct": "B",
+      "explanation": "'xhost +' disables all X11 access controls, allowing any remote host to connect to the X display server. An attacker can then use tools like xspy to capture keystrokes, xwd to take screenshots, or inject keystrokes into the victim's session using xdotool."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "Finger",
+      "question": "Which information can an attacker enumerate using the finger service (port 79) against a Unix system?",
+      "options": {
+        "A": "Running processes and their PIDs",
+        "B": "Usernames, login times, idle times, and home directories",
+        "C": "Open network ports and services",
+        "D": "Installed software packages and versions"
+      },
+      "correct": "B",
+      "explanation": "The finger service provides user information including usernames, real names, login/idle times, terminal names, home directories, and shell paths. Queries like 'finger @target' enumerate all logged-in users, while 'finger user@target' provides detailed information about a specific user."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "RPC Services",
+      "question": "Which command queries the RPC portmapper on a target to enumerate registered RPC services and their associated ports?",
+      "options": {
+        "A": "showmount -e target",
+        "B": "rpcinfo -p target",
+        "C": "rpcclient -U '' target",
+        "D": "nfsstat -c target"
+      },
+      "correct": "B",
+      "explanation": "rpcinfo -p queries the portmapper (rpcbind) service on port 111 to list all registered RPC programs, their versions, protocols (TCP/UDP), and port numbers. This reveals services like NFS, NIS/YP, mountd, and statd that may be exploitable."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "NTP",
+      "question": "Which NTP command can be abused for reconnaissance and DDoS amplification attacks by returning a list of the last 600 clients that contacted the NTP server?",
+      "options": {
+        "A": "ntpdate",
+        "B": "monlist (MON_GETLIST_1)",
+        "C": "ntpq -p",
+        "D": "ntpdc -c sysinfo"
+      },
+      "correct": "B",
+      "explanation": "The monlist command (MON_GETLIST_1) returns the list of up to 600 hosts that have recently communicated with the NTP server. This provides reconnaissance data and can be abused for DDoS amplification, as a small request generates a large response (amplification factor up to 556x)."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "IPMI",
+      "question": "Which IPMI vulnerability allows an unauthenticated attacker to retrieve password hashes for any valid user account via the RAKP protocol?",
+      "options": {
+        "A": "IPMI cipher zero authentication bypass",
+        "B": "IPMI 2.0 RAKP authentication hash disclosure",
+        "C": "IPMI SOL (Serial over LAN) buffer overflow",
+        "D": "IPMI default credential usage"
+      },
+      "correct": "B",
+      "explanation": "IPMI 2.0's RAKP (Remote Authenticated Key-Exchange Protocol) authentication process discloses the salted SHA1 or MD5 hash of any valid username during the key exchange. An unauthenticated attacker can retrieve these hashes and crack them offline. This is a design flaw in the protocol specification, not an implementation bug."
+    },
+    {
+      "category": "Network Services (PT005)",
+      "skill": "Vulnerable Services",
+      "question": "During a penetration test, you discover a service running a version known to have a publicly available exploit. What is the MOST appropriate next step?",
+      "options": {
+        "A": "Immediately execute the public exploit in production",
+        "B": "Verify the vulnerability with a safe detection method, assess impact, and exploit only within agreed scope",
+        "C": "Report the finding without any verification",
+        "D": "Scan the entire network for the same vulnerability before reporting"
+      },
+      "correct": "B",
+      "explanation": "Professional practice requires verifying the vulnerability exists (using version checks, safe probes, or non-destructive PoCs) before exploitation. Impact assessment and scope verification ensure testing stays within agreed boundaries and avoids unintended disruption to production services."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "skill": "Tamper Seals",
+      "question": "Which technique allows an attacker to defeat a tamper-evident seal on a device enclosure without leaving visible evidence of intrusion?",
+      "options": {
+        "A": "Applying heat or solvents to carefully remove and reapply the seal",
+        "B": "Cutting through the device chassis with a rotary tool",
+        "C": "Replacing the entire enclosure with a new one",
+        "D": "Using an electromagnetic pulse to disable the seal's sensor"
+      },
+      "correct": "A",
+      "explanation": "Many tamper-evident seals (adhesive labels, shrink wraps, and some holographic seals) can be defeated by applying heat, solvents, or careful mechanical techniques to remove and reapply them without visible evidence. This is why high-security environments use multiple types of seals and regular physical inspection schedules."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "skill": "Boot Sequence",
+      "question": "How can an attacker with physical access exploit PXE (Preboot Execution Environment) boot to compromise a system?",
+      "options": {
+        "A": "By modifying the BIOS firmware directly",
+        "B": "By setting up a rogue DHCP/TFTP server to serve a malicious boot image",
+        "C": "By injecting code into the CPU microcode",
+        "D": "By replacing the hard drive with a pre-configured one"
+      },
+      "correct": "B",
+      "explanation": "PXE boot relies on DHCP for IP configuration and TFTP for downloading boot images. An attacker on the local network can set up a rogue DHCP server that responds to PXE requests with a malicious TFTP server address, serving a compromised boot image that provides full system access."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "skill": "Boot Sequence",
+      "question": "Which UEFI Secure Boot bypass technique involves loading a legitimately signed but vulnerable bootloader that can then load unsigned code?",
+      "options": {
+        "A": "Cold boot attack",
+        "B": "Using a signed shim with a known vulnerability (e.g., BootHole)",
+        "C": "Modifying the TPM PCR values",
+        "D": "Flashing a modified UEFI firmware via SPI"
+      },
+      "correct": "B",
+      "explanation": "The BootHole vulnerability (CVE-2020-10713) in the GRUB2 bootloader allowed arbitrary code execution despite Secure Boot. Since GRUB2 was legitimately signed by Microsoft's third-party UEFI CA, the signed but vulnerable bootloader could bypass Secure Boot protections to load unsigned or malicious code."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "skill": "Disk Encryption",
+      "question": "Which attack can recover BitLocker encryption keys from a system that uses TPM-only authentication without a PIN or startup key?",
+      "options": {
+        "A": "Brute-forcing the AES-256 key space",
+        "B": "Sniffing the TPM-to-CPU communication bus (SPI or LPC) during boot to capture the Volume Master Key",
+        "C": "Exploiting a vulnerability in the AES algorithm",
+        "D": "Extracting the key from the Windows registry while the system is off"
+      },
+      "correct": "B",
+      "explanation": "When BitLocker uses TPM-only authentication, the Volume Master Key (VMK) is automatically released by the TPM during boot. An attacker with physical access can use a logic analyzer or FPGA to sniff the SPI or LPC bus between the TPM chip and CPU, capturing the VMK as it's transmitted in cleartext."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "skill": "Disk Encryption",
+      "question": "What is a cold boot attack and how does it threaten full-disk encryption?",
+      "options": {
+        "A": "Booting from a USB device to bypass the OS login screen",
+        "B": "Cooling RAM to slow data decay, then extracting encryption keys from memory after a reboot",
+        "C": "Exploiting the bootloader to skip the encryption password prompt",
+        "D": "Brute-forcing the disk encryption password via a GPU cluster"
+      },
+      "correct": "B",
+      "explanation": "A cold boot attack exploits the fact that DRAM retains data for seconds to minutes after power loss, especially when cooled. By cooling the RAM modules (e.g., with compressed air), removing them or rebooting into a minimal OS, an attacker can dump memory contents and extract full-disk encryption keys that were stored in RAM."
+    },
+    {
+      "category": "Physical Security (PT014)",
+      "skill": "Recovery Functionality",
+      "question": "How can an attacker exploit Windows Safe Mode to bypass security controls during a physical security assessment?",
+      "options": {
+        "A": "Safe Mode enables remote desktop by default",
+        "B": "Safe Mode loads minimal drivers and services, often bypassing endpoint protection, antivirus, and Group Policy restrictions",
+        "C": "Safe Mode disables all user authentication",
+        "D": "Safe Mode provides direct access to encrypted volumes without passwords"
+      },
+      "correct": "B",
+      "explanation": "Windows Safe Mode loads only essential drivers and services, which means many security tools (antivirus, EDR agents, DLP solutions) and Group Policy restrictions may not be active. An attacker with physical access can boot into Safe Mode to bypass these protections and perform malicious actions."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "skill": "Security in the Development Lifecycle",
+      "question": "At which phase of the Secure Development Lifecycle (SDLC) should threat modelling be performed?",
+      "options": {
+        "A": "Only during the testing phase",
+        "B": "During the design phase, before implementation begins",
+        "C": "After deployment to production",
+        "D": "Only when a security incident occurs"
+      },
+      "correct": "B",
+      "explanation": "Threat modelling should be performed during the design phase of the SDLC, before code is written. This allows security requirements to be identified early, architectural flaws to be addressed before implementation, and security controls to be designed into the system from the start."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "skill": "Security in the Development Lifecycle",
+      "question": "What is the purpose of a 'security gate' in a CI/CD pipeline?",
+      "options": {
+        "A": "To encrypt all source code before deployment",
+        "B": "To automatically block builds or deployments that fail security checks (SAST, DAST, dependency scanning)",
+        "C": "To restrict developer access to the repository",
+        "D": "To generate security documentation for compliance"
+      },
+      "correct": "B",
+      "explanation": "Security gates are automated checkpoints in CI/CD pipelines that evaluate security scan results (SAST, DAST, SCA, container scanning) against defined policies. Builds or deployments that exceed acceptable risk thresholds (e.g., critical vulnerabilities found) are automatically blocked until remediated."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "skill": "Security in the Development Lifecycle",
+      "question": "What is the 'shift-left' approach in DevSecOps?",
+      "options": {
+        "A": "Moving security testing to occur earlier in the development lifecycle rather than only at the end",
+        "B": "Shifting security responsibilities from developers to a dedicated security team",
+        "C": "Moving production workloads to the left-most availability zone",
+        "D": "Reducing the number of security tools used in the pipeline"
+      },
+      "correct": "A",
+      "explanation": "Shift-left means integrating security activities earlier in the development lifecycle \u2014 during design, coding, and build phases rather than only during testing or post-deployment. This catches vulnerabilities sooner when they're cheaper and easier to fix, and builds security awareness among developers."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "skill": "Security in the Development Lifecycle",
+      "question": "Which type of security testing tool analyses source code without executing it to identify potential vulnerabilities?",
+      "options": {
+        "A": "DAST (Dynamic Application Security Testing)",
+        "B": "SAST (Static Application Security Testing)",
+        "C": "IAST (Interactive Application Security Testing)",
+        "D": "Penetration testing"
+      },
+      "correct": "B",
+      "explanation": "SAST tools analyse source code, bytecode, or binary code without executing the application. They identify vulnerabilities such as SQL injection, XSS, buffer overflows, and insecure cryptographic usage by examining code patterns and data flows. SAST can be integrated early in development as it doesn't require a running application."
+    },
+    {
+      "category": "Secure Development Operations (PT015)",
+      "skill": "Security in the Development Lifecycle",
+      "question": "What is Software Composition Analysis (SCA) and why is it important in the development lifecycle?",
+      "options": {
+        "A": "It analyses the runtime behaviour of applications in production",
+        "B": "It identifies open-source and third-party components in the codebase and checks them against known vulnerability databases",
+        "C": "It performs load testing to identify performance bottlenecks",
+        "D": "It encrypts source code to prevent intellectual property theft"
+      },
+      "correct": "B",
+      "explanation": "SCA tools inventory all open-source and third-party dependencies in a project and cross-reference them against vulnerability databases (CVE, NVD, OSV). This is critical because modern applications often consist of 80-90% third-party code, and vulnerable dependencies (like Log4Shell) can introduce severe security risks."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "skill": "Record Keeping",
+      "question": "Why is it essential for a penetration tester to maintain a detailed activity log with timestamps throughout an engagement?",
+      "options": {
+        "A": "To increase the billable hours for the engagement",
+        "B": "To provide an audit trail that can distinguish tester activity from real attacks and support the reproducibility of findings",
+        "C": "To satisfy marketing requirements for case studies",
+        "D": "To automatically generate the final report"
+      },
+      "correct": "B",
+      "explanation": "Detailed timestamped logs serve multiple purposes: they allow SOC teams to distinguish tester activity from genuine threats, support the reproducibility and verification of findings, provide evidence in case of disputes, and demonstrate due diligence and professionalism in the engagement."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "skill": "Reporting (Basic)",
+      "question": "What is the primary purpose of an executive summary in a penetration test report?",
+      "options": {
+        "A": "To list every technical vulnerability with exploitation steps",
+        "B": "To provide a high-level overview of findings, risk posture, and strategic recommendations for non-technical stakeholders",
+        "C": "To document the tools and methodologies used during testing",
+        "D": "To include raw output from scanning tools"
+      },
+      "correct": "B",
+      "explanation": "The executive summary is written for non-technical stakeholders (C-suite, board members, managers) and should communicate the overall risk posture, key findings, business impact, and strategic recommendations in plain language without technical jargon."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "skill": "Reporting (Basic)",
+      "question": "Which of the following represents the correct order of sections in a standard penetration test report?",
+      "options": {
+        "A": "Technical Findings \u2192 Executive Summary \u2192 Methodology \u2192 Appendices",
+        "B": "Executive Summary \u2192 Scope and Methodology \u2192 Findings (prioritised by risk) \u2192 Remediation Recommendations \u2192 Appendices",
+        "C": "Tool Output \u2192 Screenshots \u2192 Vulnerability List \u2192 Conclusion",
+        "D": "Cover Page \u2192 Findings \u2192 Executive Summary \u2192 Scope"
+      },
+      "correct": "B",
+      "explanation": "A professional penetration test report follows a structured format: Executive Summary (for non-technical readers), Scope and Methodology (what was tested and how), Findings prioritised by risk severity, detailed Remediation Recommendations, and Appendices (raw data, tool output, supplementary evidence)."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "skill": "Reporting (Basic)",
+      "question": "When writing a finding in a penetration test report, which elements should be included for each vulnerability?",
+      "options": {
+        "A": "Only the CVE number and a generic description",
+        "B": "Title, risk rating, description, evidence/proof, affected assets, impact statement, and remediation guidance",
+        "C": "Only a screenshot proving the vulnerability exists",
+        "D": "The Metasploit module name and raw terminal output"
+      },
+      "correct": "B",
+      "explanation": "Each finding should include a descriptive title, risk/severity rating (e.g., CVSS score), clear description of the vulnerability, evidence/proof of concept, list of affected assets, business impact statement, and actionable remediation guidance. This structure helps both technical teams and management understand and act on the finding."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "skill": "Reporting (Basic)",
+      "question": "What risk rating system is most commonly used in penetration testing reports to provide a standardised severity score for each vulnerability?",
+      "options": {
+        "A": "The Richter scale",
+        "B": "CVSS (Common Vulnerability Scoring System)",
+        "C": "OWASP Risk Rating (Likelihood \u00d7 Impact)",
+        "D": "Both B and C are commonly used"
+      },
+      "correct": "D",
+      "explanation": "Both CVSS and the OWASP Risk Rating Methodology are commonly used in penetration test reports. CVSS provides a standardised numerical score (0-10) based on attack characteristics, while OWASP considers both likelihood and impact in a contextual risk matrix. Many reports use CVSS for individual vulnerabilities and OWASP-style ratings for business context."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "skill": "Reporting (Basic)",
+      "question": "Why should a penetration test report include remediation recommendations with prioritisation?",
+      "options": {
+        "A": "To demonstrate the tester's expertise in system administration",
+        "B": "To give the client actionable steps to fix vulnerabilities, ordered by risk severity, enabling efficient allocation of remediation resources",
+        "C": "To increase the length of the report for billing purposes",
+        "D": "To replace the need for a follow-up retest"
+      },
+      "correct": "B",
+      "explanation": "Prioritised remediation guidance helps clients understand which vulnerabilities pose the greatest risk and should be fixed first. This enables efficient resource allocation, supports risk-based decision making, and provides development/operations teams with clear, actionable steps to improve the organisation's security posture."
+    },
+    {
+      "category": "Soft Skills and Assessment Management (PT001)",
+      "skill": "Platform Preparation",
+      "question": "Before starting a penetration test, what is the MOST important consideration when preparing the testing platform and toolkit?",
+      "options": {
+        "A": "Using the newest untested tools for better results",
+        "B": "Ensuring all tools are up to date, licensed appropriately, and the platform is hardened to protect client data",
+        "C": "Installing as many tools as possible for maximum coverage",
+        "D": "Using the client's own infrastructure as the testing platform"
+      },
+      "correct": "B",
+      "explanation": "Platform preparation requires updated tools with current signatures/databases, appropriate licensing (especially for commercial tools), and a hardened testing platform that protects collected client data. The platform should use full-disk encryption, secure communications, and proper data handling procedures."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "skill": "ORM Injection",
+      "question": "How does an ORM injection attack differ from a traditional SQL injection?",
+      "options": {
+        "A": "ORM injection targets the query language or API of the ORM framework (e.g., HQL, Criteria API) rather than raw SQL",
+        "B": "ORM injection can only be performed against NoSQL databases",
+        "C": "ORM injection is a client-side attack that modifies JavaScript",
+        "D": "ORM injection attacks are impossible because ORMs inherently prevent all injection"
+      },
+      "correct": "A",
+      "explanation": "ORM injection targets the abstraction layer's query language rather than raw SQL. For example, Hibernate Query Language (HQL) injection involves manipulating HQL queries, which the ORM then translates to SQL. While ORMs reduce SQL injection risk through parameterisation, they don't eliminate injection if developers concatenate user input into ORM queries."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "skill": "LDAP Injection",
+      "question": "Which payload could be used to bypass an LDAP authentication filter that constructs queries like '(&(uid=USER)(userPassword=PASS))'?",
+      "options": {
+        "A": "admin' OR '1'='1",
+        "B": "admin)(&))(|(uid=*",
+        "C": "admin)(|(password=*))",
+        "D": "admin*)(%26"
+      },
+      "correct": "C",
+      "explanation": "Injecting 'admin)(|(password=*))' into the uid field modifies the LDAP filter to '(&(uid=admin)(|(password=*))(userPassword=PASS))'. The OR condition (|(password=*)) matches any password value, effectively bypassing the authentication check. LDAP injection uses parentheses and filter operators rather than SQL syntax."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "skill": "Mail Injection",
+      "question": "In an email header injection attack, which character sequence allows an attacker to add additional email headers such as BCC recipients?",
+      "options": {
+        "A": "SQL UNION SELECT",
+        "B": "CRLF characters (\\r\\n) followed by additional header fields like 'Bcc: attacker@evil.com'",
+        "C": "HTML <script> tags in the subject line",
+        "D": "URL-encoded semicolons in the message body"
+      },
+      "correct": "B",
+      "explanation": "Email headers are separated by CRLF (\\r\\n) sequences. By injecting \\r\\nBcc: attacker@evil.com into a header field (e.g., From, Subject), an attacker can add arbitrary headers including Bcc recipients, effectively using the application's mail server to send spam or exfiltrate data."
+    },
+    {
+      "category": "Web Technologies (PT008)",
+      "skill": "Parameter Manipulation",
+      "question": "What is HTTP Parameter Pollution (HPP) and how can it be used to bypass security controls?",
+      "options": {
+        "A": "Encrypting HTTP parameters to hide malicious payloads",
+        "B": "Submitting the same parameter multiple times with different values, exploiting differences in how frontend and backend servers handle duplicate parameters",
+        "C": "Modifying the HTTP version number in the request",
+        "D": "Changing the Content-Type header to bypass WAF rules"
+      },
+      "correct": "B",
+      "explanation": "HPP exploits the fact that different web technologies handle duplicate HTTP parameters differently \u2014 some take the first value, some the last, and some concatenate them. An attacker can bypass WAFs or input validation by splitting malicious input across duplicate parameters that are processed differently by the WAF and the application."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Breakout Techniques",
+      "question": "During a kiosk breakout assessment, which technique uses the 'Save As' or 'Open' file dialogs in an application to navigate the filesystem and launch cmd.exe?",
+      "options": {
+        "A": "DLL injection via AppInit_DLLs",
+        "B": "Typing a UNC path or file:// URI in the file dialog's address bar to access the filesystem and execute programs",
+        "C": "Exploiting a buffer overflow in the kiosk application",
+        "D": "Using remote desktop to connect to another machine"
+      },
+      "correct": "B",
+      "explanation": "File dialogs (Save As, Open, Print) often provide filesystem access that kiosk lockdown solutions fail to restrict. By typing paths like 'C:\\Windows\\System32\\cmd.exe' in the filename field or navigating via the dialog's address bar, an attacker can browse the filesystem and execute arbitrary programs to escape the kiosk environment."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Breakout Techniques",
+      "question": "Which Windows accessibility feature can be exploited during a kiosk breakout to launch a command prompt before user login?",
+      "options": {
+        "A": "Windows Narrator",
+        "B": "Sticky Keys (sethc.exe) replaced with cmd.exe",
+        "C": "Magnifier tool",
+        "D": "On-Screen Keyboard"
+      },
+      "correct": "B",
+      "explanation": "Replacing sethc.exe (Sticky Keys) or utilman.exe (Utility Manager) with cmd.exe allows an attacker to press Shift 5 times or Win+U at the login screen to spawn a SYSTEM-level command prompt. This is a classic kiosk/lockdown bypass technique when the attacker has physical access or can modify files."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Breakout Techniques",
+      "question": "In a locked-down Windows environment, how can an attacker use Internet Explorer or Edge to escape the browser-based kiosk?",
+      "options": {
+        "A": "By exploiting a zero-day browser vulnerability",
+        "B": "By using the browser's developer tools (F12) or JavaScript console to access the filesystem via ActiveX or file:// protocol",
+        "C": "By performing a SQL injection on the kiosk web application",
+        "D": "By connecting to a Wi-Fi network to bypass restrictions"
+      },
+      "correct": "B",
+      "explanation": "Browser-based kiosks can often be escaped using developer tools (F12), JavaScript console commands, the file:// protocol, or help menus that link to local files. Internet Explorer's ActiveX support and Edge's DevTools can provide filesystem access and the ability to launch external applications."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Breakout Techniques",
+      "question": "Which keyboard shortcut or technique can bypass a kiosk-mode application that replaces the default Windows shell?",
+      "options": {
+        "A": "Ctrl+Alt+Del to access Task Manager, then launching a new process",
+        "B": "Alt+F4 to close the kiosk application",
+        "C": "Win+R to open the Run dialog",
+        "D": "All of the above may work depending on the lockdown configuration"
+      },
+      "correct": "D",
+      "explanation": "All of these techniques may work if the lockdown solution has not properly disabled them. Ctrl+Alt+Del often provides Task Manager access (which can spawn new processes), Alt+F4 may close the kiosk application revealing the desktop, and Win+R may open the Run dialog. Professional lockdown testing checks all these vectors."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Breakout Techniques",
+      "question": "During a desktop lockdown assessment, you discover that PowerShell is blocked but the .NET framework is available. Which technique could bypass the PowerShell restriction?",
+      "options": {
+        "A": "Use the System.Management.Automation .NET assembly to invoke PowerShell commands from a C# application compiled with csc.exe",
+        "B": "Download a new version of PowerShell from the internet",
+        "C": "Use SSH to tunnel PowerShell from a remote machine",
+        "D": "Modify the Windows registry to re-enable PowerShell"
+      },
+      "correct": "A",
+      "explanation": "When PowerShell.exe is blocked but .NET is available, an attacker can use csc.exe (the C# compiler, included with .NET) to compile a program that references System.Management.Automation to execute PowerShell commands without using powershell.exe. This is known as 'unmanaged PowerShell' or 'PowerShell without PowerShell'."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Local Filesystem Protections",
+      "question": "How does Windows Software Restriction Policies (SRP) protect the local filesystem, and what is a common bypass?",
+      "options": {
+        "A": "SRP encrypts all files; bypass by booting from USB",
+        "B": "SRP whitelists allowed executable paths; bypass by executing code from a non-restricted directory like %TEMP% or user-writable folders",
+        "C": "SRP prevents all file downloads; bypass by using FTP instead of HTTP",
+        "D": "SRP disables the filesystem entirely; bypass by using network shares"
+      },
+      "correct": "B",
+      "explanation": "SRP uses path rules, hash rules, and certificate rules to control which executables can run. A common bypass involves placing executables in directories not covered by the SRP rules, such as %TEMP%, %APPDATA%, or other user-writable locations that may not be included in the restriction policy."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Local Filesystem Protections",
+      "question": "Which AppLocker rule type prevents execution of scripts and executables based on the file's digital signature?",
+      "options": {
+        "A": "Path rules",
+        "B": "Publisher rules",
+        "C": "Hash rules",
+        "D": "Zone rules"
+      },
+      "correct": "B",
+      "explanation": "Publisher rules in AppLocker use the digital signature of a file to control execution. They can specify the publisher, product name, filename, and version, allowing administrators to permit software from trusted publishers while blocking unsigned or unknown executables. This is more flexible than hash rules as it survives file updates."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Local Filesystem Protections",
+      "question": "An attacker finds that .exe files are blocked by AppLocker but discovers that DLL enforcement is not enabled. How can this be exploited?",
+      "options": {
+        "A": "The attacker cannot do anything without .exe execution",
+        "B": "The attacker can use rundll32.exe to load a malicious DLL, or use regsvr32.exe to execute a scriptlet",
+        "C": "The attacker must first disable AppLocker via the registry",
+        "D": "The attacker can only exploit this via network-based attacks"
+      },
+      "correct": "B",
+      "explanation": "When AppLocker's DLL rules are not enabled (they are off by default due to performance impact), an attacker can execute malicious code via DLLs using legitimate Windows binaries like rundll32.exe, regsvr32.exe (which can fetch and execute remote SCT scriptlets), or mshta.exe. These are examples of Living Off The Land Binaries (LOLBins)."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Local Filesystem Protections",
+      "question": "Which Windows feature can prevent users from accessing specific drives or folders through Group Policy, and how might a tester attempt to bypass it?",
+      "options": {
+        "A": "EFS encryption; bypass using a recovery agent certificate",
+        "B": "Explorer drive restriction policies; bypass using command prompt, PowerShell, or UNC paths to access the restricted locations directly",
+        "C": "NTFS compression; bypass by decompressing the drive",
+        "D": "Disk quotas; bypass by requesting more disk space"
+      },
+      "correct": "B",
+      "explanation": "Group Policy can hide and restrict access to drives in Windows Explorer via 'Prevent access to drives from My Computer'. However, this only affects Explorer \u2014 users can bypass it using cmd.exe, PowerShell, or by accessing files via UNC paths (\\\\localhost\\C$) or through application file dialogs."
+    },
+    {
+      "category": "Windows Desktop Lockdown (PT018)",
+      "skill": "Local Filesystem Protections",
+      "question": "During a lockdown assessment, which technique uses Windows Installer (msiexec.exe) to bypass application execution restrictions?",
+      "options": {
+        "A": "Creating a malicious MSI package that executes arbitrary commands during installation custom actions",
+        "B": "Using msiexec to uninstall the security software",
+        "C": "Modifying the MSI database to disable logging",
+        "D": "Using msiexec to mount encrypted volumes"
+      },
+      "correct": "A",
+      "explanation": "MSI packages can contain Custom Actions that execute arbitrary executables, DLLs, or scripts during installation. If msiexec.exe is not restricted (as it's a signed Microsoft binary), an attacker can create a malicious MSI that executes commands through Custom Actions, bypassing application whitelisting controls."
+    },
+    {
+      "category": "macOS Security Assessment (PT020)",
+      "skill": "macOS Remote Exploitation",
+      "question": "Which macOS-specific service, if exposed to the network, could allow an attacker to achieve remote code execution by exploiting Apple Remote Desktop (ARD) vulnerabilities?",
+      "options": {
+        "A": "Bonjour (mDNS) service on port 5353",
+        "B": "ARD/VNC service on port 5900 with authentication bypass vulnerabilities",
+        "C": "AirDrop service via Bluetooth",
+        "D": "Time Machine backup service on port 548"
+      },
+      "correct": "B",
+      "explanation": "Apple Remote Desktop uses VNC on port 5900. Historical vulnerabilities (such as CVE-2017-13872 which allowed root authentication bypass) have enabled unauthenticated remote access. When ARD is exposed to the network without proper configuration, attackers can exploit authentication weaknesses or brute-force VNC passwords for remote access."
     }
   ]
 }
