@@ -1,11 +1,11 @@
 {
-  "title": "CREST CCT \u2014 Combined Practice Exam",
+  "title": "CREST CCT Practice Exam",
   "description": "Comprehensive question bank covering all 17 topics and 180 skills of the CREST Certified Tester (CCT) syllabus across both Infrastructure and Application domains.",
   "based_on": "CREST CCT",
   "created_by": "Chat GPT / Claude (Anthropic)",
   "difficulty": "HARD",
-  "pass_mark": 70,
-  "time_limit": 0,
+  "pass_mark": 66.6,
+  "time_limit": 60,
   "num_questions": 60,
   "links": [
     {
