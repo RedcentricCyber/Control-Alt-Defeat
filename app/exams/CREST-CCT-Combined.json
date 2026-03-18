@@ -18884,6 +18884,1280 @@
       "correct": "B",
       "explanation": "Automated secret-harvesting bots scan public GitHub pushes in real time. Even if the commit is deleted or the repo made private within minutes, the secret must be assumed compromised and revoked immediately. Git history rewriting is secondary \u2014 the revocation/rotation is the critical first step.",
       "skill": "Code Repository Security"
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Domain Registration",
+      "question": "During a penetration test, you need to identify the registrar, name servers, and registration dates for a target domain. Which protocol is specifically designed for querying domain registration databases?",
+      "options": {
+        "A": "RDAP (Registration Data Access Protocol)",
+        "B": "WHOIS",
+        "C": "DNS SOA query",
+        "D": "HTTP OPTIONS method"
+      },
+      "correct": "B",
+      "explanation": "WHOIS is the traditional protocol (port 43) used to query registrar databases for domain registration information including registrar, name servers, dates, and registrant details. While RDAP is its modern successor, WHOIS remains the most widely referenced protocol for this purpose."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Domain Registration",
+      "question": "A penetration tester discovers that a target domain's WHOIS record shows registrant contact details replaced with a third-party privacy service address. What is the most likely reason for this?",
+      "options": {
+        "A": "The domain has expired and is in a redemption grace period",
+        "B": "The registrar has applied WHOIS privacy/proxy protection to hide the true registrant",
+        "C": "The domain is using DNSSEC which encrypts WHOIS records",
+        "D": "The domain is hosted behind a CDN which masks registration data"
+      },
+      "correct": "B",
+      "explanation": "WHOIS privacy or proxy services replace the true registrant's contact information with that of the privacy service provider. This is a common feature offered by registrars to protect the registrant's personal data from public WHOIS lookups."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Domain Registration",
+      "question": "You want to discover what a target company's website looked like three years ago and identify domains or infrastructure that may have since been removed. Which resource is most appropriate?",
+      "options": {
+        "A": "The Wayback Machine (web.archive.org)",
+        "B": "VirusTotal domain lookup",
+        "C": "Certificate Transparency logs",
+        "D": "BGP routing tables"
+      },
+      "correct": "A",
+      "explanation": "The Wayback Machine archives historical snapshots of websites over time, allowing a tester to review previous versions of a target site, discover removed content, old infrastructure references, and previously exposed information."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Domain Registration",
+      "question": "During reconnaissance, a tester wants to identify all domains registered by the same organisation. Which WHOIS technique is most effective for this when privacy protection is not in use?",
+      "options": {
+        "A": "Performing a reverse WHOIS lookup by registrant name or email",
+        "B": "Querying the target's MX records for related domains",
+        "C": "Brute-forcing subdomains of the known domain",
+        "D": "Checking the target's SSL certificate SAN field"
+      },
+      "correct": "A",
+      "explanation": "A reverse WHOIS lookup searches registration databases by registrant name, email, or organisation, revealing all domains registered by the same entity. This is a powerful technique for mapping an organisation's full domain portfolio when privacy protection is absent."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Domain Registration",
+      "question": "Which of the following domain registration statuses indicates that a domain is locked at the registry level and cannot be transferred, deleted, or have its name servers changed without the lock being removed?",
+      "options": {
+        "A": "clientTransferProhibited",
+        "B": "serverDeleteProhibited",
+        "C": "serverTransferProhibited combined with serverUpdateProhibited",
+        "D": "pendingDelete"
+      },
+      "correct": "C",
+      "explanation": "Server-level locks (serverTransferProhibited, serverUpdateProhibited, serverDeleteProhibited) are set by the registry and provide the strongest protection. When both serverTransferProhibited and serverUpdateProhibited are active, the domain cannot be transferred or have its name servers changed without the registry removing the locks."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Domain Registration",
+      "question": "ICANN introduced RDAP as a replacement for the traditional WHOIS protocol. Which advantage does RDAP offer over WHOIS from a reconnaissance perspective?",
+      "options": {
+        "A": "RDAP bypasses domain privacy protections automatically",
+        "B": "RDAP returns structured JSON responses with standardised data formats",
+        "C": "RDAP queries are anonymous and cannot be rate-limited",
+        "D": "RDAP provides access to the registrant's payment information"
+      },
+      "correct": "B",
+      "explanation": "RDAP (Registration Data Access Protocol) returns data in a standardised JSON format over HTTPS, making it easier to parse programmatically compared to the free-text format of traditional WHOIS responses. It does not bypass privacy protections or provide payment data."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "DNS",
+      "question": "A penetration tester attempts an AXFR request against a target's authoritative name server and receives a full copy of the DNS zone. What has the tester successfully performed?",
+      "options": {
+        "A": "DNS cache poisoning",
+        "B": "A DNS zone transfer",
+        "C": "DNS amplification attack",
+        "D": "A recursive DNS query"
+      },
+      "correct": "B",
+      "explanation": "AXFR is the DNS zone transfer mechanism. When an authoritative name server is misconfigured to allow AXFR requests from any source, an attacker can retrieve the entire zone file, revealing all DNS records including internal hostnames and IP addresses."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "DNS",
+      "question": "Which DNS record type would a penetration tester query to identify the mail servers responsible for accepting email on behalf of the target domain?",
+      "options": {
+        "A": "A record",
+        "B": "CNAME record",
+        "C": "MX record",
+        "D": "PTR record"
+      },
+      "correct": "C",
+      "explanation": "MX (Mail Exchange) records specify the mail servers responsible for receiving email for a domain. Querying MX records reveals email infrastructure which may include hostnames that expose internal naming conventions or third-party email services."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "DNS",
+      "question": "During DNS enumeration, a tester uses 'dig target.com ANY' but receives a minimal response. What is the most likely explanation?",
+      "options": {
+        "A": "The domain does not exist",
+        "B": "Many modern DNS servers and resolvers refuse or limit ANY queries (RFC 8482)",
+        "C": "The dig tool does not support the ANY query type",
+        "D": "The domain is using DNSSEC which blocks ANY queries"
+      },
+      "correct": "B",
+      "explanation": "RFC 8482 allows DNS servers to minimally respond to ANY queries, and many modern authoritative servers and resolvers now refuse to return all records for such queries to reduce abuse potential. Testers should query specific record types (A, AAAA, MX, TXT, etc.) individually."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "DNS",
+      "question": "A penetration tester discovers a TXT record containing 'v=spf1 include:_spf.google.com ~all' on the target domain. What does this reveal about the target's infrastructure?",
+      "options": {
+        "A": "The domain is hosted on Google Cloud Platform",
+        "B": "The organisation uses Google Workspace (Gmail) for their email",
+        "C": "The domain's DNS is managed by Google",
+        "D": "The organisation's web application uses Google OAuth exclusively"
+      },
+      "correct": "B",
+      "explanation": "An SPF record that includes _spf.google.com indicates that Google's mail servers are authorised to send email on behalf of the domain, strongly suggesting the organisation uses Google Workspace (formerly G Suite) for their email services."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "DNS",
+      "question": "Which tool is specifically designed for DNS enumeration and can perform zone transfers, brute-force subdomain discovery, and reverse lookups in a single assessment?",
+      "options": {
+        "A": "Nmap",
+        "B": "DNSRecon",
+        "C": "Burp Suite",
+        "D": "Wireshark"
+      },
+      "correct": "B",
+      "explanation": "DNSRecon is a purpose-built DNS enumeration tool that supports zone transfers (AXFR), brute-force subdomain enumeration, reverse lookups, Google dork-based enumeration, cache snooping, and DNS record enumeration \u2014 all from a single tool."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "DNS",
+      "question": "During passive DNS reconnaissance, a tester uses a service that aggregates historical DNS resolution data to find subdomains that no longer have active DNS records. Which type of service is being used?",
+      "options": {
+        "A": "A WHOIS history database",
+        "B": "A passive DNS database (e.g., SecurityTrails, Farsight DNSDB)",
+        "C": "A certificate transparency monitor",
+        "D": "A BGP looking glass"
+      },
+      "correct": "B",
+      "explanation": "Passive DNS databases collect and store historical DNS resolution data from sensors distributed across the internet. They allow testers to discover subdomains and IP address mappings that may no longer exist in live DNS, revealing historical infrastructure."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Web Site Analysis",
+      "question": "A penetration tester reviews the target's robots.txt file and finds 'Disallow: /admin-portal/' and 'Disallow: /internal-api/'. Why is this finding significant for reconnaissance?",
+      "options": {
+        "A": "These paths are guaranteed to be protected by authentication",
+        "B": "The robots.txt reveals paths the organisation wants hidden from search engines, which may be sensitive attack surfaces",
+        "C": "The disallow directive prevents any HTTP client from accessing these paths",
+        "D": "The robots.txt confirms these directories contain known vulnerabilities"
+      },
+      "correct": "B",
+      "explanation": "robots.txt is a voluntary directive for well-behaved web crawlers. From a security perspective, entries in Disallow often reveal sensitive directories, admin panels, or API endpoints that the organisation does not want publicly indexed \u2014 making them high-value targets for further investigation."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Web Site Analysis",
+      "question": "While analysing a target website, a tester uses Wappalyzer and identifies that the site is running WordPress 5.8 with the WooCommerce plugin. How should this information be used in the engagement?",
+      "options": {
+        "A": "It is irrelevant; only server-side vulnerabilities matter",
+        "B": "The specific versions should be checked against CVE databases for known vulnerabilities, and WordPress/plugin-specific enumeration tools should be employed",
+        "C": "The tester should immediately attempt default WordPress credentials",
+        "D": "The tester should report this as a critical finding because WordPress is inherently insecure"
+      },
+      "correct": "B",
+      "explanation": "Identifying specific CMS versions and plugins allows the tester to search for known CVEs, use specialised tools like WPScan for deeper enumeration, and understand the attack surface. Version identification is a key step before moving to vulnerability analysis."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Web Site Analysis",
+      "question": "Which HTTP response header can reveal the underlying web server software and version during website reconnaissance?",
+      "options": {
+        "A": "Content-Type",
+        "B": "Server",
+        "C": "X-Frame-Options",
+        "D": "Cache-Control"
+      },
+      "correct": "B",
+      "explanation": "The 'Server' HTTP response header typically reveals the web server software and sometimes its version (e.g., 'Apache/2.4.51' or 'nginx/1.21.3'). This information assists in identifying known vulnerabilities for the specific server version."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Web Site Analysis",
+      "question": "A penetration tester wants to map the full directory structure and linked resources of a target website without using a vulnerability scanner. Which approach is most appropriate?",
+      "options": {
+        "A": "Manually browsing the site and taking screenshots",
+        "B": "Using a web spider/crawler such as wget --mirror or Burp Suite's crawler to recursively follow links and map the site structure",
+        "C": "Running an Nmap scan against port 80 and 443",
+        "D": "Performing a DNS zone transfer"
+      },
+      "correct": "B",
+      "explanation": "Web spidering/crawling tools recursively follow links from a starting page to map the full site structure, discover linked resources, and identify content. Burp Suite's crawler and wget with mirroring options are commonly used for this purpose during web reconnaissance."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Web Site Analysis",
+      "question": "During website analysis, a tester discovers a sitemap.xml file. Which of the following best describes the reconnaissance value of this file?",
+      "options": {
+        "A": "It contains the site's database schema",
+        "B": "It provides a structured list of URLs the site owner wants indexed, potentially revealing hidden or less obvious pages",
+        "C": "It lists all users who have accounts on the website",
+        "D": "It shows real-time server performance metrics"
+      },
+      "correct": "B",
+      "explanation": "sitemap.xml is intended to help search engines discover pages. For a penetration tester, it provides a comprehensive map of URL paths the site owner wants indexed, which may include pages not easily found through browsing \u2014 such as staging environments, old content, or rarely linked sections."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Web Site Analysis",
+      "question": "A tester examines the HTML source of a target web application and discovers comments containing developer names, internal server IPs, and TODO notes about unpatched features. What category does this finding fall under?",
+      "options": {
+        "A": "Cross-site scripting (XSS)",
+        "B": "Information disclosure through HTML source code comments",
+        "C": "Server-side request forgery (SSRF)",
+        "D": "Insecure direct object reference (IDOR)"
+      },
+      "correct": "B",
+      "explanation": "HTML comments left by developers that reveal internal infrastructure details, employee names, or unpatched features constitute information disclosure. This is a common finding during web site analysis that aids further attack planning."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Search Engines",
+      "question": "Which Google dork would most effectively help a penetration tester find publicly accessible directory listings on a target domain?",
+      "options": {
+        "A": "site:target.com inurl:login",
+        "B": "site:target.com intitle:\"index of\" inurl:/",
+        "C": "site:target.com filetype:pdf",
+        "D": "site:target.com cache:homepage"
+      },
+      "correct": "B",
+      "explanation": "The dork 'site:target.com intitle:\"index of\"' searches for Apache/Nginx directory listing pages on the target domain. These listings expose file and folder structures and can reveal sensitive files that were not intended to be publicly accessible."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Search Engines",
+      "question": "A penetration tester wants to find exposed configuration files on a target's web infrastructure using Google. Which search query is most likely to yield results?",
+      "options": {
+        "A": "site:target.com filetype:conf OR filetype:cfg OR filetype:env",
+        "B": "site:target.com inurl:https",
+        "C": "site:target.com \"welcome to nginx\"",
+        "D": "target.com DNS records"
+      },
+      "correct": "A",
+      "explanation": "Using 'filetype:' operators combined with 'site:' allows a tester to search for specific file extensions that commonly contain configuration data (.conf, .cfg, .env). These files may reveal database credentials, API keys, or internal infrastructure details."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Search Engines",
+      "question": "Shodan is frequently used during the reconnaissance phase of a penetration test. What does Shodan primarily index?",
+      "options": {
+        "A": "Web page content and hyperlinks, similar to Google",
+        "B": "Internet-connected devices and services by scanning ports and capturing banner information",
+        "C": "Social media profiles and public posts",
+        "D": "Domain registration and WHOIS records"
+      },
+      "correct": "B",
+      "explanation": "Shodan is a search engine that scans the internet for connected devices and services, indexing banner information from open ports. It reveals exposed services, software versions, default configurations, and IoT devices, making it invaluable for infrastructure reconnaissance."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Search Engines",
+      "question": "A tester uses the Google operator 'cache:target.com/page' during reconnaissance. What is the primary purpose of this technique?",
+      "options": {
+        "A": "To bypass the target's WAF and access the live page",
+        "B": "To view Google's cached version of the page, which may contain content that has since been removed or modified",
+        "C": "To inject malicious content into Google's cache",
+        "D": "To perform a denial-of-service attack against Google's cache servers"
+      },
+      "correct": "B",
+      "explanation": "Google's cache operator retrieves the last version of a page that Google's crawler indexed. This can reveal content that has been removed or modified, such as previously exposed credentials, employee details, or sensitive documents."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Search Engines",
+      "question": "Which search engine is specifically designed for finding internet-facing assets using queries based on SSL certificate data, HTTP response content, and network banners?",
+      "options": {
+        "A": "DuckDuckGo",
+        "B": "Bing",
+        "C": "Censys",
+        "D": "Archive.org"
+      },
+      "correct": "C",
+      "explanation": "Censys is a search engine that indexes internet-wide scan data, including SSL/TLS certificates, HTTP responses, and service banners. It allows testers to search by certificate fields, HTTP body content, or protocol-specific attributes to discover an organisation's internet-facing assets."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Search Engines",
+      "question": "During Google dorking, a tester uses 'site:target.com -site:www.target.com'. What is the purpose of this query?",
+      "options": {
+        "A": "To find pages only on the www subdomain",
+        "B": "To discover indexed pages on subdomains other than www, potentially revealing staging, development, or internal systems",
+        "C": "To remove the target domain from Google's index",
+        "D": "To check if the www subdomain has been compromised"
+      },
+      "correct": "B",
+      "explanation": "This query finds pages indexed under target.com but excludes the main www subdomain, surfacing content on other subdomains such as dev., staging., mail., or vpn. \u2014 which may expose less-hardened systems or internal infrastructure."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "News Groups and Mailing Lists",
+      "question": "During OSINT gathering, a penetration tester discovers that a target organisation's system administrator has been posting detailed questions about their firewall configuration on a public technical mailing list. Why is this significant?",
+      "options": {
+        "A": "It proves the administrator is incompetent and should be fired",
+        "B": "The posts may reveal specific firewall products, software versions, network topology, and configuration weaknesses",
+        "C": "Mailing list posts are encrypted and cannot be read by unauthorised parties",
+        "D": "It confirms the organisation does not have a firewall"
+      },
+      "correct": "B",
+      "explanation": "Technical questions posted publicly by IT staff can inadvertently reveal specific products in use, software versions, configuration challenges, and network architecture details \u2014 all of which are valuable intelligence for planning an attack."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "News Groups and Mailing Lists",
+      "question": "Which protocol was traditionally used to access Usenet newsgroups, and on which default port does it operate?",
+      "options": {
+        "A": "SMTP on port 25",
+        "B": "NNTP on port 119",
+        "C": "IMAP on port 143",
+        "D": "HTTP on port 80"
+      },
+      "correct": "B",
+      "explanation": "NNTP (Network News Transfer Protocol) operates on port 119 (or 563 for NNTPS) and is the protocol designed for reading and posting articles to Usenet newsgroups. Historical newsgroup posts can contain valuable reconnaissance data."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "News Groups and Mailing Lists",
+      "question": "A penetration tester is researching a target organisation and finds archived posts from a developer mailing list where an employee shared a stack trace that includes internal class names, file paths, and database connection strings. What should the tester do?",
+      "options": {
+        "A": "Ignore it because mailing list data is considered out of scope",
+        "B": "Document the exposed information as it reveals internal architecture, technology stack, and potentially credentials that can inform subsequent attack phases",
+        "C": "Report the mailing list to the list administrator for removal",
+        "D": "Use the database connection string immediately to access the database"
+      },
+      "correct": "B",
+      "explanation": "Information leaked through mailing lists is valuable OSINT. The tester should document internal architecture details, technology stack information, and any exposed credentials for use in later phases, staying within the agreed scope and rules of engagement."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "News Groups and Mailing Lists",
+      "question": "Google Groups archives many public mailing lists and Usenet newsgroups. Which search technique would most effectively find posts by employees of a specific target organisation?",
+      "options": {
+        "A": "Searching for 'site:groups.google.com \"@target.com\"' to find posts from target email addresses",
+        "B": "Searching for 'site:groups.google.com target.com firewall' with no email filter",
+        "C": "Using Shodan to search for NNTP servers at target.com",
+        "D": "Performing a WHOIS lookup on groups.google.com"
+      },
+      "correct": "A",
+      "explanation": "Searching Google Groups for the target's email domain (e.g., '@target.com') surfaces posts made by employees using their corporate email addresses, often revealing technical details, internal project names, and infrastructure information."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "News Groups and Mailing Lists",
+      "question": "During reconnaissance, a tester finds that the target company moderates an open-source project mailing list. Subscribers include several @target.com addresses, and the archive is publicly accessible. What is the primary intelligence value?",
+      "options": {
+        "A": "It reveals the company's stock price",
+        "B": "Employee names, email patterns, technical interests, and potentially internal tooling or dependency information",
+        "C": "Physical office locations",
+        "D": "The company's annual revenue"
+      },
+      "correct": "B",
+      "explanation": "Public mailing list participation reveals employee identities, the organisation's email format, technical focus areas, and dependencies on specific open-source projects \u2014 all useful for social engineering, phishing crafting, and understanding the target's technology stack."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "News Groups and Mailing Lists",
+      "question": "A penetration tester discovers a public Mailman list archive for a target's internal security team. The archive shows discussions about an upcoming migration from on-premises Exchange to Microsoft 365. How should this intelligence be classified?",
+      "options": {
+        "A": "As irrelevant because it concerns future infrastructure, not current",
+        "B": "As strategic intelligence that reveals the current email platform, planned migration, and a transition period during which security controls may be weakened",
+        "C": "As classified information that the tester cannot legally use",
+        "D": "As a vulnerability that should be exploited immediately"
+      },
+      "correct": "B",
+      "explanation": "Migration discussions reveal current infrastructure (Exchange on-premises), future infrastructure (Microsoft 365), timelines, and potentially a period of weakened security posture during the transition. This is strategic intelligence that informs the overall engagement approach."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Information Leakage",
+      "question": "A penetration tester discovers valid corporate credentials for the target organisation on a paste site. Before attempting to use them, what should the tester verify?",
+      "options": {
+        "A": "That the paste site is using HTTPS",
+        "B": "That using found credentials is within the agreed scope and rules of engagement for the assessment",
+        "C": "That the credentials were posted within the last 24 hours",
+        "D": "That the credentials belong to a senior executive"
+      },
+      "correct": "B",
+      "explanation": "The rules of engagement define what actions are authorised. Using credentials found through OSINT may or may not be within scope. The tester must verify with the client or check the scope document before attempting to authenticate with discovered credentials."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Information Leakage",
+      "question": "Which of the following tools is specifically designed to check whether email addresses from a target organisation appear in known data breach databases?",
+      "options": {
+        "A": "Nmap",
+        "B": "Have I Been Pwned (HIBP)",
+        "C": "Metasploit",
+        "D": "John the Ripper"
+      },
+      "correct": "B",
+      "explanation": "Have I Been Pwned (HIBP) is a service that aggregates data from known breaches and allows users to check if specific email addresses have been compromised. Penetration testers use it to determine whether target employees' credentials may have been exposed in past breaches."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Information Leakage",
+      "question": "During reconnaissance, a penetration tester finds a public GitHub repository belonging to a target's developer that contains an .env file with database credentials and API keys. What type of information leakage is this?",
+      "options": {
+        "A": "DNS zone leakage",
+        "B": "Accidental credential exposure through source code repositories",
+        "C": "SNMP community string disclosure",
+        "D": "ARP cache poisoning"
+      },
+      "correct": "B",
+      "explanation": "Accidentally committing sensitive files like .env, configuration files, or private keys to public repositories is a common source of credential exposure. Tools like truffleHog, git-secrets, and GitLeaks are designed to detect such leaks in Git history."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Information Leakage",
+      "question": "A tester wants to search for leaked credentials, configuration files, and sensitive code snippets associated with the target across multiple source code repositories. Which tool automates this process by scanning GitHub for secrets?",
+      "options": {
+        "A": "Nikto",
+        "B": "truffleHog",
+        "C": "SQLMap",
+        "D": "Aircrack-ng"
+      },
+      "correct": "B",
+      "explanation": "truffleHog scans Git repositories for high-entropy strings and known secret patterns (API keys, credentials, tokens) throughout the entire commit history, including previously deleted content. It is a standard tool for detecting information leakage in code repositories."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Information Leakage",
+      "question": "An organisation's AWS S3 bucket is found to be publicly accessible and contains internal documentation, database backups, and customer records. What is the root cause of this information leakage?",
+      "options": {
+        "A": "A zero-day vulnerability in AWS S3",
+        "B": "Misconfigured bucket access control policies allowing public read access",
+        "C": "DNS misconfiguration pointing to the S3 bucket",
+        "D": "A man-in-the-middle attack on the AWS API"
+      },
+      "correct": "B",
+      "explanation": "Publicly accessible S3 buckets are a result of misconfigured access control lists (ACLs) or bucket policies that grant read access to 'AllUsers' or 'AuthenticatedUsers'. This is a configuration error, not a vulnerability in the S3 service itself."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Information Leakage",
+      "question": "During an engagement, a penetration tester uses Dehashed and IntelX to search for leaked data associated with the target's domain. What type of intelligence sources are these platforms?",
+      "options": {
+        "A": "Active scanning tools that probe the target's network",
+        "B": "Breach data aggregation services that index leaked credentials and personal data from known compromises",
+        "C": "Vulnerability scanners that identify software flaws",
+        "D": "DNS enumeration tools"
+      },
+      "correct": "B",
+      "explanation": "Dehashed and Intelligence X (IntelX) are breach data aggregation platforms that collect and index leaked data from known compromises, paste sites, and other sources. They allow testers to search for exposed credentials and data associated with a target domain or email addresses."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Social Media",
+      "question": "A penetration tester is building employee profiles for a social engineering campaign. Which social media platform is most likely to provide detailed information about an employee's job title, department, technical skills, and professional connections?",
+      "options": {
+        "A": "Instagram",
+        "B": "LinkedIn",
+        "C": "TikTok",
+        "D": "Pinterest"
+      },
+      "correct": "B",
+      "explanation": "LinkedIn is the primary professional networking platform and typically contains detailed employment history, job titles, departments, technical skills, certifications, and professional connections \u2014 all highly valuable for crafting targeted social engineering attacks."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Social Media",
+      "question": "A tester discovers that a target organisation's IT administrator regularly posts photos of their home office on Instagram. One photo clearly shows sticky notes with passwords on the monitor. What OSINT technique has the tester applied?",
+      "options": {
+        "A": "DNS enumeration",
+        "B": "Visual intelligence (IMINT) from social media imagery",
+        "C": "Network traffic analysis",
+        "D": "Binary reverse engineering"
+      },
+      "correct": "B",
+      "explanation": "Analysing images posted on social media for intelligence is a form of imagery intelligence (IMINT). Photos may inadvertently reveal credentials, internal systems, security badges, building layouts, or hardware details useful for an engagement."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Social Media",
+      "question": "Which OSINT framework is commonly used to automate the collection and correlation of social media profiles, email addresses, and online identities associated with a target individual?",
+      "options": {
+        "A": "Maltego",
+        "B": "Wireshark",
+        "C": "Hashcat",
+        "D": "Volatility"
+      },
+      "correct": "A",
+      "explanation": "Maltego is a visual link analysis and OSINT tool that automates the collection of information from social media, DNS, WHOIS, and other sources, presenting relationships between entities in a graph format. It is widely used for mapping individuals' online presence."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Social Media",
+      "question": "A penetration tester uses a tool to extract geolocation data from photos posted by target employees on Twitter/X. The GPS coordinates reveal that multiple employees frequent a specific coffee shop near the office. How could this intelligence be used ethically within a sanctioned engagement?",
+      "options": {
+        "A": "To physically surveil and follow the employees",
+        "B": "To inform a physical social engineering scenario (e.g., tailgating or rogue Wi-Fi deployment) if physical testing is within the agreed scope",
+        "C": "To report the employees to their employer for security violations",
+        "D": "This information has no practical use in penetration testing"
+      },
+      "correct": "B",
+      "explanation": "If physical security testing is within scope, geolocation intelligence from social media can inform realistic scenarios such as setting up a rogue access point at the coffee shop or planning a tailgating attempt. All actions must remain within the agreed rules of engagement."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Social Media",
+      "question": "During LinkedIn reconnaissance, a tester notices that the target company has recently posted multiple job listings for 'Kubernetes administrator' and 'AWS security engineer'. What can be inferred from this information?",
+      "options": {
+        "A": "The company is going bankrupt and laying off staff",
+        "B": "The company likely uses or is migrating to Kubernetes on AWS, and may currently have gaps in their cloud security team",
+        "C": "The company has already been compromised",
+        "D": "The company does not use any cloud services"
+      },
+      "correct": "B",
+      "explanation": "Job listings reveal technology stack information (Kubernetes, AWS), indicate potential gaps in staffing for security roles, and suggest current or planned infrastructure. A gap in security staffing may indicate reduced monitoring or misconfigured security controls."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Social Media",
+      "question": "A tester is using theHarvester tool during the reconnaissance phase. Which combination of data sources does theHarvester collect from?",
+      "options": {
+        "A": "Only DNS records and WHOIS data",
+        "B": "Search engines, PGP key servers, LinkedIn, and other public sources to gather emails, subdomains, hosts, and employee names",
+        "C": "Only internal network traffic",
+        "D": "Only social media APIs"
+      },
+      "correct": "B",
+      "explanation": "theHarvester is a versatile OSINT gathering tool that queries search engines (Google, Bing), PGP key servers, LinkedIn, Shodan, and other public sources to collect email addresses, subdomains, hostnames, employee names, and open ports associated with a target domain."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Document Metadata",
+      "question": "A penetration tester uses exiftool to analyse a PDF document downloaded from the target's public website. The metadata reveals 'Author: jsmith', 'Creator: Microsoft Word 2019', and 'Producer: Adobe PDF Library 15.0'. What reconnaissance value does this provide?",
+      "options": {
+        "A": "No value; metadata is automatically generated and meaningless",
+        "B": "A potential username (jsmith), the document creation software (Word 2019), and evidence of a Windows environment with Adobe products",
+        "C": "The document's encryption key",
+        "D": "The target's network topology"
+      },
+      "correct": "B",
+      "explanation": "Document metadata can reveal usernames (which may map to Active Directory accounts), software versions in use (informing OS and application targeting), internal printer names, and file paths \u2014 all valuable intelligence for the penetration test."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Document Metadata",
+      "question": "Which tool is specifically designed to extract metadata from documents found on a target's website by first using search engines to discover publicly available files?",
+      "options": {
+        "A": "Nessus",
+        "B": "FOCA (Fingerprinting Organizations with Collected Archives)",
+        "C": "OpenVAS",
+        "D": "Responder"
+      },
+      "correct": "B",
+      "explanation": "FOCA uses search engine dorking to find documents published by a target organisation, downloads them, and extracts metadata including usernames, software versions, email addresses, internal paths, printer names, and operating system details."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Document Metadata",
+      "question": "A tester uses metagoofil to download and analyse documents from a target domain. The tool discovers internal file paths such as 'C:\\Users\\admin\\Documents\\ProjectX\\' in multiple Word documents. What does this reveal?",
+      "options": {
+        "A": "The documents were created on Linux systems",
+        "B": "Internal Windows file system paths, a username ('admin'), and a project name ('ProjectX') that may aid further enumeration",
+        "C": "The web server is running on the C: drive",
+        "D": "The documents are encrypted with BitLocker"
+      },
+      "correct": "B",
+      "explanation": "Embedded file paths in document metadata reveal operating system (Windows), local usernames, directory structures, and project naming conventions. The username 'admin' could be tested against authentication services, and 'ProjectX' may help identify related resources."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Document Metadata",
+      "question": "Which metadata field in a JPEG image is most likely to reveal the exact GPS coordinates where the photograph was taken?",
+      "options": {
+        "A": "IPTC caption field",
+        "B": "EXIF GPSInfo (GPSLatitude and GPSLongitude) tags",
+        "C": "XMP Dublin Core subject field",
+        "D": "JFIF version header"
+      },
+      "correct": "B",
+      "explanation": "The EXIF GPSInfo tags (specifically GPSLatitude, GPSLongitude, and GPSAltitude) embedded in JPEG images by cameras and smartphones record the precise geographic coordinates where the photo was taken, which can reveal office locations, home addresses, or travel patterns."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Document Metadata",
+      "question": "During a penetration test, a tester runs 'exiftool -a -G *.pdf' against documents collected from the target's website. One PDF reveals 'XMP-pdf:Producer: GPL Ghostscript 9.52' and 'XMP-dc:Creator: root'. What can be inferred?",
+      "options": {
+        "A": "The PDF was created on a Windows system using Adobe Acrobat",
+        "B": "The PDF was generated on a Linux/Unix system (Ghostscript, 'root' user), suggesting the target runs Linux servers that generate documents",
+        "C": "The PDF contains malware",
+        "D": "The PDF has been digitally signed by a certificate authority"
+      },
+      "correct": "B",
+      "explanation": "Ghostscript is predominantly used on Linux/Unix systems, and a creator of 'root' indicates the document was generated by a process running as the root user. This suggests Linux servers in the target's environment, possibly generating reports or invoices automatically."
+    },
+    {
+      "category": "Internet Information Gathering and Reconnaissance (PT003)",
+      "skill": "Document Metadata",
+      "question": "A penetration tester wants to strip all metadata from documents before sharing them with the client team to avoid leaking their own operational details. Which exiftool command accomplishes this?",
+      "options": {
+        "A": "exiftool -v document.pdf",
+        "B": "exiftool -all= document.pdf",
+        "C": "exiftool -list document.pdf",
+        "D": "exiftool -json document.pdf"
+      },
+      "correct": "B",
+      "explanation": "The command 'exiftool -all= document.pdf' removes all metadata tags from the file. This is important operational security practice to prevent the tester's own software, usernames, or file paths from being revealed to others through document metadata."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Host Discovery and Reconnaissance",
+      "question": "During a penetration test, you need to determine the exact Linux kernel version running on a target host you have shell access to. Which command provides the most detailed kernel version information including the build date?",
+      "options": {
+        "A": "cat /etc/os-release",
+        "B": "uname -a",
+        "C": "hostnamectl",
+        "D": "lsb_release -a"
+      },
+      "correct": "B",
+      "explanation": "The 'uname -a' command displays all system information including the kernel name, hostname, kernel release, kernel version (with build date), machine hardware name, processor type, hardware platform, and operating system. While /etc/os-release and lsb_release show distribution information, they do not include the kernel build date. hostnamectl shows some kernel info but uname -a is the most comprehensive for kernel-specific details."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Host Discovery and Reconnaissance",
+      "question": "Which file on a Linux system would a penetration tester examine to identify all user accounts, including service accounts, present on the system?",
+      "options": {
+        "A": "/etc/shadow",
+        "B": "/etc/group",
+        "C": "/etc/passwd",
+        "D": "/etc/login.defs"
+      },
+      "correct": "C",
+      "explanation": "/etc/passwd contains entries for all user accounts on the system, including service accounts, with fields for username, UID, GID, home directory, and login shell. It is world-readable by default. /etc/shadow contains password hashes but is only readable by root. /etc/group lists group memberships, and /etc/login.defs defines login configuration defaults."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Host Discovery and Reconnaissance",
+      "question": "You have gained low-privilege access to a Linux server and want to enumerate all installed packages to identify potentially vulnerable software. On a Debian-based system, which command achieves this?",
+      "options": {
+        "A": "rpm -qa",
+        "B": "dpkg -l",
+        "C": "yum list installed",
+        "D": "pacman -Q"
+      },
+      "correct": "B",
+      "explanation": "'dpkg -l' lists all installed packages on Debian-based distributions (Debian, Ubuntu, Kali). 'rpm -qa' and 'yum list installed' are used on Red Hat-based distributions (RHEL, CentOS, Fedora). 'pacman -Q' is used on Arch Linux. Identifying installed packages and their versions is a critical reconnaissance step for finding known vulnerabilities."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Host Discovery and Reconnaissance",
+      "question": "During host reconnaissance, you discover the file /etc/machine-id on a Linux target. What does this file contain?",
+      "options": {
+        "A": "The MAC address of the primary network interface",
+        "B": "A unique, persistent machine identifier set during OS installation",
+        "C": "The serial number of the physical hardware",
+        "D": "An encrypted hash of the root password"
+      },
+      "correct": "B",
+      "explanation": "/etc/machine-id contains a unique 128-bit ID that is set during OS installation or first boot and remains constant for the lifetime of the installation. It is used by systemd and various services for identification. This can be valuable during penetration testing for tracking and identifying unique hosts, and it differs from hardware identifiers like MAC addresses or serial numbers."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Host Discovery and Reconnaissance",
+      "question": "Which directory in the /proc filesystem reveals the command line arguments used to boot the Linux kernel, potentially exposing sensitive configuration?",
+      "options": {
+        "A": "/proc/version",
+        "B": "/proc/cmdline",
+        "C": "/proc/cpuinfo",
+        "D": "/proc/meminfo"
+      },
+      "correct": "B",
+      "explanation": "/proc/cmdline contains the kernel boot parameters passed by the bootloader. These can reveal sensitive information such as root device paths, boot options, and sometimes credentials or encryption keys passed as kernel parameters. /proc/version shows kernel version info, /proc/cpuinfo shows CPU details, and /proc/meminfo shows memory statistics."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Network Enumeration",
+      "question": "During network enumeration on a compromised Linux host, which command displays the ARP cache, revealing other hosts that have recently communicated with the target?",
+      "options": {
+        "A": "arp -a",
+        "B": "route -n",
+        "C": "ip link show",
+        "D": "dig +short"
+      },
+      "correct": "A",
+      "explanation": "'arp -a' displays the ARP cache containing IP-to-MAC address mappings of hosts that have recently communicated with the target system. This is valuable for discovering other live hosts on the local network segment. 'route -n' shows routing tables, 'ip link show' displays network interfaces, and 'dig' performs DNS lookups."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Network Enumeration",
+      "question": "You are enumerating firewall rules on a Linux host. Which command lists all iptables rules across all chains including packet counts?",
+      "options": {
+        "A": "iptables -L -n -v",
+        "B": "iptables -S",
+        "C": "firewall-cmd --list-all",
+        "D": "ufw status verbose"
+      },
+      "correct": "A",
+      "explanation": "'iptables -L -n -v' lists all rules in all chains with verbose output including packet and byte counters, using numeric IP addresses and port numbers. 'iptables -S' shows rules in a format suitable for restoring but without counters. 'firewall-cmd' is for firewalld (a different frontend), and 'ufw status' is for Ubuntu's Uncomplicated Firewall frontend."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Network Enumeration",
+      "question": "On a modern Linux system using iproute2, which command displays all network interfaces along with their IP addresses?",
+      "options": {
+        "A": "ifconfig -a",
+        "B": "ip addr show",
+        "C": "netstat -i",
+        "D": "nmcli device status"
+      },
+      "correct": "B",
+      "explanation": "'ip addr show' (or 'ip a') is the modern iproute2 command that displays all network interfaces with their IP addresses, subnet masks, and other details. While 'ifconfig -a' provides similar information, it is part of the deprecated net-tools package and may not be installed on modern systems. 'netstat -i' shows interface statistics, and 'nmcli' is specific to NetworkManager."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Network Enumeration",
+      "question": "During a penetration test, you want to identify all established TCP connections from a compromised Linux host to external systems. Which ss command filter achieves this?",
+      "options": {
+        "A": "ss -t state listening",
+        "B": "ss -t state established",
+        "C": "ss -u state connected",
+        "D": "ss -a state all"
+      },
+      "correct": "B",
+      "explanation": "'ss -t state established' filters TCP sockets to show only those in the ESTABLISHED state, revealing active connections to external systems. This helps identify communication channels, potential C2 connections, or services being accessed. Option A shows listening sockets, option C uses UDP which doesn't have a 'connected' state in the same way, and option D shows all sockets without filtering."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Network Enumeration",
+      "question": "Which file on a Linux system contains the static DNS resolver configuration, potentially revealing internal DNS servers and domain names?",
+      "options": {
+        "A": "/etc/hosts",
+        "B": "/etc/resolv.conf",
+        "C": "/etc/nsswitch.conf",
+        "D": "/etc/hostname"
+      },
+      "correct": "B",
+      "explanation": "/etc/resolv.conf contains the DNS resolver configuration including nameserver addresses and search domains. This is valuable during penetration testing as it reveals internal DNS servers and domain suffixes that can be used for further enumeration. /etc/hosts maps hostnames to IPs statically, /etc/nsswitch.conf defines name resolution order, and /etc/hostname contains the system's hostname."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Network Enumeration",
+      "question": "A penetration tester discovers that a Linux target has multiple network interfaces. Which command reveals the routing table to understand how traffic is directed between networks?",
+      "options": {
+        "A": "ip route show",
+        "B": "ip neigh show",
+        "C": "ip link show",
+        "D": "ip tunnel show"
+      },
+      "correct": "A",
+      "explanation": "'ip route show' displays the kernel routing table, showing how traffic is routed between networks including default gateways, static routes, and connected subnets. This is essential for understanding network topology from a compromised host. 'ip neigh show' displays the ARP/neighbour table, 'ip link show' shows interface details, and 'ip tunnel show' shows configured tunnels."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Passwords",
+      "question": "In the /etc/shadow file, a password hash beginning with '$6$' indicates which hashing algorithm?",
+      "options": {
+        "A": "MD5",
+        "B": "Blowfish",
+        "C": "SHA-256",
+        "D": "SHA-512"
+      },
+      "correct": "D",
+      "explanation": "The prefix '$6$' indicates SHA-512 hashing, which is the current default on most modern Linux distributions. '$1$' indicates MD5, '$2a$' or '$2b$' indicates Blowfish (bcrypt), and '$5$' indicates SHA-256. SHA-512 with sufficient rounds provides strong password storage, though bcrypt and scrypt are generally preferred."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Passwords",
+      "question": "A penetration tester has obtained the /etc/shadow file from a Linux target. Which field in a shadow entry indicates that the account is locked?",
+      "options": {
+        "A": "An asterisk (*) or exclamation mark (!) prefixing the password hash",
+        "B": "A value of 0 in the minimum password age field",
+        "C": "An empty password hash field",
+        "D": "A value of 99999 in the maximum password age field"
+      },
+      "correct": "A",
+      "explanation": "An exclamation mark (!) or asterisk (*) at the beginning of the password hash field in /etc/shadow indicates that the account is locked and cannot be used for password-based authentication. An empty hash field means no password is set (passwordless login possible), 0 in minimum age means the password can be changed anytime, and 99999 in max age means the password never expires."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Passwords",
+      "question": "When using John the Ripper to crack Linux password hashes, what must be done first if the hashes are in separate /etc/passwd and /etc/shadow files?",
+      "options": {
+        "A": "Convert the hashes to NTLM format",
+        "B": "Use the 'unshadow' utility to combine both files",
+        "C": "Import them into a MySQL database",
+        "D": "Extract hashes manually using awk and pipe to john"
+      },
+      "correct": "B",
+      "explanation": "John the Ripper provides the 'unshadow' utility which combines /etc/passwd and /etc/shadow into a single file in the format that John expects. This merges the username information from passwd with the hash data from shadow. While manual extraction with awk is possible, unshadow is the standard and recommended approach that handles edge cases correctly."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Passwords",
+      "question": "Which PAM module is responsible for enforcing password complexity requirements on most modern Linux distributions?",
+      "options": {
+        "A": "pam_unix.so",
+        "B": "pam_pwquality.so",
+        "C": "pam_limits.so",
+        "D": "pam_securetty.so"
+      },
+      "correct": "B",
+      "explanation": "pam_pwquality.so (successor to pam_cracklib.so) enforces password complexity requirements including minimum length, character class requirements, and dictionary checks. pam_unix.so handles standard Unix authentication, pam_limits.so sets resource limits, and pam_securetty.so restricts root login to specific terminals. Weak pwquality settings are a common finding in penetration tests."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Passwords",
+      "question": "During a password audit, you discover that a Linux system uses the hash prefix '$y$' in /etc/shadow. Which algorithm does this indicate?",
+      "options": {
+        "A": "Argon2",
+        "B": "yescrypt",
+        "C": "scrypt",
+        "D": "PBKDF2"
+      },
+      "correct": "B",
+      "explanation": "The '$y$' prefix indicates yescrypt, a modern password hashing scheme adopted by several Linux distributions (including Debian 11+ and Fedora 35+) as the default. It is designed to be memory-hard, making GPU-based cracking more difficult. Argon2 uses '$argon2id$', scrypt uses '$7$', and PBKDF2 is not commonly used in /etc/shadow on Linux."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Passwords",
+      "question": "A penetration tester wants to perform an offline dictionary attack against SHA-512 Linux hashes using hashcat. Which hash mode (-m) value should be specified?",
+      "options": {
+        "A": "-m 500",
+        "B": "-m 1800",
+        "C": "-m 1000",
+        "D": "-m 3200"
+      },
+      "correct": "B",
+      "explanation": "Hashcat mode 1800 corresponds to sha512crypt ($6$), the standard Linux SHA-512 password hash format. Mode 500 is md5crypt ($1$), mode 1000 is NTLM (Windows), and mode 3200 is bcrypt. Using the correct mode is essential for hashcat to interpret the hash format properly and perform the attack."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX File Permissions",
+      "question": "A penetration tester discovers a file with permissions -rwsr-xr-x. What does the 's' in the owner execute position indicate?",
+      "options": {
+        "A": "The file is a symbolic link",
+        "B": "The SUID bit is set, causing the file to execute with the owner's privileges",
+        "C": "The file is a socket",
+        "D": "The SGID bit is set, causing the file to execute with the group's privileges"
+      },
+      "correct": "B",
+      "explanation": "The 's' in the owner execute position indicates the SUID (Set User ID) bit is set. When executed, the process runs with the effective UID of the file owner (typically root), regardless of who runs it. SUID binaries are high-value targets in privilege escalation. The SGID bit would appear as 's' in the group execute position instead."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX File Permissions",
+      "question": "Which find command correctly locates all SUID binaries owned by root on a Linux filesystem?",
+      "options": {
+        "A": "find / -perm -4000 -user root -type f 2>/dev/null",
+        "B": "find / -perm -2000 -user root -type f 2>/dev/null",
+        "C": "find / -perm -1000 -user root -type f 2>/dev/null",
+        "D": "find / -writable -user root -type f 2>/dev/null"
+      },
+      "correct": "A",
+      "explanation": "The permission -4000 matches files with the SUID bit set. Combined with '-user root' and '-type f', this finds regular files owned by root with SUID set. -2000 matches SGID files, -1000 matches the sticky bit, and -writable finds world-writable files. Finding SUID root binaries is one of the first steps in Linux privilege escalation."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX File Permissions",
+      "question": "What is the effect of setting the sticky bit on a directory such as /tmp?",
+      "options": {
+        "A": "Only root can create files in the directory",
+        "B": "Files inherit the directory's group ownership",
+        "C": "Only the file owner, directory owner, or root can delete or rename files within it",
+        "D": "All files created in the directory are automatically encrypted"
+      },
+      "correct": "C",
+      "explanation": "The sticky bit (represented as 't' in the other execute position, or octal 1000) on a directory restricts file deletion so that only the file's owner, the directory's owner, or root can delete or rename files within it. This prevents users from deleting each other's files in shared directories like /tmp. Option B describes SGID on a directory."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX File Permissions",
+      "question": "A system has a umask of 0027. What permissions will a newly created regular file have by default?",
+      "options": {
+        "A": "rwxr-x---",
+        "B": "rw-r-----",
+        "C": "rw-rw-r--",
+        "D": "rwxrwxrwx"
+      },
+      "correct": "B",
+      "explanation": "Regular files are created with a base permission of 0666 (rw-rw-rw-). Applying umask 0027 (----w-rwx) subtracts those bits: 0666 - 0027 = 0640, which is rw-r----- (owner read/write, group read, others nothing). Note that directories use base 0777, so they would get 0750. A restrictive umask like 0027 is a good security practice."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX File Permissions",
+      "question": "During a security assessment, you find a world-writable directory without the sticky bit set. Why is this a security concern?",
+      "options": {
+        "A": "Any user can read files in the directory",
+        "B": "Any user can delete or rename any other user's files in the directory",
+        "C": "The directory will automatically grant SUID to new files",
+        "D": "Files created in the directory will have no permissions"
+      },
+      "correct": "B",
+      "explanation": "A world-writable directory without the sticky bit allows any user to delete or rename any file within it, regardless of the file's ownership. This can lead to denial-of-service attacks, symlink attacks, or race conditions. The sticky bit is specifically designed to prevent this by restricting deletion to the file owner, directory owner, or root."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX File Permissions",
+      "question": "Which command is used to view POSIX Access Control Lists (ACLs) on a file in Linux, which may grant permissions beyond the standard owner/group/other model?",
+      "options": {
+        "A": "ls -la",
+        "B": "getfacl",
+        "C": "stat",
+        "D": "lsattr"
+      },
+      "correct": "B",
+      "explanation": "'getfacl' displays the full POSIX ACL of a file, including any additional user or group permissions beyond the standard Unix permissions. 'ls -la' shows a '+' indicator when ACLs are present but doesn't show the actual ACL entries. 'stat' shows standard permissions, and 'lsattr' shows extended file attributes (like immutable), not ACLs. Penetration testers should check ACLs as they may reveal overly permissive access."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Processes",
+      "question": "Which command allows a penetration tester to view the actual command line arguments of all running processes, potentially revealing credentials passed as arguments?",
+      "options": {
+        "A": "ps aux",
+        "B": "top -b -n 1",
+        "C": "pstree -p",
+        "D": "jobs -l"
+      },
+      "correct": "A",
+      "explanation": "'ps aux' displays all running processes with their full command lines, which may reveal credentials, API keys, or sensitive paths passed as command-line arguments. This is a well-known information disclosure vector. 'top' shows processes but with truncated commands, 'pstree' shows the process hierarchy, and 'jobs' only shows the current shell's background jobs."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Processes",
+      "question": "A penetration tester discovers that a cron job runs a script from a world-writable directory as root. What type of vulnerability does this represent?",
+      "options": {
+        "A": "Denial of service",
+        "B": "Privilege escalation via cron job hijacking",
+        "C": "Information disclosure",
+        "D": "Remote code execution"
+      },
+      "correct": "B",
+      "explanation": "When a cron job runs a script as root from a world-writable directory, any unprivileged user can modify or replace that script, and it will be executed with root privileges at the next scheduled run. This is a classic privilege escalation vector. The tester could replace the script content with a reverse shell or add a new privileged user to gain root access."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Processes",
+      "question": "Which directory in the /proc filesystem allows a penetration tester to examine the environment variables of a specific running process (PID 1234)?",
+      "options": {
+        "A": "/proc/1234/cmdline",
+        "B": "/proc/1234/environ",
+        "C": "/proc/1234/status",
+        "D": "/proc/1234/maps"
+      },
+      "correct": "B",
+      "explanation": "/proc/<pid>/environ contains the environment variables of the process, which may include database credentials, API keys, secret tokens, and other sensitive data. Access is restricted to the process owner and root. /proc/<pid>/cmdline shows command arguments, /proc/<pid>/status shows process status information, and /proc/<pid>/maps shows memory mappings."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Processes",
+      "question": "Which systemd command lists all active services, helping a penetration tester identify potentially vulnerable running services?",
+      "options": {
+        "A": "systemctl list-units --type=service --state=running",
+        "B": "service --status-all",
+        "C": "chkconfig --list",
+        "D": "initctl list"
+      },
+      "correct": "A",
+      "explanation": "'systemctl list-units --type=service --state=running' lists all currently running services on a systemd-based system, which is the init system used by most modern Linux distributions. 'service --status-all' is a SysVinit compatibility command that may not show all systemd-native services. 'chkconfig' is for SysVinit, and 'initctl' is for Upstart, both largely deprecated."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Processes",
+      "question": "A penetration tester wants to monitor filesystem activity in real-time to detect which files a target application reads or writes. Which tool is most suitable?",
+      "options": {
+        "A": "strace -e trace=file -p <pid>",
+        "B": "ltrace -p <pid>",
+        "C": "gdb attach <pid>",
+        "D": "perf stat -p <pid>"
+      },
+      "correct": "A",
+      "explanation": "'strace -e trace=file -p <pid>' traces all file-related system calls (open, read, write, stat, etc.) made by a specific process. This reveals which files the application accesses, which is invaluable for finding configuration files, credentials files, or temporary files that might be exploitable. ltrace traces library calls, gdb is a debugger, and perf focuses on performance counters."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Remote Exploitation",
+      "question": "The Shellshock vulnerability (CVE-2014-6271) affects which component commonly found on Linux systems?",
+      "options": {
+        "A": "The OpenSSL library",
+        "B": "The GNU Bash shell",
+        "C": "The Linux kernel",
+        "D": "The Apache httpd core module"
+      },
+      "correct": "B",
+      "explanation": "Shellshock is a vulnerability in GNU Bash that allows arbitrary command execution through specially crafted environment variables. It is particularly dangerous when Bash is invoked through CGI scripts, DHCP clients, or SSH forced commands. The vulnerability exists because Bash incorrectly processes function definitions stored in environment variables, continuing to execute commands beyond the function definition."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Remote Exploitation",
+      "question": "A penetration tester discovers an exposed Redis instance on a Linux server with no authentication. Which attack technique could lead to remote code execution?",
+      "options": {
+        "A": "SQL injection through Redis queries",
+        "B": "Writing an SSH public key to the authorized_keys file using Redis CONFIG SET and SAVE",
+        "C": "Buffer overflow in the Redis PING command",
+        "D": "Exploiting Redis's built-in JavaScript engine"
+      },
+      "correct": "B",
+      "explanation": "An unauthenticated Redis instance can be exploited by using CONFIG SET to change the database dump directory and filename (e.g., to /root/.ssh/ and authorized_keys), then writing an SSH public key as a value and using SAVE to write it to disk. This grants SSH access as the Redis user. Redis does not use SQL, does not have a JavaScript engine, and PING buffer overflows are not a standard attack vector."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Remote Exploitation",
+      "question": "The Heartbleed vulnerability (CVE-2014-0160) exploits a flaw in which component?",
+      "options": {
+        "A": "OpenSSH server",
+        "B": "OpenSSL's TLS heartbeat extension implementation",
+        "C": "The Linux kernel's TCP stack",
+        "D": "Apache mod_ssl certificate validation"
+      },
+      "correct": "B",
+      "explanation": "Heartbleed is a buffer over-read vulnerability in OpenSSL's implementation of the TLS/DTLS heartbeat extension (RFC 6520). It allows attackers to read up to 64KB of server memory per request, potentially exposing private keys, session tokens, and user credentials. It is not related to OpenSSH, the kernel TCP stack, or Apache's mod_ssl specifically, though any service using the vulnerable OpenSSL version was affected."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Remote Exploitation",
+      "question": "During a penetration test, you identify a Linux server running a vulnerable version of Apache Struts. Which CVE represents the critical remote code execution vulnerability that was widely exploited in 2017, including in the Equifax breach?",
+      "options": {
+        "A": "CVE-2017-0144 (EternalBlue)",
+        "B": "CVE-2017-5638 (Apache Struts 2 RCE)",
+        "C": "CVE-2017-12617 (Apache Tomcat PUT RCE)",
+        "D": "CVE-2017-9805 (Apache Struts REST plugin)"
+      },
+      "correct": "B",
+      "explanation": "CVE-2017-5638 is the critical Apache Struts 2 vulnerability that allows remote code execution via a crafted Content-Type header in the Jakarta Multipart parser. This vulnerability was used in the 2017 Equifax breach affecting 147 million people. EternalBlue is a Windows SMB vulnerability, CVE-2017-12617 affects Tomcat, and CVE-2017-9805 is a different Struts vulnerability in the REST plugin."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Remote Exploitation",
+      "question": "A penetration tester discovers an NFS export configured with no_root_squash on a Linux target. What is the security implication?",
+      "options": {
+        "A": "NFS traffic is encrypted",
+        "B": "The root user on client machines retains root privileges on the NFS share, enabling SUID binary creation",
+        "C": "Anonymous users can mount the share without authentication",
+        "D": "NFS version 4 Kerberos authentication is disabled"
+      },
+      "correct": "B",
+      "explanation": "The no_root_squash option means the root user on NFS client machines is not mapped to the 'nobody' user and retains full root privileges on the exported filesystem. An attacker can mount the share, create a SUID root binary, then execute it on the target system to gain root access. By default, root_squash maps root to nobody, preventing this attack."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Remote Exploitation",
+      "question": "Which technique allows a penetration tester to exploit a vulnerable CGI script on a Linux web server to achieve remote code execution via Shellshock?",
+      "options": {
+        "A": "Sending a crafted User-Agent header containing '() { :;}; /bin/bash -c \"command\"'",
+        "B": "Injecting SQL commands into the CGI query string",
+        "C": "Uploading a PHP webshell through the CGI file upload handler",
+        "D": "Exploiting a directory traversal in the CGI path"
+      },
+      "correct": "A",
+      "explanation": "Shellshock can be exploited via CGI by placing the malicious payload in HTTP headers (such as User-Agent, Referer, or Cookie) that get passed as environment variables to the Bash shell when the CGI script is invoked. The payload '() { :;}; command' triggers Bash to execute the command after the function definition. The other options describe different vulnerability types unrelated to Shellshock."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Local Exploitation",
+      "question": "A penetration tester discovers that a user has the following sudo entry: 'user ALL=(ALL) NOPASSWD: /usr/bin/vim'. How can this be leveraged for privilege escalation?",
+      "options": {
+        "A": "By editing /etc/shadow directly with vim",
+        "B": "By using vim's command mode to execute ':!bash', spawning a root shell",
+        "C": "By replacing the vim binary with a reverse shell",
+        "D": "By using vim to edit the sudoers file and removing all restrictions"
+      },
+      "correct": "B",
+      "explanation": "Vim has the ability to execute shell commands from within the editor using ':!command' in command mode. When vim runs with sudo privileges, executing ':!bash' or ':!/bin/sh' spawns a shell that inherits the root privileges. This is a well-known GTFOBins technique. While editing /etc/shadow would also work, spawning a shell is more direct and reliable."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Local Exploitation",
+      "question": "The Dirty COW vulnerability (CVE-2016-5195) exploits what type of flaw in the Linux kernel?",
+      "options": {
+        "A": "Buffer overflow in the ext4 filesystem driver",
+        "B": "Race condition in the copy-on-write mechanism of the memory management subsystem",
+        "C": "Use-after-free in the networking stack",
+        "D": "Integer overflow in the process scheduler"
+      },
+      "correct": "B",
+      "explanation": "Dirty COW (CVE-2016-5195) is a race condition vulnerability in the Linux kernel's memory management copy-on-write (COW) mechanism. It allows an unprivileged user to write to read-only memory mappings, enabling privilege escalation by modifying files like /etc/passwd or SUID binaries. The vulnerability existed in the kernel for approximately 9 years before being discovered."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Local Exploitation",
+      "question": "A penetration tester finds a binary with the capability cap_setuid+ep set. What does this allow?",
+      "options": {
+        "A": "The binary can bind to privileged ports below 1024",
+        "B": "The binary can change its effective UID, potentially escalating to root",
+        "C": "The binary can load kernel modules",
+        "D": "The binary can bypass file permission checks"
+      },
+      "correct": "B",
+      "explanation": "The cap_setuid capability allows a process to make arbitrary manipulations of process UIDs, including setuid(0) to become root. This is a powerful capability that effectively allows privilege escalation. cap_net_bind_service allows binding to privileged ports, cap_sys_module allows loading kernel modules, and cap_dac_override allows bypassing file permission checks."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Local Exploitation",
+      "question": "During a Linux privilege escalation assessment, you find a cron job running as root that executes a script using a wildcard: 'tar czf /backup/files.tar.gz *' in a directory where you have write access. How can this be exploited?",
+      "options": {
+        "A": "By creating files named '--checkpoint=1' and '--checkpoint-action=exec=sh shell.sh' to inject tar arguments",
+        "B": "By creating a symbolic link to /etc/shadow",
+        "C": "By filling the directory with files to cause a buffer overflow",
+        "D": "By changing the directory permissions to prevent tar from running"
+      },
+      "correct": "A",
+      "explanation": "This is a wildcard injection attack. When the shell expands the '*' wildcard, filenames that look like command-line arguments (e.g., '--checkpoint=1' and '--checkpoint-action=exec=sh shell.sh') are interpreted as arguments by tar. The checkpoint action causes tar to execute the specified command as root. This is a well-documented privilege escalation technique found on GTFOBins."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Local Exploitation",
+      "question": "A penetration tester discovers that the PATH environment variable in a SUID root script includes a writable directory before standard system directories. What attack does this enable?",
+      "options": {
+        "A": "Library injection via LD_PRELOAD",
+        "B": "PATH hijacking by placing a malicious binary with the same name as a called command in the writable directory",
+        "C": "Kernel module injection",
+        "D": "Shellcode injection into the script's memory space"
+      },
+      "correct": "B",
+      "explanation": "When a SUID script calls a command without an absolute path and the PATH includes a writable directory that is searched first, an attacker can place a malicious binary with the same name in that directory. The SUID script will execute the attacker's binary with root privileges instead of the intended system command. Note that LD_PRELOAD is typically ignored for SUID binaries as a security measure."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux Local Exploitation",
+      "question": "Which tool is specifically designed to automate the enumeration of Linux privilege escalation vectors on a compromised host?",
+      "options": {
+        "A": "Nmap",
+        "B": "LinPEAS",
+        "C": "Burp Suite",
+        "D": "Wireshark"
+      },
+      "correct": "B",
+      "explanation": "LinPEAS (Linux Privilege Escalation Awesome Script) is a widely used script that automatically enumerates a Linux system for common privilege escalation vectors including SUID binaries, cron jobs, writable paths, kernel vulnerabilities, capabilities, and misconfigured services. Nmap is a network scanner, Burp Suite is for web application testing, and Wireshark is a packet analyzer."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Post Exploitation",
+      "question": "After gaining root access on a Linux system, a penetration tester wants to establish persistence by adding an SSH key. Which file should the public key be added to?",
+      "options": {
+        "A": "/etc/ssh/sshd_config",
+        "B": "/root/.ssh/authorized_keys",
+        "C": "/etc/ssh/ssh_host_rsa_key.pub",
+        "D": "/root/.ssh/known_hosts"
+      },
+      "correct": "B",
+      "explanation": "Adding a public key to /root/.ssh/authorized_keys allows the tester to authenticate as root via SSH without a password. This is a common persistence mechanism. sshd_config is the SSH daemon configuration, ssh_host_rsa_key.pub is the server's host key, and known_hosts stores fingerprints of previously connected servers."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Post Exploitation",
+      "question": "Which technique can a penetration tester use to clear evidence of their login from Linux authentication logs?",
+      "options": {
+        "A": "Deleting /var/log/auth.log or /var/log/secure and restarting syslog",
+        "B": "Running 'history -c' and unsetting HISTFILE",
+        "C": "Using sed or similar tools to selectively remove specific log entries from /var/log/auth.log, wtmp, and btmp",
+        "D": "Changing the system clock to invalidate log timestamps"
+      },
+      "correct": "C",
+      "explanation": "Selective removal of specific log entries using tools like sed on text logs and utmpdump for binary logs (wtmp/btmp) is the most surgical approach. Deleting entire log files (A) is conspicuous and may be noticed. Clearing bash history (B) only removes command history, not login records. Changing the system clock (D) affects all logs and is very noticeable. In a legitimate penetration test, log clearing should be coordinated with the client."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Post Exploitation",
+      "question": "A penetration tester wants to extract credentials from memory on a compromised Linux system. Which tool can dump cleartext credentials from the process memory of running services?",
+      "options": {
+        "A": "mimipenguin",
+        "B": "Mimikatz",
+        "C": "LaZagne (Windows version)",
+        "D": "pwdump"
+      },
+      "correct": "A",
+      "explanation": "mimipenguin is the Linux equivalent of Mimikatz, designed to extract cleartext credentials from process memory on Linux systems. It can dump passwords from processes like gnome-keyring, vsftpd, Apache, and sshd. Mimikatz is Windows-specific, the Windows version of LaZagne targets Windows credential stores, and pwdump extracts Windows SAM database hashes."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Post Exploitation",
+      "question": "Which method provides the most covert persistence mechanism on a Linux system by executing malicious code when the system boots, without modifying standard service configurations?",
+      "options": {
+        "A": "Adding a cron @reboot entry for the root user",
+        "B": "Installing a loadable kernel module (LKM) rootkit",
+        "C": "Adding an entry to /etc/rc.local",
+        "D": "Creating a systemd service unit file"
+      },
+      "correct": "B",
+      "explanation": "A loadable kernel module (LKM) rootkit operates at the kernel level, allowing it to hide files, processes, network connections, and itself from detection. This is the most covert option as it can subvert the operating system's own reporting mechanisms. Cron entries, rc.local modifications, and systemd services are all visible to standard system administration tools and are relatively easy to detect."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Linux / UNIX Post Exploitation",
+      "question": "During post-exploitation, a penetration tester needs to exfiltrate data from a Linux host that has restricted outbound access. Only DNS traffic is allowed outbound. Which technique is most appropriate?",
+      "options": {
+        "A": "Encoding data in DNS TXT record queries to an attacker-controlled DNS server",
+        "B": "Using FTP in passive mode",
+        "C": "Setting up an HTTP reverse proxy",
+        "D": "Emailing the data using the local sendmail service"
+      },
+      "correct": "A",
+      "explanation": "DNS tunneling/exfiltration encodes data within DNS queries (typically using TXT, CNAME, or MX record lookups) to an attacker-controlled authoritative DNS server. Tools like dnscat2, iodine, and DNSExfiltrator facilitate this. Since DNS (port 53) is often allowed through firewalls, this bypasses network restrictions. FTP, HTTP, and SMTP would be blocked in this scenario."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Unix Exploitation",
+      "question": "On a Solaris system, which legacy authentication file might still contain password hashes when NIS/NIS+ is in use, providing an additional source for offline cracking?",
+      "options": {
+        "A": "/etc/security/passwd",
+        "B": "/etc/shadow",
+        "C": "/etc/passwd (with NIS markers)",
+        "D": "/var/yp/securenets"
+      },
+      "correct": "C",
+      "explanation": "When NIS (Network Information Service) is configured on Solaris systems, /etc/passwd may contain NIS markers (entries starting with '+') that reference the NIS password maps. The NIS maps themselves may contain password hashes, especially in older configurations. If NIS is misconfigured, 'ypcat passwd' can dump all user entries including hashes. /var/yp/securenets controls NIS access, not passwords."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Unix Exploitation",
+      "question": "On a FreeBSD system, which file stores password hashes, differing from the Linux standard /etc/shadow?",
+      "options": {
+        "A": "/etc/master.passwd",
+        "B": "/etc/spwd.db",
+        "C": "/etc/security/passwd",
+        "D": "/etc/login.conf"
+      },
+      "correct": "A",
+      "explanation": "/etc/master.passwd is the FreeBSD equivalent of /etc/shadow, storing password hashes along with user account information. It is readable only by root. FreeBSD also uses /etc/spwd.db and /etc/pwd.db as hashed database files for fast lookups, but /etc/master.passwd is the primary text source file. /etc/login.conf defines login classes, and /etc/security/passwd is used on AIX."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Unix Exploitation",
+      "question": "A penetration tester gains access to an AIX system. Which AIX-specific command is used to list all user accounts and their attributes?",
+      "options": {
+        "A": "getent passwd",
+        "B": "lsuser -f ALL",
+        "C": "dscl . -list /Users",
+        "D": "cat /etc/passwd"
+      },
+      "correct": "B",
+      "explanation": "'lsuser -f ALL' is an AIX-specific command that lists all user accounts with their full attributes including security settings, resource limits, and authentication parameters. While 'cat /etc/passwd' works, lsuser provides much more detailed AIX-specific information. 'getent passwd' is Linux-standard, and 'dscl' is macOS-specific (Directory Service command line)."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Unix Exploitation",
+      "question": "Which vulnerability is specific to Solaris systems and exploits the sadmind service for remote command execution?",
+      "options": {
+        "A": "CVE-2003-0722 (Solaris sadmind buffer overflow)",
+        "B": "CVE-2014-0160 (Heartbleed)",
+        "C": "CVE-2014-6271 (Shellshock)",
+        "D": "CVE-2016-5195 (Dirty COW)"
+      },
+      "correct": "A",
+      "explanation": "CVE-2003-0722 is a buffer overflow vulnerability in the Solaris sadmind (System Administration Daemon) service that allows remote attackers to execute arbitrary commands with root privileges. sadmind is a Solaris-specific RPC service used for remote system administration. Heartbleed, Shellshock, and Dirty COW affect Linux systems and are not Solaris-specific."
+    },
+    {
+      "category": "Linux / UNIX Security Assessment (PT007)",
+      "skill": "Unix Exploitation",
+      "question": "On a legacy BSD system, a penetration tester discovers that the r-services (rsh, rlogin, rexec) are enabled. What file defines trusted hosts and users that can access the system without a password?",
+      "options": {
+        "A": "/etc/hosts.allow",
+        "B": "/etc/hosts.equiv and ~/.rhosts",
+        "C": "/etc/ssh/ssh_known_hosts",
+        "D": "/etc/xinetd.d/rsh"
+      },
+      "correct": "B",
+      "explanation": "/etc/hosts.equiv defines system-wide trusted host and user combinations for r-services, while ~/.rhosts defines per-user trusted relationships. If a host is listed in either file, users from that host can log in without password authentication. This trust model is inherently insecure as it relies on IP addresses for authentication. /etc/hosts.allow is for TCP Wrappers, not r-services trust."
     }
   ]
 }
