@@ -11808,18 +11808,6 @@
     },
     {
       "category": "Web Technologies (PT008)",
-      "question": "What is the HTTP 502 status code used for?",
-      "options": {
-        "A": "The server encountered an unexpected condition that prevented it from fulfilling the request",
-        "B": "The server, acting as a gateway, received an invalid response from the upstream server",
-        "C": "The client request was too large for the server to process",
-        "D": "The requested service is temporarily unavailable due to maintenance"
-      },
-      "correct": "B",
-      "explanation": "502 Bad Gateway indicates that the server, while acting as a gateway or proxy, received an invalid response from an upstream server. 500 Internal Server Error indicates a generic server-side failure."
-    },
-    {
-      "category": "Web Technologies (PT008)",
       "question": "An attacker sends a crafted request that is interpreted as one request by the front-end proxy but as two requests by the back-end server. What vulnerability is being exploited?",
       "options": {
         "A": "HTTP parameter pollution",
@@ -13044,18 +13032,6 @@
     },
     {
       "category": "Network Services (PT005)",
-      "question": "What are the default SNMP community strings commonly found on misconfigured devices?",
-      "options": {
-        "A": "admin / password",
-        "B": "public (read-only) and private (read-write)",
-        "C": "snmpuser / snmppass",
-        "D": "community / secret"
-      },
-      "correct": "B",
-      "explanation": "SNMP v1/v2c devices are frequently left with the default community strings 'public' for read-only access and 'private' for read-write access, allowing unauthenticated information disclosure or configuration changes."
-    },
-    {
-      "category": "Network Services (PT005)",
       "question": "Which command-line tool walks the SNMP MIB tree to enumerate all available information from an SNMP-enabled device?",
       "options": {
         "A": "snmpget",
@@ -13065,18 +13041,6 @@
       },
       "correct": "B",
       "explanation": "snmpwalk queries the entire MIB tree (or a subtree) of an SNMP agent, retrieving all available OIDs which can reveal system information, network interfaces, routing tables, running processes, and installed software."
-    },
-    {
-      "category": "Network Services (PT005)",
-      "question": "How does SNMPv3 improve security over SNMPv1 and v2c?",
-      "options": {
-        "A": "SNMPv3 uses TLS encryption for all communication",
-        "B": "SNMPv3 adds username-based authentication, message integrity, and optional encryption instead of relying on cleartext community strings",
-        "C": "SNMPv3 removes the ability to write configuration changes",
-        "D": "SNMPv3 restricts access to the loopback interface only"
-      },
-      "correct": "B",
-      "explanation": "SNMPv3 introduces the User-based Security Model (USM) with authentication (MD5/SHA) and privacy (DES/AES) capabilities, replacing the insecure community string model of v1/v2c."
     },
     {
       "category": "Network Services (PT005)",
@@ -13257,18 +13221,6 @@
       },
       "correct": "B",
       "explanation": "Hashcat's -a 0 is the straight (dictionary) attack mode, which tests each word from a wordlist against the target hashes, optionally combined with rules to mutate the candidates."
-    },
-    {
-      "category": "Network Services (PT005)",
-      "question": "In Hashcat, what does the attack mode '-a 3' specify?",
-      "options": {
-        "A": "Dictionary attack",
-        "B": "Combination attack",
-        "C": "Brute-force (mask) attack",
-        "D": "Toggle case attack"
-      },
-      "correct": "C",
-      "explanation": "Hashcat's -a 3 is the brute-force (mask) attack mode, where the attacker defines character sets and positions using mask syntax (e.g., ?u?l?l?l?d?d) to generate all possible candidates matching the pattern."
     },
     {
       "category": "Network Services (PT005)",
