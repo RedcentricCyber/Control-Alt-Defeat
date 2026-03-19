@@ -1,8 +1,12 @@
 # Control-Alt-Defeat
 
-A cyberpunk-themed multiple-choice exam app built with Flask. Pick an exam, answer questions, and get graded results with full history tracking. Exams are plain JSON files — drop one in and it just works.
+A  multiple-choice exam app built with Flask. Pick an exam, answer questions, and get graded results with full history tracking. Exams are plain JSON files — drop one in and it just works.
 
+Goes without saying that as this is a vibe coded experiment, I'd suggest only running it locally.
+
+```
 NOTE: Be mindful of NDA's should you contribute questions and exams. In my case I deliberately only gave AI agents information about the exams that the exam body publishes themselves (i.e sample questions, syllabus documentation) before getting the agents to generate exam JSON.
+```
 
 ## Quick Start
 
