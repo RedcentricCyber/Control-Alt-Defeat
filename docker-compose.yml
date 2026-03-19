@@ -6,7 +6,6 @@ services:
       - "5000:5000"
     environment:
       - SECRET_KEY=${SECRET_KEY:-cyberpunk-dev-secret}
-      - CAD_PRODUCTION=1
     volumes:
       # Mount exams directory so you can add/edit exams without rebuilding
       - ./app/exams:/app/exams:ro

@@ -20,8 +20,7 @@ USER appuser
 
 EXPOSE 5000
 
-ENV CAD_PRODUCTION=1 \
-    SECRET_KEY=change-me-in-production
+ENV SECRET_KEY=change-me-in-production
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
   CMD curl -fs http://localhost:5000/ || exit 1
