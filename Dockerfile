@@ -20,7 +20,7 @@ USER appuser
 
 EXPOSE 5000
 
-ENV FLASK_ENV=production \
+ENV CAD_PRODUCTION=1 \
     SECRET_KEY=change-me-in-production
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \

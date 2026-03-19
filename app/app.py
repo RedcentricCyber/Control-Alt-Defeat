@@ -18,8 +18,9 @@ app.secret_key = os.environ.get("SECRET_KEY", "cyberpunk-secret-key-change-in-pr
 # ── Session cookie hardening ─────────────────────────────────
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
-# Set Secure flag when not in local development
-if os.environ.get("FLASK_ENV") == "production":
+# Set Secure flag when running in production (HTTPS)
+_PRODUCTION = os.environ.get("CAD_PRODUCTION", "").strip().lower() in ("1", "true", "yes")
+if _PRODUCTION:
     app.config["SESSION_COOKIE_SECURE"] = True
 
 # ── Logging ───────────────────────────────────────────────────
@@ -124,7 +125,7 @@ def set_security_headers(response):
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
-    if os.environ.get("FLASK_ENV") == "production":
+    if _PRODUCTION:
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return response
 
