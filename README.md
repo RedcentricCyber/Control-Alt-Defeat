@@ -4,9 +4,8 @@ A  multiple-choice exam app built with Flask. Pick an exam, answer questions, an
 
 Goes without saying that as this is a vibe coded experiment, I'd suggest only running it locally.
 
-```
-NOTE: Be mindful of NDA's should you contribute questions and exams. In my case I deliberately only gave AI agents information about the exams that the exam body publishes themselves (i.e sample questions, syllabus documentation) before getting the agents to generate exam JSON.
-```
+
+> NOTE: Be mindful of NDA's should you contribute questions and exams. In my case I deliberately only gave AI agents information about the exams that the exam body publishes themselves (i.e sample questions, syllabus documentation) before getting the agents to generate exam JSON.
 
 ## Quick Start
 
