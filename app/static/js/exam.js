@@ -348,6 +348,40 @@
     setInterval(tickElapsed, 1000);
   }
 
+  // ── DOM event bindings (replaces inline onclick handlers) ────
+  document.querySelectorAll('.flag-btn[data-qidx]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      toggleFlag(parseInt(this.dataset.qidx, 10));
+    });
+  });
+
+  document.querySelectorAll('.report-btn[data-qidx]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      reportQuestion(parseInt(this.dataset.qidx, 10));
+    });
+  });
+
+  document.querySelectorAll('.option-item[data-qidx]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      selectOption(this, 'q' + this.dataset.qidx, this.dataset.key);
+    });
+  });
+
+  var abortBtn = document.getElementById('abort-btn');
+  if (abortBtn) {
+    abortBtn.addEventListener('click', confirmAbort);
+  }
+
+  var flaggedJumpBtn = document.getElementById('q-map-flagged-btn');
+  if (flaggedJumpBtn) {
+    flaggedJumpBtn.addEventListener('click', jumpToFirstFlagged);
+  }
+
+  var mapToggleBtn = document.getElementById('q-map-toggle');
+  if (mapToggleBtn) {
+    mapToggleBtn.addEventListener('click', toggleMap);
+  }
+
   // ── Init ──────────────────────────────────────────────────────
   updateProgress();
   _buildMap();

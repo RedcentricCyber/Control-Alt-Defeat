@@ -64,10 +64,10 @@
         </span>
         <span class="question-actions">
           <button type="button" class="q-action-btn flag-btn" id="flag-btn-{{ qidx }}"
-                  onclick="toggleFlag({{ qidx }})">⚑ FLAG</button>
+                  data-qidx="{{ qidx }}">⚑ FLAG</button>
           {% if github_repo %}
           <button type="button" class="q-action-btn report-btn"
-                  onclick="reportQuestion({{ qidx }})">⚐ REPORT</button>
+                  data-qidx="{{ qidx }}">⚐ REPORT</button>
           {% endif %}
         </span>
       </div>
@@ -78,7 +78,7 @@
         {% for key, text in question.options.items() | sort %}
         <li class="option-item"
             id="opt-{{ qidx }}-{{ key }}"
-            onclick="selectOption(this, 'q{{ qidx }}', '{{ key }}')">
+            data-qidx="{{ qidx }}" data-key="{{ key }}">
           <input type="radio" name="q{{ qidx }}" value="{{ key }}"
                  id="r-{{ qidx }}-{{ key }}">
           <span class="option-letter">[{{ key }}]</span>
@@ -92,7 +92,7 @@
 
     <!-- Submit -->
     <div class="flex gap-12 flex-wrap mt-24">
-      <button type="button" class="btn btn-danger" onclick="confirmAbort()">
+      <button type="button" class="btn btn-danger" id="abort-btn">
         &gt; ABORT MISSION
       </button>
       <button type="submit" class="btn btn-primary" id="submit-btn">
@@ -120,7 +120,7 @@
     </div>
     <div class="q-map-grid" id="q-map-grid"><!-- built by JS --></div>
     <button type="button" class="q-map-jump-btn" id="q-map-flagged-btn"
-            style="display:none;" onclick="jumpToFirstFlagged()">
+            style="display:none;">
       ⚑ JUMP TO FLAGGED
     </button>
     <div class="q-map-kb-hint">
@@ -133,7 +133,7 @@
       <span class="q-map-key">M</span> map
     </div>
   </div>
-  <button type="button" class="q-map-header" onclick="toggleMap()">
+  <button type="button" class="q-map-header" id="q-map-toggle">
     <span>☷ QUESTION MAP</span>
     <span id="q-map-chevron">▾</span>
   </button>

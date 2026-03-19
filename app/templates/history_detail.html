@@ -113,7 +113,7 @@
         </span>
         {% if github_repo %}
         <button type="button" class="q-action-btn report-btn"
-                onclick="reportHistoryQ({{ loop.index0 }})">⚐ REPORT INACCURACY</button>
+                data-qidx="{{ loop.index0 }}">⚐ REPORT INACCURACY</button>
         {% endif %}
       </div>
       <div class="result-q-text">{{ r.question }}</div>
@@ -176,7 +176,7 @@
     var EXAM_TITLE  = {{ entry.exam_title | tojson }};
     var GITHUB_REPO = {{ github_repo | tojson }};
 
-    window.reportHistoryQ = function (idx) {
+    function reportHistoryQ(idx) {
       var row  = document.getElementById('result-row-' + idx);
       var questionText = row
         ? row.querySelector('.result-q-text').textContent.trim()
@@ -196,7 +196,13 @@
                 '&body='   + encodeURIComponent(body)  +
                 '&labels=' + encodeURIComponent('inaccuracy');
       window.open(url, '_blank', 'noopener,noreferrer');
-    };
+    }
+
+    document.querySelectorAll('.report-btn[data-qidx]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        reportHistoryQ(parseInt(this.dataset.qidx, 10));
+      });
+    });
   })();
 </script>
 {% endif %}

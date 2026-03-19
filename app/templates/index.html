@@ -61,7 +61,7 @@
             <span class="card-tag{% if loop.index > 3 %} card-tag-overflow{% endif %}">{{ cat }}</span>
             {% endfor %}
             {% if exam.categories | length > 3 %}
-            <button type="button" class="card-tags-more" onclick="expandTags(this)">+{{ exam.categories | length - 3 }} more</button>
+            <button type="button" class="card-tags-more">+{{ exam.categories | length - 3 }} more</button>
             {% endif %}
           </div>
           {% endif %}
@@ -86,7 +86,7 @@
                      min="0" max="999" value="{{ exam.time_limit }}">
             </div>
             <button type="button" class="btn btn-primary card-launch-btn"
-                    onclick="launchExam('{{ exam.id }}')">
+                    data-exam-id="{{ exam.id }}">
               <span>&gt;&gt;</span> LAUNCH
             </button>
           </div>
