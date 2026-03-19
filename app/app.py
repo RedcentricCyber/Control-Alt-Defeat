@@ -45,7 +45,7 @@ CLIENT_ID_COOKIE = "cad_client_id"
 ALIAS_COOKIE     = "cad_alias"
 CLIENT_ID_MAX_AGE = 365 * 24 * 3600  # 1 year
 ALIAS_MAX_LENGTH = 32
-GITHUB_REPO = os.environ.get("GITHUB_REPO", "x41x41x41/Control-Alt-Defeat")
+GITHUB_REPO = os.environ.get("GITHUB_REPO", "RedcentricCyber/Control-Alt-Defeat")
 
 # UUID4 pattern for validating client_id cookies
 _UUID4_RE = re.compile(
