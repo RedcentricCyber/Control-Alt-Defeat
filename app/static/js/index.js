@@ -13,16 +13,16 @@
   }
 
   // Expand hidden category tags
-  window.expandTags = function (btn) {
+  function expandTags(btn) {
     var tagsRow = btn.parentElement;
     tagsRow.querySelectorAll('.card-tag-overflow').forEach(function (el) {
       el.classList.remove('card-tag-overflow');
     });
     btn.remove();
-  };
+  }
 
   // Called by each card's launch button
-  window.launchExam = function (examId) {
+  function launchExam(examId) {
     if (!aliasOk) {
       if (aliasInput) {
         aliasInput.focus();
@@ -49,5 +49,18 @@
     } else {
       document.getElementById('start-form').submit();
     }
-  };
+  }
+
+  // ── DOM event bindings (replaces inline onclick handlers) ──
+  document.querySelectorAll('.card-tags-more').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      expandTags(this);
+    });
+  });
+
+  document.querySelectorAll('.card-launch-btn[data-exam-id]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      launchExam(this.dataset.examId);
+    });
+  });
 })();
