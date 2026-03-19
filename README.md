@@ -70,7 +70,8 @@ Add a JSON file to `app/exams/` following this format:
         "D": "Wrong answer"
       },
       "correct": "C",
-      "explanation": "Optional explanation shown after grading."
+      "explanation": "Optional explanation shown after grading.",
+      "skill": "Optional skill value to allow for a subcategory under the main one, as used on CREST syllabus documentation"
     }
   ]
 }
