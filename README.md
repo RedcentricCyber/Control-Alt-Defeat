@@ -2,6 +2,8 @@
 
 A cyberpunk-themed multiple-choice exam app built with Flask. Pick an exam, answer questions, and get graded results with full history tracking. Exams are plain JSON files — drop one in and it just works.
 
+NOTE: Be mindful of NDA's should you contribute questions and exams. In my case I deliberately only gave AI agents information about the exams that the exam body publishes themselves (i.e sample questions, syllabus documentation) before getting the agents to generate exam JSON.
+
 ## Quick Start
 
 **Docker (recommended):**
@@ -33,12 +35,8 @@ python app/app.py
 
 | Exam | Questions | Difficulty | Source |
 |------|-----------|------------|--------|
-| CREST CCT Preparation | 826 | Hard | ChatGPT |
-| CyberScheme CSTM | 108 | Hard | ChatGPT |
-| CISSP Revision | 25 | Medium | ChatGPT |
-| Web Security | 10 | Medium | ChatGPT |
-| Networking Basics | 10 | Easy | ChatGPT |
-| Linux Deep Dive | 10 | Hard | ChatGPT |
+| CREST CCT Preparation | 826 | Hard | ChatGPT, Claude, Gemini |
+| CyberScheme CSTM | 108 | Medium | ChatGPT |
 
 ## Creating Your Own Exams
 
