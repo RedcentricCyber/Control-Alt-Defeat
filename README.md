@@ -37,10 +37,11 @@ python app/app.py
 
 ## Included Exams
 
-| Exam | Questions | Difficulty | Source |
+| Exam | Question Pool | Difficulty | Source |
 |------|-----------|------------|--------|
 | CREST CCT Multichoice Preparation | 1649 | Hard | ChatGPT, Claude, Gemini |
 | CyberScheme CSTM | 108 | Medium | ChatGPT |
+| CREST CPSA Multichoice Preparation | 355 | Medium | Gemini |
 
 ## Creating Your Own Exams
 
@@ -75,6 +76,53 @@ Add a JSON file to `app/exams/` following this format:
     }
   ]
 }
+```
+
+I found Gemini code studio to be best at creating an exam using something similar to the below prompt.
+
+```
+Create an XYZ exam .json file, using the below format
+
+{
+  "title": "My Exam",
+  "description": "A short description shown on the exam card.",
+  "difficulty": "MEDIUM",
+  "pass_mark": 70,
+  "time_limit": 30,
+  "num_questions": 20,
+  "based_on": "Optional — what the exam is based on",
+  "created_by": "Optional — author name",
+  "links": [
+    { "text": "Study Guide", "url": "https://example.com" }
+  ],
+  "questions": [
+    {
+      "category": "Topic Area",
+      "question": "What is the answer to this question?",
+      "options": {
+        "A": "Wrong answer",
+        "B": "Wrong answer",
+        "C": "Correct answer",
+        "D": "Wrong answer"
+      },
+      "correct": "C",
+      "explanation": "Optional explanation shown after grading.",
+      "skill": "Optional skill value to allow for a subcategory under the main one, as used on CREST syllabus documentation"
+    }
+  ]
+}
+
+The XYZ exam syllabus is below
+
+CATEGORY|SKILL
+
+Here are some sample questions to judge the skill level required
+
+EXAMPLE QUESTIONS
+
+Also note:
+* Please make sure explanations are helpful to candidates revision and help them understand why an answer is correct.
+* I want at least 5 questions per skill
 ```
 
 **Key fields:**
