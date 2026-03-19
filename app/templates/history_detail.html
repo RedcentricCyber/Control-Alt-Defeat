@@ -171,7 +171,7 @@
 
 {% block extra_scripts %}
 {% if github_repo %}
-<script>
+<script nonce="{{ csp_nonce }}">
   (function () {
     var EXAM_TITLE  = {{ entry.exam_title | tojson }};
     var GITHUB_REPO = {{ github_repo | tojson }};

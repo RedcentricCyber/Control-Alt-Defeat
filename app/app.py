@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import random
+import re
 import secrets
 import sqlite3
 import time
@@ -13,6 +14,14 @@ from flask import Flask, abort, make_response, render_template, request, session
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "cyberpunk-secret-key-change-in-prod")
+
+# ── Session cookie hardening ─────────────────────────────────
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+# Set Secure flag when running in production (HTTPS)
+_PRODUCTION = os.environ.get("CAD_PRODUCTION", "").strip().lower() in ("1", "true", "yes")
+if _PRODUCTION:
+    app.config["SESSION_COOKIE_SECURE"] = True
 
 # ── Logging ───────────────────────────────────────────────────
 
@@ -35,7 +44,14 @@ DB_PATH = Path(os.environ.get("HISTORY_DB", Path(__file__).parent / "data" / "hi
 CLIENT_ID_COOKIE = "cad_client_id"
 ALIAS_COOKIE     = "cad_alias"
 CLIENT_ID_MAX_AGE = 365 * 24 * 3600  # 1 year
+ALIAS_MAX_LENGTH = 32
 GITHUB_REPO = os.environ.get("GITHUB_REPO", "RedcentricCyber/Control-Alt-Defeat")
+
+# UUID4 pattern for validating client_id cookies
+_UUID4_RE = re.compile(
+    r"^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+    re.IGNORECASE,
+)
 
 # ── Rate limiting ─────────────────────────────────────────────
 # Simple in-memory store: client_id → last submit timestamp.
@@ -70,6 +86,14 @@ def _get_csrf_token() -> str:
     return session["csrf_token"]
 
 
+def _generate_csp_nonce() -> str:
+    """Generate a per-request CSP nonce and store it on flask.g."""
+    from flask import g
+    nonce = secrets.token_urlsafe(32)
+    g.csp_nonce = nonce
+    return nonce
+
+
 def _check_csrf():
     """Abort 403 if the submitted CSRF token doesn't match the session token."""
     token = request.form.get("csrf_token", "")
@@ -82,9 +106,13 @@ def _check_csrf():
 
 @app.after_request
 def set_security_headers(response):
+    # Use per-request nonce for inline scripts (set by the view via g.csp_nonce)
+    from flask import g
+    nonce = getattr(g, "csp_nonce", "")
+    nonce_src = f"'nonce-{nonce}'" if nonce else "'unsafe-inline'"
     csp = (
         "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline'; "
+        f"script-src 'self' {nonce_src}; "
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' data:; "
@@ -96,6 +124,9 @@ def set_security_headers(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    if _PRODUCTION:
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return response
 
 
@@ -218,7 +249,7 @@ def _compute_category_breakdown(answers):
 def _ensure_client_id(response):
     """Return (client_id, modified) — sets cookie on response if new."""
     client_id = request.cookies.get(CLIENT_ID_COOKIE)
-    if client_id:
+    if client_id and _UUID4_RE.match(client_id):
         return client_id, False
     client_id = str(uuid.uuid4())
     response.set_cookie(
@@ -234,7 +265,13 @@ def _ensure_client_id(response):
 # ── Exam helpers ─────────────────────────────────────────────
 
 def load_exam(exam_id):
-    exam_path = EXAMS_DIR / f"{exam_id}.json"
+    # Validate exam_id to prevent path traversal — allow only alphanumeric, hyphens, underscores
+    if not exam_id or not all(c.isalnum() or c in "-_" for c in exam_id):
+        return None
+    exam_path = (EXAMS_DIR / f"{exam_id}.json").resolve()
+    # Double-check the resolved path is inside the exams directory
+    if not str(exam_path).startswith(str(EXAMS_DIR.resolve())):
+        return None
     if not exam_path.exists():
         return None
     with open(exam_path) as f:
@@ -351,7 +388,7 @@ def index():
 def start():
     _check_csrf()
 
-    alias = request.form.get("alias", "").strip()
+    alias = request.form.get("alias", "").strip()[:ALIAS_MAX_LENGTH]
     exam_id = request.form.get("exam_id", "").strip()
 
     if not alias:
@@ -420,6 +457,7 @@ def exam():
         token=session.get("session_token"),
         github_repo=GITHUB_REPO,
         csrf_token=_get_csrf_token(),
+        csp_nonce=_generate_csp_nonce(),
     )
 
 
@@ -430,7 +468,8 @@ def submit():
     if not session.get("started"):
         return redirect(url_for("index"))
 
-    client_id = request.cookies.get(CLIENT_ID_COOKIE, str(uuid.uuid4()))
+    raw_cid = request.cookies.get(CLIENT_ID_COOKIE, "")
+    client_id = raw_cid if _UUID4_RE.match(raw_cid) else str(uuid.uuid4())
 
     if not _check_rate_limit(client_id):
         logger.warning("Rate limit hit on /submit — client_id=%s", client_id)
@@ -532,8 +571,8 @@ def results():
 
 @app.route("/history")
 def history_list():
-    client_id = request.cookies.get(CLIENT_ID_COOKIE)
-    if not client_id:
+    client_id = request.cookies.get(CLIENT_ID_COOKIE, "")
+    if not _UUID4_RE.match(client_id):
         return redirect(url_for("index"))
     history = get_history(client_id)
     return render_template("history_list.html", history=history)
@@ -541,8 +580,8 @@ def history_list():
 
 @app.route("/history/<int:entry_id>")
 def history_detail(entry_id):
-    client_id = request.cookies.get(CLIENT_ID_COOKIE)
-    if not client_id:
+    client_id = request.cookies.get(CLIENT_ID_COOKIE, "")
+    if not _UUID4_RE.match(client_id):
         return redirect(url_for("index"))
 
     entry = get_history_entry(entry_id, client_id)
@@ -560,6 +599,7 @@ def history_detail(entry_id):
         category_breakdown=category_breakdown,
         grade=grade,
         github_repo=GITHUB_REPO,
+        csp_nonce=_generate_csp_nonce(),
     )
 
 

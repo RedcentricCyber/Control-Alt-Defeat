@@ -33,6 +33,7 @@ python app/app.py
 | `SECRET_KEY` | dev value (warns on startup) | Flask session signing key — **set this in production** |
 | `HISTORY_DB` | `app/data/history.db` | Path to the SQLite history database |
 | `GITHUB_REPO` | `RedcentricCyber/Control-Alt-Defeat` | Repo slug used by the "report inaccuracy" button |
+| `CAD_PRODUCTION` | off | Set to `1` when serving over HTTPS — enables Secure session cookies and HSTS |
 
 ## Included Exams
 

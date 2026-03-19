@@ -141,7 +141,7 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script>
+<script nonce="{{ csp_nonce }}">
   const TOTAL = {{ exam.questions | length }};
   const TIME_LIMIT = {{ exam.time_limit | default(0) }};
   const SESSION_TOKEN = '{{ token }}';
