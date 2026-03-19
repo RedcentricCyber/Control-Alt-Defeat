@@ -33,7 +33,7 @@ python app/app.py
 |----------|---------|-------------|
 | `SECRET_KEY` | dev value (warns on startup) | Flask session signing key — **set this in production** |
 | `HISTORY_DB` | `app/data/history.db` | Path to the SQLite history database |
-| `GITHUB_REPO` | `x41x41x41/Control-Alt-Defeat` | Repo slug used by the "report inaccuracy" button |
+| `GITHUB_REPO` | `RedcentricCyber/Control-Alt-Defeat` | Repo slug used by the "report inaccuracy" button |
 
 ## Included Exams
 
