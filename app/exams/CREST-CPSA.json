@@ -4493,6 +4493,1896 @@
       "explanation": "If sudo is configured to preserve environment variables, LD_PRELOAD can be used for privilege escalation.",
       "skill_id": "F2",
       "skill": "F2 - Unix Vulns"
+    },
+    {
+      "category": "B - Core Technical Skills",
+      "skill_id": "B14",
+      "skill": "B14 - Audit Techniques",
+      "question": "Which of the following is a primary objective of performing a regular audit of system logs during a security assessment?",
+      "options": {
+        "A": "To identify unauthorized access attempts and potential security breaches",
+        "B": "To increase the overall processing speed and performance of the server",
+        "C": "To automatically patch known vulnerabilities within the operating system",
+        "D": "To provide a complete backup of all user data stored on the local drives",
+        "E": "To encrypt all sensitive communication between the client and the server"
+      },
+      "explanation": "Regularly auditing system logs is crucial for identifying unauthorized access attempts, unusual patterns of behavior, and potential security breaches that may have occurred. It provides a historical record of events that can be used for forensic analysis and to verify that security controls are functioning as intended. Options B, C, D, and E describe other system management tasks that are not the primary goal of log auditing.",
+      "correct": "A"
+    },
+    {
+      "category": "B - Core Technical Skills",
+      "skill_id": "B14",
+      "skill": "B14 - Audit Techniques",
+      "question": "When conducting a security audit, what is the main purpose of verifying the 'integrity' of critical system files?",
+      "options": {
+        "A": "To ensure that files have not been modified by unauthorized users or malware",
+        "B": "To confirm that all system files are stored in a compressed format for space",
+        "C": "To verify that the files are accessible to every user on the local network",
+        "D": "To check if the files have been successfully backed up to a remote location",
+        "E": "To ensure that the files are compatible with the latest version of the OS"
+      },
+      "explanation": "Integrity checking ensures that critical system files (such as binaries, configuration files, and libraries) have not been tampered with or modified by unauthorized individuals or malicious software (like rootkits). This is often achieved using cryptographic hashes. Options B, C, D, and E refer to availability, compatibility, or storage efficiency rather than integrity.",
+      "correct": "A"
+    },
+    {
+      "category": "B - Core Technical Skills",
+      "skill_id": "B14",
+      "skill": "B14 - Audit Techniques",
+      "question": "Which tool is commonly used on Linux systems to monitor and report on changes to the filesystem for auditing purposes?",
+      "options": {
+        "A": "Tripwire",
+        "B": "Wireshark",
+        "C": "Metasploit",
+        "D": "Nmap",
+        "E": "Burp Suite"
+      },
+      "explanation": "Tripwire is a well-known Host-based Intrusion Detection System (HIDS) that monitors and alerts on changes to specified files and directories, making it a key tool for filesystem auditing. Wireshark is for packet analysis, Metasploit is an exploitation framework, Nmap is a network scanner, and Burp Suite is a web application security testing tool.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C1",
+      "skill": "C1 - WHOIS",
+      "question": "What type of information is most commonly retrieved from a WHOIS query during the reconnaissance phase of a penetration test?",
+      "options": {
+        "A": "The registered owner, contact details, and nameservers for a domain name",
+        "B": "The internal IP address range and subnet mask used by the target company",
+        "C": "A complete list of all active user accounts and their associated passwords",
+        "D": "The specific version numbers of all software running on the target server",
+        "E": "The physical location and serial numbers of the target's network hardware"
+      },
+      "explanation": "WHOIS is a protocol used to query databases that store the registered users or assignees of an Internet resource, such as a domain name or an IP address block. It typically provides registration dates, contact information for administrative and technical personnel, and the authoritative nameservers. It does not provide internal network details, passwords, or hardware serial numbers.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C1",
+      "skill": "C1 - WHOIS",
+      "question": "Why might a penetration tester use a WHOIS 'history' service during an engagement?",
+      "options": {
+        "A": "To find previous owners or contact details that might have been redacted",
+        "B": "To determine the exact number of times a domain has been visited by users",
+        "C": "To identify the specific vulnerabilities that were present on the site in the past",
+        "D": "To gain administrative access to the domain registrar's management console",
+        "E": "To see a list of all historical passwords used by the domain administrator"
+      },
+      "explanation": "WHOIS history services allow testers to see previous registration records. This is useful if the current records are hidden by a privacy service (WHOIS masking), as older records might contain real names, emails, or addresses that can be used for further OSINT or social engineering. It does not provide traffic stats, historical vulnerabilities, or passwords.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C3",
+      "skill": "C3 - Website Analysis",
+      "question": "During website analysis, what is the primary purpose of examining the 'robots.txt' file?",
+      "options": {
+        "A": "To identify directories that the owner wants to hide from search engines",
+        "B": "To find a list of all valid usernames and passwords for the web application",
+        "C": "To determine the physical location of the server hosting the web application",
+        "D": "To automatically exploit common vulnerabilities found in the web application",
+        "E": "To view the source code of the server-side scripts used by the application"
+      },
+      "explanation": "The robots.txt file is used to give instructions to web robots (like search engine crawlers) about which parts of the site should not be processed or indexed. For a penetration tester, these 'disallowed' entries often point to sensitive directories, admin panels, or temporary files that the owner considers private. It does not contain passwords, source code, or physical locations.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C3",
+      "skill": "C3 - Website Analysis",
+      "question": "Which of the following techniques is most effective for identifying the Content Management System (CMS) used by a target website?",
+      "options": {
+        "A": "Analyzing specific file paths, meta tags, and unique strings in the source code",
+        "B": "Performing a brute-force attack against the SSH service on the target server",
+        "C": "Sending a large number of ICMP Echo Request packets to the target's IP address",
+        "D": "Using a WHOIS query to find the contact information of the technical lead",
+        "E": "Scanning the target network for open ports using a standard TCP connect scan"
+      },
+      "explanation": "CMS identification (fingerprinting) is typically done by looking for characteristic markers in the HTML source code, such as specific paths (e.g., /wp-content/ for WordPress), meta generator tags, or unique CSS/JS file names. Brute-forcing SSH, pinging, WHOIS, and port scanning are network-level activities that do not directly reveal the web application's CMS.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C5",
+      "skill": "C5 - Newsgroups",
+      "question": "How can historical newsgroup (Usenet) postings be leveraged by a penetration tester during the information gathering phase?",
+      "options": {
+        "A": "To find technical queries from employees that might reveal internal systems",
+        "B": "To gain direct remote shell access to the target's primary domain controller",
+        "C": "To intercept real-time encrypted communications between company executives",
+        "D": "To modify the DNS records of the target organization to point to a rogue IP",
+        "E": "To automatically download the entire database of the target web application"
+      },
+      "explanation": "Historical newsgroup posts (often searchable via services like Google Groups) can contain valuable information leaked by employees, such as technical questions about specific server configurations, internal IP addresses, software versions, or even snippets of code. This helps in building a profile of the target's internal environment. It does not provide direct shell access, real-time interception, or database downloads.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C5",
+      "skill": "C5 - Newsgroups",
+      "question": "Which protocol is primarily used for accessing and participating in newsgroups (Usenet)?",
+      "options": {
+        "A": "NNTP",
+        "B": "SNMP",
+        "C": "SMTP",
+        "D": "IMAP",
+        "E": "HTTP"
+      },
+      "explanation": "NNTP (Network News Transfer Protocol) is the standard protocol used for the distribution, inquiry, retrieval, and posting of news articles on Usenet. SNMP is for network management, SMTP is for sending email, IMAP is for retrieving email, and HTTP is for web traffic.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C5",
+      "skill": "C5 - Newsgroups",
+      "question": "What is a significant security risk associated with employees posting to technical newsgroups using their corporate email addresses?",
+      "options": {
+        "A": "It facilitates the harvesting of valid email addresses for phishing attacks",
+        "B": "It causes the corporate firewall to automatically disable all inbound traffic",
+        "C": "It allows any external user to reset the passwords of all corporate accounts",
+        "D": "It immediately exposes the organization's private encryption keys to the public",
+        "E": "It results in the automatic installation of ransomware on all company laptops"
+      },
+      "explanation": "When employees post using corporate emails, they confirm that the email address is active and associated with a specific individual and organization. This makes it easy for attackers to harvest these addresses for targeted phishing or social engineering campaigns. It does not directly disable firewalls, reset passwords, or install ransomware automatically.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C6",
+      "skill": "C6 - Header Analysis",
+      "question": "Which HTTP response header is most likely to reveal the specific version of the web server software being used?",
+      "options": {
+        "A": "Server",
+        "B": "Content-Type",
+        "C": "Location",
+        "D": "Set-Cookie",
+        "E": "Cache-Control"
+      },
+      "explanation": "The 'Server' header is intended to identify the software used by the origin server to handle the request, and it often includes version information (e.g., 'Server: Apache/2.4.41'). Content-Type describes the media type, Location is used for redirects, Set-Cookie sends cookies to the client, and Cache-Control specifies caching directives.",
+      "correct": "A"
+    },
+    {
+      "category": "C - Information Gathering & Enumeration",
+      "skill_id": "C6",
+      "skill": "C6 - Header Analysis",
+      "question": "What information can the 'X-Powered-By' HTTP header provide to an attacker during the reconnaissance phase?",
+      "options": {
+        "A": "The underlying technology or framework used to generate the web page",
+        "B": "The physical MAC address of the network interface card on the server",
+        "C": "The total number of users currently logged into the web application",
+        "D": "The private IP address of the database server behind the web server",
+        "E": "The administrative password for the web server's management interface"
+      },
+      "explanation": "The 'X-Powered-By' header is a non-standard header often used to indicate the technology stack (e.g., PHP, ASP.NET, Express) used by the application. This helps an attacker narrow down their search for specific vulnerabilities related to that technology. It does not reveal MAC addresses, user counts, private IPs, or passwords.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D2",
+      "skill": "D2 - Traffic Analysis",
+      "question": "Which of the following is a primary goal of passive traffic analysis during a network security assessment?",
+      "options": {
+        "A": "To identify active protocols, services, and potential data leaks without alerting the target",
+        "B": "To actively disrupt the communication between two hosts by injecting malicious packets",
+        "C": "To automatically reset the passwords of all administrative accounts on the target network",
+        "D": "To physically trace the location of the network cables within the target's building",
+        "E": "To encrypt all unencrypted traffic passing through the target's primary gateway"
+      },
+      "explanation": "Passive traffic analysis involves monitoring network traffic without injecting any data. This allows a tester to identify the protocols in use, discover active services, and spot sensitive information (like cleartext passwords) being transmitted, all without being detected by an IDS. Options B, C, D, and E describe active or physical tasks that are not part of passive analysis.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D2",
+      "skill": "D2 - Traffic Analysis",
+      "question": "While analyzing a packet capture (PCAP) file, you notice a large number of DNS queries for unusual, long, and randomized subdomains. What might this indicate?",
+      "options": {
+        "A": "The presence of a DNS-based covert channel used for data exfiltration",
+        "B": "A standard update process for the operating system's internal clock",
+        "C": "The normal behavior of a web browser pre-fetching common domain names",
+        "D": "A misconfigured DHCP server providing incorrect addresses to local clients",
+        "E": "The successful implementation of DNSSEC across the entire organization"
+      },
+      "explanation": "DNS tunneling or covert channels often use randomized subdomains to encode and exfiltrate data or receive commands from a C2 server. This bypasses many traditional firewalls that allow outbound DNS traffic. Options B, C, D, and E are common network behaviors that do not typically involve randomized subdomain queries.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D2",
+      "skill": "D2 - Traffic Analysis",
+      "question": "What is the main difference between 'Flow Analysis' and 'Deep Packet Inspection' (DPI) in traffic analysis?",
+      "options": {
+        "A": "Flow analysis looks at metadata (IPs, ports, volume), while DPI examines the actual payload",
+        "B": "Flow analysis is used for encrypted traffic, while DPI can only be used for cleartext traffic",
+        "C": "Flow analysis requires physical access to the server, while DPI can be done remotely",
+        "D": "Flow analysis is an active technique, while DPI is always a passive monitoring technique",
+        "E": "Flow analysis is performed by the client, while DPI is always performed by the server"
+      },
+      "explanation": "Flow analysis (e.g., NetFlow) focuses on the 'who, when, and how much' by looking at headers and metadata. Deep Packet Inspection (DPI) goes further by examining the content (payload) of the packets to identify specific applications or malicious data. Both can be used on various types of traffic depending on the tools and access.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D4",
+      "skill": "D4 - IPSec",
+      "question": "In an IPSec VPN configuration, what is the primary difference between 'Transport Mode' and 'Tunnel Mode'?",
+      "options": {
+        "A": "Transport mode only encrypts the payload, while Tunnel mode encrypts the entire IP packet",
+        "B": "Transport mode is used for site-to-site VPNs, while Tunnel mode is for client-to-site",
+        "C": "Transport mode requires a hardware appliance, while Tunnel mode is software-only",
+        "D": "Transport mode uses the UDP protocol, while Tunnel mode exclusively uses the TCP protocol",
+        "E": "Transport mode is more secure because it uses a longer cryptographic key than Tunnel mode"
+      },
+      "explanation": "In Transport Mode, only the payload of the IP packet is encrypted/authenticated, leaving the original IP headers visible. In Tunnel Mode, the entire original IP packet is encapsulated within a new IP packet with new headers, providing more privacy for the internal network structure. Option B is generally the opposite of common practice.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D4",
+      "skill": "D4 - IPSec",
+      "question": "What is the main function of the 'Authentication Header' (AH) protocol within the IPSec suite?",
+      "options": {
+        "A": "To provide data integrity and origin authentication for the entire IP packet",
+        "B": "To provide full encryption for the data payload to ensure confidentiality",
+        "C": "To automatically negotiate the cryptographic keys used for the connection",
+        "D": "To compress the network traffic to improve the overall throughput of the VPN",
+        "E": "To assign dynamic IP addresses to the clients connecting to the VPN gateway"
+      },
+      "explanation": "The AH protocol provides connectionless integrity and data origin authentication for IP packets. It also provides protection against replay attacks. Crucially, AH does NOT provide confidentiality (encryption); that is the role of the ESP (Encapsulating Security Payload) protocol. Options C, D, and E describe other functions like IKE or compression.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D4",
+      "skill": "D4 - IPSec",
+      "question": "Which protocol is responsible for the secure negotiation of Security Associations (SAs) and key exchange in IPSec?",
+      "options": {
+        "A": "IKE",
+        "B": "L2TP",
+        "C": "PPTP",
+        "D": "SSL",
+        "E": "GRE"
+      },
+      "explanation": "IKE (Internet Key Exchange) is the protocol used to set up a Security Association (SA) in the IPSec protocol suite. It handles the mutual authentication of peers and the negotiation of cryptographic keys. L2TP and PPTP are other VPN protocols, SSL is for web security, and GRE is a tunneling protocol without native security.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D5",
+      "skill": "D5 - VoIP",
+      "question": "Which protocol is most commonly used for 'signalling' (call setup, teardown, and management) in VoIP environments?",
+      "options": {
+        "A": "SIP",
+        "B": "RTP",
+        "C": "RTCP",
+        "D": "H.264",
+        "E": "G.711"
+      },
+      "explanation": "SIP (Session Initiation Protocol) is the standard signalling protocol used for initiating, maintaining, and terminating real-time sessions that include voice, video, and messaging. RTP is for the actual media transport, RTCP is for monitoring media quality, and H.264/G.711 are codecs.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D5",
+      "skill": "D5 - VoIP",
+      "question": "What is a major security risk associated with using unencrypted VoIP protocols like standard SIP and RTP?",
+      "options": {
+        "A": "An attacker can intercept and listen to the voice conversations using a packet sniffer",
+        "B": "The VoIP server will automatically crash if it receives more than ten calls at once",
+        "C": "The physical handsets will become permanently disabled if they lose power during a call",
+        "D": "The organization's internet connection will be throttled by the service provider",
+        "E": "All corporate emails will be automatically forwarded to the VoIP service provider"
+      },
+      "explanation": "Unencrypted VoIP traffic is vulnerable to eavesdropping. An attacker with access to the network path can use tools like Wireshark to capture the RTP packets and reconstruct the audio of the conversation. Options B, C, D, and E are not standard risks associated with unencrypted VoIP.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D5",
+      "skill": "D5 - VoIP",
+      "question": "Which protocol is used to deliver the actual audio and video 'media streams' in a VoIP call?",
+      "options": {
+        "A": "RTP",
+        "B": "SIP",
+        "C": "TCP",
+        "D": "DNS",
+        "E": "SSH"
+      },
+      "explanation": "RTP (Real-time Transport Protocol) is designed for end-to-end, real-time transfer of streaming data, such as audio and video. SIP handles the setup, but RTP carries the actual voice data. TCP is a transport layer protocol (RTP usually runs over UDP), and DNS/SSH have unrelated functions.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D7",
+      "skill": "D7 - Config Analysis",
+      "question": "During a configuration review of a Cisco router, you find the command 'no service password-encryption'. What is the security implication of this?",
+      "options": {
+        "A": "Passwords stored in the configuration file will be visible in cleartext",
+        "B": "The router will no longer require a password for administrative access",
+        "C": "All network traffic passing through the router will be automatically encrypted",
+        "D": "The router will disable all remote management interfaces like SSH and Telnet",
+        "E": "The router will automatically generate a new, strong password every 24 hours"
+      },
+      "explanation": "The 'service password-encryption' command is used to provide a basic level of encryption (Type 7) for passwords in the config file. If it is disabled ('no ...'), passwords like the 'enable password' or line passwords will be stored as cleartext, making them easily readable by anyone with access to the config. It does not disable authentication or encrypt general traffic.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D7",
+      "skill": "D7 - Config Analysis",
+      "question": "Why is a 'permit any any' rule at the end of a firewall's inbound access control list (ACL) considered a high security risk?",
+      "options": {
+        "A": "It effectively disables the firewall by allowing all traffic that wasn't explicitly denied",
+        "B": "It causes the firewall to consume excessive CPU and memory, leading to a DoS",
+        "C": "It forces all internal users to use the same IP address when accessing the internet",
+        "D": "It prevents the firewall from logging any traffic that passes through its interfaces",
+        "E": "It automatically grants administrative privileges to any user on the local network"
+      },
+      "explanation": "Firewalls should follow the principle of 'least privilege' and 'default deny'. A 'permit any any' rule at the end of an inbound ACL allows all traffic from any source to any destination, bypassing the intended security boundaries. It doesn't necessarily cause a DoS or grant admin rights, but it negates the firewall's primary purpose.",
+      "correct": "A"
+    },
+    {
+      "category": "D - Network Security",
+      "skill_id": "D7",
+      "skill": "D7 - Config Analysis",
+      "question": "When reviewing a server's configuration, what is the primary reason for disabling 'unused services' and 'default accounts'?",
+      "options": {
+        "A": "To reduce the attack surface and eliminate common entry points for attackers",
+        "B": "To ensure that the server has enough disk space for storing large log files",
+        "C": "To increase the physical weight of the server to prevent it from being stolen",
+        "D": "To allow the server to boot up faster by reducing the number of startup tasks",
+        "E": "To comply with the manufacturer's warranty requirements for the hardware"
+      },
+      "explanation": "Every active service and account is a potential target. Disabling unused ones follows the principle of 'hardening' the system, reducing the number of ways an attacker can gain access. While it might slightly improve boot time or save a tiny amount of disk space, the primary goal is security. It has nothing to do with physical weight or warranties.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E6",
+      "skill": "E6 - Patch Management",
+      "question": "What is the primary role of Windows Server Update Services (WSUS) in a corporate environment?",
+      "options": {
+        "A": "To centrally manage and distribute Microsoft product updates to local computers",
+        "B": "To automatically encrypt all user documents stored on the central file server",
+        "C": "To provide a real-time antivirus scan for all incoming email attachments",
+        "D": "To monitor the physical temperature of the servers in the data center",
+        "E": "To assign static IP addresses to all printers and mobile devices on the network"
+      },
+      "explanation": "WSUS allows administrators to manage the distribution of updates and hotfixes released for Microsoft products to computers in their network. This helps ensure that systems are patched against known vulnerabilities in a controlled manner. Options B, C, D, and E describe other IT management tasks.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E6",
+      "skill": "E6 - Patch Management",
+      "question": "Which PowerShell command is most useful for a penetration tester to quickly determine the patching status of a local Windows machine?",
+      "options": {
+        "A": "Get-HotFix",
+        "B": "Get-Service",
+        "C": "Get-Process",
+        "D": "Get-Content",
+        "E": "Get-History"
+      },
+      "explanation": "The 'Get-HotFix' cmdlet gets hotfixes (patches) that have been applied to the local computer or a remote computer. This allows a tester to see which security updates are missing. Get-Service lists services, Get-Process lists running processes, Get-Content reads file content, and Get-History shows command history.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E6",
+      "skill": "E6 - Patch Management",
+      "question": "What is a significant risk of an organization having a slow or inconsistent patch management process?",
+      "options": {
+        "A": "It leaves systems vulnerable to exploits for which a fix is already available",
+        "B": "It causes the corporate website to automatically change its primary language",
+        "C": "It results in the immediate physical failure of all hard drives in the server",
+        "D": "It prevents users from being able to print documents to local network printers",
+        "E": "It causes the server's clock to drift by several hours every single day"
+      },
+      "explanation": "When patches are released, the vulnerabilities they fix become public knowledge. Attackers often reverse-engineer patches to create exploits. A slow patching process means systems remain vulnerable to these 'n-day' exploits long after a fix is available. Options B, C, D, and E are not standard consequences of poor patching.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E8",
+      "skill": "E8 - Exchange",
+      "question": "Which port is typically used by Microsoft Exchange for unencrypted Outlook Web Access (OWA) over HTTP?",
+      "options": {
+        "A": "80",
+        "B": "443",
+        "C": "25",
+        "D": "110",
+        "E": "143"
+      },
+      "explanation": "OWA is a web-based email client. Like any standard web application, it uses port 80 for HTTP and port 443 for HTTPS. Port 25 is for SMTP, 110 is for POP3, and 143 is for IMAP.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E8",
+      "skill": "E8 - Exchange",
+      "question": "What is the primary purpose of the 'Autodiscover' service in a Microsoft Exchange environment?",
+      "options": {
+        "A": "To automatically configure email client settings using only an email and password",
+        "B": "To detect and block all incoming spam messages before they reach the inbox",
+        "C": "To encrypt all internal emails using the organization's private root CA",
+        "D": "To provide a real-time backup of the entire Exchange database to the cloud",
+        "E": "To automatically reset the passwords of users who have been inactive for 30 days"
+      },
+      "explanation": "Autodiscover makes it easy for users to configure their Outlook or mobile clients by automatically providing the necessary server settings (like URLs for EWS, OAB, etc.) based on their email address. It is not a spam filter, encryption service, backup tool, or password manager.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E8",
+      "skill": "E8 - Exchange",
+      "question": "What is a common security concern when Exchange services are exposed directly to the internet without a reverse proxy or WAF?",
+      "options": {
+        "A": "Increased risk of exploitation for vulnerabilities in OWA or Exchange Control Panel",
+        "B": "The server will automatically start sending all emails to the wrong recipients",
+        "C": "Users will be unable to send any attachments larger than 1MB in size",
+        "D": "The Exchange server will lose its connection to the Active Directory domain",
+        "E": "The server's physical storage will be automatically wiped every weekend"
+      },
+      "explanation": "Exposing complex applications like Exchange directly to the internet increases the attack surface. Vulnerabilities in components like OWA or the Exchange Control Panel (ECP) can lead to remote code execution (e.g., ProxyLogon, ProxyShell). A reverse proxy or WAF can provide an additional layer of defense. Options B, C, D, and E are not typical results of direct exposure.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E9",
+      "skill": "E9 - Windows Apps",
+      "question": "When assessing a Windows server running IIS, what is a common security risk associated with the 'inetpub' directory?",
+      "options": {
+        "A": "Insecure permissions that allow unauthorized users to modify web content",
+        "B": "The directory is automatically deleted if the server is rebooted unexpectedly",
+        "C": "The directory can only be accessed by users with physical access to the server",
+        "D": "All files in this directory are automatically encrypted with a random key",
+        "E": "The directory is used to store the cleartext passwords of all domain admins"
+      },
+      "explanation": "The 'C:\\inetpub' directory is the default location for web content in IIS. If permissions are too loose (e.g., 'Everyone' has write access), an attacker who gains a low-privileged shell could deface the site or upload a web shell. It is not automatically deleted, encrypted, or used for domain admin passwords.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E9",
+      "skill": "E9 - Windows Apps",
+      "question": "Which of the following is an effective way to identify the version of a Windows-based application service during a network scan?",
+      "options": {
+        "A": "Banner grabbing from the service's listening port",
+        "B": "Sending a 'ping' request to the server's broadcast address",
+        "C": "Checking the WHOIS record for the organization's domain name",
+        "D": "Analyzing the 'robots.txt' file on the primary web server",
+        "E": "Performing a brute-force attack against the local 'Guest' account"
+      },
+      "explanation": "Banner grabbing involves connecting to a service's port and reading the initial response string, which often contains the software name and version. Pinging, WHOIS, robots.txt, and brute-forcing accounts do not directly reveal application version information.",
+      "correct": "A"
+    },
+    {
+      "category": "E - Windows Security Assessment",
+      "skill_id": "E9",
+      "skill": "E9 - Windows Apps",
+      "question": "What is the security implication of a Windows application running with 'SYSTEM' privileges?",
+      "options": {
+        "A": "An exploit in the application could lead to full compromise of the local machine",
+        "B": "The application will be unable to access any files stored on the local C: drive",
+        "C": "The application will automatically be blocked by the Windows Defender firewall",
+        "D": "The application can only be started by a user with a physical smart card",
+        "E": "The application's network traffic will be automatically encrypted with AES-256"
+      },
+      "explanation": "The 'SYSTEM' account (LocalSystem) has extensive privileges on the local machine, even more than a local Administrator in some cases. If an application running as SYSTEM is compromised, the attacker gains those same high-level privileges. This is why the principle of least privilege recommends running apps as low-privileged service accounts.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F5",
+      "skill": "F5 - NFS",
+      "question": "What is the primary security risk of the 'no_root_squash' option in a Linux NFS export configuration?",
+      "options": {
+        "A": "It allows a remote root user to have root privileges on the exported filesystem",
+        "B": "It prevents any user from accessing the exported directory over the network",
+        "C": "It automatically encrypts all files stored on the NFS share with a weak key",
+        "D": "It causes the NFS server to crash if more than two clients connect at once",
+        "E": "It forces all clients to use the NFSv2 protocol instead of the more secure NFSv4"
+      },
+      "explanation": "By default, NFS 'squashes' root requests from clients to a low-privileged user (usually 'nobody'). If 'no_root_squash' is enabled, a user who has root access on their own client machine will also have root access to the files on the server's export, which is a major security risk. It does not encrypt files or cause crashes.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F5",
+      "skill": "F5 - NFS",
+      "question": "Which command is used on a Linux system to list the available NFS exports on a remote server?",
+      "options": {
+        "A": "showmount -e",
+        "B": "nfsstat -l",
+        "C": "exportfs -v",
+        "D": "mount -a",
+        "E": "rpcinfo -p"
+      },
+      "explanation": "The 'showmount -e <IP>' command queries the mount daemon on a remote host for a list of its exported filesystems. 'nfsstat' shows statistics, 'exportfs' manages local exports, 'mount -a' mounts all filesystems in fstab, and 'rpcinfo' lists RPC services.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F5",
+      "skill": "F5 - NFS",
+      "question": "What is a key security improvement in NFSv4 compared to earlier versions like NFSv3?",
+      "options": {
+        "A": "Support for strong authentication and encryption via Kerberos",
+        "B": "The ability to store files larger than 2GB on the exported share",
+        "C": "A significant increase in the speed of file transfers over the network",
+        "D": "Automatic integration with the Windows Active Directory Recycle Bin",
+        "E": "The removal of the requirement for a central server to manage the shares"
+      },
+      "explanation": "NFSv4 was designed with security in mind and includes support for RPCSEC_GSS, which allows for strong authentication, integrity, and privacy using Kerberos. Earlier versions relied on weak IP-based or UID-based authentication. Options B, C, D, and E are not the primary security improvements of NFSv4.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F6",
+      "skill": "F6 - R Services",
+      "question": "Why are the legacy 'R-services' (rlogin, rsh, rcp) considered highly insecure in modern networks?",
+      "options": {
+        "A": "They transmit all data, including credentials, in cleartext over the network",
+        "B": "They require a physical hardware token to be present for every connection",
+        "C": "They are only compatible with extremely old versions of the Linux kernel",
+        "D": "They automatically disable the system's firewall whenever they are in use",
+        "E": "They can only be used to transfer files that are smaller than 1KB in size"
+      },
+      "explanation": "The R-services were designed for trusted environments and do not use encryption. This means that usernames, passwords, and all session data are sent in cleartext, making them trivial to intercept with a packet sniffer. They do not require hardware tokens or disable firewalls.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F6",
+      "skill": "F6 - R Services",
+      "question": "What is the purpose of the '.rhosts' file in the context of Unix R-services?",
+      "options": {
+        "A": "To define a list of trusted remote hosts and users for passwordless login",
+        "B": "To store the encrypted passwords of all users allowed to use the R-services",
+        "C": "To provide a real-time log of all failed login attempts to the R-services",
+        "D": "To specify the cryptographic algorithms used for the rlogin connection",
+        "E": "To automatically redirect R-service traffic to a more secure SSH server"
+      },
+      "explanation": "The '.rhosts' file (located in a user's home directory) lists pairs of hostnames and usernames that are 'trusted'. If a connection comes from a listed host/user pair, the R-service allows login without a password. This is a significant security risk if the file is misconfigured or if the remote host is compromised.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F6",
+      "skill": "F6 - R Services",
+      "question": "Which modern protocol is the secure replacement for the legacy Unix R-services?",
+      "options": {
+        "A": "SSH",
+        "B": "Telnet",
+        "C": "FTP",
+        "D": "HTTP",
+        "E": "SNMP"
+      },
+      "explanation": "SSH (Secure Shell) was specifically designed to replace insecure protocols like rlogin, rsh, and Telnet. It provides strong authentication and encrypted data communications between two untrusted hosts over an insecure network.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F8",
+      "skill": "F8 - RPC",
+      "question": "What is the role of the 'Portmapper' (or rpcbind) service in a Unix-like environment?",
+      "options": {
+        "A": "To map RPC program numbers to the specific TCP/UDP ports they are listening on",
+        "B": "To automatically assign a new IP address to any device that connects to the network",
+        "C": "To encrypt all incoming RPC traffic using a pre-shared cryptographic key",
+        "D": "To provide a web-based interface for managing all local user accounts",
+        "E": "To monitor the server's physical ports for any unauthorized hardware devices"
+      },
+      "explanation": "RPC services often listen on dynamic ports. The Portmapper (listening on port 111) acts as a directory, telling clients which port a specific RPC service (like NFS or mountd) is currently using. It does not assign IPs, encrypt traffic, or manage user accounts.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F8",
+      "skill": "F8 - RPC",
+      "question": "Which command can be used by a penetration tester to enumerate the RPC services running on a remote host?",
+      "options": {
+        "A": "rpcinfo -p",
+        "B": "showmount -a",
+        "C": "nfsstat -s",
+        "D": "netstat -rn",
+        "E": "ifconfig -a"
+      },
+      "explanation": "The 'rpcinfo -p <IP>' command queries the portmapper on the target host and returns a list of all registered RPC programs, their versions, and the ports they are listening on. 'showmount' is specifically for NFS, 'nfsstat' shows stats, 'netstat' shows network connections, and 'ifconfig' shows interface config.",
+      "correct": "A"
+    },
+    {
+      "category": "F - Unix Security Assessment",
+      "skill_id": "F8",
+      "skill": "F8 - RPC",
+      "question": "What is a common security risk of leaving RPC services exposed to an untrusted network?",
+      "options": {
+        "A": "Information disclosure about the system's internal services and versions",
+        "B": "The server will automatically start deleting all files in the /tmp directory",
+        "C": "All local users will be immediately logged out of their current sessions",
+        "D": "The server's hostname will be changed to a random string of characters",
+        "E": "The server will stop responding to all ICMP Echo Request (ping) packets"
+      },
+      "explanation": "Exposed RPC services can reveal a lot of information about the target system, such as which services are running (NFS, NIS, etc.) and their versions. This helps an attacker identify potential targets for further exploitation. It does not typically cause file deletion, session logout, or hostname changes.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G1",
+      "skill": "G1 - Web Server Operation",
+      "question": "In the context of web server operation, what is the primary function of a 'Reverse Proxy'?",
+      "options": {
+        "A": "To sit in front of web servers and forward client requests to them",
+        "B": "To automatically encrypt all files stored on the client's local machine",
+        "C": "To provide a direct physical connection between the client and the database",
+        "D": "To intercept and modify all outbound emails sent by the organization",
+        "E": "To assign a unique MAC address to every visitor of the web application"
+      },
+      "explanation": "A reverse proxy is a server that sits between client devices and web servers, forwarding client requests to the web server and then returning the server's response to the client. This can provide benefits like load balancing, SSL termination, and an extra layer of security. Options B, C, D, and E are not functions of a reverse proxy.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G1",
+      "skill": "G1 - Web Server Operation",
+      "question": "What is 'Virtual Hosting' (or SNI) used for in web server operations?",
+      "options": {
+        "A": "To host multiple domain names on a single IP address and web server",
+        "B": "To create a virtual reality environment for users to browse the website",
+        "C": "To automatically backup the entire web server to a virtual cloud drive",
+        "D": "To allow users to run virtual machines directly within their web browser",
+        "E": "To encrypt the physical hard drives of the server using a virtual key"
+      },
+      "explanation": "Virtual hosting allows a single web server to host multiple websites with different domain names. SNI (Server Name Indication) is an extension to TLS that allows the client to specify the hostname it is trying to connect to during the handshake, enabling the server to present the correct SSL certificate for that specific site. Options B, C, D, and E are unrelated to virtual hosting.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G1",
+      "skill": "G1 - Web Server Operation",
+      "question": "What is the main difference between 'Static' and 'Dynamic' web content?",
+      "options": {
+        "A": "Static content is pre-built, while dynamic content is generated on-the-fly",
+        "B": "Static content is always encrypted, while dynamic content is always cleartext",
+        "C": "Static content requires a database, while dynamic content only uses HTML files",
+        "D": "Static content is only for mobile users, while dynamic content is for desktops",
+        "E": "Static content is stored in RAM, while dynamic content is stored on the disk"
+      },
+      "explanation": "Static content (like HTML, CSS, and images) is delivered to the user exactly as stored. Dynamic content is generated by a server-side script (like PHP, Python, or Node.js) in response to a specific request, often involving data from a database. Options B, C, D, and E are incorrect descriptions of these content types.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G2",
+      "skill": "G2 - Web Servers",
+      "question": "Which of the following is a common security risk associated with default configurations in web servers like Apache or Nginx?",
+      "options": {
+        "A": "Information disclosure through default error pages or directory listings",
+        "B": "The server will automatically start mining cryptocurrency for the developer",
+        "C": "The server will refuse to serve any content to users with a specific IP",
+        "D": "All incoming traffic will be automatically redirected to a competitor's site",
+        "E": "The server's administrative password will be set to the current date and time"
+      },
+      "explanation": "Default configurations often include features that are helpful for development but risky for production, such as detailed error messages that reveal server versions and paths, or directory listing (indexing) which allows users to see all files in a folder. They don't typically mine crypto, redirect to competitors, or use the date as a password.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G2",
+      "skill": "G2 - Web Servers",
+      "question": "What is the purpose of 'Rate Limiting' in a web server configuration like Nginx?",
+      "options": {
+        "A": "To prevent DoS attacks by limiting the number of requests from a single IP",
+        "B": "To ensure that all users have the exact same download speed for large files",
+        "C": "To automatically compress all images to reduce the total bandwidth usage",
+        "D": "To limit the number of characters a user can type into a search bar",
+        "E": "To prevent the server from using more than 50% of its available CPU power"
+      },
+      "explanation": "Rate limiting is a security measure that restricts the number of requests a user can make to a server within a specific timeframe. This helps protect against brute-force attacks, scraping, and Denial of Service (DoS) attempts. It is not primarily about download speed, image compression, or CPU usage.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G2",
+      "skill": "G2 - Web Servers",
+      "question": "Which vulnerability allows an attacker to access files outside of the web root directory on a misconfigured web server?",
+      "options": {
+        "A": "Directory Traversal",
+        "B": "Cross-Site Scripting (XSS)",
+        "C": "SQL Injection",
+        "D": "Cross-Site Request Forgery (CSRF)",
+        "E": "Broken Authentication"
+      },
+      "explanation": "Directory Traversal (or Path Traversal) occurs when a web server or application allows an attacker to use special characters (like '../') in a file path to access files and directories that are stored outside the web root folder, such as /etc/passwd. XSS, SQLi, CSRF, and Broken Authentication are different types of web vulnerabilities.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G5",
+      "skill": "G5 - Markup",
+      "question": "What is the primary security risk associated with XML External Entity (XXE) injection?",
+      "options": {
+        "A": "An attacker can read local files or interact with internal systems via the XML parser",
+        "B": "The attacker can change the color and font of the text on the target web page",
+        "C": "The attacker can automatically download all images from the target's server",
+        "D": "The attacker can cause the user's browser to crash by sending a large XML file",
+        "E": "The attacker can gain physical access to the server room by exploiting the XML"
+      },
+      "explanation": "XXE injection occurs when an XML parser insecurely processes external entity references within an XML document. This can allow an attacker to view files on the server's filesystem, perform Server-Side Request Forgery (SSRF) to interact with internal services, or cause a Denial of Service. It's not about styling, image downloads, or physical access.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G5",
+      "skill": "G5 - Markup",
+      "question": "What is the role of a Document Type Definition (DTD) in an XML document?",
+      "options": {
+        "A": "To define the structure, elements, and attributes allowed in the XML file",
+        "B": "To provide a list of all users who are authorized to view the XML content",
+        "C": "To automatically encrypt the XML data before it is sent over the network",
+        "D": "To specify the physical location of the server that generated the XML",
+        "E": "To translate the XML content into multiple languages for international users"
+      },
+      "explanation": "A DTD defines the legal building blocks of an XML document. It specifies the structure of the document with a list of legal elements and attributes. Insecurely configured DTDs are what lead to XXE vulnerabilities. It is not for user authorization, encryption, or translation.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G5",
+      "skill": "G5 - Markup",
+      "question": "Which of the following is a key security difference between HTML and XML?",
+      "options": {
+        "A": "XML is designed to carry data, while HTML is designed to display data",
+        "B": "HTML is always encrypted, while XML is always transmitted in cleartext",
+        "C": "XML can only be used on Linux servers, while HTML is for Windows servers",
+        "D": "HTML requires a specialized browser, while XML can be read by any text editor",
+        "E": "XML is more secure because it does not support the use of any attributes"
+      },
+      "explanation": "HTML (HyperText Markup Language) is focused on how data looks (presentation), while XML (eXtensible Markup Language) is focused on what data is (structure and storage). From a security perspective, XML's ability to define custom entities and external references makes it susceptible to XXE, which is not a risk in standard HTML. Options B, C, D, and E are incorrect.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G7",
+      "skill": "G7 - App Servers",
+      "question": "What is a common security risk associated with the management consoles of application servers like Tomcat or JBoss?",
+      "options": {
+        "A": "Use of default or weak credentials allowing unauthorized administrative access",
+        "B": "The console will automatically delete all logs if it is accessed by an admin",
+        "C": "The console can only be accessed using a specialized, proprietary browser",
+        "D": "All data entered into the console is automatically shared with the public",
+        "E": "The console will physically lock the server if it detects a failed login"
+      },
+      "explanation": "Management consoles are powerful tools that allow for the deployment of applications and configuration changes. If they are left exposed with default or weak credentials (e.g., admin/admin), an attacker can easily gain full control over the application server. They don't typically delete logs, require special browsers, or physically lock servers.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G7",
+      "skill": "G7 - App Servers",
+      "question": "What is the primary danger of an 'Insecure Deserialization' vulnerability in an application server?",
+      "options": {
+        "A": "It can allow an attacker to execute arbitrary code on the server",
+        "B": "It causes the server to automatically reboot every time a user logs in",
+        "C": "It prevents the server from being able to connect to any external database",
+        "D": "It results in all user passwords being displayed in the server's logs",
+        "E": "It causes the server's physical memory to be permanently corrupted"
+      },
+      "explanation": "Insecure deserialization occurs when an application takes untrusted data and uses it to recreate an object. An attacker can craft a malicious serialized object that, when deserialized, executes arbitrary commands on the server (Remote Code Execution). This is a critical vulnerability. Options B, C, D, and E are not the primary risks.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G7",
+      "skill": "G7 - App Servers",
+      "question": "Which of the following is a primary role of an application server in a multi-tier web architecture?",
+      "options": {
+        "A": "To execute business logic and interact with the database tier",
+        "B": "To provide the physical power and cooling for the entire data center",
+        "C": "To act as the primary firewall for the organization's internal network",
+        "D": "To store all of the organization's physical backup tapes in a secure vault",
+        "E": "To assign unique MAC addresses to all devices on the local area network"
+      },
+      "explanation": "In a multi-tier architecture, the application server (middle tier) handles the business logic, processes requests from the web tier, and interacts with the database tier to retrieve or store data. It is not responsible for power, cooling, network firewalls, physical backups, or MAC address assignment.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G9",
+      "skill": "G9 - Components",
+      "question": "What is the main security risk of using 'Outdated Third-Party Components' in a web application?",
+      "options": {
+        "A": "They may contain known vulnerabilities that have already been patched in newer versions",
+        "B": "They will cause the web application to automatically consume 100% of the server's CPU",
+        "C": "They will prevent the web application from being indexed by any search engines",
+        "D": "They will force all users to use an older, insecure version of their web browser",
+        "E": "They will automatically send a copy of the application's source code to competitors"
+      },
+      "explanation": "Third-party libraries and frameworks (like jQuery, Log4j, or Spring) often have vulnerabilities discovered over time. If an application uses an old version, it remains vulnerable to any exploits targeting those known issues. This is a very common entry point for attackers. Options B, C, D, and E are not standard risks of outdated components.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G9",
+      "skill": "G9 - Components",
+      "question": "Which tool is specifically designed to identify known vulnerabilities in the dependencies used by a software project?",
+      "options": {
+        "A": "OWASP Dependency-Check",
+        "B": "Wireshark",
+        "C": "John the Ripper",
+        "D": "Hashcat",
+        "E": "Hydra"
+      },
+      "explanation": "OWASP Dependency-Check is a Software Composition Analysis (SCA) tool that identifies project dependencies and checks if there are any known, publicly disclosed vulnerabilities (CVEs) associated with them. Wireshark is for packet analysis, and John the Ripper, Hashcat, and Hydra are password cracking/brute-forcing tools.",
+      "correct": "A"
+    },
+    {
+      "category": "G - Web Application Security Assessment",
+      "skill_id": "G9",
+      "skill": "G9 - Components",
+      "question": "The 'Log4Shell' vulnerability (CVE-2021-44228) is a famous example of a critical flaw in which type of component?",
+      "options": {
+        "A": "A Java-based logging library used by millions of applications",
+        "B": "A hardware-based firewall used by large enterprise organizations",
+        "C": "A specific version of the Linux kernel used in embedded devices",
+        "D": "A popular web browser used by the majority of internet users",
+        "E": "A physical smart card used for multi-factor authentication"
+      },
+      "explanation": "Log4Shell was a critical remote code execution (RCE) vulnerability in Apache Log4j 2, a very popular Java logging library. Because it was so widely used, the impact was enormous, affecting a huge range of services and applications. It was not a hardware firewall, kernel, browser, or smart card flaw.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H8",
+      "skill": "H8 - Error Disclosure",
+      "question": "What is a significant security risk of a web application displaying verbose error messages (e.g., full stack traces) to end users?",
+      "options": {
+        "A": "They can reveal sensitive information like internal file paths and software versions",
+        "B": "They will cause the user's browser to automatically download a malicious file",
+        "C": "They will result in the immediate physical failure of the server's power supply",
+        "D": "They prevent the application from being able to process any further requests",
+        "E": "They cause all user passwords to be displayed in cleartext on the home page"
+      },
+      "explanation": "Verbose error messages often contain technical details that are useful for developers but can be exploited by attackers. This includes internal directory structures, database schema details, and specific versions of libraries or frameworks, which helps in tailoring further attacks. They don't typically cause browser downloads, hardware failure, or password leaks.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H8",
+      "skill": "H8 - Error Disclosure",
+      "question": "What is the recommended best practice for handling application errors in a production environment?",
+      "options": {
+        "A": "Display a generic, user-friendly error page and log the details internally",
+        "B": "Display the full stack trace to the user so they can help troubleshoot the issue",
+        "C": "Automatically reboot the server whenever any type of error is encountered",
+        "D": "Send an email with the full error details to every user currently logged in",
+        "E": "Disable all error logging to ensure that no sensitive information is stored"
+      },
+      "explanation": "In production, users should only see a generic message (e.g., 'An unexpected error occurred'). The technical details (stack traces, variables, etc.) should be logged securely on the server for administrators to review. This prevents information disclosure while still allowing for debugging. Options B, C, D, and E are poor security or operational practices.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H8",
+      "skill": "H8 - Error Disclosure",
+      "question": "How can an attacker use a SQL error message to their advantage during a penetration test?",
+      "options": {
+        "A": "To identify the type and version of the database management system (DBMS) in use",
+        "B": "To automatically bypass the requirement for a valid SSL certificate on the site",
+        "C": "To physically locate the data center where the database server is hosted",
+        "D": "To increase the speed of their internet connection by several megabits per second",
+        "E": "To gain administrative access to the local machine's operating system"
+      },
+      "explanation": "Different database systems (MySQL, PostgreSQL, Oracle, MSSQL) have characteristic error messages. By analyzing these, an attacker can determine which DBMS is being used and even its version, which helps them choose the correct SQL injection payloads. It does not bypass SSL, locate data centers, or increase internet speed.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H12",
+      "skill": "H12 - Encryption",
+      "question": "What is the primary difference between 'Hashing' and 'Encryption'?",
+      "options": {
+        "A": "Hashing is a one-way function, while encryption is a two-way function",
+        "B": "Hashing is used for large files, while encryption is only for small text strings",
+        "C": "Hashing requires a public key, while encryption only uses a private key",
+        "D": "Hashing is performed by the client, while encryption is always done by the server",
+        "E": "Hashing is a legacy technique that has been completely replaced by encryption"
+      },
+      "explanation": "Hashing is designed to be a one-way process; you cannot (easily) get the original data back from the hash. It's used for integrity and password storage. Encryption is two-way; data is transformed so it can be decrypted back to its original form using a key. Options B, C, D, and E are incorrect descriptions.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H12",
+      "skill": "H12 - Encryption",
+      "question": "Why is it considered insecure to use weak hashing algorithms like MD5 or SHA-1 for storing user passwords?",
+      "options": {
+        "A": "They are susceptible to fast brute-force attacks and collision vulnerabilities",
+        "B": "They automatically add a random string to the end of every single password",
+        "C": "They can only be used to hash passwords that are exactly eight characters long",
+        "D": "They require a specialized hardware appliance to be installed on the server",
+        "E": "They cause the web application to run significantly slower for all users"
+      },
+      "explanation": "MD5 and SHA-1 are computationally 'cheap', meaning an attacker can generate billions of hashes per second to crack them. They also have known collision vulnerabilities. Modern applications should use 'slow' algorithms like Argon2, bcrypt, or scrypt. They don't add random strings (unless salted), have length limits, or require special hardware.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H12",
+      "skill": "H12 - Encryption",
+      "question": "What is the purpose of adding a 'Salt' to a password before it is hashed?",
+      "options": {
+        "A": "To prevent the use of pre-computed tables (like Rainbow Tables) for cracking",
+        "B": "To make the resulting hash shorter so that it takes up less space in the database",
+        "C": "To allow the administrator to easily recover the original cleartext password",
+        "D": "To ensure that the password is automatically changed every ninety days",
+        "E": "To provide a second factor of authentication for the user during login"
+      },
+      "explanation": "A salt is a unique, random string added to each password before hashing. This ensures that even if two users have the same password, their hashes will be different. This effectively defeats the use of pre-computed Rainbow Tables, as the attacker would need a separate table for every possible salt. It does not shorten hashes, allow recovery, or provide MFA.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H13",
+      "skill": "H13 - Code Review",
+      "question": "What is a primary advantage of performing a manual 'Secure Code Review' compared to using an automated scanner?",
+      "options": {
+        "A": "Manual review is better at identifying complex logic flaws and business logic errors",
+        "B": "Manual review is significantly faster and can process millions of lines of code per hour",
+        "C": "Manual review is guaranteed to find 100% of all vulnerabilities in any application",
+        "D": "Manual review does not require the reviewer to have any knowledge of programming",
+        "E": "Manual review automatically generates the necessary patches for all found bugs"
+      },
+      "explanation": "Automated scanners are great for finding known patterns (like a missing CSRF token), but they struggle with understanding the context of the application. A human reviewer can identify flaws in the logic, such as an authorization check that is bypassed in a specific edge case. Manual review is slower, not guaranteed to find everything, and requires deep programming knowledge.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H13",
+      "skill": "H13 - Code Review",
+      "question": "During a code review of a C application, you find the use of the 'gets()' function. Why is this a major security concern?",
+      "options": {
+        "A": "It does not check the length of the input, making it vulnerable to buffer overflows",
+        "B": "It automatically encrypts the input using a weak and outdated algorithm",
+        "C": "It can only be used to read data from a physical floppy disk drive",
+        "D": "It causes the application to consume 100% of the available system memory",
+        "E": "It is only compatible with the very first version of the Unix operating system"
+      },
+      "explanation": "The 'gets()' function reads a line from stdin into a buffer but does not check if the input fits. This allows an attacker to provide a string longer than the buffer, overwriting adjacent memory and potentially leading to arbitrary code execution (buffer overflow). It's not about encryption, floppy disks, or memory consumption.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H13",
+      "skill": "H13 - Code Review",
+      "question": "Why is it important to review the implementation of third-party libraries during a secure code review?",
+      "options": {
+        "A": "To ensure that they are being used securely and are not introducing new vulnerabilities",
+        "B": "To verify that the organization has paid for the correct number of licenses",
+        "C": "To rewrite the entire library from scratch to improve its overall performance",
+        "D": "To ensure that the library's source code is formatted according to company style",
+        "E": "To prevent the library from being used by other applications on the same server"
+      },
+      "explanation": "Even if your own code is secure, using a library insecurely (e.g., passing unsanitized data to a vulnerable function) can compromise the entire application. Reviewing how libraries are integrated is a key part of a comprehensive security assessment. It's not primarily about licensing, performance, style, or isolation.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I1",
+      "skill": "I1 - Site Discovery",
+      "question": "What is the primary purpose of using a tool like 'dirb' or 'gobuster' during site discovery?",
+      "options": {
+        "A": "To find hidden directories and files by brute-forcing common names",
+        "B": "To automatically exploit all SQL injection vulnerabilities on the target site",
+        "C": "To intercept and modify the HTTP traffic between the client and the server",
+        "D": "To determine the physical location of the server hosting the web application",
+        "E": "To gain administrative access to the organization's primary domain controller"
+      },
+      "explanation": "These tools use a wordlist to guess the names of directories and files on a web server. This helps find 'hidden' content like admin panels, backup files, or configuration files that are not linked from the main site. They are not exploitation tools, proxies, or location trackers.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I1",
+      "skill": "I1 - Site Discovery",
+      "question": "During site discovery, you find a '.git' directory exposed on the web server. What is the most significant risk of this exposure?",
+      "options": {
+        "A": "An attacker can download the entire source code and history of the application",
+        "B": "The web server will automatically stop responding to all incoming requests",
+        "C": "All users will be forced to use a specific version of the Git client to browse the site",
+        "D": "The organization's physical address will be displayed on every page of the site",
+        "E": "The server's hard drive will be automatically formatted if the directory is accessed"
+      },
+      "explanation": "The .git directory contains the full repository, including the source code, commit history, and potentially sensitive information like API keys or database credentials stored in the code. An attacker can use tools to reconstruct the entire project. It doesn't cause crashes, client restrictions, or disk formatting.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I1",
+      "skill": "I1 - Site Discovery",
+      "question": "What is 'Spidering' (or Crawling) in the context of web application enumeration?",
+      "options": {
+        "A": "Automatically following all links on a site to map out its structure and content",
+        "B": "Sending a large number of 'ping' requests to every IP in the target's subnet",
+        "C": "Brute-forcing the passwords of all users who have 'admin' in their username",
+        "D": "Physically tracing the network cables from the server to the primary switch",
+        "E": "Using a specialized hardware device to intercept wireless network traffic"
+      },
+      "explanation": "Spidering involves a tool starting at a given URL and recursively following all links it finds to discover as much of the application's surface area as possible. This is a standard first step in web assessment. It's not about pinging, brute-forcing, physical tracing, or wireless interception.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I2",
+      "skill": "I2 - XSS",
+      "question": "What is the main difference between 'Stored' and 'Reflected' Cross-Site Scripting (XSS)?",
+      "options": {
+        "A": "Stored XSS is saved on the server, while Reflected XSS is part of a specific request",
+        "B": "Stored XSS only affects admins, while Reflected XSS affects all regular users",
+        "C": "Stored XSS is always encrypted, while Reflected XSS is always in cleartext",
+        "D": "Stored XSS requires physical access, while Reflected XSS can be done remotely",
+        "E": "Stored XSS is a client-side flaw, while Reflected XSS is a server-side flaw"
+      },
+      "explanation": "Stored (Persistent) XSS occurs when the malicious script is permanently stored on the target server (e.g., in a database or comment field). Reflected XSS occurs when the script is 'reflected' off the web application to the victim's browser, typically via a URL parameter or form submission. Both are primarily client-side vulnerabilities.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I2",
+      "skill": "I2 - XSS",
+      "question": "What is a common and high-impact result of a successful Cross-Site Scripting (XSS) attack?",
+      "options": {
+        "A": "The attacker can steal the victim's session cookies and hijack their account",
+        "B": "The attacker can gain direct remote shell access to the target's web server",
+        "C": "The attacker can automatically delete all files on the victim's local hard drive",
+        "D": "The attacker can change the physical MAC address of the victim's computer",
+        "E": "The attacker can intercept and read all of the victim's physical mail"
+      },
+      "explanation": "Because XSS allows an attacker to execute JavaScript in the context of the victim's browser, they can access sensitive information like session cookies (if not protected by HttpOnly). This allows them to impersonate the user. It does not provide server shell access, local file deletion, or physical mail interception.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I2",
+      "skill": "I2 - XSS",
+      "question": "How does the 'HttpOnly' flag on a cookie help mitigate the impact of an XSS attack?",
+      "options": {
+        "A": "It prevents client-side scripts (like JavaScript) from accessing the cookie",
+        "B": "It ensures that the cookie is only sent over an encrypted HTTPS connection",
+        "C": "It automatically deletes the cookie as soon as the user closes their browser",
+        "D": "It limits the cookie's use to a specific IP address to prevent session hijacking",
+        "E": "It encrypts the content of the cookie using a key known only to the server"
+      },
+      "explanation": "The 'HttpOnly' flag is a security measure that tells the browser that the cookie should not be accessible via 'document.cookie' in JavaScript. This means that even if an attacker successfully executes an XSS attack, they cannot steal the session cookie. 'Secure' flag handles HTTPS, and 'Expires/Max-Age' handles deletion.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I3",
+      "skill": "I3 - SQL Injection",
+      "question": "What is the most common first step in testing a web application for potential SQL injection vulnerabilities?",
+      "options": {
+        "A": "Entering a single quote (') into an input field and looking for database errors",
+        "B": "Attempting to brute-force the administrative password for the web server",
+        "C": "Sending a large number of ICMP Echo Request packets to the server's IP",
+        "D": "Checking the WHOIS record for the organization's primary domain name",
+        "E": "Analyzing the 'robots.txt' file to find hidden administrative directories"
+      },
+      "explanation": "Entering a single quote is a classic test. If the application is vulnerable, the quote might break the SQL query's syntax, causing the database to return an error message. This confirms that the input is being directly included in a query. Other options are unrelated to SQL injection testing.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I3",
+      "skill": "I3 - SQL Injection",
+      "question": "What is 'Blind SQL Injection'?",
+      "options": {
+        "A": "An attack where the application does not return any database data or errors directly",
+        "B": "An attack that can only be performed by someone who is physically blind",
+        "C": "An attack that only works if the database server is not connected to the internet",
+        "D": "An attack that requires the attacker to have administrative access to the server",
+        "E": "An attack that automatically encrypts all data in the database to prevent access"
+      },
+      "explanation": "In Blind SQLi, the application doesn't show database errors or the results of the query in the page. The attacker must infer information by asking the database true/false questions and observing the application's response (e.g., a different page content or a time delay). It has nothing to do with physical sight or encryption.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I3",
+      "skill": "I3 - SQL Injection",
+      "question": "What is the most effective way to prevent SQL injection vulnerabilities in a web application?",
+      "options": {
+        "A": "Using parameterized queries (prepared statements) for all database interactions",
+        "B": "Installing a high-quality antivirus program on the primary database server",
+        "C": "Forcing all users to use a complex password that is at least 20 characters long",
+        "D": "Changing the default port of the database server from 3306 to something else",
+        "E": "Encrypting the entire database hard drive using a strong cryptographic key"
+      },
+      "explanation": "Parameterized queries ensure that the database treats user input as data, not as executable code. This is the gold standard for prevention. Antivirus, complex passwords, changing ports, and disk encryption do not address the root cause of SQL injection.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I4",
+      "skill": "I4 - Parameter Manipulation",
+      "question": "An attacker changes the 'price' parameter in a hidden form field from '100.00' to '1.00' before submitting. What type of attack is this?",
+      "options": {
+        "A": "Parameter Manipulation",
+        "B": "Cross-Site Scripting (XSS)",
+        "C": "SQL Injection",
+        "D": "Denial of Service (DoS)",
+        "E": "Social Engineering"
+      },
+      "explanation": "Parameter manipulation involves modifying data sent between the client and the server (in URLs, form fields, cookies, etc.) to change the application's behavior. In this case, the attacker is trying to change the price of an item. XSS, SQLi, DoS, and Social Engineering are different attack categories.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I4",
+      "skill": "I4 - Parameter Manipulation",
+      "question": "What is an 'Insecure Direct Object Reference' (IDOR) vulnerability?",
+      "options": {
+        "A": "When an application uses a user-supplied identifier to access an object without authorization",
+        "B": "When a web server allows any user to view the source code of its configuration files",
+        "C": "When an attacker can cause a server to crash by sending a large number of requests",
+        "D": "When a user's password is stored in cleartext within the application's database",
+        "E": "When a website uses an outdated version of a third-party JavaScript library"
+      },
+      "explanation": "IDOR is a type of parameter manipulation where an attacker changes a value (like a user ID in a URL: /user/123 -> /user/124) to access data that doesn't belong to them. It occurs when the application doesn't perform a proper authorization check on the requested object. Options B, C, D, and E describe other issues.",
+      "correct": "A"
+    },
+    {
+      "category": "I - Web Application Enumeration",
+      "skill_id": "I4",
+      "skill": "I4 - Parameter Manipulation",
+      "question": "Why is it critical to perform all security-sensitive validation on the 'server-side' rather than the 'client-side'?",
+      "options": {
+        "A": "Client-side validation can be easily bypassed or modified by the user",
+        "B": "Server-side validation is significantly faster and uses less network bandwidth",
+        "C": "Client-side validation is only compatible with the Google Chrome web browser",
+        "D": "Server-side validation is required by law for all websites that use cookies",
+        "E": "Client-side validation causes the user's computer to consume excessive power"
+      },
+      "explanation": "Client-side validation (e.g., JavaScript) is for user experience, not security. An attacker can use a proxy (like Burp Suite) or simply disable JavaScript to bypass these checks. The server must always re-validate all data it receives because it cannot trust the client. Options B, C, D, and E are incorrect.",
+      "correct": "A"
+    },
+    {
+      "category": "J - Database Assessment",
+      "skill_id": "J2",
+      "skill": "J2 - Oracle",
+      "question": "What is the default TCP port used by the Oracle TNS Listener service?",
+      "options": {
+        "A": "1521",
+        "B": "1433",
+        "C": "3306",
+        "D": "5432",
+        "E": "1522"
+      },
+      "explanation": "Port 1521 is the standard default port for the Oracle TNS Listener. 1433 is for MSSQL, 3306 is for MySQL, and 5432 is for PostgreSQL.",
+      "correct": "A"
+    },
+    {
+      "category": "J - Database Assessment",
+      "skill_id": "J2",
+      "skill": "J2 - Oracle",
+      "question": "Which of the following are well-known default administrative accounts in an Oracle database environment?",
+      "options": {
+        "A": "SYS and SYSTEM",
+        "B": "sa and Administrator",
+        "C": "root and admin",
+        "D": "postgres and superuser",
+        "E": "oracle and dba"
+      },
+      "explanation": "SYS and SYSTEM are the primary administrative accounts in Oracle. 'sa' is for MSSQL, 'root' is for MySQL/Linux, and 'postgres' is for PostgreSQL. Identifying these accounts and testing for default passwords is a key part of a database assessment.",
+      "correct": "A"
+    },
+    {
+      "category": "J - Database Assessment",
+      "skill_id": "J2",
+      "skill": "J2 - Oracle",
+      "question": "What information can be typically gathered by querying an exposed Oracle TNS Listener?",
+      "options": {
+        "A": "The database version, service names, and the underlying operating system",
+        "B": "A complete list of all user passwords stored in the database in cleartext",
+        "C": "The physical serial numbers of the hard drives used by the database server",
+        "D": "The private encryption keys used by the organization for its VPN connections",
+        "E": "The administrative password for the organization's primary domain controller"
+      },
+      "explanation": "Querying the listener (e.g., using 'tnscmd' or 'nmap') can reveal the Oracle version, the names of the databases (SIDs/Services) it is managing, and often details about the host OS. It does not provide passwords, hardware serials, VPN keys, or domain admin passwords.",
+      "correct": "A"
+    },
+    {
+      "category": "J - Database Assessment",
+      "skill_id": "J3",
+      "skill": "J3 - DB Connectivity",
+      "question": "What is a major security risk of using unencrypted database connection strings in application configuration files?",
+      "options": {
+        "A": "They often contain cleartext credentials that can be stolen by an attacker",
+        "B": "They will cause the database server to automatically delete all of its data",
+        "C": "They prevent the application from being able to connect to the database remotely",
+        "D": "They force the database to use a legacy, insecure version of the SQL language",
+        "E": "They result in the automatic installation of malware on the database server"
+      },
+      "explanation": "Connection strings usually include the server address, database name, username, and password. If these are stored in cleartext (e.g., in web.config or .env files) and an attacker gains access to the filesystem, they can easily steal the credentials and gain full access to the database. Options B, C, D, and E are not standard risks.",
+      "correct": "A"
+    },
+    {
+      "category": "J - Database Assessment",
+      "skill_id": "J3",
+      "skill": "J3 - DB Connectivity",
+      "question": "Which technology is commonly used as a middleware to allow Java applications to connect to various database systems?",
+      "options": {
+        "A": "JDBC",
+        "B": "ODBC",
+        "C": "TDS",
+        "D": "SMB",
+        "E": "NFS"
+      },
+      "explanation": "JDBC (Java Database Connectivity) is the standard API for connecting Java applications to a wide range of relational databases. ODBC is a similar standard but more common in Windows/C++ environments. TDS is the protocol for MSSQL, and SMB/NFS are file sharing protocols.",
+      "correct": "A"
+    },
+    {
+      "category": "J - Database Assessment",
+      "skill_id": "J3",
+      "skill": "J3 - DB Connectivity",
+      "question": "What is the security risk of a database server allowing connections from 'any' IP address (0.0.0.0/0)?",
+      "options": {
+        "A": "It exposes the database to brute-force and exploitation attempts from the entire internet",
+        "B": "It causes the database to automatically encrypt all data with a random, unknown key",
+        "C": "It prevents the database from being able to perform any internal backup operations",
+        "D": "It results in the database server's physical memory being permanently corrupted",
+        "E": "It causes the database to only accept connections from users with an 'admin' role"
+      },
+      "explanation": "Database servers should be restricted to only accept connections from known, authorized IPs (e.g., the web server's IP). Allowing connections from anywhere significantly increases the risk of unauthorized access attempts. It does not cause encryption, backup failure, memory corruption, or role-based restrictions.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H7",
+      "skill": "H7 - Session Management",
+      "question": "What is a major security risk of including session identifiers (Session IDs) directly in the URL (e.g., ?session_id=123)?",
+      "options": {
+        "A": "The session ID can be easily leaked through browser history, bookmarks, or 'Referer' headers",
+        "B": "It will cause the web server to automatically encrypt all of the user's personal data",
+        "C": "It prevents the user from being able to log out of the application correctly",
+        "D": "It forces the user's browser to use an outdated and insecure version of the HTTP protocol",
+        "E": "It results in the automatic installation of a keylogger on the user's local machine"
+      },
+      "explanation": "URLs are often stored in browser history, server logs, and sent in the 'Referer' header when clicking on external links. If the session ID is in the URL, an attacker can easily obtain it and hijack the user's session. It does not cause encryption, prevent logout, or install malware.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H7",
+      "skill": "H7 - Session Management",
+      "question": "What is the primary purpose of implementing a 'Session Timeout' in a web application?",
+      "options": {
+        "A": "To reduce the window of opportunity for an attacker to use a stolen session ID",
+        "B": "To increase the overall speed and performance of the web application for all users",
+        "C": "To ensure that the user's password is automatically changed every thirty minutes",
+        "D": "To prevent the web server from consuming too much physical electrical power",
+        "E": "To allow the organization to track exactly how much time each user spends on the site"
+      },
+      "explanation": "Session timeouts ensure that a session is invalidated after a period of inactivity. This limits the amount of time an attacker has to use a hijacked session. While it might help with server resources, its primary goal is security. It doesn't change passwords, save power, or primarily track time.",
+      "correct": "A"
+    },
+    {
+      "category": "H - Web Application Vulnerabilities",
+      "skill_id": "H7",
+      "skill": "H7 - Session Management",
+      "question": "Why is it a security best practice to regenerate the Session ID immediately after a user successfully logs in?",
+      "options": {
+        "A": "To prevent 'Session Fixation' attacks where an attacker provides a known ID to the victim",
+        "B": "To ensure that the user's browser is automatically updated to the latest version",
+        "C": "To allow the user to have multiple sessions open at the same time on different devices",
+        "D": "To encrypt the user's login credentials using a stronger cryptographic algorithm",
+        "E": "To provide the user with a unique digital certificate for every single request they make"
+      },
+      "explanation": "In a session fixation attack, an attacker sets a victim's session ID (e.g., by sending a link with an ID) and then waits for them to log in. If the ID doesn't change after login, the attacker can then use that same ID to access the victim's account. Regenerating the ID after authentication defeats this attack. It's not about browser updates, multiple sessions, or encryption.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K1",
+      "skill": "K1 - Windows Assessment",
+      "question": "Which tool is commonly used during a Windows assessment to enumerate users, groups, and shares via SMB?",
+      "options": {
+        "A": "enum4linux",
+        "B": "Nikto",
+        "C": "Sqlmap",
+        "D": "Dirbuster",
+        "E": "Hydra"
+      },
+      "explanation": "enum4linux is a specialized tool for enumerating information from Windows and Samba systems. It can retrieve user lists, share names, group memberships, and more. Nikto is for web servers, Sqlmap for databases, Dirbuster for directories, and Hydra for brute-forcing.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K1",
+      "skill": "K1 - Windows Assessment",
+      "question": "What is a 'Null Session' in the context of Windows networking, and why is it a security risk?",
+      "options": {
+        "A": "An unauthenticated connection to a Windows share that can reveal sensitive system information",
+        "B": "A session that has been automatically terminated by the server due to inactivity",
+        "C": "A specialized type of administrative login that does not require a password",
+        "D": "A connection that uses a completely empty cryptographic key for all traffic",
+        "E": "A session that is used to automatically install Windows updates on a local machine"
+      },
+      "explanation": "A null session is an anonymous connection to the IPC$ share on a Windows machine. On older or poorly configured systems, this can be used to enumerate users, groups, and other system details without providing any credentials. It's not a terminated session, a passwordless admin login, or an update mechanism.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K1",
+      "skill": "K1 - Windows Assessment",
+      "question": "Which Nmap script category is most useful for identifying common vulnerabilities on a Windows target?",
+      "options": {
+        "A": "vuln",
+        "B": "safe",
+        "C": "discovery",
+        "D": "auth",
+        "E": "broadcast"
+      },
+      "explanation": "The 'vuln' category in the Nmap Scripting Engine (NSE) contains scripts specifically designed to check for known vulnerabilities (like MS17-010/EternalBlue). 'discovery' is for finding information, 'safe' for non-intrusive scripts, and 'auth' for testing credentials.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K2",
+      "skill": "K2 - Linux Assessment",
+      "question": "During a Linux assessment, you find a file with the permissions '-rwsr-xr-x'. What does the 's' in the owner's permissions indicate?",
+      "options": {
+        "A": "The SUID (Set User ID) bit is set, meaning the file runs with the owner's privileges",
+        "B": "The file is a 'System' file and cannot be modified by any user, including root",
+        "C": "The file is 'Shared' and can be accessed by multiple users at the same time",
+        "D": "The file is 'Secure' and its contents are automatically encrypted on the disk",
+        "E": "The file is a 'Socket' and is used for inter-process communication on the host"
+      },
+      "explanation": "The SUID bit allows a user to execute a binary with the privileges of the file's owner (often root). This is common for utilities like 'passwd' but can be a major security risk if set on a vulnerable or malicious binary. It's not about system files, sharing, encryption, or sockets.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K2",
+      "skill": "K2 - Linux Assessment",
+      "question": "Which file on a Linux system contains the hashed passwords for all local users?",
+      "options": {
+        "A": "/etc/shadow",
+        "B": "/etc/passwd",
+        "C": "/etc/group",
+        "D": "/etc/hosts",
+        "E": "/etc/resolv.conf"
+      },
+      "explanation": "/etc/shadow is only readable by root and contains the encrypted/hashed password data. /etc/passwd contains user account information but is world-readable and no longer stores the actual hashes. /etc/group is for groups, /etc/hosts for local DNS, and /etc/resolv.conf for DNS configuration.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K2",
+      "skill": "K2 - Linux Assessment",
+      "question": "Which command can be used on a Linux system to list all currently listening network services and their associated ports?",
+      "options": {
+        "A": "netstat -tuln",
+        "B": "ls -la",
+        "C": "cat /etc/passwd",
+        "D": "ps aux",
+        "E": "df -h"
+      },
+      "explanation": "'netstat -tuln' (or the newer 'ss -tuln') lists TCP and UDP listening ports in numeric format. 'ls' is for files, 'cat /etc/passwd' for users, 'ps aux' for processes, and 'df -h' for disk space.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K3",
+      "skill": "K3 - Network Assessment",
+      "question": "What is the primary difference between an 'Internal' and an 'External' network assessment?",
+      "options": {
+        "A": "Internal is performed from within the network, while External is from the internet",
+        "B": "Internal only tests Windows machines, while External only tests Linux machines",
+        "C": "Internal is always performed by employees, while External is always by contractors",
+        "D": "Internal is focused on hardware, while External is focused on software vulnerabilities",
+        "E": "Internal is performed during the day, while External is only performed at night"
+      },
+      "explanation": "An internal assessment simulates an attacker who has already gained a foothold (e.g., a malicious insider or a compromised workstation). An external assessment tests the perimeter defenses and services exposed to the public internet. The other options are incorrect generalizations.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K3",
+      "skill": "K3 - Network Assessment",
+      "question": "Why is the use of unencrypted protocols like Telnet or FTP on a local network considered a significant security risk?",
+      "options": {
+        "A": "An attacker can capture the traffic and steal cleartext credentials (usernames and passwords)",
+        "B": "They will cause the network switches to automatically reboot every few minutes",
+        "C": "They prevent the use of modern, high-speed fiber optic network connections",
+        "D": "They force all network traffic to be routed through a specific, insecure server",
+        "E": "They result in the automatic installation of ransomware on all connected devices"
+      },
+      "explanation": "Telnet and FTP send all data, including login credentials, in cleartext. An attacker performing a 'Man-in-the-Middle' (MitM) or simple packet sniffing attack can easily steal these credentials. They don't cause switch reboots, prevent fiber use, or automatically install ransomware.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K3",
+      "skill": "K3 - Network Assessment",
+      "question": "What is a 'Rogue Access Point' in the context of a wireless network assessment?",
+      "options": {
+        "A": "An unauthorized wireless access point connected to the organization's internal network",
+        "B": "A wireless access point that has been physically damaged and is no longer working",
+        "C": "A specialized type of access point that only allows connections from mobile devices",
+        "D": "An access point that uses a completely random and unknown cryptographic key",
+        "E": "A wireless access point that is used to provide free internet access to the public"
+      },
+      "explanation": "A rogue AP is an access point installed without authorization (e.g., by an employee for convenience). It bypasses the organization's security controls and provides a potential entry point for attackers into the internal network. It's not about damage, device types, random keys, or public access.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K4",
+      "skill": "K4 - Web Assessment",
+      "question": "What is the primary function of a Web Application Firewall (WAF)?",
+      "options": {
+        "A": "To inspect and filter incoming HTTP traffic to block common web-based attacks",
+        "B": "To automatically encrypt all data stored in the application's primary database",
+        "C": "To provide a high-speed internet connection for the application's web server",
+        "D": "To ensure that the web application is compatible with all modern web browsers",
+        "E": "To physically protect the server from being stolen from the organization's data center"
+      },
+      "explanation": "A WAF sits in front of a web application and analyzes incoming requests for patterns associated with attacks like SQL injection, XSS, and path traversal. It can block these requests before they reach the application. It's not for database encryption, internet speed, browser compatibility, or physical security.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K4",
+      "skill": "K4 - Web Assessment",
+      "question": "Which of the following is a key component of a comprehensive web application assessment methodology?",
+      "options": {
+        "A": "Testing for all vulnerabilities listed in the OWASP Top 10",
+        "B": "Physically inspecting the server's motherboard for any signs of damage",
+        "C": "Ensuring that the organization's social media accounts have strong passwords",
+        "D": "Verifying that the web server is running the very latest version of the BIOS",
+        "E": "Testing the physical strength of the doors to the organization's server room"
+      },
+      "explanation": "The OWASP Top 10 is a globally recognized standard for the most critical web application security risks. Testing for these is a fundamental part of any web assessment. Motherboard inspection, social media passwords, BIOS versions, and door strength are not part of a web application assessment.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K4",
+      "skill": "K4 - Web Assessment",
+      "question": "What is the purpose of 'Output Encoding' in the context of preventing web-based attacks?",
+      "options": {
+        "A": "To ensure that user-supplied data is treated as literal text rather than executable code",
+        "B": "To compress the data sent from the server to the client to save network bandwidth",
+        "C": "To automatically translate the website's content into multiple different languages",
+        "D": "To encrypt all data sent to the user's browser using a strong cryptographic key",
+        "E": "To provide a unique digital signature for every single page on the web application"
+      },
+      "explanation": "Output encoding (e.g., converting '<' to '&lt;') ensures that the browser renders user-supplied data as text instead of executing it as HTML or JavaScript. This is a primary defense against Cross-Site Scripting (XSS). It's not about compression, translation, encryption, or digital signatures.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K5",
+      "skill": "K5 - DB Assessment",
+      "question": "Why is it important to check for 'Default Credentials' during a database assessment?",
+      "options": {
+        "A": "Many database systems are installed with well-known, insecure default passwords",
+        "B": "Default credentials are automatically changed by the database every thirty days",
+        "C": "They are required to enable the database's built-in encryption features",
+        "D": "They provide a way for the database to automatically recover from a hardware failure",
+        "E": "They are only used to provide read-only access to the database's help files"
+      },
+      "explanation": "Many DBMS (like Oracle, MSSQL, MySQL) have default accounts (e.g., 'sa', 'root', 'SYS') with well-known passwords. Attackers often try these first. A database assessment must verify that these have been changed or disabled. They don't change automatically, enable encryption, help with recovery, or only access help files.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K5",
+      "skill": "K5 - DB Assessment",
+      "question": "What is the primary goal of 'Database Auditing'?",
+      "options": {
+        "A": "To maintain a record of all significant actions and changes performed on the database",
+        "B": "To automatically increase the overall performance and speed of the database queries",
+        "C": "To ensure that the database is compatible with all modern operating systems",
+        "D": "To provide a way for users to recover their forgotten passwords without an admin",
+        "E": "To physically count the number of database servers in the organization's data center"
+      },
+      "explanation": "Auditing involves logging who accessed what data and when, and what changes were made. This is critical for security monitoring, incident response, and compliance. It's not about performance, OS compatibility, password recovery, or physical inventory.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K5",
+      "skill": "K5 - DB Assessment",
+      "question": "During a database assessment, you find that the DBMS is several versions behind the latest release. What is the most significant risk?",
+      "options": {
+        "A": "The database may be vulnerable to known security flaws that have been patched in newer versions",
+        "B": "The database will automatically stop responding to all incoming requests from the web server",
+        "C": "The database will force all users to use a legacy, insecure version of the SQL language",
+        "D": "The database will result in the automatic installation of malware on the local machine",
+        "E": "The database will cause the server's physical memory to be permanently corrupted"
+      },
+      "explanation": "Software updates often include critical security patches. Running an outdated version means the database is vulnerable to any exploits targeting those fixed issues. This is a major finding in any assessment. It doesn't typically cause crashes, SQL version changes, malware installation, or memory corruption.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K6",
+      "skill": "K6 - Wireless Assessment",
+      "question": "Which wireless security protocol is currently considered the most secure for modern networks?",
+      "options": {
+        "A": "WPA3",
+        "B": "WPA2",
+        "C": "WEP",
+        "D": "WPA",
+        "E": "TKIP"
+      },
+      "explanation": "WPA3 is the latest and most secure standard, addressing several vulnerabilities in WPA2. WEP is extremely insecure and can be cracked in seconds. WPA and TKIP are also outdated and insecure.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K6",
+      "skill": "K6 - Wireless Assessment",
+      "question": "What is an 'Evil Twin' attack in the context of wireless security?",
+      "options": {
+        "A": "An attacker sets up a malicious access point with the same name (SSID) as a legitimate one",
+        "B": "An attacker physically steals a wireless access point from the organization's office",
+        "C": "An attacker uses a specialized device to jam all wireless signals in a specific area",
+        "D": "An attacker attempts to brute-force the password of a wireless access point",
+        "E": "An attacker uses a wireless access point to provide free internet access to the public"
+      },
+      "explanation": "In an Evil Twin attack, the attacker lures victims into connecting to their malicious AP by mimicking a trusted network. Once connected, the attacker can perform MitM attacks to steal data. It's not about physical theft, jamming, brute-forcing, or public access.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K6",
+      "skill": "K6 - Wireless Assessment",
+      "question": "What is the purpose of a 'Wireless Site Survey' during a security assessment?",
+      "options": {
+        "A": "To map out the signal coverage and identify all wireless devices in a specific area",
+        "B": "To automatically crack the passwords of all wireless networks found in the vicinity",
+        "C": "To ensure that the organization's wireless network is compatible with all mobile devices",
+        "D": "To provide a high-speed wireless internet connection for all employees in the building",
+        "E": "To physically locate the organization's primary internet service provider (ISP)"
+      },
+      "explanation": "A site survey helps identify the physical boundaries of the wireless signal (to check for leakage) and discover any unauthorized or rogue access points. It's not about cracking passwords, device compatibility, providing internet, or locating the ISP.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K7",
+      "skill": "K7 - Cloud Assessment",
+      "question": "What does the 'Shared Responsibility Model' mean in the context of cloud security?",
+      "options": {
+        "A": "The cloud provider is responsible for the infrastructure, while the customer is responsible for their data",
+        "B": "The cloud provider and the customer both share the exact same set of security responsibilities",
+        "C": "The cloud provider is responsible for all security, and the customer has no responsibilities",
+        "D": "The customer is responsible for all security, and the cloud provider has no responsibilities",
+        "E": "The responsibility for security is shared equally between the cloud provider and the government"
+      },
+      "explanation": "In cloud computing (AWS, Azure, GCP), the provider secures the 'cloud' (physical data centers, networking, hypervisors), but the customer is responsible for securing what they put 'in' the cloud (OS, applications, data, IAM). The exact split depends on the service type (IaaS, PaaS, SaaS).",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K7",
+      "skill": "K7 - Cloud Assessment",
+      "question": "What is a common and high-impact security risk associated with cloud storage services like Amazon S3?",
+      "options": {
+        "A": "Misconfigured permissions that allow public access to sensitive data",
+        "B": "The cloud provider automatically deleting all data every ninety days",
+        "C": "The storage service only being compatible with a specific version of Windows",
+        "D": "The storage service requiring a specialized hardware device to be installed locally",
+        "E": "The storage service causing the user's computer to consume excessive power"
+      },
+      "explanation": "Publicly accessible S3 buckets (or Azure Blobs) are a very common cause of data breaches. If permissions are not correctly set, anyone on the internet can view or download the contents. It's not about automatic deletion, OS compatibility, hardware requirements, or power consumption.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K7",
+      "skill": "K7 - Cloud Assessment",
+      "question": "Why is 'IAM' (Identity and Access Management) critical in a cloud environment?",
+      "options": {
+        "A": "It allows for granular control over who can access specific cloud resources and what they can do",
+        "B": "It automatically encrypts all data stored in the cloud using a strong cryptographic key",
+        "C": "It ensures that the cloud environment is compatible with all modern web browsers",
+        "D": "It provides a way for the cloud provider to automatically recover from a hardware failure",
+        "E": "It physically protects the cloud data center from being stolen by unauthorized individuals"
+      },
+      "explanation": "IAM is the primary security boundary in the cloud. It defines users, groups, and roles, and assigns policies that grant or deny access to services and data. It's not about encryption, browser compatibility, hardware recovery, or physical security.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K8",
+      "skill": "K8 - Mobile Assessment",
+      "question": "What is a major security risk of a mobile application storing sensitive data (like passwords) in cleartext on the device?",
+      "options": {
+        "A": "An attacker with physical access or malware can easily steal the sensitive information",
+        "B": "It will cause the mobile device to automatically reboot every few minutes",
+        "C": "It prevents the mobile application from being able to connect to the internet",
+        "D": "It forces the mobile device to use an outdated and insecure version of its OS",
+        "E": "It results in the automatic installation of a keylogger on the mobile device"
+      },
+      "explanation": "Mobile devices are easily lost or stolen, and malware can access the local filesystem. Sensitive data should always be stored securely using the device's built-in secure storage (like iOS Keychain or Android Keystore). It doesn't cause reboots, prevent internet access, force OS updates, or install keyloggers.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K8",
+      "skill": "K8 - Mobile Assessment",
+      "question": "What is the purpose of 'Certificate Pinning' in a mobile application?",
+      "options": {
+        "A": "To ensure the app only communicates with a specific, trusted server by verifying its certificate",
+        "B": "To automatically update the mobile device's operating system to the latest version",
+        "C": "To allow the mobile application to have multiple sessions open at the same time",
+        "D": "To encrypt the user's login credentials using a stronger cryptographic algorithm",
+        "E": "To provide the user with a unique digital certificate for every single request they make"
+      },
+      "explanation": "Certificate pinning prevents MitM attacks by hardcoding the server's public key or certificate into the app. This ensures the app won't trust a malicious certificate, even if it's signed by a valid CA. It's not about OS updates, multiple sessions, encryption, or per-request certificates.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K8",
+      "skill": "K8 - Mobile Assessment",
+      "question": "What is the security risk of a mobile application running on a 'Jailbroken' (iOS) or 'Rooted' (Android) device?",
+      "options": {
+        "A": "The device's built-in security controls are bypassed, making it more vulnerable to malware",
+        "B": "The device will automatically stop responding to all incoming phone calls",
+        "C": "The device will force all users to use a specific version of the mobile browser",
+        "D": "The device's physical screen will be automatically cracked if it is accessed",
+        "E": "The device will cause the user's computer to consume excessive power"
+      },
+      "explanation": "Jailbreaking/Rooting removes the OS's security restrictions (sandboxing, permission controls). This allows apps (including malware) to gain full administrative access to the device and its data. It doesn't stop calls, force browser versions, crack screens, or consume computer power.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K9",
+      "skill": "K9 - IoT Assessment",
+      "question": "What is a very common security vulnerability found in many Internet of Things (IoT) devices?",
+      "options": {
+        "A": "The use of hardcoded or well-known default administrative credentials",
+        "B": "The requirement for a specialized hardware device to be installed locally",
+        "C": "The device only being compatible with a specific version of the Linux kernel",
+        "D": "The device automatically deleting all of its data every ninety days",
+        "E": "The device causing the user's computer to consume excessive power"
+      },
+      "explanation": "Many IoT devices (cameras, routers, smart home gadgets) are shipped with default passwords (like 'admin/admin') that users rarely change. This makes them easy targets for botnets like Mirai. It's not about hardware requirements, kernel versions, data deletion, or power consumption.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K9",
+      "skill": "K9 - IoT Assessment",
+      "question": "Why is it often difficult to perform security updates on many types of IoT devices?",
+      "options": {
+        "A": "They may lack a built-in update mechanism or have very limited hardware resources",
+        "B": "They are required by law to only use the very first version of their firmware",
+        "C": "They automatically reject any type of update that is not signed by the government",
+        "D": "They force the user to physically return the device to the manufacturer for updates",
+        "E": "They result in the automatic installation of malware if an update is attempted"
+      },
+      "explanation": "IoT devices often have minimal hardware and no easy way for users to apply patches. Some manufacturers also fail to provide updates for older models. This leaves them vulnerable to known exploits for long periods. They aren't legally restricted to old firmware, government-signed, or malware-prone during updates.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K9",
+      "skill": "K9 - IoT Assessment",
+      "question": "What is a significant security risk of IoT devices using unencrypted communication protocols (like MQTT without TLS)?",
+      "options": {
+        "A": "An attacker can intercept the traffic and steal sensitive data or control the device",
+        "B": "It will cause the IoT device to automatically reboot every few minutes",
+        "C": "It prevents the IoT device from being able to connect to the internet",
+        "D": "It forces the IoT device to use an outdated and insecure version of its OS",
+        "E": "It results in the automatic installation of a keylogger on the IoT device"
+      },
+      "explanation": "Unencrypted traffic can be sniffed by anyone on the same network. This can reveal sensor data, user commands, or even credentials. It doesn't cause reboots, prevent internet access, force OS updates, or install keyloggers.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K10",
+      "skill": "K10 - SCADA Assessment",
+      "question": "What is a unique and critical challenge when performing a security assessment of a SCADA or Industrial Control System (ICS)?",
+      "options": {
+        "A": "The systems are often fragile and can be easily crashed by standard scanning tools",
+        "B": "The systems only use a specific version of the Windows operating system",
+        "C": "The systems are required by law to be connected directly to the public internet",
+        "D": "The systems automatically delete all of their data every ninety days",
+        "E": "The systems result in the automatic installation of malware if they are scanned"
+      },
+      "explanation": "SCADA/ICS environments control physical processes (power, water, manufacturing). They often use legacy hardware and protocols that are not designed for security scanning. A standard 'nmap' scan can cause a PLC to crash, potentially leading to physical damage or safety issues. They aren't limited to Windows, required to be online, or malware-prone.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K10",
+      "skill": "K10 - SCADA Assessment",
+      "question": "Why is 'Network Segmentation' particularly important for securing SCADA and ICS environments?",
+      "options": {
+        "A": "It isolates the critical control systems from the organization's general business network",
+        "B": "It automatically encrypts all data stored in the SCADA system's primary database",
+        "C": "It ensures that the SCADA system is compatible with all modern web browsers",
+        "D": "It provides a way for the SCADA system to automatically recover from a hardware failure",
+        "E": "It physically protects the SCADA server from being stolen from the data center"
+      },
+      "explanation": "SCADA systems should never be directly accessible from the corporate network or the internet. Segmentation (using firewalls and DMZs) ensures that a compromise of an office workstation doesn't lead to a compromise of the power grid or factory floor. It's not about encryption, browser compatibility, hardware recovery, or physical security.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K10",
+      "skill": "K10 - SCADA Assessment",
+      "question": "What is a common security risk associated with legacy protocols (like Modbus) used in SCADA environments?",
+      "options": {
+        "A": "They often lack any form of authentication or encryption for their communications",
+        "B": "They are required by law to only use the very first version of their protocol",
+        "C": "They automatically reject any type of connection that is not signed by the government",
+        "D": "They force the user to physically return the device to the manufacturer for updates",
+        "E": "They result in the automatic installation of malware if they are used"
+      },
+      "explanation": "Many industrial protocols were designed decades ago for reliability, not security. They often send commands in cleartext without any authentication, meaning anyone on the network can control the equipment. They aren't legally restricted, government-signed, or malware-prone.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K11",
+      "skill": "K11 - Mainframe Assessment",
+      "question": "Which security software is commonly used on IBM mainframes to manage user access and permissions?",
+      "options": {
+        "A": "RACF",
+        "B": "Active Directory",
+        "C": "OpenLDAP",
+        "D": "Kerberos",
+        "E": "Sudo"
+      },
+      "explanation": "RACF (Resource Access Control Facility) is the primary security manager for IBM's z/OS mainframe operating system. Active Directory is for Windows, OpenLDAP for Linux/Unix, and Kerberos is a general authentication protocol.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K11",
+      "skill": "K11 - Mainframe Assessment",
+      "question": "What is a major security risk associated with unauthorized access to mainframe 'Datasets'?",
+      "options": {
+        "A": "They often contain massive amounts of sensitive corporate or customer data",
+        "B": "They will cause the mainframe to automatically reboot every few minutes",
+        "C": "They prevent the mainframe from being able to connect to the internet",
+        "D": "They force the mainframe to use an outdated and insecure version of its OS",
+        "E": "They result in the automatic installation of a keylogger on the mainframe"
+      },
+      "explanation": "Mainframes are the 'backbone' of many large organizations (banks, insurance, government) and store vast amounts of critical data. Unauthorized access to datasets can lead to massive data breaches. It doesn't cause reboots, prevent internet access, force OS updates, or install keyloggers.",
+      "correct": "A"
+    },
+    {
+      "category": "K - Advanced Assessment",
+      "skill_id": "K11",
+      "skill": "K11 - Mainframe Assessment",
+      "question": "Why is 'Auditing' particularly important in a mainframe environment?",
+      "options": {
+        "A": "To track all administrative actions and access to highly sensitive data for compliance",
+        "B": "To automatically increase the overall performance and speed of the mainframe",
+        "C": "To ensure that the mainframe is compatible with all modern web browsers",
+        "D": "To provide a way for the mainframe to automatically recover from a hardware failure",
+        "E": "To physically count the number of mainframes in the organization's data center"
+      },
+      "explanation": "Because mainframes handle such critical data, maintaining a detailed audit trail of all privileged actions is a core requirement for security and regulatory compliance (like PCI-DSS or HIPAA). It's not about performance, browser compatibility, hardware recovery, or physical inventory.",
+      "correct": "A"
+    },
+    {
+      "category": "L - Reporting",
+      "skill_id": "L1",
+      "skill": "L1 - Reporting",
+      "question": "What is the primary purpose of the 'Executive Summary' in a penetration test report?",
+      "options": {
+        "A": "To provide a high-level overview of the overall risk and key findings for management",
+        "B": "To list every single technical detail and command used during the assessment",
+        "C": "To provide a complete list of all user passwords found during the testing",
+        "D": "To ensure that the report is at least fifty pages long to show the work done",
+        "E": "To physically identify the location of every server in the organization"
+      },
+      "explanation": "The executive summary is for non-technical stakeholders. It should summarize the overall security posture, the most critical risks, and the general impact on the business. Technical details belong in the body of the report. It's not for passwords, page count, or server locations.",
+      "correct": "A"
+    },
+    {
+      "category": "L - Reporting",
+      "skill_id": "L1",
+      "skill": "L1 - Reporting",
+      "question": "Why is it critical to provide clear and actionable 'Remediation Steps' for every finding in a report?",
+      "options": {
+        "A": "To help the client understand exactly how to fix the identified vulnerabilities",
+        "B": "To increase the overall cost of the penetration test for the organization",
+        "C": "To ensure that the client is forced to hire the same company for the next test",
+        "D": "To provide a way for the attacker to easily re-exploit the same vulnerabilities",
+        "E": "To physically protect the organization's servers from being stolen"
+      },
+      "explanation": "A penetration test is only useful if the client can fix the issues found. Clear remediation advice (e.g., 'Update this library to version X', 'Apply this patch') is the most valuable part of the report. It's not about cost, vendor lock-in, re-exploitation, or physical security.",
+      "correct": "A"
+    },
+    {
+      "category": "L - Reporting",
+      "skill_id": "L1",
+      "skill": "L1 - Reporting",
+      "question": "What is the purpose of using a standard risk rating system like 'CVSS' in a report?",
+      "options": {
+        "A": "To provide a consistent and objective way to prioritize the found vulnerabilities",
+        "B": "To automatically encrypt the entire report using a strong cryptographic key",
+        "C": "To ensure that the report is compatible with all modern operating systems",
+        "D": "To provide a way for the client to automatically recover from a hardware failure",
+        "E": "To physically count the number of vulnerabilities found in the organization"
+      },
+      "explanation": "CVSS (Common Vulnerability Scoring System) provides a numerical score reflecting the severity of a vulnerability. This helps the client prioritize which issues to fix first based on risk. It's not about encryption, OS compatibility, hardware recovery, or physical counting.",
+      "correct": "A"
+    },
+    {
+      "category": "L - Reporting",
+      "skill_id": "L2",
+      "skill": "L2 - Record Keeping",
+      "question": "Why is it important for a penetration tester to maintain a secure 'Audit Trail' of all their activities?",
+      "options": {
+        "A": "To provide evidence of what was tested and to defend against claims of damage",
+        "B": "To automatically increase the overall speed and performance of the testing tools",
+        "C": "To ensure that the tester's computer is automatically updated to the latest version",
+        "D": "To allow the tester to have multiple sessions open at the same time on different devices",
+        "E": "To provide the tester with a unique digital certificate for every single request"
+      },
+      "explanation": "An audit trail (logs, screenshots, notes) is essential for accountability. If a server crashes during testing, the tester can use their logs to prove what they did (or didn't) do. It also helps in writing the report. It's not about tool speed, OS updates, multiple sessions, or certificates.",
+      "correct": "A"
+    },
+    {
+      "category": "L - Reporting",
+      "skill_id": "L2",
+      "skill": "L2 - Record Keeping",
+      "question": "What is the primary security risk of storing sensitive client data (like cleartext passwords) in unencrypted testing notes?",
+      "options": {
+        "A": "The data could be stolen if the tester's laptop is lost, stolen, or compromised",
+        "B": "It will cause the tester's computer to automatically reboot every few minutes",
+        "C": "It prevents the tester from being able to connect to the organization's network",
+        "D": "It forces the tester to use an outdated and insecure version of their OS",
+        "E": "It results in the automatic installation of a keylogger on the tester's machine"
+      },
+      "explanation": "Testers often handle highly sensitive data. This data must be protected with the same level of care as the client's own systems. Unencrypted notes on a laptop are a major risk. It doesn't cause reboots, prevent network access, force OS updates, or install keyloggers.",
+      "correct": "A"
+    },
+    {
+      "category": "L - Reporting",
+      "skill_id": "L2",
+      "skill": "L2 - Record Keeping",
+      "question": "What is the standard requirement for handling sensitive client data after a penetration test engagement is complete?",
+      "options": {
+        "A": "The data should be securely destroyed or returned to the client according to the contract",
+        "B": "The data should be published on the organization's public website for transparency",
+        "C": "The data should be stored on a public cloud storage service for at least ten years",
+        "D": "The data should be shared with all of the organization's competitors for review",
+        "E": "The data should be used to automatically install malware on the client's servers"
+      },
+      "explanation": "Once the engagement is over and the report is delivered, the tester has no reason to keep the client's sensitive data. Secure destruction (wiping) is the standard practice to minimize risk. It shouldn't be published, stored publicly, shared with competitors, or used for malware.",
+      "correct": "A"
     }
   ]
 }
