@@ -124,6 +124,7 @@ Also note:
 * Please make sure explanations are helpful to candidates revision and help them understand why an answer is correct.
 * I want at least 5 questions per skill
 * Please ensure all the options (incorrect and correct) are similar length/verbosity
+* Minimise repetition and similar questions
 ```
 
 **Key fields:**
