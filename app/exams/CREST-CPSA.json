@@ -5730,15 +5730,15 @@
     {
       "category": "B - Core Technical Skills",
       "skill": "B14 - Audit Techniques",
-      "question": "An analyst suspects a backdoor process is running on a compromised Linux server. Which command would best help identify processes that are not associated with any known installed package?",
+      "question": "An analyst suspects a backdoor process is running on a compromised Red Hat Enterprise Linux server. Which command would best help identify processes that are not associated with any known installed RPM package?",
       "options": {
-        "A": "rpm -qf $(ls /proc/*/exe 2>/dev/null | xargs readlink)",
+        "A": "rpm -qf $(ls /proc/*/exe 2>/dev/null | xargs readlink -f)",
         "B": "top -b -n 1 -o %MEM",
         "C": "dmesg | grep -i process",
         "D": "journalctl -xe --since today"
       },
       "correct": "A",
-      "explanation": "Using 'rpm -qf' (or the equivalent 'dpkg -S' on Debian-based systems) against the resolved executable paths from /proc/*/exe allows an analyst to cross-reference every running process binary against the installed package database. Any binary that returns 'not owned by any package' is a candidate for further investigation. 'top' shows resource usage but does not cross-reference package ownership. 'dmesg' shows kernel messages and 'journalctl' shows system logs — neither directly identifies unpackaged executables."
+      "explanation": "On RPM-based distributions (RHEL, CentOS, Fedora), using 'rpm -qf' against the resolved executable paths from /proc/*/exe allows an analyst to cross-reference every running process binary against the installed package database. Any binary that returns 'not owned by any package' is a candidate for further investigation — it may be a backdoor, a manually compiled tool, or a container process. On Debian-based systems the equivalent is 'dpkg -S'. 'top' shows resource usage but does not cross-reference package ownership. 'dmesg' shows kernel messages and 'journalctl' shows system logs — neither directly identifies unpackaged executables."
     },
     {
       "category": "C - Background Information Gathering and Open Source",
@@ -5834,7 +5834,7 @@
     {
       "category": "C - Background Information Gathering and Open Source",
       "skill": "C6 - Header Analysis",
-      "question": "A web application sits behind a reverse proxy and load balancer. During testing you observe the HTTP response includes an 'X-Forwarded-For' header in requests reaching the backend. What reconnaissance value does this header provide to an attacker?",
+      "question": "A web application sits behind a reverse proxy and load balancer. During testing you observe that requests reaching the backend include an 'X-Forwarded-For' header added by the proxy infrastructure. What reconnaissance value does this header provide to an attacker?",
       "options": {
         "A": "It can reveal the true client IP address chain and may expose internal proxy or load balancer IP addresses that are not reachable from the internet",
         "B": "It identifies the web application firewall vendor and rule set version being used to filter requests upstream",
@@ -5951,7 +5951,7 @@
     {
       "category": "E - Microsoft Windows Security Assessment",
       "skill": "E6 - Patch Management",
-      "question": "A security assessor wants to scan a Windows workstation to identify missing patches, weak security configurations, and blank or weak local account passwords. Which Microsoft tool is designed specifically for this purpose?",
+      "question": "A security assessor wants to scan a Windows Server 2008 R2 machine to identify missing patches, weak security configurations, and blank or weak local account passwords. Which Microsoft tool was designed specifically for this purpose on legacy Windows systems?",
       "options": {
         "A": "Microsoft Baseline Security Analyzer (MBSA), which scans for missing updates, common misconfigurations, and weak account policies",
         "B": "Microsoft Security Compliance Toolkit (SCT), which deploys Group Policy Objects to enforce CIS benchmark settings",
@@ -5959,7 +5959,7 @@
         "D": "System Center Configuration Manager (SCCM), which provides enterprise-wide software deployment and inventory collection"
       },
       "correct": "A",
-      "explanation": "Microsoft Baseline Security Analyzer (MBSA) is a free tool designed to assess individual machines or small networks for common security misconfigurations. It checks for missing Windows and application patches (via the Microsoft Update catalogue), blank or weak passwords on local accounts, IIS and SQL Server configuration issues, and unnecessary services. MBSA produces a prioritised report suited to manual security review. WSUS is a patch distribution server — it does not scan for vulnerabilities. SCCM/MECM provides enterprise endpoint management including patch deployment but is not a security assessment scanner. The Security Compliance Toolkit applies and audits Group Policy baselines rather than scanning for missing patches."
+      "explanation": "Microsoft Baseline Security Analyzer (MBSA) is a free tool designed to assess individual machines or small networks for common security misconfigurations. It checks for missing Windows and application patches (via the Microsoft Update catalogue), blank or weak passwords on local accounts, IIS and SQL Server configuration issues, and unnecessary services. MBSA produces a prioritised report suited to manual security review. Note that MBSA was deprecated by Microsoft and its last version (2.3) does not support Windows 10 or Server 2016 and later — on modern systems, Windows Update, Microsoft Defender, or SCCM-based compliance scanning have replaced it. WSUS is a patch distribution server — it does not scan for vulnerabilities. SCCM/MECM provides enterprise endpoint management including patch deployment but is not a dedicated security assessment scanner. The Security Compliance Toolkit applies and audits Group Policy baselines rather than scanning for missing patches."
     },
     {
       "category": "E - Microsoft Windows Security Assessment",
@@ -5985,7 +5985,7 @@
         "D": "The SMTP relay service by sending specially crafted email headers to the transport agent"
       },
       "correct": "A",
-      "explanation": "ProxyLogon abused a server-side request forgery (SSRF) vulnerability in the Exchange Client Access Service (CAS), specifically through the /ecp endpoint. By crafting requests that the CAS would forward internally with elevated trust, an unauthenticated attacker could access the Exchange Control Panel as any user. This was then chained with a post-auth arbitrary file write to achieve remote code execution. ProxyLogon was one of the most severe Exchange vulnerabilities ever disclosed, affecting millions of on-premises servers."
+      "explanation": "ProxyLogon abused a server-side request forgery (SSRF) vulnerability in the Exchange Client Access Service (CAS). The SSRF (CVE-2021-26855) allowed an unauthenticated attacker to send crafted requests through the CAS frontend that were forwarded internally with SYSTEM-level trust to backend services, including the Exchange Control Panel (ECP). By targeting ECP through this SSRF, the attacker could impersonate any user without credentials. This was then chained with a post-auth arbitrary file write vulnerability (CVE-2021-27065) in the ECP to achieve remote code execution. ProxyLogon was one of the most severe Exchange vulnerabilities ever disclosed, affecting millions of on-premises servers."
     },
     {
       "category": "E - Microsoft Windows Security Assessment",
@@ -6111,7 +6111,7 @@
       "options": {
         "A": "A forward proxy, which acts on behalf of clients to access resources on external servers",
         "B": "A reverse proxy, which sits in front of internal servers and forwards inbound client requests",
-        "C": "A transparent proxy, which is architecturally equivalent to a reverse proxy but requires no client config",
+        "C": "A transparent proxy, which intercepts outbound traffic at the network layer without requiring any client configuration",
         "D": "A SOCKS proxy, which operates exclusively at the transport layer using the SOCKS5 protocol"
       },
       "correct": "A",
@@ -6185,28 +6185,28 @@
     {
       "category": "G - Web Technologies",
       "skill": "G6 - Languages",
-      "question": "A PHP application uses the loose comparison operator (==) to validate a user-supplied token against an expected value. An attacker submits the value '0' and successfully authenticates. Which PHP behaviour explains this?",
+      "question": "A PHP application compares password hashes using the loose comparison operator (==). The stored hash for a user is '0e462097431906509019562988736854'. An attacker discovers they can authenticate by submitting any password whose MD5 hash also begins with '0e' followed by only digits. Which PHP behaviour explains this?",
       "options": {
-        "A": "PHP type juggling causes '0' to be loosely equal to any string that begins with a non-numeric character when compared with ==",
-        "B": "PHP casts both operands to integers before loose comparison, so '0' becomes 0 which equals the integer 0 stored in the database",
-        "C": "The loose equality operator == in PHP always returns true when either operand is the string '0'",
-        "D": "PHP treats single-digit strings as boolean true values when used on the right-hand side of a comparison"
+        "A": "PHP type juggling interprets strings matching the pattern '0e[digits]' as scientific notation (zero to a power), so both sides evaluate to float 0 and the comparison returns true",
+        "B": "PHP casts all hash strings to hexadecimal integers before comparison, and any hash beginning with '0e' overflows to zero",
+        "C": "The loose equality operator == in PHP performs a substring match, so two strings sharing the same prefix are considered equal",
+        "D": "PHP treats strings beginning with '0' as octal numbers, and all octal representations of MD5 hashes evaluate to the same value"
       },
       "correct": "A",
-      "explanation": "PHP's loose comparison operator (==) performs type coercion before comparing values. When comparing a string that starts with a non-numeric character (e.g., a hex token like 'abc123xyz') to the integer 0 or the string '0', PHP converts the non-numeric string to the integer 0, making the comparison 0 == 0, which evaluates to true. This is PHP type juggling. It has historically been exploited in authentication bypasses, hash comparison flaws (e.g., comparing a '0e...' hash string to 0), and logic errors. The fix is to always use the strict comparison operator (===), which checks both value and type without coercion. This class of vulnerability appears in CTFs and real-world CVEs alike and is a key CPSA-level PHP security concept."
+      "explanation": "PHP's loose comparison operator (==) performs type coercion. When both operands are strings that look like numbers in scientific notation (e.g., '0e462097...' is interpreted as 0 × 10^462097), PHP converts them to floats. Since zero raised to any power is still zero, both sides become 0.0 and the comparison returns true. This is the classic 'magic hash' vulnerability: an attacker finds a password whose hash matches the '0e[digits]' pattern and bypasses authentication because 0 == 0. Real-world examples include MD5 and SHA-1 hashes that happen to start with '0e' followed entirely by digits. The fix is to always use the strict comparison operator (===), which compares both type and value without coercion, or better still, use hash_equals() for timing-safe comparison. This behaviour was changed in PHP 8.0 for integer-to-string comparisons, but '0e' string-to-string scientific notation coercion still applies to == in all PHP versions."
     },
     {
       "category": "G - Web Technologies",
       "skill": "G6 - Languages",
-      "question": "An ASP.NET web application uses ViewState to persist page data across postbacks. An attacker intercepts and tampers with the ViewState parameter. What condition must be absent for this tampering to succeed in injecting malicious object data?",
+      "question": "An ASP.NET web application uses ViewState to persist page data across postbacks. A penetration tester wants to forge a malicious ViewState to exploit insecure deserialization. What must the tester obtain or bypass to forge a valid ViewState with a correct MAC signature?",
       "options": {
-        "A": "A valid machineKey configuration, which would enforce ViewState MAC validation and detect any tampering",
-        "B": "The EnableViewState property set to false, which would prevent ViewState from being generated at all",
-        "C": "The ViewStateEncryptionMode property set to Always, which would apply AES encryption to the payload",
-        "D": "The ValidateRequest attribute on the page, which would block any non-alphanumeric characters in ViewState"
+        "A": "The application's machineKey value, which is used to compute the ViewState MAC — if the key is leaked, hardcoded, or predictable, the attacker can forge valid signatures",
+        "B": "The server's TLS private key, which ASP.NET uses to sign ViewState before transmitting it over HTTPS",
+        "C": "The IIS application pool identity credentials, because ViewState MAC is derived from the Windows service account password hash",
+        "D": "The .NET Framework version number, because ViewState MAC validation is only enabled in specific framework versions and disabled by default in all others"
       },
       "correct": "A",
-      "explanation": "ASP.NET ViewState is a Base64-encoded blob that stores page state between HTTP requests. By default, ASP.NET appends a Message Authentication Code (MAC) to the ViewState using a secret derived from the machineKey in web.config. If the machineKey is absent, weak, or known to the attacker, MAC validation can be forged, allowing the attacker to supply arbitrary ViewState data. In ASP.NET versions that use ObjectStateFormatter for deserialization, a tampered ViewState can trigger insecure deserialization leading to remote code execution — the basis of exploits like ysoserial.net's ViewState payloads. Discovering a publicly known or default machineKey during a penetration test is a critical finding that should be escalated immediately."
+      "explanation": "ASP.NET ViewState is a Base64-encoded blob that stores page state between HTTP requests. ASP.NET appends a Message Authentication Code (MAC) computed using the machineKey from web.config (or auto-generated if not explicitly configured). ViewState MAC is enabled by default and mandatory in .NET 4.5.2 and later — it cannot be disabled. To forge a ViewState, an attacker must know the machineKey. This can happen when the key is hardcoded in web.config and exposed via information disclosure (e.g., directory traversal, misconfigured source control), when a default or example machineKey is used, or when the key is shared across a web farm and leaked from one node. With the machineKey, an attacker can craft a ViewState containing a malicious serialized object and compute a valid MAC, triggering insecure deserialization via ObjectStateFormatter — the basis of exploits like ysoserial.net's ViewState payloads."
     },
     {
       "category": "G - Web Technologies",
@@ -6474,7 +6474,7 @@
       "question": "A web application stores the user's account type in a cookie as accountType=standard. What vulnerability is a penetration tester investigating if they modify this cookie value to accountType=admin?",
       "options": {
         "A": "Cross-Site Request Forgery, where a forged request is submitted from another domain",
-        "B": "Insecure Direct Object Reference, where a file path is traversed to access restricted files",
+        "B": "Insecure Direct Object Reference, where a user-controlled identifier is changed to access another user's resources",
         "C": "Insecure client-side trust, where the server accepts tampered cookie parameters as authoritative",
         "D": "Session fixation, where a known session ID is set before the victim authenticates"
       },
