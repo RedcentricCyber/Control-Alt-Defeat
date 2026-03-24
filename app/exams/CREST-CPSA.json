@@ -1,6 +1,6 @@
 {
   "title": "CPSA Practice Exam",
-  "description": "A comprehensive practice exam for the CREST CPSA certification, covering all syllabus areas (445 questions total).",
+  "description": "A comprehensive practice exam for the CREST CPSA certification, covering all syllabus areas (430 questions total).",
   "difficulty": "MEDIUM",
   "pass_mark": 60,
   "time_limit": 120,
@@ -5379,8 +5379,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K1 - Windows Assessment",
+      "category": "E - Microsoft Windows Security Assessment",
+      "skill": "E5 - Windows Vulns",
       "question": "Which tool is commonly used during a Windows assessment to enumerate users, groups, and shares via SMB?",
       "options": {
         "A": "enum4linux",
@@ -5393,8 +5393,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K1 - Windows Assessment",
+      "category": "E - Microsoft Windows Security Assessment",
+      "skill": "E5 - Windows Vulns",
       "question": "What is a 'Null Session' in the context of Windows networking, and why is it a security risk?",
       "options": {
         "A": "An unauthenticated connection to a Windows share that can reveal sensitive system information",
@@ -5407,8 +5407,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K1 - Windows Assessment",
+      "category": "E - Microsoft Windows Security Assessment",
+      "skill": "E5 - Windows Vulns",
       "question": "Which Nmap script category is most useful for identifying common vulnerabilities on a Windows target?",
       "options": {
         "A": "vuln",
@@ -5421,8 +5421,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K2 - Linux Assessment",
+      "category": "F - Unix Security Assessment",
+      "skill": "F2 - Unix Vulns",
       "question": "During a Linux assessment, you find a file with the permissions '-rwsr-xr-x'. What does the 's' in the owner's permissions indicate?",
       "options": {
         "A": "The SUID (Set User ID) bit is set, meaning the file runs with the owner's privileges",
@@ -5435,8 +5435,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K2 - Linux Assessment",
+      "category": "F - Unix Security Assessment",
+      "skill": "F2 - Unix Vulns",
       "question": "Which file on a Linux system contains the hashed passwords for all local users?",
       "options": {
         "A": "/etc/shadow",
@@ -5449,8 +5449,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K2 - Linux Assessment",
+      "category": "F - Unix Security Assessment",
+      "skill": "F2 - Unix Vulns",
       "question": "Which command can be used on a Linux system to list all currently listening network services and their associated ports?",
       "options": {
         "A": "netstat -tuln",
@@ -5463,8 +5463,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K3 - Network Assessment",
+      "category": "D - Networking Equipment",
+      "skill": "D3 - Network Protocol Security",
       "question": "What is the primary difference between an 'Internal' and an 'External' network assessment?",
       "options": {
         "A": "Internal is performed from within the network, while External is from the internet",
@@ -5477,8 +5477,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K3 - Network Assessment",
+      "category": "D - Networking Equipment",
+      "skill": "D3 - Network Protocol Security",
       "question": "Why is the use of unencrypted protocols like Telnet or FTP on a local network considered a significant security risk?",
       "options": {
         "A": "An attacker can capture the traffic and steal cleartext credentials (usernames and passwords)",
@@ -5491,8 +5491,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K3 - Network Assessment",
+      "category": "D - Networking Equipment",
+      "skill": "D3 - Network Protocol Security",
       "question": "What is a 'Rogue Access Point' in the context of a wireless network assessment?",
       "options": {
         "A": "An unauthorized wireless access point connected to the organization's internal network",
@@ -5505,8 +5505,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K4 - Web Assessment",
+      "category": "H - Web Testing Methodologies",
+      "skill": "H1 - Recon",
       "question": "What is the primary function of a Web Application Firewall (WAF)?",
       "options": {
         "A": "To inspect and filter incoming HTTP traffic to block common web-based attacks",
@@ -5519,8 +5519,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K4 - Web Assessment",
+      "category": "H - Web Testing Methodologies",
+      "skill": "H1 - Recon",
       "question": "Which of the following is a key component of a comprehensive web application assessment methodology?",
       "options": {
         "A": "Testing for all vulnerabilities listed in the OWASP Top 10",
@@ -5533,8 +5533,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K4 - Web Assessment",
+      "category": "H - Web Testing Methodologies",
+      "skill": "H1 - Recon",
       "question": "What is the purpose of 'Output Encoding' in the context of preventing web-based attacks?",
       "options": {
         "A": "To ensure that user-supplied data is treated as literal text rather than executable code",
@@ -5547,8 +5547,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K5 - DB Assessment",
+      "category": "J - Databases",
+      "skill": "J1 - MSSQL",
       "question": "Why is it important to check for 'Default Credentials' during a database assessment?",
       "options": {
         "A": "Many database systems are installed with well-known, insecure default passwords",
@@ -5561,8 +5561,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K5 - DB Assessment",
+      "category": "J - Databases",
+      "skill": "J1 - MSSQL",
       "question": "What is the primary goal of 'Database Auditing'?",
       "options": {
         "A": "To maintain a record of all significant actions and changes performed on the database",
@@ -5575,8 +5575,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K5 - DB Assessment",
+      "category": "J - Databases",
+      "skill": "J1 - MSSQL",
       "question": "During a database assessment, you find that the DBMS is several versions behind the latest release. What is the most significant risk?",
       "options": {
         "A": "The database may be vulnerable to known security flaws that have been patched in newer versions",
@@ -5589,8 +5589,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K6 - Wireless Assessment",
+      "category": "D - Networking Equipment",
+      "skill": "D6 - Wireless",
       "question": "Which wireless security protocol is currently considered the most secure for modern networks?",
       "options": {
         "A": "WPA3",
@@ -5603,8 +5603,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K6 - Wireless Assessment",
+      "category": "D - Networking Equipment",
+      "skill": "D6 - Wireless",
       "question": "What is an 'Evil Twin' attack in the context of wireless security?",
       "options": {
         "A": "An attacker sets up a malicious access point with the same name (SSID) as a legitimate one",
@@ -5617,8 +5617,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K6 - Wireless Assessment",
+      "category": "D - Networking Equipment",
+      "skill": "D6 - Wireless",
       "question": "What is the purpose of a 'Wireless Site Survey' during a security assessment?",
       "options": {
         "A": "To map out the signal coverage and identify all wireless devices in a specific area",
@@ -5631,218 +5631,8 @@
       "correct": "A"
     },
     {
-      "category": "K - Advanced Assessment",
-      "skill": "K7 - Cloud Assessment",
-      "question": "What does the 'Shared Responsibility Model' mean in the context of cloud security?",
-      "options": {
-        "A": "The cloud provider is responsible for the infrastructure, while the customer is responsible for their data",
-        "B": "The cloud provider and the customer both share the exact same set of security responsibilities",
-        "C": "The cloud provider is responsible for all security, and the customer has no responsibilities",
-        "D": "The customer is responsible for all security, and the cloud provider has no responsibilities",
-        "E": "The responsibility for security is shared equally between the cloud provider and the government"
-      },
-      "explanation": "In cloud computing (AWS, Azure, GCP), the provider secures the 'cloud' (physical data centers, networking, hypervisors), but the customer is responsible for securing what they put 'in' the cloud (OS, applications, data, IAM). The exact split depends on the service type (IaaS, PaaS, SaaS).",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K7 - Cloud Assessment",
-      "question": "What is a common and high-impact security risk associated with cloud storage services like Amazon S3?",
-      "options": {
-        "A": "Misconfigured permissions that allow public access to sensitive data",
-        "B": "The cloud provider automatically deleting all data every ninety days",
-        "C": "The storage service only being compatible with a specific version of Windows",
-        "D": "The storage service requiring a specialized hardware device to be installed locally",
-        "E": "The storage service causing the user's computer to consume excessive power"
-      },
-      "explanation": "Publicly accessible S3 buckets (or Azure Blobs) are a very common cause of data breaches. If permissions are not correctly set, anyone on the internet can view or download the contents. It's not about automatic deletion, OS compatibility, hardware requirements, or power consumption.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K7 - Cloud Assessment",
-      "question": "Why is 'IAM' (Identity and Access Management) critical in a cloud environment?",
-      "options": {
-        "A": "It allows for granular control over who can access specific cloud resources and what they can do",
-        "B": "It automatically encrypts all data stored in the cloud using a strong cryptographic key",
-        "C": "It ensures that the cloud environment is compatible with all modern web browsers",
-        "D": "It provides a way for the cloud provider to automatically recover from a hardware failure",
-        "E": "It physically protects the cloud data center from being stolen by unauthorized individuals"
-      },
-      "explanation": "IAM is the primary security boundary in the cloud. It defines users, groups, and roles, and assigns policies that grant or deny access to services and data. It's not about encryption, browser compatibility, hardware recovery, or physical security.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K8 - Mobile Assessment",
-      "question": "What is a major security risk of a mobile application storing sensitive data (like passwords) in cleartext on the device?",
-      "options": {
-        "A": "An attacker with physical access or malware can easily steal the sensitive information",
-        "B": "It will cause the mobile device to automatically reboot every few minutes",
-        "C": "It prevents the mobile application from being able to connect to the internet",
-        "D": "It forces the mobile device to use an outdated and insecure version of its OS",
-        "E": "It results in the automatic installation of a keylogger on the mobile device"
-      },
-      "explanation": "Mobile devices are easily lost or stolen, and malware can access the local filesystem. Sensitive data should always be stored securely using the device's built-in secure storage (like iOS Keychain or Android Keystore). It doesn't cause reboots, prevent internet access, force OS updates, or install keyloggers.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K8 - Mobile Assessment",
-      "question": "What is the purpose of 'Certificate Pinning' in a mobile application?",
-      "options": {
-        "A": "To ensure the app only communicates with a specific, trusted server by verifying its certificate",
-        "B": "To automatically update the mobile device's operating system to the latest version",
-        "C": "To allow the mobile application to have multiple sessions open at the same time",
-        "D": "To encrypt the user's login credentials using a stronger cryptographic algorithm",
-        "E": "To provide the user with a unique digital certificate for every single request they make"
-      },
-      "explanation": "Certificate pinning prevents MitM attacks by hardcoding the server's public key or certificate into the app. This ensures the app won't trust a malicious certificate, even if it's signed by a valid CA. It's not about OS updates, multiple sessions, encryption, or per-request certificates.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K8 - Mobile Assessment",
-      "question": "What is the security risk of a mobile application running on a 'Jailbroken' (iOS) or 'Rooted' (Android) device?",
-      "options": {
-        "A": "The device's built-in security controls are bypassed, making it more vulnerable to malware",
-        "B": "The device will automatically stop responding to all incoming phone calls",
-        "C": "The device will force all users to use a specific version of the mobile browser",
-        "D": "The device's physical screen will be automatically cracked if it is accessed",
-        "E": "The device will cause the user's computer to consume excessive power"
-      },
-      "explanation": "Jailbreaking/Rooting removes the OS's security restrictions (sandboxing, permission controls). This allows apps (including malware) to gain full administrative access to the device and its data. It doesn't stop calls, force browser versions, crack screens, or consume computer power.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K9 - IoT Assessment",
-      "question": "What is a very common security vulnerability found in many Internet of Things (IoT) devices?",
-      "options": {
-        "A": "The use of hardcoded or well-known default administrative credentials",
-        "B": "The requirement for a specialized hardware device to be installed locally",
-        "C": "The device only being compatible with a specific version of the Linux kernel",
-        "D": "The device automatically deleting all of its data every ninety days",
-        "E": "The device causing the user's computer to consume excessive power"
-      },
-      "explanation": "Many IoT devices (cameras, routers, smart home gadgets) are shipped with default passwords (like 'admin/admin') that users rarely change. This makes them easy targets for botnets like Mirai. It's not about hardware requirements, kernel versions, data deletion, or power consumption.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K9 - IoT Assessment",
-      "question": "Why is it often difficult to perform security updates on many types of IoT devices?",
-      "options": {
-        "A": "They may lack a built-in update mechanism or have very limited hardware resources",
-        "B": "They are required by law to only use the very first version of their firmware",
-        "C": "They automatically reject any type of update that is not signed by the government",
-        "D": "They force the user to physically return the device to the manufacturer for updates",
-        "E": "They result in the automatic installation of malware if an update is attempted"
-      },
-      "explanation": "IoT devices often have minimal hardware and no easy way for users to apply patches. Some manufacturers also fail to provide updates for older models. This leaves them vulnerable to known exploits for long periods. They aren't legally restricted to old firmware, government-signed, or malware-prone during updates.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K9 - IoT Assessment",
-      "question": "What is a significant security risk of IoT devices using unencrypted communication protocols (like MQTT without TLS)?",
-      "options": {
-        "A": "An attacker can intercept the traffic and steal sensitive data or control the device",
-        "B": "It will cause the IoT device to automatically reboot every few minutes",
-        "C": "It prevents the IoT device from being able to connect to the internet",
-        "D": "It forces the IoT device to use an outdated and insecure version of its OS",
-        "E": "It results in the automatic installation of a keylogger on the IoT device"
-      },
-      "explanation": "Unencrypted traffic can be sniffed by anyone on the same network. This can reveal sensor data, user commands, or even credentials. It doesn't cause reboots, prevent internet access, force OS updates, or install keyloggers.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K10 - SCADA Assessment",
-      "question": "What is a unique and critical challenge when performing a security assessment of a SCADA or Industrial Control System (ICS)?",
-      "options": {
-        "A": "The systems are often fragile and can be easily crashed by standard scanning tools",
-        "B": "The systems only use a specific version of the Windows operating system",
-        "C": "The systems are required by law to be connected directly to the public internet",
-        "D": "The systems automatically delete all of their data every ninety days",
-        "E": "The systems result in the automatic installation of malware if they are scanned"
-      },
-      "explanation": "SCADA/ICS environments control physical processes (power, water, manufacturing). They often use legacy hardware and protocols that are not designed for security scanning. A standard 'nmap' scan can cause a PLC to crash, potentially leading to physical damage or safety issues. They aren't limited to Windows, required to be online, or malware-prone.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K10 - SCADA Assessment",
-      "question": "Why is 'Network Segmentation' particularly important for securing SCADA and ICS environments?",
-      "options": {
-        "A": "It isolates the critical control systems from the organization's general business network",
-        "B": "It automatically encrypts all data stored in the SCADA system's primary database",
-        "C": "It ensures that the SCADA system is compatible with all modern web browsers",
-        "D": "It provides a way for the SCADA system to automatically recover from a hardware failure",
-        "E": "It physically protects the SCADA server from being stolen from the data center"
-      },
-      "explanation": "SCADA systems should never be directly accessible from the corporate network or the internet. Segmentation (using firewalls and DMZs) ensures that a compromise of an office workstation doesn't lead to a compromise of the power grid or factory floor. It's not about encryption, browser compatibility, hardware recovery, or physical security.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K10 - SCADA Assessment",
-      "question": "What is a common security risk associated with legacy protocols (like Modbus) used in SCADA environments?",
-      "options": {
-        "A": "They often lack any form of authentication or encryption for their communications",
-        "B": "They are required by law to only use the very first version of their protocol",
-        "C": "They automatically reject any type of connection that is not signed by the government",
-        "D": "They force the user to physically return the device to the manufacturer for updates",
-        "E": "They result in the automatic installation of malware if they are used"
-      },
-      "explanation": "Many industrial protocols were designed decades ago for reliability, not security. They often send commands in cleartext without any authentication, meaning anyone on the network can control the equipment. They aren't legally restricted, government-signed, or malware-prone.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K11 - Mainframe Assessment",
-      "question": "Which security software is commonly used on IBM mainframes to manage user access and permissions?",
-      "options": {
-        "A": "RACF",
-        "B": "Active Directory",
-        "C": "OpenLDAP",
-        "D": "Kerberos",
-        "E": "Sudo"
-      },
-      "explanation": "RACF (Resource Access Control Facility) is the primary security manager for IBM's z/OS mainframe operating system. Active Directory is for Windows, OpenLDAP for Linux/Unix, and Kerberos is a general authentication protocol.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K11 - Mainframe Assessment",
-      "question": "What is a major security risk associated with unauthorized access to mainframe 'Datasets'?",
-      "options": {
-        "A": "They often contain massive amounts of sensitive corporate or customer data",
-        "B": "They will cause the mainframe to automatically reboot every few minutes",
-        "C": "They prevent the mainframe from being able to connect to the internet",
-        "D": "They force the mainframe to use an outdated and insecure version of its OS",
-        "E": "They result in the automatic installation of a keylogger on the mainframe"
-      },
-      "explanation": "Mainframes are the 'backbone' of many large organizations (banks, insurance, government) and store vast amounts of critical data. Unauthorized access to datasets can lead to massive data breaches. It doesn't cause reboots, prevent internet access, force OS updates, or install keyloggers.",
-      "correct": "A"
-    },
-    {
-      "category": "K - Advanced Assessment",
-      "skill": "K11 - Mainframe Assessment",
-      "question": "Why is 'Auditing' particularly important in a mainframe environment?",
-      "options": {
-        "A": "To track all administrative actions and access to highly sensitive data for compliance",
-        "B": "To automatically increase the overall performance and speed of the mainframe",
-        "C": "To ensure that the mainframe is compatible with all modern web browsers",
-        "D": "To provide a way for the mainframe to automatically recover from a hardware failure",
-        "E": "To physically count the number of mainframes in the organization's data center"
-      },
-      "explanation": "Because mainframes handle such critical data, maintaining a detailed audit trail of all privileged actions is a core requirement for security and regulatory compliance (like PCI-DSS or HIPAA). It's not about performance, browser compatibility, hardware recovery, or physical inventory.",
-      "correct": "A"
-    },
-    {
-      "category": "L - Reporting",
-      "skill": "L1 - Reporting",
+      "category": "A - Soft Skills and Assessment Management",
+      "skill": "A5 - Reporting & Record Keeping",
       "question": "What is the primary purpose of the 'Executive Summary' in a penetration test report?",
       "options": {
         "A": "To provide a high-level overview of the overall risk and key findings for management",
@@ -5855,8 +5645,8 @@
       "correct": "A"
     },
     {
-      "category": "L - Reporting",
-      "skill": "L1 - Reporting",
+      "category": "A - Soft Skills and Assessment Management",
+      "skill": "A5 - Reporting & Record Keeping",
       "question": "Why is it critical to provide clear and actionable 'Remediation Steps' for every finding in a report?",
       "options": {
         "A": "To help the client understand exactly how to fix the identified vulnerabilities",
@@ -5869,8 +5659,8 @@
       "correct": "A"
     },
     {
-      "category": "L - Reporting",
-      "skill": "L1 - Reporting",
+      "category": "A - Soft Skills and Assessment Management",
+      "skill": "A5 - Reporting & Record Keeping",
       "question": "What is the purpose of using a standard risk rating system like 'CVSS' in a report?",
       "options": {
         "A": "To provide a consistent and objective way to prioritize the found vulnerabilities",
@@ -5883,8 +5673,8 @@
       "correct": "A"
     },
     {
-      "category": "L - Reporting",
-      "skill": "L2 - Record Keeping",
+      "category": "A - Soft Skills and Assessment Management",
+      "skill": "A5 - Reporting & Record Keeping",
       "question": "Why is it important for a penetration tester to maintain a secure 'Audit Trail' of all their activities?",
       "options": {
         "A": "To provide evidence of what was tested and to defend against claims of damage",
@@ -5897,8 +5687,8 @@
       "correct": "A"
     },
     {
-      "category": "L - Reporting",
-      "skill": "L2 - Record Keeping",
+      "category": "A - Soft Skills and Assessment Management",
+      "skill": "A5 - Reporting & Record Keeping",
       "question": "What is the primary security risk of storing sensitive client data (like cleartext passwords) in unencrypted testing notes?",
       "options": {
         "A": "The data could be stolen if the tester's laptop is lost, stolen, or compromised",
@@ -5911,8 +5701,8 @@
       "correct": "A"
     },
     {
-      "category": "L - Reporting",
-      "skill": "L2 - Record Keeping",
+      "category": "A - Soft Skills and Assessment Management",
+      "skill": "A5 - Reporting & Record Keeping",
       "question": "What is the standard requirement for handling sensitive client data after a penetration test engagement is complete?",
       "options": {
         "A": "The data should be securely destroyed or returned to the client according to the contract",
