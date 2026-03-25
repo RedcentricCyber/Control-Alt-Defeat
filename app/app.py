@@ -169,6 +169,11 @@ def init_db():
             db.execute("ALTER TABLE history ADD COLUMN time_taken INTEGER")
         except sqlite3.OperationalError:
             pass  # column already exists
+        # Migrate: add reward for exam pass rewards
+        try:
+            db.execute("ALTER TABLE history ADD COLUMN reward TEXT")
+        except sqlite3.OperationalError:
+            pass  # column already exists
         db.commit()
 
 
@@ -184,13 +189,13 @@ def get_history(client_id):
     return [dict(r) for r in rows]
 
 
-def insert_history(client_id, entry, answers=None, time_taken=None):
+def insert_history(client_id, entry, answers=None, time_taken=None, reward=None):
     with get_db() as db:
         cursor = db.execute(
             """INSERT INTO history
                (client_id, exam_title, alias, score, total, percentage,
-                pass_mark, passed, grade_label, grade_class, token, timestamp, answers, time_taken)
-               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                pass_mark, passed, grade_label, grade_class, token, timestamp, answers, time_taken, reward)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (
                 client_id,
                 entry["exam_title"],
@@ -206,6 +211,7 @@ def insert_history(client_id, entry, answers=None, time_taken=None):
                 entry["timestamp"],
                 json.dumps(answers) if answers is not None else None,
                 time_taken,
+                reward,
             ),
         )
         db.commit()
@@ -512,6 +518,8 @@ def submit():
     grade = _grade(percentage)
     time_taken = int(time.time()) - session.get("start_time", int(time.time()))
 
+    reward = exam.get("reward") if passed else None
+
     entry_id = insert_history(client_id, {
         "exam_title": session.get("exam_title", exam_id),
         "alias": session.get("alias", "UNKNOWN"),
@@ -524,7 +532,7 @@ def submit():
         "grade_class": grade["class"],
         "token": session.get("session_token", "--------"),
         "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-    }, answers=results, time_taken=time_taken)
+    }, answers=results, time_taken=time_taken, reward=reward)
 
     logger.info(
         "Exam submitted — alias=%r exam=%r score=%d/%d (%.0f%%) passed=%s entry_id=%d",
@@ -598,6 +606,7 @@ def history_detail(entry_id):
         answers=answers,
         category_breakdown=category_breakdown,
         grade=grade,
+        reward=entry.get("reward"),
         github_repo=GITHUB_REPO,
         csp_nonce=_generate_csp_nonce(),
     )

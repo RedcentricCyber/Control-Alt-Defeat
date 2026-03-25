@@ -31,6 +31,13 @@
       <span class="pass-mark-note">// PASS MARK: {{ entry.pass_mark }}%</span>
     </div>
 
+    {% if reward %}
+    <div class="panel mt-16" data-label="Reward Unlocked" style="border-color:var(--neon-yellow); text-align:center;">
+      <div style="font-family:var(--font-display); font-size:12px; letter-spacing:3px; color:var(--neon-yellow); margin-bottom:8px;">REWARD UNLOCKED</div>
+      <div style="font-family:var(--font-mono); font-size:1.1rem; color:var(--neon-green); word-break:break-all; user-select:all;">{{ reward }}</div>
+    </div>
+    {% endif %}
+
     <div class="score-meta mt-16">
       {{ entry.total }} questions
       {% if entry.time_taken is not none %}
