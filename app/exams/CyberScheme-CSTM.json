@@ -16,9 +16,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What is Root Squashing?",
       "options": {
-        "A": "A Linux kernel hardening feature that disables all setuid binaries.",
-        "B": "A DNS control that prevents zone transfers from unauthorized hosts.",
-        "C": "A container isolation technique that forces root inside a container to map to root on the host.",
+        "A": "A Linux kernel hardening feature that disables all setuid binaries to reduce the attack surface of the operating system.",
+        "B": "A DNS control that prevents zone transfers from unauthorized hosts to stop information leakage from authoritative name servers.",
+        "C": "A container isolation technique that forces root inside a container to map to root on the host system by default.",
         "D": "An NFS feature that maps requests from the remote root user to an unprivileged user to prevent root-level access on the server."
       },
       "correct": "D",
@@ -28,10 +28,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain how run0 and the polkit can be used as a more secure alternative to sudo on Linux platforms.",
       "options": {
-        "A": "They encrypt commands in transit so attackers cannot intercept sudo passwords over SSH.",
-        "B": "They are used only for container escape prevention and do not relate to privilege elevation.",
+        "A": "They encrypt commands in transit so attackers cannot intercept sudo passwords over SSH or other network protocols during remote sessions.",
+        "B": "They are used only for container escape prevention and do not relate to privilege elevation on standard Linux host platforms.",
         "C": "They allow fine-grained, policy-based privilege elevation for specific actions via polkit rules, reducing blanket shell access compared to broad sudo grants.",
-        "D": "They replace PAM entirely and remove the need for authentication for administrative tasks."
+        "D": "They replace PAM entirely and remove the need for authentication for administrative tasks, simplifying the user experience for system administrators."
       },
       "correct": "C",
       "explanation": "run0 is a systemd tool that uses polkit (PolicyKit) to request privilege elevation for specific actions rather than spawning a full root shell like sudo can. polkit uses declarative rules to grant fine-grained, per-action authorization, reducing the attack surface compared to broad sudoers entries. This is not about encrypting commands (A), not limited to container escapes (B), and does not replace PAM or remove authentication — it provides an alternative authorization path (D)."
@@ -40,10 +40,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What is DMARC (Domain-based Message Authentication, Reporting, and Conformance)?",
       "options": {
-        "A": "A method for compressing email headers to reduce spam filtering overhead.",
-        "B": "A DNS record type used to delegate subdomains securely to third parties.",
+        "A": "A method for compressing email headers to reduce spam filtering overhead and improve the efficiency of mail delivery across relays.",
+        "B": "A DNS record type used to delegate subdomains securely to third parties while maintaining control over the parent domain records.",
         "C": "An email authentication policy and reporting standard that builds on SPF and DKIM to help receivers handle spoofed mail and provide feedback reports.",
-        "D": "A symmetric encryption protocol for securing SMTP sessions end-to-end."
+        "D": "A symmetric encryption protocol for securing SMTP sessions end-to-end between the sender and the recipient mail servers to prevent interception."
       },
       "correct": "C",
       "explanation": "DMARC is a DNS-published email authentication policy that builds on SPF (sender IP authorization) and DKIM (cryptographic message signing) by adding alignment checks and a policy layer (none/quarantine/reject) that tells receivers how to handle mail that fails authentication. It also provides aggregate and forensic reporting so domain owners gain visibility into spoofing attempts. It does not compress headers (A), is not a delegation record (B), and is not an encryption protocol (D)."
@@ -52,9 +52,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What is the purpose of the Sender Policy Framework (SPF)?",
       "options": {
-        "A": "To sign outbound email content with a private key so recipients can validate integrity.",
-        "B": "To encrypt email at rest on the recipient’s mail server.",
-        "C": "To block all inbound mail that contains links or attachments.",
+        "A": "To sign outbound email content with a private key so recipients can validate integrity and ensure the message was not altered.",
+        "B": "To encrypt email at rest on the recipient’s mail server to protect sensitive information from unauthorized access by server administrators.",
+        "C": "To block all inbound mail that contains links or attachments to prevent malware infections and phishing attempts on the network.",
         "D": "To publish which mail servers are authorized to send email for a domain via DNS, helping prevent sender spoofing."
       },
       "correct": "D",
@@ -64,9 +64,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What is the purpose of DomainKeys Identified Mail (DKIM)?",
       "options": {
-        "A": "To enforce mandatory TLS between all mail relays on the internet.",
-        "B": "To publish allowed sender IP ranges for a domain in DNS.",
-        "C": "To prevent users from forwarding mail without breaking authentication.",
+        "A": "To enforce mandatory TLS between all mail relays on the internet to ensure that email is always encrypted during transit.",
+        "B": "To publish allowed sender IP ranges for a domain in DNS to help receiving servers identify legitimate sources of email.",
+        "C": "To prevent users from forwarding mail without breaking authentication, ensuring that the original sender's identity is always preserved.",
         "D": "To cryptographically sign email with a domain key so recipients can verify message integrity and that it was authorized by the domain."
       },
       "correct": "D",
@@ -76,10 +76,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What are the security issues with the FTP protocol?",
       "options": {
-        "A": "Credentials and data are typically transmitted in cleartext, making them vulnerable to interception and manipulation.",
-        "B": "It is UDP-based and therefore cannot be filtered by firewalls.",
-        "C": "It cannot support authentication, so anonymous access is mandatory.",
-        "D": "It provides end-to-end encryption by default but is susceptible to key reuse."
+        "A": "Credentials and data are typically transmitted in cleartext, making them vulnerable to interception and manipulation by attackers on the network path.",
+        "B": "It is UDP-based and therefore cannot be filtered by standard firewalls, leading to potential denial of service or unauthorized access.",
+        "C": "It cannot support authentication, so anonymous access is mandatory for all users, which prevents tracking and auditing of file transfers.",
+        "D": "It provides end-to-end encryption by default but is susceptible to key reuse attacks that allow decryption of intercepted traffic sessions."
       },
       "correct": "A",
       "explanation": "FTP transmits credentials (USER/PASS commands) and file data in cleartext over separate control (port 21) and data channels, making it vulnerable to network sniffing, credential theft, and man-in-the-middle attacks. Active mode FTP also introduces firewall complexity with dynamic data ports. FTP is TCP-based, not UDP (B), it does support authentication — anonymous access is optional (C), and it does not provide encryption by default (D). Secure alternatives include FTPS (FTP over TLS) and SFTP (SSH File Transfer Protocol)."
@@ -88,9 +88,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What is Kerberos?",
       "options": {
-        "A": "A VPN tunneling protocol that encapsulates IP packets.",
-        "B": "A password hashing scheme used by Windows to store credentials.",
-        "C": "A public key infrastructure used to issue TLS certificates for web servers.",
+        "A": "A VPN tunneling protocol that encapsulates IP packets to provide secure remote access to internal network resources over the internet.",
+        "B": "A password hashing scheme used by Windows to store credentials in the SAM database or Active Directory for local authentication.",
+        "C": "A public key infrastructure used to issue TLS certificates for web servers to enable secure HTTPS communication with clients.",
         "D": "A ticket-based network authentication protocol that uses a trusted Key Distribution Center (KDC) to provide mutual authentication."
       },
       "correct": "D",
@@ -100,10 +100,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain directory traversal exploitation",
       "options": {
-        "A": "Injecting SQL meta-characters to extract database rows.",
+        "A": "Injecting SQL meta-characters to extract database rows or bypass authentication mechanisms within the application's backend database server.",
         "B": "Manipulating path input (e.g., ../) to access files outside the intended directory, potentially reading sensitive files or executing unintended resources.",
-        "C": "Abusing DNS recursion to enumerate internal hosts.",
-        "D": "Forcing the application to reuse a session token created by another user."
+        "C": "Abusing DNS recursion to enumerate internal hosts by forcing the server to query unauthorized domains and reveal its internal topology.",
+        "D": "Forcing the application to reuse a session token created by another user to gain unauthorized access to their account and data."
       },
       "correct": "B",
       "explanation": "Directory traversal (also called path traversal) exploits occur when an application uses user-supplied input to construct file paths without proper validation or sanitization. Attackers use sequences like '../' or encoded variants to escape the intended directory and access arbitrary files on the server, such as /etc/passwd, configuration files, or application source code. This is distinct from SQL injection (A), DNS enumeration (C), or session fixation (D). Mitigations include input validation, path canonicalization, chroot jails, and avoiding direct use of user input in file operations."
@@ -112,9 +112,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What are the four types of Application Programming Interface (API)?",
       "options": {
-        "A": "REST, SOAP, RPC, and GraphQL.",
-        "B": "TCP, UDP, ICMP, and ARP.",
-        "C": "SQL, NoSQL, LDAP, and SMB.",
+        "A": "REST, SOAP, RPC, and GraphQL architectural styles.",
+        "B": "TCP, UDP, ICMP, and ARP network protocols.",
+        "C": "SQL, NoSQL, LDAP, and SMB storage protocols.",
         "D": "Public (open), Partner, Private (internal), and Composite APIs."
       },
       "correct": "D",
@@ -124,9 +124,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "How would you fingerprint a database server?",
       "options": {
-        "A": "Only by cracking the database administrator password and logging in.",
-        "B": "By checking the web server’s TLS certificate issuer.",
-        "C": "By using ARP spoofing to force the server to reveal its database type.",
+        "A": "Only by cracking the database administrator password and logging in to run version queries directly against the database management system.",
+        "B": "By checking the web server’s TLS certificate issuer to determine which organization manages the database and what software they likely use.",
+        "C": "By using ARP spoofing to force the server to reveal its database type during the initial connection handshake with the application server.",
         "D": "Enumerate banners/version via service probes, review error messages and protocol responses, and validate with authenticated queries where permitted."
       },
       "correct": "D",
@@ -136,10 +136,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain symmetrical and asymmetrical cryptography",
       "options": {
-        "A": "They are identical; the terms refer to different cipher modes.",
-        "B": "Symmetric uses public keys only; asymmetric uses passwords only.",
+        "A": "Symmetric and asymmetric cryptography are identical terms that refer to different cipher modes of operation.",
+        "B": "Symmetric uses public keys only for encryption, while asymmetric uses passwords only for secure authentication.",
         "C": "Symmetric uses the same key for encryption/decryption; asymmetric uses a public/private key pair for encryption, signatures, and key exchange.",
-        "D": "Symmetric is slower and used only for signatures; asymmetric is faster and used for bulk data."
+        "D": "Symmetric is slower and used only for digital signatures; asymmetric is faster and used for bulk data encryption."
       },
       "correct": "C",
       "explanation": "Symmetric cryptography uses a single shared secret key for both encryption and decryption (e.g., AES, ChaCha20), making it fast and suitable for bulk data encryption. Asymmetric cryptography uses a mathematically linked key pair — a public key (shared openly) and a private key (kept secret) — enabling encryption, digital signatures, and secure key exchange without prior shared secrets (e.g., RSA, ECDH). The terms are not identical (A), the key usage is the opposite of B, and symmetric is actually faster than asymmetric — not slower (D). Most real-world protocols (e.g., TLS) use both in a hybrid approach."
@@ -148,10 +148,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What is the difference between SQL and no SQL database vulnerabilities?",
       "options": {
-        "A": "NoSQL vulnerabilities only relate to buffer overflows in the kernel.",
+        "A": "NoSQL vulnerabilities only relate to buffer overflows in the kernel and do not involve any application-layer injection vectors.",
         "B": "SQL systems commonly face SQL injection via query concatenation; NoSQL can face NoSQL injection through unvalidated query objects/operators and may differ in auth/ACL models.",
-        "C": "SQL databases cannot be attacked remotely because they only run locally.",
-        "D": "NoSQL databases are immune to injection attacks by design."
+        "C": "SQL databases cannot be attacked remotely because they only run locally and do not listen on network interfaces by default.",
+        "D": "NoSQL databases are immune to injection attacks by design because they do not use a structured query language for data retrieval."
       },
       "correct": "B",
       "explanation": "SQL databases are vulnerable to SQL injection where attackers manipulate structured query language through string concatenation. NoSQL databases (e.g., MongoDB, CouchDB) face different injection vectors — such as JSON/BSON operator injection (e.g., $gt, $ne operators), JavaScript injection in server-side evaluation, or manipulating query objects. NoSQL databases may also have weaker default authentication and access control models compared to mature SQL platforms. NoSQL is not limited to buffer overflows (A), SQL databases can absolutely be attacked remotely (C), and NoSQL databases are not immune to injection — they just have different attack surfaces (D)."
@@ -160,9 +160,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What is the Open Vulnerability and Assessment Language (OVAL)?",
       "options": {
-        "A": "A protocol for securely transporting vulnerability scan results over TLS.",
-        "B": "A penetration testing methodology framework for web applications.",
-        "C": "A vulnerability scoring system that replaces CVSS.",
+        "A": "A protocol for securely transporting vulnerability scan results over TLS between different security tools and management consoles.",
+        "B": "A penetration testing methodology framework for web applications that provides a step-by-step guide for identifying common flaws.",
+        "C": "A vulnerability scoring system that replaces CVSS by providing a more granular and accurate assessment of risk levels.",
         "D": "A standard for representing and exchanging security configuration and vulnerability checks in a machine-readable way."
       },
       "correct": "D",
@@ -172,9 +172,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain the difference between Phishing, Smishing and Vishing and what risks do they pose?",
       "options": {
-        "A": "They are all technical exploits with no user interaction required.",
-        "B": "Smishing is email-based and phishing is SMS-based; vishing is social media-based.",
-        "C": "Phishing is only for credential theft; smishing is only for malware; vishing is only for DDoS.",
+        "A": "They are all technical exploits with no user interaction required to compromise a target system or network account.",
+        "B": "Smishing is email-based and phishing is SMS-based; vishing is social media-based and targets only high-profile users.",
+        "C": "Phishing is only for credential theft; smishing is only for malware; vishing is only for DDoS attacks against infrastructure.",
         "D": "Phishing uses email, smishing uses SMS/messages, and vishing uses voice calls; all aim to trick users into revealing data, installing malware, or authorizing fraud."
       },
       "correct": "D",
@@ -184,10 +184,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What tools could you use to enumerate Domain Name System (DNS) for ZONE transfer vulnerabilities?",
       "options": {
-        "A": "tcpdump and Wireshark only; DNS cannot be queried directly.",
+        "A": "tcpdump and Wireshark are the only tools that can be used as DNS cannot be queried directly for zone data.",
         "B": "dig, nslookup, and specialized tools like dnsrecon or fierce to attempt AXFR against authoritative name servers.",
-        "C": "hashcat and john; zone transfers require password cracking.",
-        "D": "nmap only; DNS servers do not support zone transfers."
+        "C": "hashcat and john are required because zone transfers are always protected by strong passwords that must be cracked first.",
+        "D": "nmap is the only tool that supports DNS enumeration as standard DNS servers do not allow any other types of queries."
       },
       "correct": "B",
       "explanation": "DNS zone transfer (AXFR) vulnerabilities are tested using tools like 'dig axfr @nameserver domain.com' or 'nslookup' with 'ls -d domain'. Specialized tools like dnsrecon, fierce, and dnsenum automate the process of identifying authoritative name servers and attempting zone transfers to reveal all DNS records for a domain. A successful zone transfer exposes the full DNS zone including internal hostnames, IP addresses, and network topology. Wireshark captures traffic but does not query DNS directly (A), zone transfers do not require password cracking (C), and nmap alone is insufficient — though its dns-zone-transfer NSE script can help (D)."
@@ -197,9 +197,9 @@
       "question": "Explain what a Security identifier (SID) is and the different parts of a SID.",
       "options": {
         "A": "A Windows identifier for users/groups: revision, identifier authority, and one or more subauthorities (including domain SID and RID).",
-        "B": "A Linux file permission string made of owner/group/other bits.",
-        "C": "A Kerberos ticket field that stores session keys and timestamps.",
-        "D": "A DNS record that maps hostnames to IPv4 addresses."
+        "B": "A Linux file permission string made of owner/group/other bits that controls access to files and directories on the system.",
+        "C": "A Kerberos ticket field that stores session keys and timestamps to allow for mutual authentication between clients and servers.",
+        "D": "A DNS record that maps hostnames to IPv4 addresses to enable network communication between devices on a local network."
       },
       "correct": "A",
       "explanation": "A Security Identifier (SID) is a unique value used in Windows to identify security principals (users, groups, computers). Its structure includes: a revision level (S-1), an identifier authority (e.g., 5 for NT Authority), subauthority values identifying the domain, and a Relative Identifier (RID) as the final component (e.g., 500 for Administrator, 501 for Guest). For example, S-1-5-21-<domain>-500 identifies the built-in Administrator. SIDs are a Windows concept, not Linux file permissions (B), not Kerberos ticket fields (C), and not DNS records (D)."
@@ -208,10 +208,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What are the two IPsec encoding methods and what are the pros and cons of each?",
       "options": {
-        "A": "RSA and AES; RSA is slower but more secure than AES.",
+        "A": "RSA and AES; RSA is slower but more secure than AES for encrypting large volumes of data over the network.",
         "B": "Transport mode (protects payload; less overhead) and Tunnel mode (encapsulates entire IP packet; better for gateway-to-gateway/VPNs but more overhead).",
-        "C": "Cleartext and Encrypted; cleartext is faster but equally secure.",
-        "D": "Base64 and Hex; Base64 is smaller but less secure than Hex."
+        "C": "Cleartext and Encrypted; cleartext is faster but equally secure as it relies on physical security of the network cables.",
+        "D": "Base64 and Hex; Base64 is smaller but less secure than Hex as it can be easily decoded by any attacker."
       },
       "correct": "B",
       "explanation": "IPsec has two encoding modes: Transport mode encrypts/authenticates only the IP payload while preserving the original IP header, making it efficient for host-to-host communication with less overhead. Tunnel mode encapsulates the entire original IP packet inside a new IP packet, providing full protection including the original headers — ideal for site-to-site VPNs and gateway-to-gateway traffic but with additional overhead. RSA and AES are algorithms, not IPsec modes (A). Cleartext is not an IPsec mode (C). Base64 and Hex are encoding formats unrelated to IPsec (D)."
@@ -220,10 +220,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "In key signing do you use the private or public key for signing?",
       "options": {
-        "A": "The public key is used to sign; the private key is used to verify.",
-        "B": "Both keys must be combined to sign a message.",
-        "C": "The private key is used to create the signature; the public key is used to verify it.",
-        "D": "Neither key is used; signing uses only hashing."
+        "A": "The public key is used to sign the message; the private key is used to verify the signature by the recipient.",
+        "B": "Both keys must be combined to sign a message using a complex mathematical process that ensures non-repudiation.",
+        "C": "The private key is used to create the signature; the public key is used to verify it by any third party.",
+        "D": "Neither key is used; signing uses only hashing to ensure that the message has not been tampered with in transit."
       },
       "correct": "C",
       "explanation": "In digital signing, the signer uses their private key to create a signature over a hash of the message. Anyone with access to the signer’s public key can verify the signature, confirming both the signer’s identity (authentication) and that the message was not altered (integrity). This also provides non-repudiation since only the private key holder could have created the signature. The roles are reversed in option A. Both keys are not combined (B) — each has a distinct role. Hashing alone cannot produce a verifiable signature without a key pair (D)."
@@ -232,9 +232,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What ports need to be open on a domain controller (DC)?",
       "options": {
-        "A": "Only TCP 22 for SSH administration.",
-        "B": "Only TCP 80 and 443 for web-based authentication.",
-        "C": "Only UDP 161 for SNMP monitoring.",
+        "A": "Only TCP 22 for SSH administration is required for a Domain Controller to function correctly on the network.",
+        "B": "Only TCP 80 and 443 for web-based authentication are used to manage user identities and access to resources.",
+        "C": "Only UDP 161 for SNMP monitoring is used to track the performance and health of the Domain Controller.",
         "D": "Core services include Kerberos (88), LDAP (389/636), DNS (53), SMB/RPC (445 plus RPC dynamic ports), and often Global Catalog (3268/3269)."
       },
       "correct": "D",
@@ -244,10 +244,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain the Simple Network Management Protocol (SNMP) protocol and any weaknesses in the protocol",
       "options": {
-        "A": "SNMP is used only for email routing and is encrypted by default.",
-        "B": "SNMP cannot be queried remotely, so it has no practical weaknesses.",
+        "A": "SNMP is used only for email routing and is encrypted by default to protect sensitive information from interception.",
+        "B": "SNMP cannot be queried remotely, so it has no practical weaknesses that can be exploited by an attacker.",
         "C": "SNMP is for monitoring/management; weaknesses include plaintext community strings in v1/v2c and weak/default credentials; v3 improves with auth/privacy but can be misconfigured.",
-        "D": "SNMP is a file transfer protocol with no authentication."
+        "D": "SNMP is a file transfer protocol with no authentication that is used to share data between network devices."
       },
       "correct": "C",
       "explanation": "SNMP is used for monitoring and managing network devices (routers, switches, servers). SNMPv1 and v2c transmit community strings (essentially passwords) in cleartext, and default strings like 'public' (read) and 'private' (read-write) are frequently left unchanged, allowing attackers to enumerate device configurations or even modify settings. SNMPv3 improves security by adding authentication (e.g., HMAC-SHA) and encryption (e.g., AES) for privacy, but misconfiguration, weak credentials, or fallback to v2c can negate these protections. SNMP is not for email routing (A), it can be queried remotely — that is its purpose (B), and it is not a file transfer protocol (D)."
@@ -257,9 +257,9 @@
       "question": "What are the trade-offs between symmetrical and asymmetrical cryptography?",
       "options": {
         "A": "Symmetric is fast for bulk encryption but requires secure key sharing; asymmetric simplifies key distribution and supports signatures but is slower and used mainly for key exchange/authentication.",
-        "B": "Asymmetric is always faster and preferred for encrypting large files.",
-        "C": "There are no trade-offs; both have identical performance and properties.",
-        "D": "Symmetric provides non-repudiation; asymmetric does not."
+        "B": "Asymmetric is always faster and preferred for encrypting large files because it uses a more efficient mathematical process for data processing.",
+        "C": "There are no trade-offs; both have identical performance and properties regardless of the size of the data being encrypted or decrypted.",
+        "D": "Symmetric provides non-repudiation by default; asymmetric does not support any form of identity verification or message integrity checks."
       },
       "correct": "A",
       "explanation": "Symmetric encryption (e.g., AES) is computationally fast and efficient for encrypting large amounts of data, but requires both parties to securely share the same secret key — a significant challenge at scale (the key distribution problem). Asymmetric encryption (e.g., RSA, ECDH) solves key distribution by using public/private key pairs, enabling secure key exchange and digital signatures, but is much slower and impractical for bulk data. In practice, hybrid cryptosystems (like TLS) use asymmetric cryptography for the initial handshake and key exchange, then switch to symmetric encryption for the data session. Asymmetric is not faster (B), there are clear trade-offs (C), and it is asymmetric — not symmetric — that provides non-repudiation via digital signatures (D)."
@@ -268,9 +268,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain some vulnerabilities in SSL (Secure Sockets Layer) and TLS (Transport Layer Security)?",
       "options": {
-        "A": "The only vulnerability is that TLS cannot support perfect forward secrecy.",
-        "B": "SSL/TLS vulnerabilities only occur at the IP layer, not the application layer.",
-        "C": "TLS is immune to misconfiguration because it auto-selects the best cipher.",
+        "A": "The only vulnerability is that TLS cannot support perfect forward secrecy for any of its supported cipher suites.",
+        "B": "SSL/TLS vulnerabilities only occur at the IP layer, not the application layer, making them easy to mitigate with firewalls.",
+        "C": "TLS is immune to misconfiguration because it auto-selects the best cipher based on the client's capabilities and server policy.",
         "D": "Examples include obsolete protocol versions (SSLv2/v3), weak ciphers, downgrade attacks, poor certificate validation, and implementation bugs (e.g., Heartbleed)."
       },
       "correct": "D",
@@ -280,10 +280,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain the purpose of a Remote Authentication Dial-In User Service (RADIUS) server",
       "options": {
-        "A": "To host web applications behind a reverse proxy.",
-        "B": "To perform DNS zone transfers between authoritative servers.",
+        "A": "To host web applications behind a reverse proxy to protect them from direct internet exposure and common web attacks.",
+        "B": "To perform DNS zone transfers between authoritative servers to ensure that all name servers have a consistent view of the zone.",
         "C": "To provide centralized AAA (authentication, authorization, accounting) for network access such as VPN, Wi-Fi (802.1X), and dial-in services.",
-        "D": "To encrypt all LAN traffic at Layer 2."
+        "D": "To encrypt all LAN traffic at Layer 2 using a proprietary encryption algorithm that is only supported by specific hardware vendors."
       },
       "correct": "C",
       "explanation": "RADIUS provides centralized Authentication, Authorization, and Accounting (AAA) for network access. It authenticates users connecting via VPN, Wi-Fi (802.1X), dial-in, or wired 802.1X by proxying credentials to a backend (e.g., Active Directory). It authorizes what resources/VLANs the user can access, and accounts for session usage (time, data transferred). Network devices (access points, switches, VPN gateways) act as RADIUS clients that forward access requests to the RADIUS server. It is not a reverse proxy (A), has nothing to do with DNS zone transfers (B), and does not encrypt LAN traffic at Layer 2 (D)."
@@ -293,9 +293,9 @@
       "question": "Where are passwords stored on server devices?",
       "options": {
         "A": "Typically as salted hashes in OS-specific stores (e.g., /etc/shadow on Linux; SAM/NTDS.dit for Windows), not as reversible plaintext.",
-        "B": "Only in DNS TXT records for the domain.",
-        "C": "Only inside the BIOS/UEFI firmware on the motherboard.",
-        "D": "Always in plaintext in /etc/passwd on Linux."
+        "B": "Only in DNS TXT records for the domain to allow for easy retrieval by administrators during password recovery operations.",
+        "C": "Only inside the BIOS/UEFI firmware on the motherboard to prevent unauthorized access even if the hard drive is stolen.",
+        "D": "Always in plaintext in /etc/passwd on Linux to allow the system to verify user credentials during the login process."
       },
       "correct": "A",
       "explanation": "On Linux, password hashes are stored in /etc/shadow (readable only by root), using algorithms like SHA-512 or yescrypt with per-user salts. The /etc/passwd file contains user account information but not the actual password hashes on modern systems. On Windows, local password hashes (NTLM) are stored in the SAM (Security Account Manager) database, and domain credentials are stored in NTDS.dit on domain controllers. Both are protected by OS access controls. Passwords are not stored in DNS (B), not in BIOS/UEFI (C), and modern Linux does not store passwords in plaintext in /etc/passwd (D) — that practice ended decades ago with the move to /etc/shadow."
@@ -304,9 +304,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain Structured Query Language injection (SQLi)",
       "options": {
-        "A": "A technique to overflow the stack by sending long SQL strings.",
-        "B": "A DNS attack that injects records into a resolver cache.",
-        "C": "A method to bypass TLS encryption by injecting SQL keywords.",
+        "A": "A technique to overflow the stack by sending long SQL strings to the application's backend database server.",
+        "B": "A DNS attack that injects records into a resolver cache to redirect users to a malicious website.",
+        "C": "A method to bypass TLS encryption by injecting SQL keywords into the encrypted transport layer stream.",
         "D": "An attack where untrusted input is concatenated into SQL queries, allowing attackers to alter query logic to read/modify data or execute database functions."
       },
       "correct": "D",
@@ -316,9 +316,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "If password hashes cannot be cracked can the hashes be used in any way and how would you do this?",
       "options": {
-        "A": "Yes—upload hashes to DNS to gain domain admin automatically.",
-        "B": "Yes—convert the hash into an AES key and decrypt any file on the network.",
-        "C": "No—hashes are useless unless cracked into plaintext.",
+        "A": "Yes—upload hashes to DNS to gain domain admin automatically by exploiting a vulnerability in the DNS server software.",
+        "B": "Yes—convert the hash into an AES key and decrypt any file on the network that is protected by symmetric encryption.",
+        "C": "No—hashes are completely useless unless they are first cracked into plaintext using a brute-force or dictionary attack.",
         "D": "Yes—Pass-the-Hash (and related token-based abuses) can authenticate using the hash directly (e.g., NTLM) without recovering the plaintext password."
       },
       "correct": "D",
@@ -328,10 +328,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain how a Cross-Site Request Forgery (CSRF) exploit works",
       "options": {
-        "A": "It exploits SQL injection to modify database rows directly.",
+        "A": "It exploits SQL injection to modify database rows directly without needing any user interaction or authentication.",
         "B": "It tricks an authenticated user’s browser into submitting a state-changing request to a trusted site, leveraging existing session cookies.",
-        "C": "It forces a server to accept malformed TLS certificates.",
-        "D": "It steals passwords by keylogging the user’s keyboard in the browser."
+        "C": "It forces a server to accept malformed TLS certificates by exploiting a vulnerability in the certificate validation logic.",
+        "D": "It steals passwords by keylogging the user’s keyboard in the browser using a malicious script injected into the page."
       },
       "correct": "B",
       "explanation": "CSRF exploits the browser's automatic inclusion of cookies (session cookies, authentication tokens) when making requests to a site. An attacker crafts a malicious page or link that triggers a state-changing request (e.g., changing an email address, transferring funds) to a trusted site where the victim is already authenticated. The victim's browser automatically attaches valid session cookies, making the forged request appear legitimate. Mitigations include anti-CSRF tokens (synchronizer tokens), SameSite cookie attributes, checking the Origin/Referer header, and requiring re-authentication for sensitive actions. CSRF is distinct from SQL injection (A), does not involve TLS certificates (C), and is not a keylogger (D)."
@@ -340,10 +340,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain session hijacking (with respect to web application testing)",
       "options": {
-        "A": "Brute forcing a database admin account until access is granted.",
-        "B": "Forcing a VPN tunnel to renegotiate encryption keys.",
+        "A": "An attack where an attacker brute-forces a user's session ID by trying every possible combination of characters until they find a valid one.",
+        "B": "An attack where an attacker steals a user's physical security token and uses it to gain unauthorized access to their web session.",
         "C": "Taking over a valid user session by stealing or predicting session tokens (e.g., via XSS, sniffing, or insecure cookies) and reusing them to impersonate the user.",
-        "D": "Exploiting directory traversal to read server-side source code."
+        "D": "An attack where an attacker exploits directory traversal to read server-side source code and extract sensitive session management logic."
       },
       "correct": "C",
       "explanation": "Session hijacking involves an attacker obtaining or predicting a valid session token to impersonate an authenticated user. Attack vectors include: XSS to steal cookies via JavaScript, network sniffing on unencrypted connections, session fixation (forcing a known session ID), brute-forcing weak/predictable session IDs, and accessing tokens from logs or referrer headers. Once the attacker has the session token, they can replay it to access the application as the victim. Mitigations include using HTTPS everywhere, setting Secure/HttpOnly/SameSite cookie flags, regenerating session IDs after login, implementing session timeouts, and preventing XSS. It is not database brute forcing (A), VPN key renegotiation (B), or directory traversal (D)."
@@ -352,9 +352,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What is Internet Information Service (IIS)?",
       "options": {
-        "A": "A Linux init system for starting services.",
-        "B": "A VPN protocol for site-to-site tunneling.",
-        "C": "A database engine used for NoSQL document storage.",
+        "A": "A Linux init system for starting services and managing system resources on a Unix-like operating system platform.",
+        "B": "A VPN protocol for site-to-site tunneling that provides secure communication between two different network locations over the internet.",
+        "C": "A database engine used for NoSQL document storage that is known for its high performance and flexible data model.",
         "D": "Microsoft’s web server platform for hosting websites and web applications on Windows."
       },
       "correct": "D",
@@ -364,10 +364,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Explain baseboard management controller (BMC) Hacking and the Intelligent Platform Management Interface (IPMI)",
       "options": {
-        "A": "Hacking the GPU driver to increase rendering performance.",
-        "B": "Using ARP spoofing to intercept DNS queries on the LAN.",
+        "A": "Hacking the GPU driver to increase rendering performance and improve the overall user experience on a workstation.",
+        "B": "Using ARP spoofing to intercept DNS queries on the LAN and redirect users to a malicious website or server.",
         "C": "Attacking out-of-band management interfaces (e.g., IPMI/BMC) to gain hardware-level control, often via weak auth, default creds, exposed services, or firmware flaws.",
-        "D": "Abusing SMTP relays to send unauthenticated email."
+        "D": "Abusing SMTP relays to send unauthenticated email messages to a large number of recipients for phishing or spamming."
       },
       "correct": "C",
       "explanation": "The Baseboard Management Controller (BMC) is an embedded microcontroller on server motherboards that provides out-of-band management via the Intelligent Platform Management Interface (IPMI). It enables remote power control, KVM console access, hardware monitoring, and firmware updates — even when the main OS is powered off. Security issues include: IPMI v2.0 RAKP allowing password hash extraction without authentication, default/weak credentials (e.g., ADMIN/ADMIN on many vendors), plaintext IPMI v1.5, exposed web interfaces with known CVEs, and firmware vulnerabilities. Compromise gives an attacker hardware-level persistent access below the OS layer. BMC/IPMI management interfaces should be isolated on a dedicated management VLAN with strict ACLs. It is unrelated to GPU drivers (A), ARP spoofing (B), or SMTP relays (D)."
@@ -376,10 +376,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What are the pros and cons of using the cloud vs on prem (in terms of cyber security)?",
       "options": {
-        "A": "Cloud removes the need for identity management entirely.",
-        "B": "On-prem eliminates insider threats; cloud increases them only.",
+        "A": "Cloud removes the need for identity management entirely as the provider handles all authentication and authorization for the user.",
+        "B": "On-prem eliminates insider threats; cloud increases them only because the data is stored on a shared infrastructure.",
         "C": "Cloud can offer strong baseline controls and rapid patching, but introduces shared-responsibility, misconfiguration risk, and dependency on provider controls; on-prem offers direct control but requires in-house security maturity.",
-        "D": "Cloud is always less secure because it is public; on-prem is always secure."
+        "D": "Cloud is always less secure because it is public; on-prem is always secure because it is behind a physical firewall."
       },
       "correct": "C",
       "explanation": "Cloud environments offer strong baseline security controls (provider-managed physical security, rapid patching, built-in redundancy, advanced DDoS protection), but introduce the shared responsibility model where the customer must correctly configure IAM, networking, storage, and encryption. Misconfiguration (e.g., public S3 buckets, overly permissive security groups) is a leading cause of cloud breaches. On-premises provides direct physical and logical control but demands significant in-house security expertise, patch management, and infrastructure investment. Cloud does not eliminate identity management (A), on-prem does not eliminate insider threats (B), and neither environment is inherently always more or less secure than the other (D)."
@@ -388,10 +388,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What technical controls are available in the cloud to help with cyber security?",
       "options": {
-        "A": "Only DNS filtering; other controls are not available.",
+        "A": "Only DNS filtering is available; other security controls are not supported by the major cloud service providers.",
         "B": "IAM policies/MFA, network segmentation (VPC/VNet, security groups), logging/monitoring, encryption/KMS, WAF/DDoS protections, and posture management tools.",
-        "C": "Only physical security at the data center perimeter.",
-        "D": "Only antivirus installed on virtual machines."
+        "C": "Only physical security at the data center perimeter is provided by the cloud service provider to protect the hardware.",
+        "D": "Only antivirus installed on virtual machines is available to protect the operating system and applications from malware."
       },
       "correct": "B",
       "explanation": "Cloud providers offer a comprehensive suite of security controls: IAM policies with MFA and least-privilege access; network segmentation via VPCs/VNets, security groups, and NACLs; centralized logging and monitoring (e.g., CloudTrail, Azure Monitor, GCP Cloud Audit Logs); encryption at rest and in transit with managed key services (KMS); WAF and DDoS protection services (e.g., AWS Shield, Azure DDoS Protection); and cloud security posture management (CSPM) tools for detecting misconfigurations. These controls require proper configuration and ongoing governance to be effective. Cloud security is not limited to just DNS filtering (A), physical security alone (C), or antivirus (D)."
@@ -401,9 +401,9 @@
       "question": "What are the most popular containerization solutions?",
       "options": {
         "A": "Docker and containerd, often orchestrated with Kubernetes; podman is also common as a daemonless alternative.",
-        "B": "Hyper-V and VMware ESXi.",
-        "C": "WEP and WPA2.",
-        "D": "SMTP and IMAP."
+        "B": "Hyper-V and VMware ESXi are the most popular containerization solutions used in enterprise environments today.",
+        "C": "WEP and WPA2 are the primary containerization solutions used to secure wireless network communication between devices.",
+        "D": "SMTP and IMAP are the most popular containerization solutions used to manage and deliver email messages over the internet."
       },
       "correct": "A",
       "explanation": "Docker is the most widely recognized containerization platform, using containerd as its underlying container runtime. Podman is a popular daemonless alternative that runs containers without a central daemon process, improving security. Kubernetes (K8s) is the dominant container orchestration platform for managing deployment, scaling, and networking of containerized workloads. These solutions all use OCI (Open Container Initiative) compatible images and runtimes. Hyper-V and VMware ESXi are hypervisors for virtual machines, not containers (B). WEP and WPA2 are wireless security protocols (C). SMTP and IMAP are email protocols (D)."
@@ -412,10 +412,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What’s the difference between virtual machines and containerization?",
       "options": {
-        "A": "VMs cannot be networked; containers can.",
+        "A": "VMs cannot be networked; containers can be easily networked to allow communication between different application components.",
         "B": "VMs virtualize hardware and run separate OS kernels; containers share the host kernel and isolate processes, making them lighter but with different isolation boundaries.",
-        "C": "Containers are always more secure because they cannot escape.",
-        "D": "Containers require a hypervisor; VMs run directly on the host kernel."
+        "C": "Containers are always more secure because they cannot escape to the host system even if the container is compromised.",
+        "D": "Containers require a hypervisor to run; VMs run directly on the host kernel without the need for any virtualization software."
       },
       "correct": "B",
       "explanation": "Virtual machines use a hypervisor to virtualize hardware, running a complete guest OS with its own kernel on top, providing strong isolation boundaries. Containers share the host OS kernel and use kernel features (namespaces, cgroups, seccomp) to isolate processes, making them lighter, faster to start, and more resource-efficient, but with a thinner isolation boundary — a kernel exploit could affect all containers. VMs can be networked (A is false). Containers can escape under certain conditions, so they are not inherently always more secure (C). Containers do not require a hypervisor — they run on the host kernel; VMs require hypervisors (D reverses this)."
@@ -424,10 +424,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What are the signs a mobile device has been jail broken?",
       "options": {
-        "A": "The screen brightness increases automatically at night.",
+        "A": "The screen brightness increases automatically at night to improve visibility for the user in low-light conditions.",
         "B": "Presence of root/jailbreak tools (e.g., Cydia/Sileo), unusual privilege escalation apps, disabled sandboxing indicators, or integrity checks failing (e.g., SafetyNet/DeviceCheck).",
-        "C": "The device can connect to Wi‑Fi networks.",
-        "D": "The phone battery lasts longer than normal."
+        "C": "The device can connect to Wi-Fi networks that are not in its saved list of trusted networks.",
+        "D": "The phone battery lasts longer than normal because the jailbreak process optimizes the power management settings of the device."
       },
       "correct": "B",
       "explanation": "Signs of a jailbroken/rooted device include: presence of jailbreak tools like Cydia or Sileo (iOS) or Magisk/SuperSU (Android); apps with root/su binary access; modified system partitions or boot images; failing platform integrity checks such as Android's Play Integrity API (formerly SafetyNet) or Apple's DeviceCheck/App Attest; the ability to install apps from unofficial sources; and SSH servers running on non-standard ports. These indicators can be detected by MDM solutions and security applications. Increased screen brightness (A) and Wi-Fi connectivity (C) are normal device behavior. Jailbroken devices typically have worse battery life, not better (D)."
@@ -437,9 +437,9 @@
       "question": "What file types are associated with android apps?",
       "options": {
         "A": "APK (and the newer AAB for Play distribution), with DEX bytecode inside packages.",
-        "B": "EXE and MSI.",
-        "C": "JAR only; Android does not use packages.",
-        "D": "IPA and DMG."
+        "B": "EXE and MSI are the primary file types associated with Android applications and services.",
+        "C": "JAR only; Android does not use packages to distribute or install applications on the device.",
+        "D": "IPA and DMG are the file types used to package and distribute Android applications to users."
       },
       "correct": "A",
       "explanation": "Android applications are packaged as APK (Android Package Kit) files — ZIP archives containing DEX bytecode (compiled Java/Kotlin), resources, assets, the AndroidManifest.xml, and native libraries. Google Play now requires AAB (Android App Bundle) format for submission, which Google Play processes to generate optimized APKs for each device configuration. Inside APKs, the compiled code runs as DEX (Dalvik Executable) bytecode on the ART runtime. EXE/MSI are Windows formats (B), JAR files are generic Java archives and Android does not use them directly (C), and IPA/DMG are Apple formats (D)."
@@ -448,10 +448,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What file types are associated with apple apps?",
       "options": {
-        "A": "RPM and DEB.",
+        "A": "RPM and DEB are the primary file types associated with Apple applications and services, providing package management for all users.",
         "B": "IPA packages (iOS/iPadOS), and macOS apps commonly as .app bundles or distributed via DMG/PKG installers.",
-        "C": "EXE and BAT.",
-        "D": "APK and AAB."
+        "C": "EXE and BAT are the file types used to package and distribute Apple applications to users and provide execution for all services.",
+        "D": "APK and AAB are the primary file types associated with Apple applications and services, providing app distribution for all users."
       },
       "correct": "B",
       "explanation": "iOS and iPadOS apps are distributed as IPA (iOS App Store Package) files — ZIP archives containing the compiled app binary, resources, and code signature. macOS applications are typically .app bundles (directory structures containing the executable, frameworks, and resources), distributed via DMG (disk image) or PKG (installer package) files, or through the Mac App Store. All Apple apps must be code-signed and, for App Store distribution, notarized by Apple. RPM/DEB are Linux package formats (A), EXE/BAT are Windows formats (C), and APK/AAB are Android formats (D)."
@@ -461,9 +461,9 @@
       "question": "Explain the use case for Datagram Transport Layer Security (DTLS).",
       "options": {
         "A": "To provide TLS-like encryption and authentication over UDP for latency-sensitive applications (e.g., VoIP, WebRTC) where TCP is unsuitable.",
-        "B": "To compress UDP payloads to improve throughput.",
-        "C": "To route DNS queries anonymously through relays.",
-        "D": "To replace IPsec for encrypting disks at rest."
+        "B": "To compress UDP payloads to improve throughput and reduce the overall network latency for the application and all its users.",
+        "C": "To route DNS queries anonymously through relays to protect the privacy of the user's browsing history and all their online activities.",
+        "D": "To replace IPsec for encrypting disks at rest on a storage area network (SAN) or local hard drive and all its stored data."
       },
       "correct": "A",
       "explanation": "DTLS (Datagram Transport Layer Security) adapts the TLS protocol to work over UDP and other datagram transports. Since UDP is connectionless and does not guarantee ordering or delivery, DTLS adds its own sequence numbers, retransmission timers, and replay protection while providing the same encryption, authentication, and integrity guarantees as TLS. Key use cases include WebRTC (real-time browser communication), VoIP, video conferencing, VPN protocols (e.g., Cisco AnyConnect, OpenConnect), and IoT protocols like CoAP. It does not compress payloads (B), is not related to DNS anonymization (C), and is not a disk encryption replacement for IPsec (D)."
@@ -472,10 +472,10 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "What are the built-in user accounts on a Windows server?",
       "options": {
-        "A": "postgres, mysql, and sa.",
-        "B": "ec2-user and ubuntu.",
+        "A": "postgres, mysql, and sa are the primary built-in user accounts on a Windows server, providing database access for all users.",
+        "B": "ec2-user and ubuntu are the default built-in user accounts on a Windows server, providing cloud access for all users.",
         "C": "Common built-ins include Administrator, Guest (often disabled), and service accounts like LocalSystem, LocalService, and NetworkService.",
-        "D": "root, nobody, and daemon."
+        "D": "root, nobody, and daemon are the primary built-in user accounts on a Windows server, providing system access for all users."
       },
       "correct": "C",
       "explanation": "Windows Server includes several built-in accounts: the Administrator account (SID ending in -500, full local admin access), the Guest account (typically disabled by default, limited access), and service accounts including LocalSystem (highest privilege, acts as the computer on the network), LocalService (limited local privilege, anonymous network access), and NetworkService (limited local privilege, authenticates to the network as the machine account). Active Directory domain controllers also include KRBTGT for Kerberos ticket encryption. Hardening involves disabling Guest, renaming Administrator, and applying least privilege. Options A (database accounts), B (cloud Linux AMI users), and D (Unix/Linux accounts) are for other operating systems."
@@ -484,9 +484,9 @@
       "category": "CURRENT TECHNOLOGY",
       "question": "Name some protocols in the Industrial control system (ICS) / Operational Technology (OT) space?",
       "options": {
-        "A": "IMAP, POP3, and SMTP only.",
-        "B": "SIP, RTP, and SRTP only.",
-        "C": "BGP, OSPF, and IS-IS only.",
+        "A": "IMAP, POP3, and SMTP are the primary protocols used in the Industrial control system (ICS) and Operational Technology (OT) space.",
+        "B": "SIP, RTP, and SRTP are the primary protocols used in the Industrial control system (ICS) and Operational Technology (OT) space.",
+        "C": "BGP, OSPF, and IS-IS are the primary protocols used in the Industrial control system (ICS) and Operational Technology (OT) space.",
         "D": "Modbus, DNP3, BACnet, OPC (classic/UA), and PROFINET are common ICS/OT protocols."
       },
       "correct": "D",
@@ -497,9 +497,9 @@
       "question": "Name some security models and what is the purpose of security models?",
       "options": {
         "A": "Examples include Bell–LaPadula, Biba, Clark–Wilson, and Brewer–Nash; they formalize security properties and guide system policy/design.",
-        "B": "Examples include RAID levels; they define disk redundancy.",
-        "C": "Examples include TCP/IP and OSI; they define packet formats.",
-        "D": "Examples include AES and RSA; they define encryption algorithms."
+        "B": "Examples include RAID levels; they define disk redundancy and improve the overall reliability of the storage system and all its data.",
+        "C": "Examples include TCP/IP and OSI; they define packet formats and the communication protocols used for network connectivity and all its users.",
+        "D": "Examples include AES and RSA; they define encryption algorithms and the mathematical operations used to secure data and all its services."
       },
       "correct": "A",
       "explanation": "Security models are formal frameworks that define rules and properties for enforcing security policies: Bell-LaPadula enforces confidentiality ('no read up, no write down'), Biba enforces integrity ('no read down, no write up'), Clark-Wilson provides integrity through well-formed transactions and separation of duties, and Brewer-Nash (Chinese Wall) prevents conflicts of interest by dynamically restricting access. These models guide system design and policy enforcement, providing mathematical assurance about security properties. RAID levels relate to disk redundancy (B), TCP/IP and OSI are networking models (C), and AES/RSA are cryptographic algorithms, not security models (D)."
@@ -509,9 +509,9 @@
       "question": "What are the issues with the Wired Equivalent Privacy (WEP) protocol?",
       "options": {
         "A": "It uses weak IVs and RC4 key scheduling, enabling practical key recovery and traffic decryption; it is considered broken.",
-        "B": "It mandates AES-256 and therefore is too slow for Wi‑Fi.",
-        "C": "It cannot authenticate clients, so all Wi‑Fi is anonymous.",
-        "D": "It is immune to replay attacks due to perfect forward secrecy."
+        "B": "It mandates AES-256 and therefore is too slow for Wi-Fi network communication between devices on the local network and all its users.",
+        "C": "It cannot authenticate clients, so all Wi-Fi is anonymous and any user can connect to the network without a password or any credentials.",
+        "D": "It is immune to replay attacks due to perfect forward secrecy and the use of a secure key exchange mechanism for all its users."
       },
       "correct": "A",
       "explanation": "WEP uses RC4 stream cipher with 24-bit Initialization Vectors (IVs) that are transmitted in cleartext and repeat frequently on busy networks. The weak IV scheduling (FMS attack) and related attacks (PTW, chopchop, fragmentation) allow an attacker to recover the WEP key from passively captured traffic in minutes using tools like aircrack-ng. WEP also lacks proper integrity protection (CRC32 is not cryptographically secure) and has no protection against replay attacks. WEP does not use AES-256 (B), it does support authentication via shared key or open system (C), and it has no forward secrecy at all (D). WPA2 (AES-CCMP) or WPA3 (SAE) should always be used instead."
@@ -520,10 +520,10 @@
       "category": "OLDER TECHNOLOGY",
       "question": "What are the security issues associated with Lanman (LM) passwords?",
       "options": {
-        "A": "They require smart cards, which are easy to clone.",
-        "B": "They store plaintext passwords in the registry by default.",
+        "A": "They require smart cards, which are easy to clone and use to gain unauthorized access to the user's account and all their data.",
+        "B": "They store plaintext passwords in the registry by default, making them easy for an attacker to read and use for unauthorized access.",
         "C": "They are case-insensitive, split into 7-character chunks, and use weak hashing, making them highly susceptible to brute force and rainbow tables.",
-        "D": "They are salted with modern bcrypt, making cracking infeasible."
+        "D": "They are salted with modern bcrypt, making cracking infeasible and protecting the user's password from being recovered by an attacker."
       },
       "correct": "C",
       "explanation": "LanMan (LM) hashes have critical weaknesses: passwords are converted to uppercase (eliminating case as an entropy factor), truncated or padded to 14 characters, then split into two independent 7-character halves that are each used as a DES key to encrypt a fixed string. This means each 7-character half can be cracked independently, dramatically reducing the keyspace. Combined with no salting, LM hashes are extremely vulnerable to rainbow table and brute-force attacks — a full LM hash can typically be cracked in minutes. LM hashes do not use smart cards (A), do not store plaintext (B), and definitely do not use bcrypt (D). Modern Windows systems should disable LM hash storage via Group Policy."
@@ -532,10 +532,10 @@
       "category": "OLDER TECHNOLOGY",
       "question": "Explain the purpose of the phpMyAdmin application.",
       "options": {
-        "A": "A VPN client for IPsec tunnels.",
-        "B": "A Linux kernel module for memory management.",
+        "A": "A VPN client for IPsec tunnels that provides secure communication between two different network locations over the internet and all its users.",
+        "B": "A Linux kernel module for memory management that is used to optimize the performance of the operating system and all its services.",
         "C": "A web-based administration interface for MySQL/MariaDB to manage databases, users, and queries.",
-        "D": "A Windows service for domain authentication."
+        "D": "A Windows service for domain authentication that is used to manage user accounts and permissions in an Active Directory environment and its users."
       },
       "correct": "C",
       "explanation": "phpMyAdmin is an open-source PHP web application that provides a graphical interface for managing MySQL and MariaDB databases. It allows administrators to create/modify databases and tables, run SQL queries, manage users and permissions, import/export data, and browse table contents through a web browser. From a security perspective, phpMyAdmin is a high-value target because it provides direct database access — it should be restricted by IP, placed behind authentication, kept updated, and ideally not exposed to the public internet. It is not a VPN client (A), not a kernel module (B), and not a Windows authentication service (D)."
@@ -544,10 +544,10 @@
       "category": "OLDER TECHNOLOGY",
       "question": "How would you find and download files from a File Transfer Protocol (FTP) server or a Trivial File Transfer Protocol (TFTP) server?",
       "options": {
-        "A": "By querying DNS TXT records for file contents.",
-        "B": "Only by exploiting buffer overflows in the FTP server.",
+        "A": "By querying DNS TXT records for file contents and downloading the data from the DNS server and all its authoritative zones for the network.",
+        "B": "Only by exploiting buffer overflows in the FTP server to gain unauthorized access to the file system and all its stored data for the network.",
         "C": "Enumerate directories/files (e.g., ftp ls/dir; nmap scripts), then retrieve with ftp get/mget or tftp get, respecting authorization and scope.",
-        "D": "By sending ICMP echo requests and reading the payload."
+        "D": "By sending ICMP echo requests and reading the payload of the response to extract the file data and all its contents for the network."
       },
       "correct": "C",
       "explanation": "For FTP: connect using an FTP client, authenticate (or use anonymous if allowed), list directories with 'ls' or 'dir', and retrieve files with 'get' or 'mget'. Nmap scripts (e.g., ftp-anon, ftp-bounce) can identify anonymous access and enumerate content. For TFTP: since it has no authentication or directory listing capability, you typically need to know filenames and retrieve them with 'tftp -g' or 'atftp'. TFTP commonly runs on UDP port 69 and is often used for firmware/config file transfers on internal networks. Enumeration tools and wordlists can be used to discover files on TFTP. Files are not found via DNS TXT records (A), buffer overflows are not required (B), and ICMP is not used for file retrieval (D)."
@@ -556,10 +556,10 @@
       "category": "OLDER TECHNOLOGY",
       "question": "What enumeration can the Simple Mail Transfer Protocol (SMTP) service be used for?",
       "options": {
-        "A": "Enumerating SMB shares and Windows domain SIDs.",
+        "A": "Enumerating SMB shares and Windows domain SIDs for unauthorized access to the file system and user accounts and all their stored data.",
         "B": "User enumeration (e.g., VRFY/EXPN/RCPT TO behavior), mail relay testing, and banner/version discovery.",
-        "C": "Enumerating wireless networks and WPA handshakes.",
-        "D": "Enumerating database tables via SQL injection."
+        "C": "Enumerating wireless networks and WPA handshakes to gain unauthorized access to the local network over the air and all its connected users.",
+        "D": "Enumerating database tables via SQL injection to steal sensitive data from the application's backend database server and all its stored data."
       },
       "correct": "B",
       "explanation": "SMTP can be used for several enumeration techniques: VRFY (verify if a user exists), EXPN (expand a mailing list to reveal members), and RCPT TO (observing different response codes for valid vs invalid recipients to enumerate users). Banner grabbing reveals the mail server software and version. Open relay testing determines if the server forwards mail for unauthorized domains, which can be abused for spam or phishing. Tools like smtp-user-enum, nmap NSE scripts (smtp-enum-users, smtp-open-relay), and manual telnet/netcat connections are commonly used. SMTP cannot enumerate SMB shares (A), wireless networks (C), or database tables (D)."
@@ -569,9 +569,9 @@
       "question": "What is steganography?",
       "options": {
         "A": "Hiding information within other data (e.g., images/audio) so the existence of the message is concealed.",
-        "B": "Compressing files to reduce size for transmission.",
-        "C": "Hashing passwords to store them securely.",
-        "D": "Encrypting data so it is unreadable without a key."
+        "B": "Compressing files to reduce size for transmission and improve the overall throughput of the network and all its connected users.",
+        "C": "Hashing passwords to store them securely and protect the user's credentials from being recovered by an attacker using a brute force attack.",
+        "D": "Encrypting data so it is unreadable without a key and requires a decryption algorithm to recover the original message for the user."
       },
       "correct": "A",
       "explanation": "Steganography is the practice of hiding secret information within ordinary, non-secret data so that the very existence of the hidden message is concealed. Common carrier media include images (modifying least significant bits of pixel data), audio files, video, network traffic, or even text documents. Unlike encryption, which makes data unreadable but its presence obvious, steganography aims for undetectability — an observer should not suspect hidden content exists. It can be combined with encryption for defense in depth. Tools include steghide, OpenStego, and zsteg. It is not compression (B), not password hashing (C), and not encryption — though it is often used alongside encryption (D)."
@@ -581,9 +581,9 @@
       "question": "What is a relative identifier (RID) Master?",
       "options": {
         "A": "An Active Directory FSMO role that allocates pools of RIDs to domain controllers so they can create unique SIDs for new objects.",
-        "B": "A Kerberos server that issues ticket-granting tickets.",
-        "C": "A DNS master server that handles zone transfers.",
-        "D": "A Windows service that manages print queues across a forest."
+        "B": "A Kerberos server that issues ticket-granting tickets to users and services in an Active Directory environment and all its connected users.",
+        "C": "A DNS master server that handles zone transfers and resolves domain names to IP addresses for the network and all its authoritative zones.",
+        "D": "A Windows service that manages print queues across a forest and provides centralized printing for all users and all their connected devices."
       },
       "correct": "A",
       "explanation": "The RID Master is one of the five Active Directory FSMO (Flexible Single Master Operation) roles. It is responsible for allocating pools of Relative Identifiers (RIDs) to each domain controller in the domain. When a DC creates a new security principal (user, group, computer), it assigns a unique SID by combining the domain SID with a RID from its allocated pool. The RID Master ensures no two DCs issue the same RID, preventing SID collisions. If the RID Master is unavailable, DCs can continue creating objects only until their current RID pool is exhausted. It is not a Kerberos server (B), not a DNS server (C), and not related to print management (D)."
@@ -592,9 +592,9 @@
       "category": "OLDER TECHNOLOGY",
       "question": "Explain Hashing functions ie MD5 and SHA1",
       "options": {
-        "A": "They are public key algorithms used for key exchange.",
-        "B": "They are compression algorithms used to shrink files.",
-        "C": "They are symmetric ciphers used to encrypt disks.",
+        "A": "They are public key algorithms used for key exchange and digital signatures in a public key infrastructure and all its connected users.",
+        "B": "They are compression algorithms used to shrink files and reduce the overall storage requirements for the system and all its stored data.",
+        "C": "They are symmetric ciphers used to encrypt disks and protect the data from being accessed by unauthorized users and all their online activities.",
         "D": "They produce fixed-length digests for integrity; MD5 and SHA‑1 are considered collision-broken and unsuitable for modern security uses like signatures."
       },
       "correct": "D",
@@ -604,10 +604,10 @@
       "category": "OLDER TECHNOLOGY",
       "question": "Explain with examples some protocols used for Wide Area Networks (WAN)",
       "options": {
-        "A": "NFS, SMB, and AFP.",
+        "A": "NFS, SMB, and AFP are the primary protocols used for Wide Area Networks (WAN) in an enterprise environment.",
         "B": "Examples include MPLS, PPP/PPPoE, Frame Relay (legacy), and BGP for interdomain routing.",
-        "C": "WEP, WPA2, and WPA3.",
-        "D": "USB, HDMI, and PCIe."
+        "C": "WEP, WPA2, and WPA3 are the primary protocols used for Wide Area Networks (WAN) in an enterprise environment.",
+        "D": "USB, HDMI, and PCIe are the primary protocols used for Wide Area Networks (WAN) in an enterprise environment."
       },
       "correct": "B",
       "explanation": "WAN protocols facilitate communication over wide geographical areas: MPLS (Multi-Protocol Label Switching) provides efficient traffic engineering and QoS by routing packets using labels rather than IP lookups; PPP/PPPoE (Point-to-Point Protocol/over Ethernet) encapsulates network traffic for direct connections, commonly used by DSL providers; Frame Relay is a legacy packet-switched WAN technology largely replaced by MPLS; and BGP (Border Gateway Protocol) is the interdomain routing protocol that routes traffic between autonomous systems across the internet. NFS/SMB/AFP are file sharing protocols (A), WEP/WPA are wireless security protocols (C), and USB/HDMI/PCIe are physical hardware interfaces (D)."
@@ -616,10 +616,10 @@
       "category": "OLDER TECHNOLOGY",
       "question": "What is a One-Time-Pad?",
       "options": {
-        "A": "A public key certificate used to sign software.",
+        "A": "A public key certificate used to sign software and verify the identity of the publisher to the user.",
         "B": "A cipher using a truly random key as long as the message, used once; when used correctly it provides information-theoretic security.",
-        "C": "A password policy requiring users to change passwords weekly.",
-        "D": "A disk encryption mode that reuses the same key for all files."
+        "C": "A password policy requiring users to change passwords weekly to improve the overall security of the system.",
+        "D": "A disk encryption mode that reuses the same key for all files on the storage device to simplify management."
       },
       "correct": "B",
       "explanation": "A One-Time Pad is a symmetric encryption technique where each bit or character of the plaintext is combined (typically XOR'd) with a corresponding bit or character from a truly random key that is at least as long as the message and used only once. When implemented correctly, it is the only cipher mathematically proven to be unbreakable (information-theoretic security, proven by Claude Shannon). However, practical challenges make it largely impractical: the key must be truly random (not pseudo-random), must be as long as the message, must never be reused (reuse enables key recovery via crib-dragging), and must be securely distributed to both parties. It is not a certificate (A), not a password policy (C), and reusing the key (as described in D) would completely break its security."
@@ -628,10 +628,10 @@
       "category": "OLDER TECHNOLOGY",
       "question": "What is a Schema Master?",
       "options": {
-        "A": "A Windows service that manages DHCP leases.",
-        "B": "A Kerberos role that stores user passwords in plaintext.",
+        "A": "A Windows service that manages DHCP leases and provides IP configuration for all clients on the network.",
+        "B": "A Kerberos role that stores user passwords in plaintext and provides authentication for all users in the domain.",
         "C": "An Active Directory FSMO role that controls updates to the AD schema, ensuring only one DC processes schema modifications at a time.",
-        "D": "A DNS role that authoritatively resolves all internet domains."
+        "D": "A DNS role that authoritatively resolves all internet domains and provides name resolution for all users on the network."
       },
       "correct": "C",
       "explanation": "The Schema Master is one of the five Active Directory FSMO roles and is unique across the entire forest (only one DC holds this role). It controls all modifications to the Active Directory schema — the blueprint that defines every object class and attribute available in AD (e.g., user objects, group objects, custom attributes). Only the Schema Master can write schema changes, ensuring consistency across all domain controllers in the forest. Schema modifications are needed when extending AD (e.g., for Exchange Server, SCCM, or custom applications). It is not a DHCP service (A), does not store passwords in plaintext (B), and is not a DNS role (D)."
@@ -640,9 +640,9 @@
       "category": "OLDER TECHNOLOGY",
       "question": "Explain null sessions and restrict anonymous settings",
       "options": {
-        "A": "Restrict anonymous settings disable all user authentication on a domain.",
-        "B": "Null sessions occur only on Wi‑Fi networks using WEP.",
-        "C": "Null sessions are encrypted TLS tunnels that improve privacy.",
+        "A": "Restrict anonymous settings disable all user authentication on a domain and allow any user to connect to the network and its services.",
+        "B": "Null sessions occur only on Wi-Fi networks using WEP and are used to intercept the user's traffic over the air and all their data.",
+        "C": "Null sessions are encrypted TLS tunnels that improve privacy and protect the user's data from being intercepted by an attacker on the network.",
         "D": "Null sessions are unauthenticated SMB connections that can expose information; restrict anonymous settings limit what anonymous users can enumerate over SMB/NetBIOS."
       },
       "correct": "D",
@@ -653,9 +653,9 @@
       "question": "What vulnerability might be present if Server Message Block (SMB) version 1 was enabled on a Windows device?",
       "options": {
         "A": "Exposure to legacy SMBv1 flaws and exploit chains (e.g., vulnerabilities leveraged by wormable attacks), plus weaker security features compared to SMBv2/v3.",
-        "B": "It disables file sharing entirely, preventing any access.",
-        "C": "It forces all traffic onto UDP, enabling amplification attacks only.",
-        "D": "It automatically enables MFA for all users, which attackers can bypass."
+        "B": "It disables file sharing entirely, preventing any access to the files and folders on the network for all users and all their connected devices.",
+        "C": "It forces all traffic onto UDP, enabling amplification attacks only and reducing the overall performance of the network and all its services.",
+        "D": "It automatically enables MFA for all users, which attackers can bypass using a sophisticated phishing attack or social engineering for the network."
       },
       "correct": "A",
       "explanation": "SMBv1 is an outdated protocol with numerous security vulnerabilities, most notably those exploited by EternalBlue (MS17-010), which was used by the WannaCry and NotPetya wormable ransomware attacks. SMBv1 lacks important security features present in later versions: SMBv2/v3 added improved signing, encryption (SMBv3), secure negotiation to prevent downgrade attacks, and pre-authentication integrity. Enabling SMBv1 exposes systems to remote code execution, information disclosure, and denial of service attacks. Microsoft recommends disabling SMBv1 via Group Policy or PowerShell (Disable-WindowsOptionalFeature). It does not disable file sharing (B), SMB uses TCP not UDP (C), and it has nothing to do with MFA (D)."
@@ -664,10 +664,10 @@
       "category": "NETWORKING",
       "question": "Explain the Open Systems Interconnection (OSI) model",
       "options": {
-        "A": "A database normalization model for structuring tables.",
-        "B": "A symmetric encryption model for key distribution.",
+        "A": "A database normalization model for structuring tables and improving the overall performance of the database queries.",
+        "B": "A symmetric encryption model for key distribution and protecting the data from being accessed by unauthorized users.",
         "C": "A 7-layer conceptual model (Physical to Application) that standardizes how network functions are layered and interact.",
-        "D": "A 3-layer model used only for cloud security."
+        "D": "A 3-layer model used only for cloud security and protecting the data from being accessed by unauthorized users."
       },
       "correct": "C",
       "explanation": "The OSI model defines seven layers: 1-Physical (electrical signals, cables), 2-Data Link (frames, MAC addresses, switches), 3-Network (packets, IP addressing, routing), 4-Transport (TCP/UDP, segments), 5-Session (session establishment/teardown), 6-Presentation (data formatting, encryption at this layer), and 7-Application (HTTP, DNS, SMTP). Each layer communicates with its peer layer on the remote system and provides services to the layer above. This model helps network professionals troubleshoot issues by layer, understand where security controls operate (e.g., firewalls at L3/L4, WAFs at L7), and design protocol stacks. It is not a database model (A), not an encryption model (B), and has 7 layers, not 3 (D)."
@@ -677,9 +677,9 @@
       "question": "Explain the Department of Defense (DoD) networking model",
       "options": {
         "A": "A 4-layer model (Link, Internet, Transport, Application) similar to TCP/IP that describes network communications in broader layers.",
-        "B": "A vulnerability scoring model used by CVSS.",
-        "C": "A 7-layer model identical to OSI.",
-        "D": "A wireless-only model for WPA authentication."
+        "B": "A vulnerability scoring model used by CVSS to rank the severity of security vulnerabilities in software and systems.",
+        "C": "A 7-layer model identical to OSI that standardizes how network functions are layered and interact.",
+        "D": "A wireless-only model for WPA authentication and protecting the data from being accessed by unauthorized users."
       },
       "correct": "A",
       "explanation": "The DoD (Department of Defense) model, also called the TCP/IP model, uses four layers instead of OSI's seven: 1-Link/Network Access (combines OSI Physical and Data Link — Ethernet, Wi-Fi), 2-Internet (equivalent to OSI Network — IP, ICMP, ARP), 3-Transport (equivalent to OSI Transport — TCP, UDP), and 4-Application (combines OSI Session, Presentation, Application — HTTP, DNS, FTP). It was developed alongside the ARPANET/internet protocols and is more practical for describing how TCP/IP networks actually operate. It is not a vulnerability scoring model (B), it has 4 layers not 7 (C), and it covers all network types, not just wireless (D)."
@@ -688,9 +688,9 @@
       "category": "NETWORKING",
       "question": "Explain how Dynamic Host Configuration Protocol (DHCP) works",
       "options": {
-        "A": "It resolves domain names to IP addresses using recursive queries.",
-        "B": "It authenticates users to a domain controller using tickets.",
-        "C": "It encrypts network traffic between hosts using shared keys.",
+        "A": "It resolves domain names to IP addresses using recursive queries and caching the results for future use.",
+        "B": "It authenticates users to a domain controller using tickets and providing single sign-on for all users in the domain.",
+        "C": "It encrypts network traffic between hosts using shared keys and protecting the data from being intercepted.",
         "D": "It automatically assigns IP configuration using a DORA process (Discover, Offer, Request, Acknowledge) and leases addresses for a period."
       },
       "correct": "D",
@@ -701,9 +701,9 @@
       "question": "What is a Start of Authority (SOA) record - with respect to Domain Name System (DNS)?",
       "options": {
         "A": "A DNS record that contains authoritative information about a zone, including the primary name server, admin contact, and serial/refresh timers.",
-        "B": "A DNS record that indicates a mail exchanger for the domain.",
-        "C": "A DNS record that maps a hostname to an IPv4 address.",
-        "D": "A DNS record that stores a public key for DKIM signing."
+        "B": "A DNS record that indicates a mail exchanger for the domain and provides mail routing for all users.",
+        "C": "A DNS record that maps a hostname to an IPv4 address and provides name resolution for all users.",
+        "D": "A DNS record that stores a public key for DKIM signing and provides email authentication for all users."
       },
       "correct": "A",
       "explanation": "The SOA (Start of Authority) record is mandatory for every DNS zone and contains: the primary authoritative name server (MNAME), the responsible party's email address (RNAME), a serial number (incremented on zone changes to trigger transfers), and timing parameters — refresh interval (how often secondaries check for updates), retry interval (how long before retrying a failed refresh), expire time (when secondaries stop serving the zone if unreachable), and minimum TTL (negative caching duration). SOA records are essential for zone transfer synchronization between primary and secondary DNS servers. MX records handle mail routing (B), A records map hostnames to IPs (C), and DKIM keys are stored in TXT records (D)."
@@ -712,9 +712,9 @@
       "category": "NETWORKING",
       "question": "Explain what Domain Name System (DNS) is and explain how DNS works.",
       "options": {
-        "A": "A protocol that assigns IP addresses dynamically to clients.",
-        "B": "A transport protocol that provides reliable delivery over IP.",
-        "C": "A firewall technology that blocks malicious domains by default.",
+        "A": "A protocol that assigns IP addresses dynamically to clients and provides network configuration for all users and all their connected devices.",
+        "B": "A transport protocol that provides reliable delivery over IP and ensures the data is received correctly by the destination for all users.",
+        "C": "A firewall technology that blocks malicious domains by default and protects the user from being redirected to a malicious website on the network.",
         "D": "A hierarchical naming system that maps domain names to records (A/AAAA/CNAME/MX, etc.) using recursive resolvers querying authoritative servers with caching."
       },
       "correct": "D",
@@ -725,9 +725,9 @@
       "question": "Explain the IP protocol and explain IP addresses.",
       "options": {
         "A": "IP routes packets across networks using source/destination IP addresses; IPv4 uses 32-bit addresses and IPv6 uses 128-bit addresses.",
-        "B": "IP encrypts packets end-to-end by default.",
-        "C": "IP addresses are MAC addresses formatted with colons.",
-        "D": "IP is an application-layer protocol for web pages."
+        "B": "IP encrypts packets end-to-end by default and protects the data from being intercepted by unauthorized users.",
+        "C": "IP addresses are MAC addresses formatted with colons and used to identify the hardware on a local area network.",
+        "D": "IP is an application-layer protocol for web pages and provides the communication between the browser and the server."
       },
       "correct": "A",
       "explanation": "IP (Internet Protocol) is a Layer 3 (network layer) protocol responsible for routing packets across interconnected networks using source and destination IP addresses. IPv4 uses 32-bit addresses (e.g., 192.168.1.1), providing approximately 4.3 billion unique addresses. IPv6 uses 128-bit addresses (e.g., 2001:db8::1), vastly expanding the address space. IP provides connectionless, best-effort delivery — it does not guarantee delivery, ordering, or integrity (those are handled by upper-layer protocols like TCP). Key header fields include TTL (time to live), protocol number, and source/destination addresses. IP does not encrypt by default — IPsec is needed for that (B). IP addresses are not MAC addresses (C). IP operates at the network layer, not the application layer (D)."
@@ -736,10 +736,10 @@
       "category": "NETWORKING",
       "question": "Explain Classless Inter-Domain Routing (CIDR)",
       "options": {
-        "A": "A protocol that replaces TCP with a faster transport.",
-        "B": "A method of IP addressing and routing using variable-length prefixes (e.g., /24) to allocate and aggregate address space efficiently.",
-        "C": "A technique to hide web traffic inside DNS queries.",
-        "D": "A Wi‑Fi security standard that supersedes WPA3."
+        "A": "A protocol that replaces TCP with a faster transport mechanism.",
+        "B": "A method of IP addressing using variable-length prefixes (e.g., /24) to allocate and aggregate address space efficiently.",
+        "C": "A technique used to hide web traffic inside DNS queries for exfiltration.",
+        "D": "A wireless security standard that supersedes WPA3 for enterprise networks."
       },
       "correct": "B",
       "explanation": "CIDR replaced the rigid classful addressing system (Class A/B/C) with variable-length subnet masking using prefix notation (e.g., /24 = 256 addresses, /16 = 65,536 addresses). This allows organizations to receive precisely sized address blocks rather than wasteful class-based allocations, significantly improving IPv4 address efficiency. CIDR also enables route aggregation (supernetting) — multiple contiguous networks can be advertised as a single route, reducing routing table size. For example, four /24 networks can be aggregated into a single /22. It is not a transport protocol (A), not related to DNS tunneling (C), and not a Wi-Fi standard (D)."
@@ -748,10 +748,10 @@
       "category": "NETWORKING",
       "question": "Explain how Machine-in-the-Middle (MITM) techniques work with the Address Resolution Protocol (ARP).",
       "options": {
-        "A": "By changing BGP routes on the public internet without access to the LAN.",
-        "B": "By exploiting DNSSEC signatures to change records.",
-        "C": "By brute forcing WPA passwords over the air.",
-        "D": "By poisoning ARP caches so victims map an IP to the attacker’s MAC, allowing interception/relay of traffic on a LAN segment."
+        "A": "By changing BGP routes on the public internet without access to the local LAN and all its connected users and their data.",
+        "B": "By exploiting DNSSEC signatures to change records and redirect web traffic for all users on the network and all their services.",
+        "C": "By brute forcing WPA passwords over the air to gain access to the network and all its connected users and their stored data.",
+        "D": "By poisoning ARP caches to map an IP to the attacker’s MAC, allowing interception of traffic on a LAN segment."
       },
       "correct": "D",
       "explanation": "ARP MITM attacks exploit the fact that ARP has no authentication mechanism. An attacker on the same LAN segment sends unsolicited (gratuitous) ARP replies to the victim and the gateway, associating the attacker's MAC address with the other party's IP address in each device's ARP cache. This causes traffic between the victim and gateway to flow through the attacker, who can then intercept, modify, or forward it (relay). Tools like arpspoof, Ettercap, and Bettercap automate this attack. Mitigations include: Dynamic ARP Inspection (DAI) on managed switches, DHCP snooping (which DAI relies on for trusted bindings), static ARP entries for critical systems, port security, and using encrypted protocols (TLS/SSH) to protect data even if intercepted. BGP attacks are internet-scale routing attacks (A), DNSSEC is unrelated (B), and WPA cracking targets wireless, not ARP (C)."
@@ -760,10 +760,10 @@
       "category": "NETWORKING",
       "question": "What is the function of Port Address Translation (PAT)?",
       "options": {
-        "A": "To allocate DNS zones to authoritative servers.",
-        "B": "To allow many internal hosts to share a single public IP by translating internal addresses/ports to external ports (a form of NAT).",
-        "C": "To route packets based on MAC addresses only.",
-        "D": "To encrypt TCP ports so scanners cannot detect services."
+        "A": "To allocate DNS zones to authoritative servers for name resolution and all its connected users and their data.",
+        "B": "To allow many internal hosts to share a single public IP by translating internal addresses and ports to external ports.",
+        "C": "To route packets based on MAC addresses only without using IP headers and providing Layer 2 connectivity for all users.",
+        "D": "To encrypt TCP ports so scanners cannot detect services on the host and all its connected users and their stored data."
       },
       "correct": "B",
       "explanation": "Port Address Translation (PAT), also called NAT overload, is a form of Network Address Translation that allows multiple internal hosts (using private RFC 1918 addresses) to share a single public IP address by mapping each session to a unique source port number on the public IP. The NAT device maintains a translation table tracking internal IP:port to external IP:port mappings. This conserves public IPv4 addresses and provides a degree of obscurity for internal network topology (though it is not a security control). PAT is the most common form of NAT used in home and enterprise internet gateways. It does not allocate DNS zones (A), does not operate on MAC addresses alone (C), and does not encrypt ports (D)."
@@ -772,10 +772,10 @@
       "category": "NETWORKING",
       "question": "What is the Lightweight Directory Access Protocol (LDAP)?",
       "options": {
-        "A": "A file transfer protocol that runs only over UDP.",
-        "B": "A time synchronization protocol for network devices.",
-        "C": "A protocol for accessing and managing directory services (e.g., Active Directory), used for querying users, groups, and objects.",
-        "D": "A routing protocol that selects paths between routers."
+        "A": "A file transfer protocol that runs only over UDP for speed and providing file transport for all users on the network.",
+        "B": "A time synchronization protocol for network devices and servers and providing time sync for all users on the network.",
+        "C": "A protocol for accessing and managing directory services (e.g., Active Directory) to query users and objects.",
+        "D": "A routing protocol that selects paths between routers in an AS and providing path selection for all users on the network."
       },
       "correct": "C",
       "explanation": "LDAP is an application-layer protocol (TCP ports 389 for plaintext, 636 for LDAPS/TLS) used to query and modify directory services — hierarchical databases storing information about users, groups, computers, and other network objects. Active Directory is the most common LDAP-based directory. LDAP uses a tree structure (Distinguished Names like CN=John,OU=Users,DC=example,DC=com) and supports operations like search, bind (authenticate), add, modify, and delete. Security concerns include: cleartext LDAP binds transmitting credentials, anonymous binds leaking directory information, LDAP injection, and overly permissive ACLs. Mitigations include enforcing LDAPS or STARTTLS, disabling anonymous binds, and applying least-privilege access. LDAP is not a file transfer protocol (A), not for time sync (B), and not a routing protocol (D)."
@@ -784,10 +784,10 @@
       "category": "NETWORKING",
       "question": "Name and explain two distance vector routing protocols",
       "options": {
-        "A": "RIP and EIGRP (often treated as advanced DV): they exchange route information with neighbors based on distance/metric rather than full topology.",
-        "B": "ARP and ICMP; they compute shortest paths across WANs.",
-        "C": "OSPF and IS‑IS; they are distance vector protocols.",
-        "D": "BGP and HTTP; they exchange routes over the web."
+        "A": "RIP and EIGRP: they exchange route information with neighbors based on distance or metric rather than full topology.",
+        "B": "ARP and ICMP: they compute shortest paths across WANs using Layer 2 and Layer 3 diagnostic messages for all users in the domain.",
+        "C": "OSPF and IS‑IS: they are distance vector protocols that use hop count to determine the best path for all users on the network.",
+        "D": "BGP and HTTP: they exchange routes over the web using application-layer headers and path vectors for all users in the domain."
       },
       "correct": "A",
       "explanation": "Distance vector routing protocols share routing information with directly connected neighbors based on metrics (e.g., hop count, composite metrics). RIP (Routing Information Protocol) uses hop count as its metric (maximum 15 hops), sends periodic full updates every 30 seconds, and is simple but slow to converge. EIGRP (Enhanced Interior Gateway Routing Protocol) is Cisco's advanced distance vector protocol using a composite metric (bandwidth, delay, reliability, load) with DUAL algorithm for loop-free, fast convergence and supports incremental updates. Distance vector protocols are susceptible to routing loops (mitigated by split horizon, route poisoning, holddown timers). OSPF and IS-IS are link-state protocols, not distance vector (C). ARP/ICMP are not routing protocols (B). BGP is a path-vector protocol and HTTP is not a routing protocol (D)."
@@ -796,10 +796,10 @@
       "category": "NETWORKING",
       "question": "Explain Medium Access Control (MAC) addresses and explain what an Organizationally Unique Identifier (OUI) is?",
       "options": {
-        "A": "A MAC is an IP address; an OUI is the DNS zone name.",
-        "B": "A MAC is a port number; an OUI is a routing metric.",
-        "C": "A MAC is a Layer 2 hardware address; the OUI is the first 24 bits identifying the manufacturer (or assignment) of the network interface.",
-        "D": "A MAC is a user ID; an OUI is a password hash."
+        "A": "A MAC is an IP address; an OUI is the DNS zone name for the device and all its connected users and their data.",
+        "B": "A MAC is a port number; an OUI is a routing metric for path selection and all its connected users and their data.",
+        "C": "A MAC is a Layer 2 hardware address; the OUI is the first 24 bits identifying the manufacturer of the interface.",
+        "D": "A MAC is a user ID; an OUI is a password hash used for authentication and all its connected users and their data."
       },
       "correct": "C",
       "explanation": "A MAC (Media Access Control) address is a 48-bit Layer 2 hardware identifier assigned to network interface cards, typically displayed as six pairs of hexadecimal digits (e.g., AA:BB:CC:DD:EE:FF). The first 24 bits (first three octets) form the OUI (Organizationally Unique Identifier), assigned by IEEE to manufacturers — for example, 00:50:56 identifies VMware, and DC:A6:32 identifies Raspberry Pi. The remaining 24 bits are assigned by the manufacturer to uniquely identify each device. OUI lookups are useful during penetration testing and network reconnaissance to identify device manufacturers and types. Modern devices may use MAC address randomization for privacy. MACs are not IP addresses (A), not port numbers (B), and not user IDs (D)."
@@ -808,10 +808,10 @@
       "category": "NETWORKING",
       "question": "What is firewalking (with respect to network security)?",
       "options": {
-        "A": "A technique for exploiting SQL injection to enumerate tables.",
-        "B": "A technique to infer firewall rules by sending packets with crafted TTL values to determine which ports/protocols are permitted through a filtering device.",
-        "C": "A physical security test of sprinkler systems and fire doors.",
-        "D": "A method to crack WPA2 by capturing handshakes."
+        "A": "A technique for exploiting SQL injection to enumerate database tables and all its stored data for the network.",
+        "B": "A technique to infer firewall rules by sending packets with crafted TTL values to determine permitted ports.",
+        "C": "A physical security test of sprinkler systems and fire doors in a DC and all its connected users and their data.",
+        "D": "A method to crack WPA2 by capturing handshakes and using wordlists and all its connected users and their data."
       },
       "correct": "B",
       "explanation": "Firewalking is a reconnaissance technique that determines which ports and protocols are permitted through a firewall or packet filter. It works by sending packets with TTL values set to expire one hop past the firewall — if the firewall permits the traffic, the packet reaches the next hop and generates an ICMP Time Exceeded response, confirming the port is open through the filter. If the firewall blocks the traffic, no response is received. Tools like firewalk and hping3 automate this technique. First, a traceroute determines the hop count to the firewall, then probes are sent with TTL = hop_count + 1. It is not related to SQL injection (A), physical fire safety (C), or WPA2 cracking (D)."
@@ -820,10 +820,10 @@
       "category": "NETWORKING",
       "question": "Explain the Wi-Fi Protected Access (WPA) protocol",
       "options": {
-        "A": "A file transfer protocol used for downloading firmware.",
-        "B": "A wireless security standard improving on WEP; WPA uses TKIP (legacy) and WPA2 uses AES-CCMP, while WPA3 further improves key exchange and protection.",
-        "C": "A routing protocol for exchanging routes between autonomous systems.",
-        "D": "An email authentication method based on DNS TXT records."
+        "A": "A file transfer protocol used for downloading firmware to routers and all its connected users and their data.",
+        "B": "A wireless security standard improving on WEP; WPA2 uses AES-CCMP, while WPA3 improves key exchange.",
+        "C": "A routing protocol for exchanging routes between autonomous systems and all its connected users and their data.",
+        "D": "An email authentication method based on DNS TXT records and SPF and all its connected users and their data."
       },
       "correct": "B",
       "explanation": "WPA was developed as an interim replacement for WEP, using TKIP (Temporal Key Integrity Protocol) with RC4 cipher and per-packet key mixing to address WEP's key reuse flaws. WPA2 replaced TKIP with AES-CCMP (Counter Mode CBC-MAC Protocol), providing significantly stronger encryption and integrity protection — it has been mandatory for Wi-Fi certification since 2006. WPA3 further improves security with SAE (Simultaneous Authentication of Equals) replacing the PSK 4-way handshake, providing forward secrecy and resistance to offline dictionary attacks, plus mandatory Protected Management Frames (PMF). Enterprise modes (WPA2/3-Enterprise) use 802.1X/RADIUS for per-user authentication. WPA is not a file transfer protocol (A), not a routing protocol (C), and not an email authentication method (D)."
@@ -832,10 +832,10 @@
       "category": "NETWORKING",
       "question": "Explain IPSec",
       "options": {
-        "A": "A DNS protocol that ensures integrity of DNS records.",
-        "B": "A suite that secures IP traffic with authentication and encryption using AH/ESP, often for VPNs, operating in transport or tunnel mode.",
-        "C": "A TCP option that increases window size for performance.",
-        "D": "A web application firewall that blocks SQL injection."
+        "A": "A DNS protocol that ensures integrity of DNS records via signatures and all its connected users and their data.",
+        "B": "A suite that secures IP traffic with authentication and encryption using AH/ESP, often for VPNs.",
+        "C": "A TCP option that increases window size for high-performance networks and all its connected users and their data.",
+        "D": "A web application firewall that blocks SQL injection and XSS attacks and all its connected users and their data."
       },
       "correct": "B",
       "explanation": "IPsec is a suite of protocols operating at the network layer (Layer 3) that provides security for IP communications. It uses two main protocols: AH (Authentication Header) for integrity and authentication without encryption, and ESP (Encapsulating Security Payload) for confidentiality, integrity, and authentication. IPsec operates in two modes: transport mode (protects the payload, used for host-to-host) and tunnel mode (encapsulates the entire IP packet, used for VPNs). IKE (Internet Key Exchange) handles the negotiation of Security Associations (SAs) and key exchange. IPsec is widely used for site-to-site VPNs, remote-access VPNs, and securing routing protocols. It is not a DNS protocol — DNSSEC is (A), not a TCP option (C), and not a WAF (D)."
@@ -844,10 +844,10 @@
       "category": "NETWORKING",
       "question": "Where would you find the hosts file and what is its purpose?",
       "options": {
-        "A": "It is stored only on DNS servers and defines authoritative zones.",
-        "B": "It is stored in the browser cache and defines TLS certificates.",
-        "C": "It is stored in the router firmware and defines NAT rules.",
-        "D": "It is a local name-to-IP mapping file (e.g., /etc/hosts on Unix-like systems; %SystemRoot%\\System32\\drivers\\etc\\hosts on Windows) that overrides DNS resolution."
+        "A": "It is stored only on DNS servers and defines authoritative zones for resolution and all its connected users.",
+        "B": "It is stored in the browser cache and defines TLS certificates for sites and all its connected users.",
+        "C": "It is stored in the router firmware and defines NAT rules for the LAN and all its connected users.",
+        "D": "It is a local name-to-IP mapping file (e.g., /etc/hosts) that overrides DNS resolution."
       },
       "correct": "D",
       "explanation": "The hosts file is a local plain-text file that maps hostnames to IP addresses, consulted before DNS resolution in most OS configurations. On Unix/Linux/macOS it is located at /etc/hosts; on Windows at %SystemRoot%\\System32\\drivers\\etc\\hosts. Entries follow the format 'IP_address hostname' (e.g., '127.0.0.1 localhost'). The hosts file can be used legitimately for local development, ad blocking, or overriding DNS for testing. Malware may modify the hosts file to redirect legitimate domains to malicious IPs (pharming) or block security update servers. It is not stored on DNS servers (A), not in browser cache (B), and not in router firmware (C). Protecting the hosts file with appropriate file permissions is a basic hardening step."
@@ -856,10 +856,10 @@
       "category": "NETWORKING",
       "question": "Explain how Virtual Local Area Networks (VLANS) work",
       "options": {
-        "A": "VLANs are Layer 3 routing protocols that replace IP.",
-        "B": "VLANs encrypt Wi‑Fi frames so attackers cannot sniff traffic.",
-        "C": "VLANs logically segment Layer 2 networks by tagging frames (802.1Q) so devices can be separated into distinct broadcast domains on the same physical infrastructure.",
-        "D": "VLANs are only for connecting remote sites over the internet."
+        "A": "VLANs are Layer 3 routing protocols that replace IP for internal traffic and all its connected users.",
+        "B": "VLANs encrypt Wi‑Fi frames so attackers cannot sniff traffic over the air and all its connected users.",
+        "C": "VLANs logically segment Layer 2 networks by tagging frames (802.1Q) to separate broadcast domains.",
+        "D": "VLANs are only for connecting remote sites over the internet using VPNs and all its connected users."
       },
       "correct": "C",
       "explanation": "VLANs logically segment a physical network into separate broadcast domains at Layer 2 using IEEE 802.1Q tagging. Each VLAN has a unique ID (1-4094) inserted into the Ethernet frame header on trunk ports. Devices in the same VLAN can communicate at Layer 2, but traffic between VLANs requires a Layer 3 router or Layer 3 switch (inter-VLAN routing), where ACLs and firewall rules can control cross-VLAN access. Benefits include reduced broadcast traffic, improved security through segmentation, and flexible network design independent of physical topology. VLAN hopping attacks (e.g., double tagging, switch spoofing) are mitigated by disabling DTP, pruning VLANs, and using a dedicated native VLAN. VLANs are not Layer 3 routing protocols (A), do not encrypt traffic (B), and are not limited to remote site connectivity (D)."
@@ -868,10 +868,10 @@
       "category": "NETWORKING",
       "question": "Explain the purpose of a Terminal Access Controller Access Control System (TACACS)",
       "options": {
-        "A": "A protocol for synchronizing time across servers.",
-        "B": "A tunneling protocol for encrypting IP traffic over UDP.",
-        "C": "A protocol for discovering devices on a local network.",
-        "D": "A centralized AAA protocol (commonly TACACS+) for authenticating and authorizing administrative access to network devices, with detailed command accounting."
+        "A": "A protocol for synchronizing time across servers and network devices and all its connected users and their data.",
+        "B": "A tunneling protocol for encrypting IP traffic over UDP for VPNs and all its connected users and their data.",
+        "C": "A protocol for discovering devices on a local network using broadcasts and all its connected users and their data.",
+        "D": "A centralized AAA protocol (TACACS+) for authenticating administrative access to network devices."
       },
       "correct": "D",
       "explanation": "TACACS+ (Terminal Access Controller Access-Control System Plus) is a Cisco-developed AAA protocol (TCP port 49) primarily used for authenticating and authorizing administrative access to network infrastructure devices (routers, switches, firewalls). Unlike RADIUS, TACACS+ separates authentication, authorization, and accounting into independent processes, encrypts the entire packet body (not just the password), and provides per-command authorization — allowing granular control over which commands each administrator can execute. This makes it ideal for network device management where different admin levels need different command access. It is not a time synchronization protocol — that is NTP (A), not a tunneling protocol (B), and not a device discovery protocol (C)."
@@ -880,10 +880,10 @@
       "category": "NETWORKING",
       "question": "Why are CLOSED ports a cause for concern?",
       "options": {
-        "A": "Closed ports always indicate malware is present.",
-        "B": "Closed ports mean the firewall blocks all traffic so there is no risk.",
-        "C": "Closed ports reveal the encryption keys used by the host.",
-        "D": "They indicate a reachable host and an IP stack responding, which can aid attacker reconnaissance and may reflect unnecessary exposure even if no service is listening."
+        "A": "Closed ports always indicate malware is present on the target host and all its connected users and their data.",
+        "B": "Closed ports mean the firewall blocks all traffic so there is no risk and all its connected users and their data.",
+        "C": "Closed ports reveal the encryption keys used by the host for SSH and all its connected users and their data.",
+        "D": "They indicate a reachable host and an IP stack responding, which aids attacker reconnaissance."
       },
       "correct": "D",
       "explanation": "A closed port responds with a TCP RST (reset) or ICMP port unreachable, which confirms: the host is alive and reachable, the IP stack is responding, and there is no firewall filtering traffic to that port. This information aids attacker reconnaissance by confirming live hosts, enabling OS fingerprinting via TCP/IP stack behavior analysis, and identifying potential attack surfaces where services might be started later. Ideally, ports should be filtered (silently dropped) rather than closed (actively rejected) to minimize information leakage. Closed ports do not always indicate malware (A), they show the port is reachable but not listening — different from being firewall-blocked (B), and they do not reveal encryption keys (C)."
@@ -892,10 +892,10 @@
       "category": "NETWORKING",
       "question": "How would you set a source port in nmap and why would you use this feature?",
       "options": {
-        "A": "Use --spoof-mac to change the source port at Layer 2.",
-        "B": "Use -p to set the destination port, which is the same as the source port.",
-        "C": "Use --source-port (or -g) to set a specific source port, sometimes to bypass poorly configured ACLs that trust traffic from certain ports (e.g., 53).",
-        "D": "You cannot set a source port in nmap."
+        "A": "Use --spoof-mac to change the source port at Layer 2 for scanning and all its connected users and their data.",
+        "B": "Use -p to set the destination port, which is the same as the source port and all its connected users and their data.",
+        "C": "Use --source-port (or -g) to set a specific source port to bypass poorly configured ACLs.",
+        "D": "You cannot set a source port in nmap as it is randomized by the OS and all its connected users and their data."
       },
       "correct": "C",
       "explanation": "The nmap flags --source-port or -g allow you to specify the source port for scan packets. This is useful for testing poorly configured stateless ACLs or packet filters that trust traffic from specific source ports — for example, some legacy firewalls allow all traffic with source port 53 (DNS) or 80 (HTTP) assuming it is legitimate response traffic. By setting the source port to these trusted values, an attacker can potentially bypass such filters and reach otherwise blocked services. This technique is ineffective against stateful firewalls that track connection state. --spoof-mac changes the MAC address, not the source port (A), -p sets the destination port to scan (B), and nmap does support source port setting (D)."
@@ -904,10 +904,10 @@
       "category": "PROTOCOLS",
       "question": "Explain the Address Resolution Protocol (ARP) protocol",
       "options": {
-        "A": "A Layer 2/3 mapping protocol used on LANs to resolve an IP address to a MAC address via broadcasts and replies.",
-        "B": "A routing protocol used to exchange routes between routers.",
-        "C": "A transport protocol that guarantees reliable delivery.",
-        "D": "An application protocol used to send emails."
+        "A": "A Layer 2/3 mapping protocol used on LANs to resolve an IP address to a MAC address.",
+        "B": "A routing protocol used to exchange routes between routers in different AS.",
+        "C": "A transport protocol that guarantees reliable delivery of packets over the network.",
+        "D": "An application protocol used to send emails between mail servers over the internet."
       },
       "correct": "A",
       "explanation": "ARP (Address Resolution Protocol) is used on local area networks to map Layer 3 IP addresses to Layer 2 MAC addresses. When a host needs to communicate with another device on the same subnet, it broadcasts an ARP request ('Who has IP X?'), and the device with that IP responds with its MAC address in a unicast ARP reply. Results are cached in the ARP table/cache to reduce broadcast traffic. ARP operates between OSI Layers 2 and 3 and has no built-in authentication, making it vulnerable to ARP spoofing/poisoning where an attacker sends false ARP replies to redirect traffic. It is not a routing protocol (B), not a transport protocol for reliable delivery — that is TCP (C), and not an application protocol for email — that is SMTP (D)."
@@ -916,10 +916,10 @@
       "category": "PROTOCOLS",
       "question": "Explain the Internet Control Message Protocol (ICMP) protocol",
       "options": {
-        "A": "A protocol used to encrypt HTTP traffic.",
-        "B": "A network-layer protocol used for diagnostic and control messages (e.g., ping echo, destination unreachable, time exceeded).",
-        "C": "A database protocol for executing queries.",
-        "D": "A Layer 2 protocol for switching frames."
+        "A": "A protocol used to encrypt HTTP traffic for secure browsing.",
+        "B": "A network-layer protocol used for diagnostic and control messages (e.g., ping echo).",
+        "C": "A database protocol for executing queries on remote SQL servers.",
+        "D": "A Layer 2 protocol for switching frames between physical ports."
       },
       "correct": "B",
       "explanation": "ICMP (Internet Control Message Protocol) operates at the network layer alongside IP and is used for diagnostic and error-reporting purposes. Common message types include: Echo Request/Reply (type 8/0 — used by ping), Destination Unreachable (type 3 — e.g., port unreachable, host unreachable), Time Exceeded (type 11 — used by traceroute when TTL expires), and Redirect (type 5). ICMP is essential for network troubleshooting but can be abused for: host discovery (ping sweeps), OS fingerprinting, network mapping (traceroute), ICMP tunneling (hiding data in ICMP payloads), ICMP flood/Smurf attacks, and path MTU discovery manipulation. It does not encrypt HTTP (A), is not a database protocol (C), and operates at Layer 3, not Layer 2 (D)."
@@ -928,10 +928,10 @@
       "category": "PROTOCOLS",
       "question": "Explain the User Datagram Protocol (UDP) protocol",
       "options": {
-        "A": "A protocol that replaces IP addressing with MAC addressing.",
-        "B": "A connectionless transport protocol providing best-effort delivery without retransmissions, used for low-latency services like DNS and VoIP.",
-        "C": "A connection-oriented protocol that guarantees in-order delivery.",
-        "D": "A routing protocol for exchanging BGP updates."
+        "A": "A protocol that replaces IP addressing with MAC addressing at Layer 3.",
+        "B": "A connectionless transport protocol providing best-effort delivery without retransmissions.",
+        "C": "A connection-oriented protocol that guarantees in-order delivery of segments.",
+        "D": "A routing protocol for exchanging BGP updates between autonomous systems."
       },
       "correct": "B",
       "explanation": "UDP (User Datagram Protocol) is a connectionless Layer 4 transport protocol that provides minimal overhead by omitting connection setup, sequencing, acknowledgments, and retransmission. Datagrams may arrive out of order, be duplicated, or be lost entirely — the application must handle these cases if needed. UDP's simplicity makes it ideal for latency-sensitive applications like DNS (port 53), VoIP/RTP, video streaming, online gaming, DHCP (ports 67/68), SNMP (ports 161/162), and NTP (port 123). UDP headers are only 8 bytes (vs TCP's 20+ bytes). Security considerations include UDP amplification attacks for DDoS (e.g., DNS amplification, NTP amplification). It does not replace IP addressing (A), is connectionless and does not guarantee delivery — that is TCP (C), and is not a routing protocol (D)."
@@ -941,9 +941,9 @@
       "question": "What are the response codes for the Hypertext Transfer Protocol (http) protocol?",
       "options": {
         "A": "Status code classes: 1xx informational, 2xx success, 3xx redirection, 4xx client error, 5xx server error.",
-        "B": "Only 200 and 404 are valid HTTP responses.",
-        "C": "HTTP response codes are MAC addresses.",
-        "D": "HTTP uses DNS response codes like NXDOMAIN and SERVFAIL."
+        "B": "Only 200 and 404 are valid HTTP responses for web traffic.",
+        "C": "HTTP response codes are MAC addresses used for hardware identification.",
+        "D": "HTTP uses DNS response codes like NXDOMAIN and SERVFAIL for errors."
       },
       "correct": "A",
       "explanation": "HTTP response status codes are grouped into five classes: 1xx Informational (e.g., 100 Continue, 101 Switching Protocols), 2xx Success (e.g., 200 OK, 201 Created, 204 No Content), 3xx Redirection (e.g., 301 Moved Permanently, 302 Found, 304 Not Modified), 4xx Client Error (e.g., 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 405 Method Not Allowed), and 5xx Server Error (e.g., 500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable). Understanding these codes is essential for web application testing, as error responses can leak information about server-side technology, configuration, and application logic. HTTP has many more valid codes than just 200 and 404 (B), status codes are numeric not MAC addresses (C), and HTTP uses its own status code system, not DNS response codes (D)."
@@ -952,10 +952,10 @@
       "category": "PROTOCOLS",
       "question": "Explain IPV6 and why its not widely adopted",
       "options": {
-        "A": "IPv6 cannot be routed on the internet.",
-        "B": "IPv6 is a proprietary protocol requiring paid licenses.",
-        "C": "IPv6 uses 128-bit addressing to solve IPv4 exhaustion; slower adoption is due to legacy infrastructure, cost/complexity, and continued IPv4 via NAT.",
-        "D": "IPv6 reduces address space compared to IPv4."
+        "A": "IPv6 cannot be routed on the internet due to header size.",
+        "B": "IPv6 is a proprietary protocol requiring paid licenses from IEEE.",
+        "C": "IPv6 uses 128-bit addressing to solve IPv4 exhaustion; adoption is slowed by legacy costs.",
+        "D": "IPv6 reduces address space compared to IPv4 to improve routing speed."
       },
       "correct": "C",
       "explanation": "IPv6 uses 128-bit addresses (written in eight groups of four hex digits, e.g., 2001:0db8:85a3::8a2e:0370:7334) providing approximately 3.4x10^38 unique addresses, solving IPv4's 32-bit address exhaustion. IPv6 includes built-in IPsec support, simplified headers, no need for NAT, autoconfiguration (SLAAC), and improved multicast. However, adoption has been slow due to: the cost of upgrading legacy infrastructure, dual-stack complexity, IPv4 NAT/PAT extending IPv4's usable life, training requirements, and potential security concerns from unfamiliar protocol behavior and dual-stack exposure. IPv6 is fully routable on the internet (A), is an open standard with no licensing fees (B), and massively expands — not reduces — the address space compared to IPv4 (D)."
@@ -976,10 +976,10 @@
       "category": "PROTOCOLS",
       "question": "What is the Intermediate System to Intermediate System (IS-IS) protocol?",
       "options": {
-        "A": "A protocol for transferring files securely over SSH.",
-        "B": "A protocol for authenticating users to Active Directory.",
+        "A": "A protocol for transferring files securely over SSH and providing encrypted storage for all users on the network.",
+        "B": "A protocol for authenticating users to Active Directory and providing single sign-on for all users in the domain.",
         "C": "A link-state interior gateway routing protocol used within an autonomous system, common in service provider networks.",
-        "D": "A protocol for resolving hostnames to IP addresses."
+        "D": "A protocol for resolving hostnames to IP addresses and providing name resolution for all users on the network."
       },
       "correct": "C",
       "explanation": "IS-IS (Intermediate System to Intermediate System) is a link-state IGP (Interior Gateway Protocol) that operates within a single autonomous system. Like OSPF, it builds a complete topology database using link-state advertisements (LSPs) and computes shortest paths using the Dijkstra/SPF algorithm. Key differences from OSPF: IS-IS runs directly over Layer 2 (not over IP), uses a two-level hierarchy (Level 1 for intra-area, Level 2 for inter-area/backbone routing), and is generally preferred in large ISP/service provider networks for its stability, scalability, and protocol-independent design (natively supports both IPv4 and IPv6 via TLVs). It is not a file transfer protocol (A), not an authentication protocol (B), and not DNS (D)."
@@ -988,10 +988,10 @@
       "category": "PROTOCOLS",
       "question": "Explain the Network File System (NFS) protocol",
       "options": {
-        "A": "A VPN protocol for encrypting IP packets.",
-        "B": "A routing protocol used to exchange routes.",
+        "A": "A VPN protocol for encrypting IP packets and providing secure remote access to internal network resources over the internet.",
+        "B": "A routing protocol used to exchange routes between routers and providing path selection for all users on the network.",
         "C": "A distributed file system protocol allowing clients to access remote files over a network as if local, common in Unix/Linux environments.",
-        "D": "A protocol for sending emails between mail servers."
+        "D": "A protocol for sending emails between mail servers and providing mail transport for all users on the network."
       },
       "correct": "C",
       "explanation": "NFS (Network File System) is a distributed file system protocol that allows clients to access files over a network transparently, as if they were local. Developed by Sun Microsystems and widely used in Unix/Linux environments, NFS exports directories from a server that clients mount into their local filesystem. Server-side exports are configured in /etc/exports, controlling access by IP/subnet, read/write permissions, and options like root_squash. Security varies significantly by version: NFSv2/v3 rely primarily on IP-based access control and Unix UIDs (weak authentication), while NFSv4 supports Kerberos authentication and improved ACLs. Common attack vectors include misconfigured exports, no_root_squash exploitation, and UID spoofing. NFS is not a VPN protocol (A), not a routing protocol (B), and not an email protocol (D)."
@@ -1000,10 +1000,10 @@
       "category": "PROTOCOLS",
       "question": "Explain the Internet Key Exchange (IKE) Protocol",
       "options": {
-        "A": "A protocol used to scan open ports on a host.",
-        "B": "A protocol used by IPsec to negotiate Security Associations and establish keys (IKEv1/IKEv2) for secure tunnels.",
-        "C": "A protocol used to allocate IP addresses dynamically.",
-        "D": "A protocol used to retrieve email from a mailbox."
+        "A": "A protocol used to scan open ports on a host for vulnerabilities.",
+        "B": "A protocol used by IPsec to negotiate Security Associations and establish keys.",
+        "C": "A protocol used to allocate IP addresses dynamically to hosts on a LAN.",
+        "D": "A protocol used to retrieve email from a mailbox using a web client."
       },
       "correct": "B",
       "explanation": "IKE (Internet Key Exchange) is the protocol used by IPsec to negotiate Security Associations (SAs) — agreements on the cryptographic algorithms, keys, and parameters used for secure communication. IKEv1 uses two phases: Phase 1 establishes a secure channel (IKE SA) using either Main Mode (6 messages, identity protection) or Aggressive Mode (3 messages, faster but exposes identity), and Phase 2 (Quick Mode) negotiates the IPsec SAs for data protection. IKEv2 simplifies this to a single exchange (4 messages for initial setup) with improved reliability, NAT traversal support, and built-in EAP authentication. IKE typically uses UDP port 500 (or port 4500 for NAT traversal). It is not a port scanner (A), not DHCP (C), and not an email retrieval protocol (D)."
@@ -1012,10 +1012,10 @@
       "category": "PROTOCOLS",
       "question": "What protocols are associated with Virtual Private Network (VPN)?",
       "options": {
-        "A": "POP3, IMAP, and NNTP.",
-        "B": "Common VPN-related protocols include IPsec/IKE, SSL/TLS VPNs (e.g., OpenVPN), and WireGuard.",
-        "C": "HTTP, FTP, and SMTP.",
-        "D": "ARP, ICMP, and IGMP."
+        "A": "POP3, IMAP, and NNTP for mail and news services.",
+        "B": "Common VPN-related protocols include IPsec/IKE, SSL/TLS VPNs, and WireGuard.",
+        "C": "HTTP, FTP, and SMTP for web, file, and email transport.",
+        "D": "ARP, ICMP, and IGMP for network diagnostics and group management."
       },
       "correct": "B",
       "explanation": "VPN protocols include: IPsec/IKE (site-to-site and remote access VPNs, operating at Layer 3 with strong encryption), SSL/TLS VPNs like OpenVPN (using TLS over TCP/UDP, flexible and firewall-friendly), and WireGuard (modern, lightweight protocol using state-of-the-art cryptography with minimal code footprint for better auditability). Legacy VPN protocols include PPTP (broken, should not be used) and L2TP (often combined with IPsec for encryption). Each has different trade-offs in performance, compatibility, and security. POP3/IMAP/NNTP are mail/news protocols (A), HTTP/FTP/SMTP are application protocols (C), and ARP/ICMP/IGMP are network-layer protocols, not VPN protocols (D)."
@@ -1024,10 +1024,10 @@
       "category": "PROTOCOLS",
       "question": "What protocols are associated with Voice over Internet Protocol (VOIP)?",
       "options": {
-        "A": "BGP for routing and OSPF for link-state updates.",
-        "B": "NFS for network storage and SNMP for monitoring.",
-        "C": "SMB for file sharing and LDAP for directory queries.",
-        "D": "SIP for signaling, RTP/RTCP for media transport, and often SRTP/TLS for securing media/signaling."
+        "A": "BGP for routing and OSPF for link-state updates in an AS.",
+        "B": "NFS for network storage and SNMP for monitoring device health.",
+        "C": "SMB for file sharing and LDAP for directory queries in AD.",
+        "D": "SIP for signaling, RTP for media transport, and SRTP for security."
       },
       "correct": "D",
       "explanation": "VoIP relies on several protocols working together: SIP (Session Initiation Protocol) handles call signaling — setup, modification, and teardown of voice/video sessions. RTP (Real-time Transport Protocol) carries the actual audio/video media streams over UDP, while RTCP (RTP Control Protocol) provides quality-of-service feedback (jitter, packet loss, latency). For security: SRTP encrypts and authenticates media streams, and SIP can be secured with TLS (SIPS). VoIP security concerns include eavesdropping on unencrypted calls, SIP registration hijacking, toll fraud, and denial of service. BGP/OSPF are routing protocols (A), NFS/SNMP are file sharing/management protocols (B), and SMB/LDAP are Windows networking protocols (C)."
@@ -1036,10 +1036,10 @@
       "category": "PROTOCOLS",
       "question": "Name and explain a Kerberos exploit?",
       "options": {
-        "A": "Kerberoasting: requesting service tickets for SPNs and cracking the ticket offline to recover weak service account passwords.",
-        "B": "SQL injection: altering database queries via input.",
-        "C": "Heartbleed: reading memory from vulnerable TLS servers.",
-        "D": "ARP spoofing: poisoning a LAN to intercept packets."
+        "A": "Kerberoasting: requesting service tickets for SPNs and cracking them offline to recover passwords.",
+        "B": "SQL injection: altering database queries via input to bypass authentication.",
+        "C": "Heartbleed: reading memory from vulnerable TLS servers to steal private keys.",
+        "D": "ARP spoofing: poisoning a LAN to intercept packets between a host and gateway."
       },
       "correct": "A",
       "explanation": "Kerberoasting exploits the fact that any authenticated domain user can request a Kerberos TGS (Ticket Granting Service) ticket for any service registered with a Service Principal Name (SPN) in Active Directory. The service ticket is encrypted with the service account's NTLM password hash. The attacker extracts the ticket and performs offline brute-force/dictionary attacks against it (using tools like hashcat or John the Ripper) to recover the service account password. Service accounts often have weak passwords and high privileges, making this a highly effective attack. Mitigations include using strong, long passwords for service accounts, using Group Managed Service Accounts (gMSA), and monitoring for anomalous TGS requests. SQL injection (B), Heartbleed (C), and ARP spoofing (D) are unrelated exploit types."
@@ -1048,10 +1048,10 @@
       "category": "PROTOCOLS",
       "question": "What is a Pre-Shared Key (PSK) used for and what are the issues with its use?",
       "options": {
-        "A": "A shared secret used for authentication/key derivation (e.g., WPA2-PSK); issues include sharing at scale, weak passphrases, and no per-user accountability.",
-        "B": "A routing key used by BGP; issues include path hijacking.",
-        "C": "A public certificate used to validate server identity; issues include certificate pinning.",
-        "D": "A hardware token used for MFA; issues include battery life."
+        "A": "A shared secret used for authentication; issues include weak passphrases and no per-user accountability.",
+        "B": "A routing key used by BGP; issues include path hijacking and route leaks.",
+        "C": "A public certificate used to validate server identity; issues include certificate pinning and revocation.",
+        "D": "A hardware token used for MFA; issues include battery life and physical loss."
       },
       "correct": "A",
       "explanation": "A Pre-Shared Key is a shared secret established between parties before communication, used for authentication and/or key derivation. Common uses include WPA2-PSK (Wi-Fi passwords), IPsec VPNs, and some TLS configurations. Issues include: the key must be securely distributed to all parties; weak or short PSKs are vulnerable to offline dictionary/brute-force attacks (e.g., capturing WPA2 4-way handshakes and cracking offline with hashcat); all users sharing the same PSK means compromise affects everyone; there is no individual accountability (cannot identify which user connected); and key rotation is difficult at scale as all devices must be updated. Enterprise environments should prefer certificate-based or 802.1X/EAP authentication over PSK. A PSK is not a routing key (B), not a public certificate (C), and not a hardware token (D)."
@@ -1060,10 +1060,10 @@
       "category": "PROTOCOLS",
       "question": "How many versions of the Network File System (NFS) protocol are there and what is the compatibility between the versions?",
       "options": {
-        "A": "There are 10 versions and they are all fully interchangeable.",
-        "B": "Commonly referenced versions are NFSv2, NFSv3, and NFSv4 (with v4.1/v4.2); v4 is not fully backward compatible with v2/v3 semantics and often uses different ports/behavior.",
-        "C": "Only one version exists; all implementations are identical.",
-        "D": "NFS has only v1 and v2, both deprecated and incompatible with TCP."
+        "A": "There are 10 versions and they are all fully interchangeable across OS.",
+        "B": "Common versions are NFSv2, NFSv3, and NFSv4; v4 is not fully backward compatible.",
+        "C": "Only one version exists; all implementations are identical and use TCP port 2049.",
+        "D": "NFS has only v1 and v2, both deprecated and incompatible with modern TCP stacks."
       },
       "correct": "B",
       "explanation": "NFS has three commonly referenced major versions: NFSv2 (oldest, UDP-only, limited file size support), NFSv3 (added TCP support, large file handling, asynchronous writes, and better error reporting), and NFSv4 (major redesign — stateful protocol, single TCP port 2049, built-in Kerberos authentication support, ACLs, compound operations, and pseudo-filesystem for exports). NFSv4.1 added session trunking and pNFS (parallel NFS) for distributed storage, and NFSv4.2 added server-side copy and sparse file support. NFSv4 is not fully backward compatible with v2/v3 — it uses different port behavior (no portmapper/rpcbind needed), different security models, and different mounting semantics. There are not 10 fully interchangeable versions (A), more than one version exists (C), and there are three major versions, not just two (D)."
@@ -1072,10 +1072,10 @@
       "category": "MITIGATION",
       "question": "How do you mitigate Server Message Block (SMB) issues?",
       "options": {
-        "A": "Disable all logging to improve performance.",
-        "B": "Disable SMBv1, enforce SMB signing where appropriate, restrict exposure (firewall/segmentation), apply patches, and use least privilege on shares.",
-        "C": "Enable anonymous SMB access to reduce authentication failures.",
-        "D": "Expose SMB directly to the internet to simplify access."
+        "A": "Disable all logging to improve performance and reduce disk I/O.",
+        "B": "Disable SMBv1, enforce SMB signing, restrict exposure, and apply security patches.",
+        "C": "Enable anonymous SMB access to reduce authentication failures for users.",
+        "D": "Expose SMB directly to the internet to simplify remote access for staff."
       },
       "correct": "B",
       "explanation": "SMB mitigation involves multiple layers: disable SMBv1 (vulnerable to EternalBlue and other exploits) via Group Policy or PowerShell; enforce SMB signing to prevent relay and MITM attacks (especially on domain controllers); enable SMBv3 encryption where supported for data confidentiality; restrict SMB access with host-based firewalls and network segmentation (block TCP 445 at perimeter firewalls); apply security patches promptly (especially for RCE vulnerabilities); enforce least-privilege share permissions and NTFS ACLs; and disable unnecessary null session access. Disabling logging reduces visibility (A), enabling anonymous access increases risk (C), and exposing SMB to the internet is extremely dangerous (D)."
@@ -1084,10 +1084,10 @@
       "category": "MITIGATION",
       "question": "How do you mitigate an external facing Remote Desktop Protocol (RDP) server with an expired Transport Layer Security (TLS) certificate?",
       "options": {
-        "A": "Disable encryption so certificate validation is bypassed.",
-        "B": "Replace/renew the certificate, enforce modern TLS settings, restrict internet exposure (VPN/zero trust), and enable MFA/conditional access.",
-        "C": "Move RDP to port 80 to blend with web traffic.",
-        "D": "Ignore the certificate; RDP does not use TLS."
+        "A": "Disable encryption so certificate validation is bypassed by the RDP client.",
+        "B": "Renew the certificate, enforce modern TLS, and restrict internet exposure via VPN.",
+        "C": "Move RDP to port 80 to blend with standard web traffic and bypass firewalls.",
+        "D": "Ignore the certificate; RDP does not use TLS for securing the connection."
       },
       "correct": "B",
       "explanation": "Mitigating an externally facing RDP server with an expired TLS certificate requires multiple steps: immediately replace/renew the TLS certificate to restore encrypted, authenticated connections (expired certs may cause clients to skip validation or enable MITM); enforce TLS 1.2+ and NLA (Network Level Authentication) to require authentication before session establishment; restrict internet exposure by placing RDP behind a VPN, jump host, or zero-trust network access solution rather than exposing directly; enable MFA/conditional access (e.g., via Azure AD or Duo); implement account lockout policies and monitoring for brute-force attempts; and keep the RDP server fully patched (e.g., BlueKeep CVE-2019-0708). Disabling encryption (A), moving to port 80 (C), and ignoring certificates (D) all increase risk."
@@ -1096,10 +1096,10 @@
       "category": "MITIGATION",
       "question": "How do you mitigate machine in the middle (MITM) attacks?",
       "options": {
-        "A": "Disable TLS to reduce complexity.",
-        "B": "Use shared accounts to simplify access control.",
-        "C": "Use strong encryption with certificate validation (TLS), secure Wi‑Fi, implement network protections (DAI, DHCP snooping), and avoid trusting unvalidated networks.",
-        "D": "Allow ARP replies from any host without monitoring."
+        "A": "Disable TLS to reduce complexity and improve network performance.",
+        "B": "Use shared accounts to simplify access control for administrators.",
+        "C": "Use strong encryption with certificate validation (TLS) and network protections.",
+        "D": "Allow ARP replies from any host without monitoring for spoofing."
       },
       "correct": "C",
       "explanation": "MITM mitigation employs layered defenses: use strong encryption with proper certificate validation (TLS with HSTS, certificate pinning where appropriate) to prevent traffic interception; use secure Wi-Fi (WPA3-Enterprise with 802.1X) to prevent wireless eavesdropping; implement network-layer protections like DAI (Dynamic ARP Inspection) to prevent ARP poisoning, DHCP snooping to prevent rogue DHCP servers, and 802.1X port-based authentication; use VPNs on untrusted networks; validate SSH host keys; deploy DNSSEC to prevent DNS spoofing; and educate users about certificate warnings. Disabling TLS (A), using shared accounts (B), and allowing unrestricted ARP (D) all increase susceptibility to MITM attacks."
@@ -1108,10 +1108,10 @@
       "category": "MITIGATION",
       "question": "How do you mitigate Structured Query Language injection (SQLi)?",
       "options": {
-        "A": "Use parameterized queries/prepared statements, input validation, least-privileged DB accounts, and secure error handling; consider WAF as defense-in-depth.",
-        "B": "Concatenate user input after escaping single quotes only.",
-        "C": "Run the database as administrator to avoid permission errors.",
-        "D": "Disable authentication so attackers cannot log in."
+        "A": "Use parameterized queries, input validation, and least-privileged accounts.",
+        "B": "Concatenate user input after escaping single quotes only in the code.",
+        "C": "Run the database as administrator to avoid permission errors during execution.",
+        "D": "Disable authentication so attackers cannot log in to the database server."
       },
       "correct": "A",
       "explanation": "SQLi mitigation uses defense in depth: parameterized queries/prepared statements are the primary defense, separating SQL code from user data so input cannot alter query logic; input validation (allowlisting expected formats, rejecting unexpected characters) provides an additional layer; least-privileged database accounts limit what an attacker can access if injection occurs; secure error handling prevents leaking database structure in error messages; stored procedures (when parameterized) can further restrict database operations; and WAFs provide defense-in-depth detection of common SQLi patterns. Simply escaping quotes (B) is unreliable and bypassable. Running as administrator (C) increases impact. Disabling authentication (D) makes systems more vulnerable, not less."
@@ -1120,10 +1120,10 @@
       "category": "MITIGATION",
       "question": "How do you mitigate socially engineered staff?",
       "options": {
-        "A": "Share passwords across teams to improve resilience.",
-        "B": "Implement security awareness training, strong verification procedures, least privilege, MFA, and reporting/response processes for suspicious requests.",
-        "C": "Allow unmanaged personal devices to access sensitive systems.",
-        "D": "Disable logging so staff are not monitored."
+        "A": "Share passwords across teams to improve resilience and speed up tasks.",
+        "B": "Implement security awareness training, strong verification, and MFA.",
+        "C": "Allow unmanaged personal devices to access sensitive systems for staff.",
+        "D": "Disable logging so staff are not monitored while performing their duties."
       },
       "correct": "B",
       "explanation": "Mitigating social engineering requires both human and technical controls: regular security awareness training with simulated phishing exercises to build recognition skills; strong verification procedures (e.g., callback verification for financial requests, out-of-band confirmation for password resets); least privilege access so compromised accounts have limited impact; MFA to prevent credential-only compromise; clear reporting and incident response processes so staff can quickly flag suspicious contacts; email security controls (DMARC/SPF/DKIM, email gateways); and a culture that encourages reporting without blame. Sharing passwords (A), allowing unmanaged devices (C), and disabling logging (D) all increase vulnerability to social engineering attacks."
@@ -1132,10 +1132,10 @@
       "category": "MITIGATION",
       "question": "How do you mitigate a Cross-Site Scripting (XSS) vulnerability?",
       "options": {
-        "A": "Store user input in base64 so it cannot execute.",
-        "B": "Output encode/escape untrusted data, validate inputs, use Content Security Policy (CSP), and avoid unsafe DOM sinks; set HttpOnly/Secure cookies.",
-        "C": "Use FTP instead of HTTP.",
-        "D": "Disable JavaScript in the browser for all users."
+        "A": "Store user input in base64 so it cannot execute in the browser.",
+        "B": "Output encode data, validate inputs, and use Content Security Policy (CSP).",
+        "C": "Use FTP instead of HTTP for all web application traffic and storage.",
+        "D": "Disable JavaScript in the browser for all users to prevent script execution."
       },
       "correct": "B",
       "explanation": "XSS mitigation requires multiple layers: output encoding/escaping (HTML entity encoding, JavaScript encoding, URL encoding) appropriate to the output context prevents injected scripts from executing; input validation using allowlists restricts what data is accepted; Content Security Policy (CSP) headers restrict which scripts can execute, blocking inline scripts and unauthorized sources; avoiding unsafe DOM manipulation methods (innerHTML, document.write, eval) prevents DOM-based XSS; HttpOnly cookie flags prevent JavaScript from accessing session cookies (reducing session hijacking impact); Secure flag ensures cookies are only sent over HTTPS; and SameSite cookie attributes limit cross-site cookie sending. Base64 encoding does not prevent execution (A), using FTP does not address XSS (C), and disabling JavaScript entirely breaks modern web applications (D)."
@@ -1144,10 +1144,10 @@
       "category": "MITIGATION",
       "question": "What is the mitigation for a ransomware attack where files have been locked?",
       "options": {
-        "A": "Turn off antivirus permanently to stop alerts.",
-        "B": "Publish the encryption keys to the internet.",
-        "C": "Isolate affected systems, restore from verified offline backups, investigate and eradicate the intrusion, and follow incident response/legal guidance; avoid paying where possible.",
-        "D": "Immediately delete all backups to prevent reinfection."
+        "A": "Turn off antivirus permanently to stop alerts during a ransomware attack.",
+        "B": "Publish the encryption keys to the internet to help others recover data.",
+        "C": "Isolate systems, restore from offline backups, and investigate the intrusion.",
+        "D": "Immediately delete all backups to prevent reinfection of the network."
       },
       "correct": "C",
       "explanation": "Ransomware response follows incident response principles: immediately isolate affected systems from the network to prevent lateral spread; restore data from verified offline/immutable backups (not connected backups that may also be encrypted); investigate the intrusion vector, scope of compromise, and persistence mechanisms; eradicate the threat before restoring systems; follow legal/regulatory notification requirements (e.g., GDPR breach notification, law enforcement reporting); engage incident response specialists if needed; and avoid paying the ransom where possible — payment does not guarantee decryption, may fund further criminal activity, and may violate sanctions laws. Preventive controls include offline backups, network segmentation, EDR, email filtering, patch management, and least privilege. Disabling antivirus (A), publishing keys (B), and deleting backups (D) are all counterproductive."
@@ -1156,10 +1156,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What should be in a scope document for a security test?",
       "options": {
-        "A": "Only a list of usernames to use.",
-        "B": "Only the final report template with no constraints.",
-        "C": "Objectives, in/out-of-scope assets, permitted techniques, time windows, points of contact, rules of engagement, data handling, reporting expectations, and approval/sign-off.",
-        "D": "Only the tester’s preferred tools list."
+        "A": "Only a list of usernames to use for the duration of the test.",
+        "B": "Only the final report template with no constraints on the tester.",
+        "C": "Objectives, in-scope assets, permitted techniques, and rules of engagement.",
+        "D": "Only the tester’s preferred tools list for performing the assessment."
       },
       "correct": "C",
       "explanation": "A comprehensive scope document is essential for lawful, controlled testing and should include: clear objectives and goals of the test; in-scope assets (IP ranges, domains, applications, physical locations); out-of-scope assets and activities; permitted techniques and attack types (e.g., social engineering allowed?); testing time windows and blackout periods; emergency contacts and escalation procedures; rules of engagement (e.g., data handling, evidence destruction, notification thresholds); data handling and confidentiality requirements; reporting format and expectations; and formal authorization/sign-off from asset owners with legal authority. This protects both the tester and the organization. A username list alone (A), a report template (B), or a tools list (D) are each individually insufficient without the broader context."
@@ -1168,10 +1168,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What laws affect security testing?",
       "options": {
-        "A": "Commonly relevant are computer misuse/cybercrime statutes, data protection/privacy laws, interception/surveillance laws, and contractual obligations depending on jurisdiction.",
-        "B": "No laws apply if the test is for security purposes.",
-        "C": "Only maritime law applies to penetration tests.",
-        "D": "Only copyright law applies to all testing activities."
+        "A": "Commonly relevant are computer misuse, data protection, and privacy laws.",
+        "B": "No laws apply if the test is for security purposes and authorized.",
+        "C": "Only maritime law applies to penetration tests conducted over the web.",
+        "D": "Only copyright law applies to all testing activities and final reports."
       },
       "correct": "A",
       "explanation": "Multiple categories of law affect security testing: computer misuse/cybercrime statutes (e.g., UK Computer Misuse Act 1990, US CFAA) criminalise unauthorized access and require explicit authorization; data protection/privacy laws (e.g., GDPR, DPA 2018) govern handling of personal data encountered during testing; interception/surveillance laws (e.g., RIPA 2000, Wiretap Act) regulate monitoring and intercepting communications; and contractual obligations (NDAs, service agreements, third-party hosting terms) may restrict testing scope or require notification. Testing without proper authorization can result in criminal prosecution regardless of intent. No jurisdiction exempts security testing from all laws (B), maritime law is irrelevant (C), and multiple legal frameworks apply beyond just copyright (D)."
@@ -1181,9 +1181,9 @@
       "question": "What risk mitigation can you put in place before conducting a security test?",
       "options": {
         "A": "Test production systems without notifying anyone to simulate realism.",
-        "B": "Disable backups to reduce storage usage.",
-        "C": "Use default credentials to reduce setup time.",
-        "D": "Obtain written authorization, define ROE, schedule safe windows, set monitoring/rollback plans, back up critical systems, and establish comms/escalation paths."
+        "B": "Disable backups to reduce storage usage during the testing window.",
+        "C": "Use default credentials to reduce setup time for the testing team.",
+        "D": "Obtain written authorization, define ROE, and schedule safe windows."
       },
       "correct": "D",
       "explanation": "Risk mitigation before a security test includes: obtaining written authorization (a 'get out of jail free' letter or formal contract) from the asset owner with legal authority; defining clear Rules of Engagement (ROE) specifying permitted activities and boundaries; scheduling testing during agreed safe windows to minimize operational impact; establishing monitoring and rollback plans in case testing causes issues; backing up critical systems before testing begins; setting up communication and escalation paths so testers can quickly report issues or request guidance; and ensuring testers have emergency contact details for the client's technical and management teams. Testing production without notification (A), disabling backups (B), and using default credentials without authorization (C) all increase risk rather than mitigate it."
@@ -1192,10 +1192,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What is the Common Vulnerability Scoring System (CVSS) and Common vulnerabilities and Exposures (CVE)?",
       "options": {
-        "A": "CVSS identifies people; CVE identifies network devices.",
+        "A": "CVSS identifies people and their roles; CVE identifies network devices and their physical locations on the network.",
         "B": "CVSS is a scoring framework for vulnerability severity; CVE is a catalogue of publicly known vulnerabilities with unique identifiers.",
-        "C": "CVSS is a patching tool; CVE is an encryption algorithm.",
-        "D": "CVSS is a legal standard; CVE is a penetration testing methodology."
+        "C": "CVSS is a patching tool for security updates; CVE is an encryption algorithm for protecting sensitive data from being accessed.",
+        "D": "CVSS is a legal standard for security audits; CVE is a penetration testing methodology for identifying common security flaws."
       },
       "correct": "B",
       "explanation": "CVSS (Common Vulnerability Scoring System) is a framework maintained by FIRST that provides a standardized method for rating the severity of security vulnerabilities on a 0-10 scale. It uses three metric groups: Base (attack vector, complexity, privileges required, user interaction, scope, impact), Temporal (exploit maturity, remediation level, report confidence), and Environmental (customized to an organization's context). CVE (Common Vulnerabilities and Exposures) is a catalogue maintained by MITRE that assigns unique identifiers (e.g., CVE-2021-44228 for Log4Shell) to publicly known vulnerabilities, providing a common reference point. Together they enable consistent identification and prioritization of security issues. CVSS does not identify people (A), is not a patching tool (C), and is not a legal standard (D)."
@@ -1204,10 +1204,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What are the testing regulations regarding CHECK level testing?",
       "options": {
-        "A": "CHECK is a US federal encryption standard for VPNs.",
-        "B": "CHECK is a UK government scheme requiring approved providers/testers and adherence to defined methodologies and reporting for certain public sector testing contexts.",
-        "C": "CHECK is an EU law that bans penetration testing.",
-        "D": "CHECK is a DNS security extension for government domains."
+        "A": "CHECK is a US federal encryption standard for government VPNs.",
+        "B": "CHECK is a UK government scheme requiring approved providers and testers.",
+        "C": "CHECK is an EU law that bans penetration testing on public sites.",
+        "D": "CHECK is a DNS security extension for government domains and zones."
       },
       "correct": "B",
       "explanation": "CHECK is a UK government-backed scheme (administered by NCSC, the National Cyber Security Centre) that accredits companies and individual testers to conduct penetration testing on government and public sector systems. CHECK requires: companies to be assessed and approved by NCSC; individual testers to hold recognized qualifications (e.g., CSTM/CSTL from CyberScheme, or equivalent); adherence to defined testing methodologies and standards; and reporting in specified formats. CHECK testing is often mandated for UK government IT systems and Critical National Infrastructure. It ensures a consistent, high-quality standard of security testing for sensitive environments. CHECK is not a US encryption standard (A), not an EU law banning pen testing (C), and not a DNS extension (D)."
@@ -1217,8 +1217,8 @@
       "question": "What part of the Human Rights Act 1998 affects pen testers?",
       "options": {
         "A": "Article 12 mandates testers disclose all vulnerabilities publicly.",
-        "B": "No part applies because it only covers physical security.",
-        "C": "Rights related to privacy and family life (notably Article 8, via the ECHR) can be relevant when handling personal data and surveillance-like activity.",
+        "B": "No part applies because it only covers physical security of people.",
+        "C": "Rights related to privacy (Article 8) are relevant when handling data.",
         "D": "Article 1 on property requires all pen tests to be free of charge."
       },
       "correct": "C",
@@ -1228,10 +1228,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What is the Regulation of Investigatory Powers Act 2000 (RIPA) and does it affect security testing?",
       "options": {
-        "A": "A UK law governing interception and surveillance powers; it can affect testing where communications interception/monitoring is involved and requires proper authority.",
-        "B": "A regulation that defines CVSS scoring.",
-        "C": "A law that mandates MFA for all UK citizens.",
-        "D": "A law that only applies to hardware imports."
+        "A": "A UK law governing interception and surveillance; it can affect testing.",
+        "B": "A regulation that defines CVSS scoring for all public vulnerabilities.",
+        "C": "A law that mandates MFA for all UK citizens for web services.",
+        "D": "A law that only applies to hardware imports from outside the UK."
       },
       "correct": "A",
       "explanation": "RIPA (Regulation of Investigatory Powers Act 2000) is UK legislation that governs the powers of public bodies to conduct surveillance and intercept communications. It affects security testing because: if a penetration test involves intercepting network traffic, capturing credentials, or monitoring communications (e.g., MITM attacks, packet capture, email interception), this could constitute 'interception' under RIPA. For lawful testing, testers need explicit consent from the system owner and, where applicable, from parties whose communications may be intercepted. RIPA defines lawful interception requirements and penalties for unauthorized interception. The Investigatory Powers Act 2016 (IPA) has updated and expanded some of RIPA's provisions. RIPA does not define CVSS scoring (B), does not mandate MFA (C), and applies to communications interception, not hardware imports (D)."
@@ -1240,10 +1240,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What is the General Data Protection Regulation (GDPR) and how does it affect security testing?",
       "options": {
-        "A": "A vulnerability database used by scanners.",
-        "B": "A routing standard for IPv6 adoption.",
-        "C": "An EU/UK data protection framework requiring lawful processing, data minimization, security, and rights protections; pen tests must handle personal data appropriately with agreements and controls.",
-        "D": "A Wi‑Fi encryption protocol."
+        "A": "A vulnerability database used by scanners to identify open ports.",
+        "B": "A routing standard for IPv6 adoption across the European Union.",
+        "C": "A data protection framework requiring lawful processing and security.",
+        "D": "A Wi‑Fi encryption protocol that replaces WPA2 for home networks."
       },
       "correct": "C",
       "explanation": "GDPR (General Data Protection Regulation) is an EU/UK data protection framework that governs the processing of personal data. It requires: a lawful basis for processing personal data (e.g., legitimate interest, consent, contractual necessity); data minimization (only process data necessary for the purpose); appropriate security measures to protect personal data; data processing agreements between controllers and processors; breach notification within 72 hours to supervisory authorities; and respect for data subject rights (access, erasure, portability). For security testing, GDPR means: testers who access systems containing personal data must have appropriate agreements in place; test data should be minimized and securely handled; any personal data captured during testing must be protected and deleted after the engagement; and data breaches discovered during testing must follow notification procedures. GDPR is not a vulnerability database (A), not a routing standard (B), and not an encryption protocol (D)."
@@ -1252,10 +1252,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "Name and explain three security standards",
       "options": {
-        "A": "Examples: HTTP, FTP, and SMTP.",
-        "B": "Examples: WEP, WPA, and WPA3.",
-        "C": "Examples: FAT32, NTFS, and ext4.",
-        "D": "Examples: ISO/IEC 27001 (ISMS), PCI DSS (payment card security), and NIST SP 800-53 (security controls catalogue)."
+        "A": "Examples: HTTP, FTP, and SMTP protocols for network transport.",
+        "B": "Examples: WEP, WPA, and WPA3 protocols for wireless security.",
+        "C": "Examples: FAT32, NTFS, and ext4 formats for disk filesystems.",
+        "D": "Examples: ISO/IEC 27001, PCI DSS, and NIST SP 800-53 controls."
       },
       "correct": "D",
       "explanation": "Three key security standards: ISO/IEC 27001 is an international standard for establishing, implementing, and maintaining an Information Security Management System (ISMS), requiring risk assessment, security controls, and continual improvement — organizations can be certified against it. PCI DSS (Payment Card Industry Data Security Standard) defines 12 requirements for organizations that handle payment card data, covering network security, access control, encryption, monitoring, and regular testing. NIST SP 800-53 is a comprehensive catalogue of security and privacy controls published by the US National Institute of Standards and Technology, widely used as a control framework for federal systems and adopted by many private organizations. HTTP/FTP/SMTP are network protocols (A), WEP/WPA are wireless security protocols (B), and FAT32/NTFS/ext4 are filesystem formats (C) — none are security standards."
@@ -1264,10 +1264,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What are the risks of enumerating and vulnerability assessing a multifunction printing device?",
       "options": {
-        "A": "No risks; printers cannot store data.",
-        "B": "It automatically patches the device and improves security.",
-        "C": "Potential service disruption, exposure of stored documents/credentials, lateral movement via embedded OS, and privacy impacts from captured scans/prints.",
-        "D": "It only risks increasing toner usage."
+        "A": "No risks; printers cannot store data or execute remote code.",
+        "B": "It automatically patches the device and improves security posture.",
+        "C": "Potential service disruption and exposure of stored documents.",
+        "D": "It only risks increasing toner usage during the testing window."
       },
       "correct": "C",
       "explanation": "Multifunction printers (MFPs) pose significant risks during security assessments: they often store copies of scanned/printed/faxed documents in internal memory or hard drives, potentially containing sensitive personal or business data; they may have default or weak admin credentials; they run embedded operating systems with network services (HTTP, SNMP, FTP, SMB, LDAP) that can be vulnerable; they may be configured with domain credentials for scan-to-email or scan-to-share functionality, which could be extracted; aggressive scanning can crash the device, disrupting business operations (printers are notoriously fragile under scan pressure); and accessing stored documents raises privacy and legal concerns under data protection laws. Additionally, compromised MFPs can serve as pivot points for lateral movement within a network. Printers absolutely can store data (A), scanning does not patch devices (B), and risks extend far beyond toner usage (D)."
@@ -1276,10 +1276,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What are the risks of enumerating and vulnerability assessing an ICS device?",
       "options": {
-        "A": "The only risk is increased electricity cost.",
+        "A": "The only risk is increased electricity cost for the facility.",
         "B": "ICS devices are identical to laptops so the risk is the same.",
-        "C": "No risks because ICS protocols are encrypted by default.",
-        "D": "Operational disruption/safety impact, fragile protocols, potential downtime, and legal/contractual consequences due to criticality of OT environments."
+        "C": "No risks because ICS protocols are encrypted by default in OT.",
+        "D": "Operational disruption, safety impact, and potential downtime."
       },
       "correct": "D",
       "explanation": "ICS/OT device testing carries unique and serious risks: operational disruption can cause physical process failures (e.g., stopping a production line, disrupting power generation, affecting water treatment); safety impacts could endanger human lives if safety-instrumented systems are disrupted; ICS protocols (Modbus, DNP3) and legacy PLCs are often fragile and may crash or enter fault states from unexpected network traffic or port scans; downtime in OT environments can be extremely costly and may have cascading effects; and testing without proper coordination may violate regulatory requirements or contractual obligations for critical infrastructure. Testing must be carefully coordinated with operations teams, performed during maintenance windows where possible, and often limited to passive/non-intrusive techniques (e.g., traffic analysis rather than active scanning). The risk is not just increased electricity cost (A), ICS devices are fundamentally different from laptops (B), and ICS protocols are largely unencrypted by design (C)."
@@ -1288,10 +1288,10 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "What is the Police and Justice Act 2006 (PJA) and how does it affect security testing?",
       "options": {
-        "A": "A UK act that amended aspects of computer misuse and related offences; it reinforces the need for explicit authorization and lawful conduct during testing.",
-        "B": "A law that defines wireless encryption requirements for Wi‑Fi.",
-        "C": "A law that only applies to physical penetration testing.",
-        "D": "A regulation that requires all scans be run from London."
+        "A": "A UK act that amended aspects of computer misuse and related offences.",
+        "B": "A law that defines wireless encryption requirements for home Wi‑Fi.",
+        "C": "A law that only applies to physical penetration testing of sites.",
+        "D": "A regulation that requires all scans be run from London servers."
       },
       "correct": "A",
       "explanation": "The Police and Justice Act 2006 amended the UK Computer Misuse Act 1990, strengthening provisions relating to computer crime. Key changes include: making denial-of-service attacks explicitly criminal (Section 3 — unauthorized acts with intent to impair operation of a computer); criminalising the making, supplying, or obtaining of articles (tools) for use in computer misuse offences (Section 3A — the 'hacker tools' provision); and increasing maximum penalties for offences. For penetration testers, this means: all testing activities must be explicitly authorized in writing; the possession and use of security testing tools must be for lawful, authorized purposes; any testing that exceeds the agreed scope could constitute a criminal offence; and proper documentation of authorization is essential. The PJA does not define wireless encryption (B), applies to all types of testing, not just physical (C), and has no geographic restrictions on where scans are run (D)."
@@ -1300,9 +1300,9 @@
       "category": "SCOPE/LAWS/RISK",
       "question": "Explain how to keep to scope during a security test.",
       "options": {
-        "A": "Scan any system you can reach to maximize coverage.",
-        "B": "Avoid documenting actions to reduce evidence.",
-        "C": "Follow the agreed ROE, target only authorized assets, use allowlists, document actions, stop/escalate on unexpected access, and maintain continuous communication with stakeholders.",
+        "A": "Scan any system you can reach to maximize coverage of the test.",
+        "B": "Avoid documenting actions to reduce evidence of the assessment.",
+        "C": "Follow the agreed ROE, target authorized assets, and document actions.",
         "D": "Exploit high-risk findings on unrelated systems to prove impact."
       },
       "correct": "C",
