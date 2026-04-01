@@ -402,10 +402,11 @@ def start():
     pool_size = len(all_questions)
 
     # Number of questions — use form override if valid, else exam default
+    default_num_questions = min(exam.get("num_questions", pool_size), pool_size)
     try:
         num_questions = max(1, min(int(request.form.get("num_questions", "")), pool_size))
     except (ValueError, TypeError):
-        num_questions = min(exam.get("num_questions", pool_size), pool_size)
+        num_questions = default_num_questions
 
     question_indices = select_question_indices(all_questions, num_questions)
 
@@ -417,10 +418,12 @@ def start():
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
     session["start_time"] = int(time.time())
+    session["default_settings"] = (num_questions == default_num_questions)
 
     # Time limit — use form override if valid, else leave unset (exam default used in /exam)
     try:
         session["time_limit_override"] = max(0, min(int(request.form.get("time_limit_override", "")), 9999))
+        session["default_settings"] = False
     except (ValueError, TypeError):
         pass  # no override — /exam will use exam.time_limit directly
 
@@ -526,7 +529,7 @@ def submit():
         "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
     }, answers=results, time_taken=time_taken)
 
-    if passed and exam.get("reward"):
+    if passed and exam.get("reward") and session.get("default_settings"):
         flash(exam["reward"], "reward")
 
     logger.info(
