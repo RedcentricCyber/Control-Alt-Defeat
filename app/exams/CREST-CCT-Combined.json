@@ -23062,6 +23062,2414 @@
       },
       "correct": "B",
       "explanation": "Apple Remote Desktop uses VNC on port 5900. Historical vulnerabilities (such as CVE-2017-13872 which allowed root authentication bypass) have enabled unauthenticated remote access. When ARD is exposed to the network without proper configuration, attackers can exploit authentication weaknesses or brute-force VNC passwords for remote access."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which Bluetooth attack specifically involves the unauthorized access and theft of information from a wireless device?",
+      "options": {
+        "A": "Bluejacking",
+        "B": "Bluesnarfing",
+        "C": "BlueSmacking",
+        "D": "Bluebugging",
+        "E": "BlueBorne"
+      },
+      "correct": "B",
+      "explanation": "Bluesnarfing is the theft of information from a wireless device through a Bluetooth connection. This can include contacts, calendar entries, images, and messages. Bluejacking is merely sending unsolicited messages (annoyance), while Bluebugging involves taking full control of the device."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary difference between a Bluejacking attack and a Bluebugging attack?",
+      "options": {
+        "A": "Bluejacking steals data while Bluebugging only sends messages",
+        "B": "Bluejacking is a DoS attack while Bluebugging is for eavesdropping",
+        "C": "Bluejacking involves sending unsolicited messages while Bluebugging allows for full device control",
+        "D": "Bluejacking requires physical access while Bluebugging is remote",
+        "E": "There is no difference between the two attacks"
+      },
+      "correct": "C",
+      "explanation": "Bluejacking is a relatively harmless attack where unsolicited messages are sent to Bluetooth-enabled devices. In contrast, Bluebugging is far more severe, as it allows an attacker to gain full control over the target device, enabling them to make calls, send messages, and access all stored data."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which vulnerability allows an attacker to take complete control of a targeted device (computer, mobile, TV) via Bluetooth without requiring the device to be in discoverable mode or paired?",
+      "options": {
+        "A": "Bluejacking",
+        "B": "Bluesnarfing",
+        "C": "BlueBorne",
+        "D": "KNB",
+        "E": "BIAS"
+      },
+      "correct": "C",
+      "explanation": "BlueBorne is a set of critical vulnerabilities that allow attackers to take control of devices, spread malware, or perform man-in-the-middle attacks via Bluetooth. Crucially, it does not require the target device to be paired or in discoverable mode, making it a highly dangerous \"airborne\" threat."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "The KNB (Key Negotiation Bluetooth) attack primarily targets which aspect of the Bluetooth connection process?",
+      "options": {
+        "A": "Device discovery and piconet formation",
+        "B": "The physical layer frequency hopping",
+        "C": "The encryption key negotiation during pairing",
+        "D": "The application-level data transfer",
+        "E": "The battery management system of the mobile device"
+      },
+      "correct": "C",
+      "explanation": "The KNB (or KNOB) attack exploits a flaw in the Bluetooth standard that allows an attacker to interfere with the encryption key negotiation process. By forcing the devices to use an encryption key as short as one byte, the attacker can easily brute-force the key and decrypt the communication."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In the context of cryptanalysis, what is the primary goal of a \"Timing Attack\"?",
+      "options": {
+        "A": "To crash the system by sending too many requests at once",
+        "B": "To extract secret keys by measuring the time taken to perform cryptographic operations",
+        "C": "To synchronize the attacker's clock with the target server",
+        "D": "To bypass authentication by replaying old packets",
+        "E": "To identify the physical location of the server based on latency"
+      },
+      "correct": "B",
+      "explanation": "A timing attack is a side-channel attack where the attacker gains information about a secret key by measuring how long a system takes to process different inputs. Variations in computation time can reveal internal states of the cryptographic algorithm, allowing the attacker to make informed guesses about the key."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which type of side-channel attack involves analyzing the variations in a device's power consumption during cryptographic operations?",
+      "options": {
+        "A": "Acoustic Cryptanalysis",
+        "B": "Timing Attack",
+        "C": "Power Monitoring Attack (SPA/DPA)",
+        "D": "Frequency Analysis",
+        "E": "Differential Fault Analysis"
+      },
+      "correct": "C",
+      "explanation": "Power monitoring attacks, such as Simple Power Analysis (SPA) and Differential Power Analysis (DPA), involve observing the power consumption of a device while it executes cryptographic algorithms. These variations can reveal the operations being performed and the bits of the secret key being used."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the fundamental difference between the Spectre and Meltdown vulnerabilities?",
+      "options": {
+        "A": "Spectre targets software while Meltdown targets hardware",
+        "B": "Spectre breaks isolation between applications while Meltdown dissolves isolation between user apps and the OS",
+        "C": "Spectre is only for Intel CPUs while Meltdown affects all ARM processors",
+        "D": "Spectre requires physical access while Meltdown is a remote exploit",
+        "E": "There is no functional difference between the two vulnerabilities"
+      },
+      "correct": "B",
+      "explanation": "Both are microprocessor vulnerabilities exploiting speculative execution. Spectre breaks the isolation between different applications, allowing one app to trick another into leaking secrets. Meltdown specifically targets the isolation between user applications and the operating system's kernel memory, allowing a malicious program to access sensitive OS data."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "When assessing an API, you find that a user can access their own profile at `/api/v1/user/123` but can also access another user's profile by changing the ID to `/api/v1/user/456`. Which vulnerability does this represent?",
+      "options": {
+        "A": "BFLA (Broken Function Level Authorization)",
+        "B": "BOLA (Broken Object Level Authorization)",
+        "C": "SSRF (Server Side Request Forgery)",
+        "D": "SQL Injection",
+        "E": "Insecure Direct Object Reference (IDOR)"
+      },
+      "correct": "B",
+      "explanation": "This is a classic example of Broken Object Level Authorization (BOLA), also known as IDOR. The user is authorized to use the endpoint (`/api/v1/user/{id}`), but the application fails to verify if the user has permission to access the specific object (user 456) requested."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "A web application allows users to provide a URL for a profile picture, which the server then fetches and processes. If an attacker provides `http://localhost:22` and the server returns a \"Connection Refused\" error, what vulnerability is likely present?",
+      "options": {
+        "A": "Cross-Site Scripting (XSS)",
+        "B": "SQL Injection",
+        "C": "Server-Side Request Forgery (SSRF)",
+        "D": "Broken Access Control",
+        "E": "Remote Code Execution (RCE)"
+      },
+      "correct": "C",
+      "explanation": "Server-Side Request Forgery (SSRF) occurs when a server is tricked into making requests to internal or external resources that it shouldn't access. By providing internal addresses (like `localhost`), an attacker can scan internal ports or access sensitive internal services that are not exposed to the public internet."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In MongoDB, what is the default storage format for documents, and which field is reserved as the primary key?",
+      "options": {
+        "A": "JSON and `id` ",
+        "B": "XML and `_key` ",
+        "C": "BSON and `_id` ",
+        "D": "YAML and `pk` ",
+        "E": "CSV and `index` "
+      },
+      "correct": "C",
+      "explanation": "MongoDB stores data in BSON (Binary JSON) format, which is a binary representation of JSON-like documents. The `_id` field is a reserved field that acts as the unique primary key for every document in a collection."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "An attacker submits the following payload to a login form: `username[$regex]=. &password[$regex]=.`. What is the intended outcome of this NoSQL injection?",
+      "options": {
+        "A": "To delete the entire users collection",
+        "B": "To bypass authentication by matching any username and any password",
+        "C": "To extract the administrator's password character by character",
+        "D": "To cause a Denial of Service by overloading the regex engine",
+        "E": "To identify the version of the MongoDB server"
+      },
+      "correct": "B",
+      "explanation": "This is a simple authentication bypass using NoSQL injection. The `$regex: .` operator matches any single character (and thus any non-empty string). If the backend doesn't sanitize the input and passes it directly to a MongoDB query, it will return the first user in the database, effectively logging the attacker in."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "During a NoSQL injection test, why might an attacker use the tilde character (`~`) in a `$lt` (less than) or `$lte` (less than or equal to) query?",
+      "options": {
+        "A": "It is a wildcard character in MongoDB",
+        "B": "It is the largest printable ASCII character, useful for range-based extraction",
+        "C": "It escapes special characters in the regex engine",
+        "D": "It forces the server to return an error message with the database version",
+        "E": "It is required to terminate a NoSQL query string"
+      },
+      "correct": "B",
+      "explanation": "In NoSQL (and SQL) string comparisons, the tilde (`~`) is one of the highest-value printable ASCII characters. Using it in a \"less than\" query (e.g., `password[$lt]=~`) can help confirm that a field exists or help in binary search style data extraction by providing an upper bound for the search."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which NoSQL injection technique involves injecting JavaScript code into a `$where` operator to execute logic on the database server?",
+      "options": {
+        "A": "Blind NoSQL Injection",
+        "B": "In-Band NoSQL Injection",
+        "C": "SSJI (Server-Side JavaScript Injection)",
+        "D": "Cross-Site Scripting (XSS)",
+        "E": "Command Injection"
+      },
+      "correct": "C",
+      "explanation": "Server-Side JavaScript Injection (SSJI) occurs when an application passes unsanitized user input into a MongoDB `$where` clause, which allows for the execution of arbitrary JavaScript on the server. This can be used for data extraction, authentication bypass, or even remote code execution if the environment is poorly configured."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following characters are most commonly used to test for the presence of an SQL Injection vulnerability during the discovery phase?",
+      "options": {
+        "A": "< > !",
+        "B": "# ; ) '",
+        "C": "[ ] { }",
+        "D": "@ $ %",
+        "E": "& | ^"
+      },
+      "correct": "B",
+      "explanation": "Characters like the single quote (`'`), semicolon (`;`), comment markers (`#` or `--`), and parentheses (`)`) are used to break out of the intended SQL query structure. If the application returns an error or changes its behavior when these characters are injected, it strongly indicates an SQL injection vulnerability."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "You suspect a backend database is MySQL. Which of the following queries would be most effective for fingerprinting and confirming the database type?",
+      "options": {
+        "A": "SELECT version()",
+        "B": "SELECT @@version",
+        "C": "SELECT SLEEP(5)",
+        "D": "SELECT POW(1,1)",
+        "E": "All of the above"
+      },
+      "correct": "E",
+      "explanation": "MySQL supports `SELECT version()` and `SELECT @@version` to retrieve the version string. `SELECT SLEEP(5)` is a time-based test unique to MySQL (and MariaDB) in this syntax. `SELECT POW(1,1)` is another mathematical function that can be used to differentiate between DBMS types based on their supported functions and return values."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary characteristic of a \"Stored XSS\" (Cross-Site Scripting) vulnerability?",
+      "options": {
+        "A": "The payload is executed only in the attacker's browser",
+        "B": "The payload is reflected back to the user in a URL parameter",
+        "C": "The malicious script is permanently stored on the target server (e.g., in a database)",
+        "D": "The attack relies on modifying the Document Object Model (DOM) in the client's browser",
+        "E": "The attack only works if the user is an administrator"
+      },
+      "correct": "C",
+      "explanation": "Stored XSS (also known as Persistent XSS) is the most dangerous type because the malicious script is saved on the server (e.g., in a comment, profile bio, or message). Every user who views the affected page will have the script executed in their browser, potentially leading to session hijacking or data theft."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which type of XSS occurs when a malicious script is processed entirely on the client-side, often by modifying the Document Object Model (DOM), without the payload ever reaching the backend server?",
+      "options": {
+        "A": "Stored XSS",
+        "B": "Reflected XSS",
+        "C": "DOM-Based XSS",
+        "D": "Blind XSS",
+        "E": "Self-XSS"
+      },
+      "correct": "C",
+      "explanation": "DOM-Based XSS is unique because the entire vulnerability exists in the client-side code. The server may never see the malicious payload if it's contained in the URL fragment (after the `#`). The client-side JavaScript then insecurely handles this data and writes it to the DOM, executing the script."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following default port mappings is INCORRECT for the specified database system?",
+      "options": {
+        "A": "MySQL - 3306",
+        "B": "MSSQL - 1433",
+        "C": "PostgreSQL - 5432",
+        "D": "Oracle RDBMS - 1521",
+        "E": "MongoDB - 6379"
+      },
+      "correct": "E",
+      "explanation": "MongoDB typically runs on port 27017. Port 6379 is the default port for Redis, an in-memory data structure store."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How does \"Spear Phishing\" differ from a standard phishing campaign?",
+      "options": {
+        "A": "It uses SMS instead of email",
+        "B": "It targets a wide audience with a generic message",
+        "C": "It involves researching a specific individual or organization to craft a personalized and highly convincing message",
+        "D": "It only targets high-level executives",
+        "E": "It relies on physical mail instead of digital communication"
+      },
+      "correct": "C",
+      "explanation": "While standard phishing is a \"numbers game\" targeting thousands of people with generic lures, Spear Phishing is a targeted attack. The attacker researches the victim (e.g., via LinkedIn or company websites) to make the email appear legitimate and relevant to the recipient's role or interests."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is \"Whaling\" in the context of social engineering?",
+      "options": {
+        "A": "A phishing attack targeting low-level employees to gain a foothold",
+        "B": "A subtype of spear phishing that specifically targets high-profile individuals like CEOs or CFOs",
+        "C": "An attack that involves stealing large amounts of data at once",
+        "D": "A physical security breach involving tailgating",
+        "E": "A method of cracking passwords using large dictionaries"
+      },
+      "correct": "B",
+      "explanation": "Whaling is a form of spear phishing directed at \"big fish\"—high-level executives or other high-profile targets within an organization. These attacks often involve sophisticated lures related to legal subpoenas, customer complaints, or executive briefings to trick the target into revealing sensitive information or authorizing fraudulent transactions."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In Bluetooth networking, what is the term for a network of devices connected via Bluetooth, and what is it called when multiple such networks interact?",
+      "options": {
+        "A": "Subnet and Supernet",
+        "B": "Piconet and Scatternet",
+        "C": "Mesh and Grid",
+        "D": "Node and Cluster",
+        "E": "Cell and Zone"
+      },
+      "correct": "B",
+      "explanation": "A Piconet is a basic Bluetooth network consisting of one master and up to seven active slave devices. A Scatternet is formed when two or more piconets are connected, with at least one device participating in multiple piconets."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which cryptanalysis technique relies on the statistical study of the occurrence of letters or symbols in a ciphertext to identify the underlying plaintext?",
+      "options": {
+        "A": "Brute Force Attack",
+        "B": "Dictionary Attack",
+        "C": "Frequency Analysis",
+        "D": "Known Plaintext Attack",
+        "E": "Chosen Ciphertext Attack"
+      },
+      "correct": "C",
+      "explanation": "Frequency analysis is based on the fact that in any given language, certain letters and combinations of letters occur with varying frequencies. By comparing the frequency of symbols in a ciphertext with the known frequency of letters in the language, an attacker can often break simple substitution ciphers."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "An attacker is testing for SSRF (Server-Side Request Forgery) and attempts to make the server connect to their own listener using a tool like Netcat. If the server is vulnerable, what would the attacker expect to see on their listener?",
+      "options": {
+        "A": "The server's entire database contents",
+        "B": "An incoming connection request from the target server's IP address",
+        "C": "The administrator's session cookie",
+        "D": "A \"403 Forbidden\" error message",
+        "C": "The source code of the application's index page"
+      },
+      "correct": "B",
+      "explanation": "To confirm SSRF, an attacker often tries to make the vulnerable server connect back to a machine they control. If they see an incoming connection on their listener (e.g., `nc -lvp 80`), it proves the server is making outbound requests based on user input, confirming the vulnerability."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary goal of \"Encryption-in-Transit\"?",
+      "options": {
+        "A": "To protect data while it is stored on a hard drive",
+        "B": "To ensure data is encrypted before it is sent over a network and decrypted only after it is received",
+        "C": "To prevent users from deleting their own files",
+        "D": "To compress data to save bandwidth during transmission",
+        "E": "To verify the physical identity of the person sending the data"
+      },
+      "correct": "B",
+      "explanation": "Encryption-in-transit (or encryption-in-motion) protects data as it moves between components, such as between a browser and a web server (using TLS/HTTPS). This prevents attackers from eavesdropping on the communication or performing man-in-the-middle attacks to steal sensitive information like passwords or credit card numbers."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In a NoSQL injection attack, what is the difference between an \"In-Band\" injection and a \"Blind\" injection?",
+      "options": {
+        "A": "In-Band uses a different channel for results while Blind uses the same",
+        "B": "In-Band results are visible in the application's response while Blind results must be inferred from server behavior",
+        "C": "In-Band only works on MongoDB while Blind works on all NoSQL databases",
+        "D": "In-Band requires administrative access while Blind can be done by any user",
+        "E": "There is no functional difference between the two"
+      },
+      "correct": "B",
+      "explanation": "In-Band NoSQL injection is when the attacker can see the results of the injected query directly in the application's response (e.g., a list of users). Blind NoSQL injection is when the application doesn't return data directly, but the attacker can infer information by observing differences in the server's response (Boolean-based) or the time it takes to respond (Time-based)."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "The BIAS (Bluetooth Impersonation AttackS) vulnerability primarily exploits which phase of the Bluetooth connection process?",
+      "options": {
+        "A": "The initial device discovery and inquiry phase",
+        "B": "The secure pairing and key exchange process",
+        "C": "The post-pairing authentication and connection establishment",
+        "D": "The data transmission phase using frequency hopping",
+        "E": "The device power management and sleep mode transitions"
+      },
+      "correct": "C",
+      "explanation": "BIAS (Bluetooth Impersonation AttackS) exploits a vulnerability in the Bluetooth standard's authentication procedure during the establishment of a secure connection after pairing has already occurred. It allows an attacker to impersonate a previously paired (trusted) device without knowing the long-term pairing key, potentially gaining unauthorized access to the target device."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary target of a 'Car Whisperer' Bluetooth attack?",
+      "options": {
+        "A": "Stealing the vehicle's GPS navigation history and saved locations",
+        "B": "Remotely unlocking doors and starting the engine via the keyless entry system",
+        "C": "Eavesdropping on or injecting audio into the vehicle's hands-free system",
+        "D": "Exfiltrating diagnostic data from the car's internal CAN bus network",
+        "E": "Performing a Denial of Service (DoS) attack on the vehicle's infotainment screen"
+      },
+      "correct": "C",
+      "explanation": "The 'Car Whisperer' attack targets Bluetooth-enabled hands-free kits in vehicles that use a default or easily guessable passkey (like '0000' or '1234'). Attackers can exploit this to connect to the car's audio system, allowing them to listen to conversations inside the cabin or play audio through the car's speakers."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In the context of cryptanalysis, what is the defining characteristic of a 'Side Channel Attack'?",
+      "options": {
+        "A": "Exploiting mathematical weaknesses in the encryption algorithm's design",
+        "B": "Using brute-force methods to test every possible key combination",
+        "C": "Analyzing physical information leaked during the execution of the algorithm",
+        "D": "Intercepting the key during its transmission over an insecure network",
+        "E": "Tricking a user into revealing their private key through social engineering"
+      },
+      "correct": "C",
+      "explanation": "A Side Channel Attack does not target the mathematical logic of a cryptographic algorithm directly. Instead, it exploits information inadvertently leaked by the physical implementation of the system during processing, such as variations in power consumption, electromagnetic emissions, sound, or the time taken to perform operations."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How does a 'Timing Attack' in cryptanalysis allow an attacker to potentially recover a secret key?",
+      "options": {
+        "A": "By measuring the total time a system has been operational since its last reboot",
+        "B": "By analyzing the time differences in how long a system takes to process different inputs",
+        "C": "By forcing the system to use an outdated and slower encryption protocol",
+        "D": "By intercepting the NTP (Network Time Protocol) sync packets to desynchronize the clock",
+        "E": "By observing the frequency of encryption operations performed over a 24-hour period"
+      },
+      "correct": "B",
+      "explanation": "A Timing Attack measures the exact amount of time a system takes to perform cryptographic operations on various inputs. Because many algorithms take slightly different amounts of time depending on the bits of the secret key, an attacker can use statistical analysis of these timing variations to make informed guesses and eventually recover the key."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the fundamental difference between Simple Power Analysis (SPA) and Differential Power Analysis (DPA)?",
+      "options": {
+        "A": "SPA requires physical access while DPA can be performed remotely over a network",
+        "B": "SPA targets symmetric ciphers while DPA is only effective against asymmetric ones",
+        "C": "SPA involves direct visual interpretation of power traces while DPA uses statistical analysis",
+        "D": "SPA is used for key recovery while DPA is only used for identifying the algorithm",
+        "E": "SPA measures voltage fluctuations while DPA measures current consumption"
+      },
+      "correct": "C",
+      "explanation": "Simple Power Analysis (SPA) involves directly observing and interpreting a single power consumption trace (graph) to identify specific operations or key bits. Differential Power Analysis (DPA) is more advanced, collecting many power traces and using sophisticated statistical methods to find correlations between power consumption and secret key values, making it effective even when traces are noisy."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following is a recognized mitigation against 'Acoustic Cryptanalysis' attacks?",
+      "options": {
+        "A": "Implementing strong multi-factor authentication for all administrative users",
+        "B": "Using sound-absorbing materials and physically isolating sensitive components",
+        "C": "Rotating encryption keys more frequently to limit the window of exposure",
+        "D": "Enabling hardware-level encryption for all data stored on the local disk",
+        "E": "Monitoring network traffic for unusual patterns of outbound data exfiltration"
+      },
+      "correct": "B",
+      "explanation": "Acoustic Cryptanalysis exploits the sound emissions (e.g., high-pitched whines from capacitors or CPU fans) produced by hardware during cryptographic operations. Mitigations involve physical countermeasures such as using sound-dampening materials in device construction or placing sensitive hardware in soundproof enclosures to prevent an adversary from capturing these emissions."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In classical cryptanalysis, what is the primary basis for 'Frequency Analysis'?",
+      "options": {
+        "A": "Measuring the frequency of electromagnetic waves emitted by the processor",
+        "B": "Studying the statistical distribution of letters or symbols in the ciphertext",
+        "C": "Analyzing how often a specific encryption key is reused across different sessions",
+        "D": "Observing the frequency of network packets sent during an encrypted session",
+        "E": "Calculating the clock frequency of the target system to determine its processing power"
+      },
+      "correct": "B",
+      "explanation": "Frequency Analysis is a technique used to break simple substitution ciphers. It relies on the fact that in any given language, certain letters (like 'E' or 'T' in English) appear more frequently than others. By comparing the frequency of symbols in the ciphertext to the known frequency of letters in the plaintext language, an attacker can deduce the substitution mapping."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following best describes 'Encryption at Rest'?",
+      "options": {
+        "A": "Protecting data as it moves between a web browser and a backend server",
+        "B": "Encrypting data only when it is being actively processed by the CPU",
+        "C": "Securing data that is stored on physical media like hard drives or databases",
+        "D": "Using a VPN to secure all traffic leaving a corporate network perimeter",
+        "E": "A method of encryption where the key is automatically deleted after one hour"
+      },
+      "correct": "C",
+      "explanation": "Encryption at Rest refers to protecting data while it is stored on persistent storage media, such as hard disks, SSDs, backup tapes, or within database files. This prevents unauthorized access to the data if the physical media is stolen or if an attacker gains access to the storage system without the proper decryption keys."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary purpose of 'Encryption in Transit' (also known as Encryption in Motion)?",
+      "options": {
+        "A": "To prevent data from being modified while it is stored in a cloud database",
+        "B": "To protect data from eavesdropping as it travels across a network",
+        "C": "To ensure that only the sender and the final recipient can ever read the data",
+        "D": "To verify the identity of a user before they are allowed to access a file",
+        "E": "To compress data before transmission to reduce network bandwidth usage"
+      },
+      "correct": "B",
+      "explanation": "Encryption in Transit protects data as it is being transmitted over a network (e.g., via HTTPS, TLS, or SSH). It ensures that even if an attacker intercepts the network traffic (e.g., via a man-in-the-middle attack), they cannot read the sensitive information being exchanged between the two endpoints."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How does 'End-to-End Encryption' (E2EE) differ from standard 'Encryption in Transit' provided by a service provider?",
+      "options": {
+        "A": "E2EE is significantly faster because it uses simpler mathematical algorithms",
+        "B": "E2EE only works over local area networks and cannot be used on the internet",
+        "C": "E2EE ensures that the service provider itself cannot decrypt or access the data",
+        "D": "E2EE requires the use of physical hardware tokens for every communication session",
+        "E": "E2EE is a legacy protocol that has been largely replaced by modern TLS 1.3"
+      },
+      "correct": "C",
+      "explanation": "While standard transit encryption (like HTTPS) protects data between the user and the server, the service provider often has the keys to decrypt the data on their end. End-to-End Encryption (E2EE) ensures that the data is encrypted on the sender's device and only decrypted on the recipient's device, meaning no intermediaries—including the service provider—can access the plaintext content."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "MongoDB is classified as which type of database system?",
+      "options": {
+        "A": "Relational Database Management System (RDBMS)",
+        "B": "Graph-based Database",
+        "C": "Document-oriented NoSQL Database",
+        "D": "Key-Value Store",
+        "E": "Column-family Store"
+      },
+      "correct": "C",
+      "explanation": "MongoDB is a popular NoSQL database that is document-oriented. Unlike relational databases that use tables and rows, MongoDB stores data in flexible, JSON-like documents, allowing for a more dynamic schema and easier scaling for certain types of applications."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In what format does MongoDB natively store its documents on disk?",
+      "options": {
+        "A": "Plaintext JSON (JavaScript Object Notation)",
+        "B": "XML (Extensible Markup Language)",
+        "C": "BSON (Binary JSON)",
+        "D": "CSV (Comma-Separated Values)",
+        "E": "YAML (YAML Ain't Markup Language)"
+      },
+      "correct": "C",
+      "explanation": "While MongoDB uses a JSON-like structure for its documents, it natively stores them in BSON (Binary JSON) format. BSON is a binary-encoded serialization of JSON-like documents that is designed to be efficient for both storage space and scan speed, and it supports additional data types not found in standard JSON."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which field is reserved as the mandatory primary key for every document in a MongoDB collection?",
+      "options": {
+        "A": "id",
+        "B": "uuid",
+        "C": "_id",
+        "D": "pk",
+        "E": "key"
+      },
+      "correct": "C",
+      "explanation": "In MongoDB, every document must have a unique `_id` field that serves as its primary key. If a developer does not provide an `_id` when inserting a document, MongoDB will automatically generate a unique ObjectId for that field."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "An attacker provides the following input to a login form: `{\"username\": {\"$regex\": \".*\"}, \"password\": {\"$ne\": \"\"}}`. What type of attack is being attempted?",
+      "options": {
+        "A": "Classic SQL Injection targeting a MySQL backend",
+        "B": "JSON-based NoSQL Injection targeting a MongoDB backend",
+        "C": "Cross-Site Scripting (XSS) to steal session cookies",
+        "D": "LDAP Injection to bypass directory authentication",
+        "E": "Command Injection to execute shell commands on the server"
+      },
+      "correct": "B",
+      "explanation": "This is a classic NoSQL injection payload. The `$regex: \".*\"` operator matches any username, and the `$ne: \"\"` (not equal to empty) operator matches any non-empty password. If the application insecurely passes this JSON object directly to a MongoDB query, the attacker can bypass authentication without knowing a valid username or password."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the defining characteristic of an 'In-Band' NoSQL Injection vulnerability?",
+      "options": {
+        "A": "The attacker must use a separate out-of-band channel to receive data",
+        "B": "The vulnerability can only be exploited if the attacker has administrative access",
+        "C": "The attacker uses the same communication channel to both launch the attack and see the results",
+        "D": "The attack relies on forcing the server to wait for a specific amount of time",
+        "E": "The results of the injection are only visible in the server's internal log files"
+      },
+      "correct": "C",
+      "explanation": "In-Band NoSQL injection occurs when the attacker can use the same channel (e.g., the HTTP response) to both send the malicious payload and receive the results of the query. This is the most straightforward type of injection to exploit because the data is returned directly to the attacker."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How does a 'Blind' NoSQL Injection differ from an 'In-Band' NoSQL Injection?",
+      "options": {
+        "A": "Blind injection does not return data directly in the application's response",
+        "B": "Blind injection is only possible against relational database systems",
+        "C": "Blind injection requires the attacker to be physically present at the server",
+        "D": "Blind injection is a type of social engineering rather than a technical exploit",
+        "E": "Blind injection only affects the metadata of the database, not the actual records"
+      },
+      "correct": "A",
+      "explanation": "In a Blind NoSQL injection, the application does not return the results of the injected query directly to the attacker. Instead, the attacker must 'infer' information by observing how the application behaves, such as changes in the response content (Boolean-based) or the time it takes for the server to respond (Time-based)."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In a 'Boolean-based' Blind NoSQL Injection, how does an attacker typically extract information?",
+      "options": {
+        "A": "By measuring the exact number of bytes returned in the HTTP response",
+        "B": "By forcing the server to return a 'True' or 'False' condition that changes the UI",
+        "C": "By intercepting the database's internal binary logs over the network",
+        "D": "By causing the server to crash and analyzing the resulting error message",
+        "E": "By using a brute-force tool to guess the entire database schema at once"
+      },
+      "correct": "B",
+      "explanation": "A Boolean-based blind injection involves sending queries that ask the database a true/false question (e.g., 'Does the first letter of the admin password start with A?'). The attacker then observes the application's response—such as a 'Welcome' message vs. an 'Invalid Login' message—to determine if their guess was correct."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary mechanism used in a 'Time-based' Blind NoSQL Injection?",
+      "options": {
+        "A": "Exploiting a race condition in the server's multi-threaded query processor",
+        "B": "Measuring the time it takes for a DNS lookup to resolve a malicious hostname",
+        "C": "Causing the database to pause its response if a specific condition is met",
+        "D": "Analyzing the 'Date' header in the HTTP response to find millisecond variations",
+        "E": "Flooding the server with requests until its internal clock begins to drift"
+      },
+      "correct": "C",
+      "explanation": "In a Time-based blind injection, the attacker injects a command that tells the database to wait (sleep) for a specific amount of time if a certain condition is true. By measuring how long the server takes to respond, the attacker can determine the truth of the condition without seeing any data returned in the response."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "If an application uses URL-encoded parameters (x-www-form-urlencoded) instead of JSON, how might a NoSQL injection payload be formatted?",
+      "options": {
+        "A": "user[$regex]=.*&pass[$ne]=",
+        "B": "user=admin' OR '1'='1",
+        "C": "user={\"admin\": true}",
+        "D": "user=<script>alert(1)</script>",
+        "E": "user=admin; DROP TABLE users;"
+      },
+      "correct": "A",
+      "explanation": "When an application processes form-encoded data, many NoSQL drivers allow the use of bracket syntax to pass objects or operators. The payload `user[$regex]=.*` tells the backend to treat the `user` parameter as an object with a `$regex` operator, which can be used to bypass authentication in a similar way to JSON-based injections."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following NoSQL query operators is commonly used to bypass 'equal to' checks in an injection attack?",
+      "options": {
+        "A": "$eq",
+        "B": "$in",
+        "C": "$ne",
+        "D": "$and",
+        "E": "$set"
+      },
+      "correct": "C",
+      "explanation": "The `$ne` (not equal) operator is frequently used in NoSQL injections to bypass authentication. For example, providing a password of `{\"$ne\": \"\"}` will match any password that is not an empty string, effectively allowing an attacker to log in without knowing the actual password."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "A penetration tester wants to confirm a suspected SSRF (Server-Side Request Forgery) vulnerability. Which of the following is a common first step for verification?",
+      "options": {
+        "A": "Attempting to upload a large shell script to the server's /tmp directory",
+        "B": "Using a tool like Netcat to listen for an incoming connection from the target server",
+        "C": "Performing a brute-force attack against the server's SSH management port",
+        "D": "Injecting a cross-site scripting (XSS) payload into the user's profile page",
+        "E": "Analyzing the server's SSL certificate to find hidden internal subdomains"
+      },
+      "correct": "B",
+      "explanation": "To confirm SSRF, a tester often tries to make the vulnerable server connect back to a machine they control. By setting up a listener (e.g., using `nc -lvp 80`) and then providing their IP address to the vulnerable parameter, the tester can verify the vulnerability if they see an incoming connection from the target server's IP."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is considered the most effective long-term mitigation against SSRF (Server-Side Request Forgery) vulnerabilities?",
+      "options": {
+        "A": "Implementing a blacklist of known malicious IP addresses and domains",
+        "B": "Using a Web Application Firewall (WAF) to block all requests containing 'localhost'",
+        "C": "Enforcing a strict whitelist of allowed internal and external resources",
+        "D": "Disabling all outbound HTTP requests from the application server entirely",
+        "E": "Requiring all users to complete a CAPTCHA before submitting any URL parameters"
+      },
+      "correct": "C",
+      "explanation": "Whitelisting is the most secure approach to preventing SSRF. By explicitly defining which domains or IP addresses the server is allowed to communicate with, you eliminate the risk of an attacker redirecting the server to internal resources or sensitive metadata endpoints. Blacklisting is often ineffective as attackers can use various encoding or redirection tricks to bypass it."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What does the 'S' in HTTPS stand for, and which protocols does it primarily use for security?",
+      "options": {
+        "A": "Static; it uses SSH and SFTP for secure file transfers",
+        "B": "Secure; it uses SSL or TLS to provide encryption and integrity",
+        "C": "Standard; it uses IPsec to secure the network layer communication",
+        "D": "System; it uses Kerberos for centralized user authentication",
+        "E": "Server; it uses DNSSEC to prevent domain hijacking and spoofing"
+      },
+      "correct": "B",
+      "explanation": "HTTPS stands for Hypertext Transfer Protocol Secure. It is the secure version of HTTP, using either SSL (Secure Sockets Layer) or its more modern successor, TLS (Transport Layer Security), to encrypt the communication between a web browser and a server, ensuring data privacy and integrity."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In modern web security, what is the relationship between SSL (Secure Sockets Layer) and TLS (Transport Layer Security)?",
+      "options": {
+        "A": "SSL is a more modern and secure version of the TLS protocol",
+        "B": "TLS is the successor to SSL and has largely replaced it in production",
+        "C": "SSL is used for encrypting data at rest while TLS is for data in transit",
+        "D": "TLS is a proprietary protocol while SSL is an open-source standard",
+        "E": "There is no difference between the two; they are exactly the same protocol"
+      },
+      "correct": "B",
+      "explanation": "TLS is the modern successor to SSL. While the term 'SSL' is still commonly used to refer to web encryption, all versions of the original SSL protocol (1.0, 2.0, 3.0) are now considered insecure and have been deprecated. Modern systems use TLS (1.2 or 1.3) to provide secure communication."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is a key difference in the isolation boundaries affected by the Spectre and Meltdown vulnerabilities?",
+      "options": {
+        "A": "Spectre only affects mobile devices while Meltdown only affects servers",
+        "B": "Spectre targets the browser cache while Meltdown targets the physical RAM",
+        "C": "Spectre breaks isolation between applications while Meltdown targets the OS kernel",
+        "D": "Spectre requires administrative privileges while Meltdown can be run as a guest",
+        "E": "Spectre is a software-only bug while Meltdown is a hardware-only flaw"
+      },
+      "correct": "C",
+      "explanation": "Both are hardware vulnerabilities exploiting speculative execution in modern CPUs. Spectre primarily breaks the isolation between different user-level applications, allowing one program to trick another into leaking its data. Meltdown specifically breaks the isolation between user applications and the operating system's kernel memory, potentially allowing any program to read sensitive OS data."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary function of a Public Key Infrastructure (PKI)?",
+      "options": {
+        "A": "To provide a centralized database for storing all users' private keys",
+        "B": "To manage the creation, distribution, and revocation of digital certificates",
+        "C": "To automate the process of patching vulnerabilities in web server software",
+        "D": "To monitor network traffic for unauthorized access to encrypted files",
+        "E": "To generate strong passwords for users based on their biometric data"
+      },
+      "correct": "B",
+      "explanation": "A Public Key Infrastructure (PKI) is a framework that manages digital certificates and public-key encryption. Its core role is to establish the identity of people, devices, and services by issuing digital certificates through a trusted Certificate Authority (CA), allowing for secure communication and authentication."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In a PKI environment, what is the role of a Certificate Authority (CA)?",
+      "options": {
+        "A": "To act as a firewall that inspects all incoming encrypted traffic",
+        "B": "To store a backup of every user's private key in case of loss",
+        "C": "To verify the identity of an entity and issue a signed digital certificate",
+        "D": "To perform periodic vulnerability scans on the organization's public servers",
+        "E": "To decrypt all communications for law enforcement monitoring purposes"
+      },
+      "correct": "C",
+      "explanation": "A Certificate Authority (CA) is a trusted third party that validates the identity of an entity (like a website or a person). Once verified, the CA issues a digital certificate that binds the entity's identity to its public key, allowing others to trust that the public key belongs to the legitimate owner."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following correctly describes the standard format of a TLS Cipher Suite (e.g., TLS_AES_256_GCM_SHA384)?",
+      "options": {
+        "A": "Protocol, Key Exchange, Authentication, Encryption, and Hashing algorithms",
+        "B": "Server Name, Port Number, Encryption Level, and Expiry Date",
+        "C": "Username, Password, Domain, and Session ID",
+        "D": "IP Address, MAC Address, Subnet Mask, and Gateway",
+        "E": "Operating System, Browser Version, and Language Preference"
+      },
+      "correct": "A",
+      "explanation": "A TLS Cipher Suite is a set of algorithms that define how a secure connection will be established. It typically includes the protocol version, the key exchange mechanism (e.g., ECDHE), the authentication method (e.g., RSA), the bulk encryption algorithm (e.g., AES_256_GCM), and the hashing algorithm used for integrity checks (e.g., SHA384)."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How does a 'Block Cipher' process data compared to a 'Stream Cipher'?",
+      "options": {
+        "A": "Block ciphers encrypt data bit by bit, while stream ciphers encrypt in fixed-size chunks",
+        "B": "Block ciphers use a different key for every bit, while stream ciphers use a single fixed key",
+        "C": "Block ciphers encrypt data in fixed-size groups of bits, while stream ciphers encrypt bit by bit",
+        "D": "Block ciphers are only used for asymmetric encryption, while stream ciphers are for symmetric",
+        "E": "Block ciphers are hardware-based, while stream ciphers are implemented entirely in software"
+      },
+      "correct": "C",
+      "explanation": "A Block Cipher (like AES) breaks the plaintext into fixed-size blocks (e.g., 128 bits) and encrypts each block as a unit. A Stream Cipher (like ChaCha20) encrypts data one bit or one byte at a time, typically by combining the plaintext with a pseudorandom keystream."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Why is 'Padding' necessary when using a Block Cipher in certain modes of operation?",
+      "options": {
+        "A": "To increase the complexity of the encryption key to prevent brute-force attacks",
+        "B": "To ensure the plaintext length is a multiple of the cipher's fixed block size",
+        "C": "To hide the original file format of the data being encrypted",
+        "D": "To add a digital signature to the end of every encrypted block for integrity",
+        "E": "To compress the data before encryption to save storage space"
+      },
+      "correct": "B",
+      "explanation": "Block ciphers require the input data to be an exact multiple of the block size (e.g., 16 bytes for AES). If the final piece of plaintext is shorter than the block size, padding is added to fill the remaining space so the encryption algorithm can process the final block correctly."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the core principle behind a 'Padding Oracle' attack?",
+      "options": {
+        "A": "Exploiting the time it takes for a server to generate a new encryption key",
+        "B": "Using error messages about invalid padding to deduce information about the plaintext",
+        "C": "Brute-forcing the padding bytes until the server accepts the modified ciphertext",
+        "D": "Intercepting the padding configuration file during a software update",
+        "E": "Injecting malicious padding that executes code when decrypted by the server"
+      },
+      "correct": "B",
+      "explanation": "A Padding Oracle attack occurs when a server reveals whether a decrypted ciphertext has valid or invalid padding. By repeatedly sending modified ciphertexts and observing these 'oracle' responses, an attacker can systematically decrypt the data or even forge valid ciphertexts without knowing the encryption key."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "The POODLE (Padding Oracle On Downgraded Legacy Encryption) attack primarily targets which legacy protocol?",
+      "options": {
+        "A": "TLS 1.3",
+        "B": "SSHv2",
+        "C": "SSL 3.0",
+        "D": "IPsec",
+        "E": "WPA3"
+      },
+      "correct": "C",
+      "explanation": "POODLE is a man-in-the-middle exploit that takes advantage of a vulnerability in the SSL 3.0 protocol's padding scheme. Attackers can force a modern browser to 'downgrade' its connection to SSL 3.0 and then use the padding oracle vulnerability to steal sensitive information like session cookies."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What does a 'Bleichenbacher Attack' (also known as a Million Message Attack) exploit in the RSA encryption process?",
+      "options": {
+        "A": "The use of small prime numbers in the key generation phase",
+        "B": "Weaknesses in the PKCS#1 v1.5 padding scheme used with RSA",
+        "C": "A flaw in the way RSA handles large exponents during decryption",
+        "D": "The lack of forward secrecy in the standard RSA key exchange",
+        "E": "The ability to predict the random numbers used in RSA signatures"
+      },
+      "correct": "B",
+      "explanation": "The Bleichenbacher attack is a chosen-ciphertext attack against RSA that exploits error messages related to the PKCS#1 v1.5 padding scheme. By sending many slightly different ciphertexts and observing whether the server returns a 'padding error', an attacker can eventually decrypt the original message."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "The DROWN (Decrypting RSA with Obsolete and Weakened eNcryption) attack exploits servers that still support which insecure protocol?",
+      "options": {
+        "A": "TLS 1.1",
+        "B": "SSL 2.0",
+        "C": "HTTP/2",
+        "D": "Telnet",
+        "E": "SNMPv1"
+      },
+      "correct": "B",
+      "explanation": "DROWN is a cross-protocol attack where an attacker can decrypt modern TLS connections by exploiting a vulnerability in servers that still support the obsolete SSL 2.0 protocol. Even if the victim uses TLS, if the server (or another server sharing the same RSA key) supports SSL 2.0, the attacker can use it as an oracle to break the TLS session."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary impact of the 'Heartbleed' vulnerability (CVE-2014-0160) in OpenSSL?",
+      "options": {
+        "A": "It allows an attacker to remotely execute code with root privileges",
+        "B": "It enables a complete bypass of the server's firewall and IDS",
+        "C": "It allows an attacker to read sensitive memory from the server, including private keys",
+        "D": "It causes the server to crash by flooding it with malformed heartbeat packets",
+        "E": "It forces the server to use a weak 40-bit encryption key for all new sessions"
+      },
+      "correct": "C",
+      "explanation": "Heartbleed is a critical bug in the OpenSSL library's implementation of the TLS Heartbeat extension. It allows an attacker to send a specially crafted heartbeat request that tricks the server into returning up to 64KB of its memory, which could contain session cookies, user credentials, or even the server's private encryption keys."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How does an 'SSL Stripping' attack (also known as SSL Downgrade) work?",
+      "options": {
+        "A": "By physically removing the SSL certificate from the target server's hardware",
+        "B": "By intercepting a request to upgrade to HTTPS and forcing the user to stay on HTTP",
+        "C": "By brute-forcing the SSL handshake until the server gives up and uses plaintext",
+        "D": "By tricking a Certificate Authority into revoking a legitimate website's certificate",
+        "E": "By using a high-powered laser to interfere with the fiber optic cables carrying the data"
+      },
+      "correct": "B",
+      "explanation": "SSL Stripping is a type of man-in-the-middle attack where the attacker sits between the user and the server. When the user tries to access a site via HTTPS (or is redirected to it), the attacker intercepts the request and communicates with the server via HTTPS while keeping the connection to the user as plain HTTP, allowing the attacker to see all sensitive data in cleartext."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In a local area network, what technique is commonly used to perform a Man-in-the-Middle (MitM) attack for SSL stripping?",
+      "options": {
+        "A": "DNS Cache Poisoning",
+        "B": "BGP Hijacking",
+        "C": "ARP Spoofing",
+        "D": "VLAN Hopping",
+        "E": "MAC Flooding"
+      },
+      "correct": "C",
+      "explanation": "ARP Spoofing involves sending malicious ARP (Address Resolution Protocol) messages to a local network. This tricks the victim's machine and the network gateway into believing the attacker's MAC address is associated with the other's IP address, effectively routing all traffic through the attacker's machine."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary risk associated with Server-Side Template Injection (SSTI)?",
+      "options": {
+        "A": "It allows an attacker to steal the database's administrative credentials",
+        "B": "It enables an attacker to execute arbitrary code on the server via the template engine",
+        "C": "It causes the web application to display raw HTML instead of the rendered page",
+        "D": "It allows an attacker to bypass the application's login page using a default password",
+        "E": "It results in the server's hard drive being filled with temporary log files"
+      },
+      "correct": "B",
+      "explanation": "SSTI occurs when an application insecurely embeds user input into a server-side template (e.g., Jinja2, Twig, or FreeMarker). An attacker can use template-specific syntax to escape the intended context and execute arbitrary code or access sensitive internal objects on the server."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following best describes a Server-Side Includes (SSI) injection attack?",
+      "options": {
+        "A": "Injecting malicious JavaScript that executes in the user's browser",
+        "B": "Using SQL commands to modify the structure of the backend database",
+        "C": "Exploiting a web server's ability to dynamically include files or execute commands",
+        "D": "Tricking a user into downloading a malicious file from a trusted domain",
+        "E": "Flooding a server with HTTP GET requests to cause a denial of service"
+      },
+      "correct": "C",
+      "explanation": "SSI is a legacy technology used to add dynamic content to HTML pages. An SSI injection occurs when an application fails to sanitize user input that is then processed by the server's SSI engine. Attackers can use SSI directives (e.g., `<!--#exec cmd=\"...\" -->`) to execute shell commands or read sensitive files on the server."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How does a 'Web Cache Poisoning' attack work?",
+      "options": {
+        "A": "By physically damaging the server's RAM modules to cause data corruption",
+        "B": "By tricking a web cache into storing a malicious response and serving it to other users",
+        "C": "By overwhelming the cache with so many requests that it stops functioning",
+        "D": "By stealing the cache's encryption keys to decrypt all stored content",
+        "E": "By modifying the 'Cache-Control' header in the server's configuration file"
+      },
+      "correct": "B",
+      "explanation": "Web Cache Poisoning involves sending a specially crafted request that causes the server to generate a malicious response (e.g., containing an XSS payload). If the attacker can trick an intermediary cache (like a CDN or reverse proxy) into saving this response, the cache will then serve the malicious content to any other user who requests the same page."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the defining characteristic of a 'Session Fixation' attack?",
+      "options": {
+        "A": "The attacker steals a user's active session cookie after they have logged in",
+        "B": "The attacker forces a known session ID onto a user before they log in",
+        "C": "The attacker uses a brute-force tool to guess a valid session ID",
+        "D": "The attacker prevents a user from logging out by disabling the logout button",
+        "E": "The attacker modifies the session timeout value to keep a session active indefinitely"
+      },
+      "correct": "B",
+      "explanation": "In a Session Fixation attack, the attacker provides a specific session ID to the victim (e.g., via a link with a session parameter). If the application does not generate a new session ID upon successful login, the attacker can then use the 'fixed' session ID to hijack the victim's account after they authenticate."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary target of an 'XPath Injection' attack?",
+      "options": {
+        "A": "Relational databases like MySQL or PostgreSQL",
+        "B": "Directory services like Active Directory or OpenLDAP",
+        "C": "XML documents and the queries used to navigate them",
+        "D": "The server's internal file system and configuration files",
+        "E": "The user's browser-side local storage and session cookies"
+      },
+      "correct": "C",
+      "explanation": "XPath is a language used to query and navigate XML documents. An XPath injection occurs when an application uses unsanitized user input to build an XPath query, allowing an attacker to manipulate the query to bypass authentication or extract sensitive data from the XML structure."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "An 'LDAP Injection' attack targets which type of service?",
+      "options": {
+        "A": "A web server's static content delivery network (CDN)",
+        "B": "A centralized directory service used for authentication and authorization",
+        "C": "A distributed NoSQL database used for real-time analytics",
+        "D": "An email server's SMTP relay for sending outbound messages",
+        "E": "A hardware firewall's packet inspection engine"
+      },
+      "correct": "B",
+      "explanation": "LDAP (Lightweight Directory Access Protocol) is used to access and manage directory information services (like Active Directory). An LDAP injection occurs when user input is insecurely included in an LDAP query, potentially allowing an attacker to bypass login screens, escalate privileges, or exfiltrate sensitive user information from the directory."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In the context of a CRLF (Carriage Return Line Feed) injection, what do the symbols 'CR' and 'LF' represent in hex or URL-encoded format?",
+      "options": {
+        "A": "%00 and %FF",
+        "B": "%0D and %0A",
+        "C": "%20 and %2B",
+        "D": "%3C and %3E",
+        "E": "%27 and %22"
+      },
+      "correct": "B",
+      "explanation": "CR (Carriage Return) is represented by the hex value `0x0D` (`%0D`), and LF (Line Feed) is represented by `0x0A` (`%0A`). Together, they form the standard end-of-line sequence in many protocols, including HTTP. Injecting these characters allows an attacker to split headers or inject new ones."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How can a CRLF injection lead to an 'HTTP Response Splitting' attack?",
+      "options": {
+        "A": "By causing the server to send the response in two separate TCP packets",
+        "B": "By injecting a newline that allows the attacker to start a second, malicious HTTP response",
+        "C": "By forcing the server to use a different character encoding for the response body",
+        "D": "By splitting the user's session cookie into two parts to bypass security checks",
+        "E": "By causing the web browser to render the page in 'split-screen' mode"
+      },
+      "correct": "B",
+      "explanation": "HTTP Response Splitting is a severe form of CRLF injection. By injecting a sequence of two CRLFs (`%0D%0A%0D%0A`), an attacker can terminate the headers of the legitimate response and begin a completely new, malicious HTTP response that the browser (or an intermediary cache) will treat as a separate message."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary goal of an 'SMTP Header Injection' attack?",
+      "options": {
+        "A": "To steal the email server's administrative password",
+        "B": "To inject malicious attachments into every outgoing email",
+        "C": "To add extra recipients (Bcc) or modify the 'From' address of an email",
+        "D": "To perform a denial of service attack on the email relay",
+        "E": "To decrypt all encrypted emails stored on the server"
+      },
+      "correct": "C",
+      "explanation": "SMTP Header Injection occurs when an application (like a 'Contact Us' form) insecurely includes user input in an email's headers. An attacker can use CRLF characters to inject additional headers, such as `Bcc:`, allowing them to use the server to send spam or exfiltrate sensitive information to an external address."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In an HTTP Request Smuggling attack, what is the fundamental cause of the vulnerability?",
+      "options": {
+        "A": "The server's inability to handle large file uploads over 1GB",
+        "B": "A disagreement between a front-end proxy and a back-end server on how to delimit requests",
+        "C": "The use of outdated HTTP/1.0 protocols instead of modern HTTP/2",
+        "D": "A flaw in the browser's implementation of the 'Keep-Alive' header",
+        "E": "The lack of encryption between the user's browser and the front-end proxy"
+      },
+      "correct": "B",
+      "explanation": "Request Smuggling occurs when a front-end proxy (like a load balancer) and a back-end server interpret the `Content-Length` (CL) and `Transfer-Encoding` (TE) headers differently. This allows an attacker to 'smuggle' a second request inside the body of the first, which the back-end server then processes as a separate request from a different user."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary difference between a CSRF (Cross-Site Request Forgery) attack and an XSS (Cross-Site Scripting) attack?",
+      "options": {
+        "A": "CSRF targets the server's database while XSS targets the user's browser",
+        "B": "CSRF exploits the trust a site has in a user, while XSS exploits the trust a user has in a site",
+        "C": "CSRF requires the attacker to be on the same network, while XSS can be done remotely",
+        "D": "CSRF is only possible on mobile devices, while XSS affects all platforms",
+        "E": "There is no difference; they are two names for the same vulnerability"
+      },
+      "correct": "B",
+      "explanation": "In XSS, the attacker injects malicious script into a trusted website to attack its users. In CSRF, the attacker tricks a victim's browser into sending an unauthorized request to a website where the victim is currently authenticated, exploiting the fact that the website trusts the browser's automatic inclusion of session cookies."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the purpose of the 'HSTS' (HTTP Strict Transport Security) header?",
+      "options": {
+        "A": "To prevent the browser from caching sensitive pages on the local disk",
+        "B": "To force the browser to always connect to the site using HTTPS",
+        "C": "To specify which domains are allowed to load the site in an iframe",
+        "D": "To disable all JavaScript execution for users coming from untrusted IPs",
+        "E": "To provide a list of authorized administrators for the web application"
+      },
+      "correct": "B",
+      "explanation": "HSTS is a security header that tells a browser to only communicate with a specific website using secure HTTPS connections. This prevents SSL stripping attacks by ensuring the browser never even attempts an insecure HTTP connection, even if the user types `http://` or clicks a plain HTTP link."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How does an XML External Entity (XXE) injection vulnerability typically manifest?",
+      "options": {
+        "A": "By causing the XML parser to crash due to an infinite loop",
+        "B": "By allowing an attacker to include external files or interact with internal services via XML",
+        "C": "By modifying the XML schema to allow unauthorized data types",
+        "D": "By encrypting the XML document so the server can no longer read it",
+        "E": "By injecting malicious CSS that changes the appearance of the XML data"
+      },
+      "correct": "B",
+      "explanation": "XXE occurs when an insecurely configured XML parser processes a document containing an external entity reference. An attacker can use this to read local files on the server (e.g., `/etc/passwd`), perform internal port scanning, or even launch SSRF attacks against other internal systems."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary risk associated with a 'Log Injection' attack?",
+      "options": {
+        "A": "It allows an attacker to remotely execute code on the server's CPU",
+        "B": "It enables an attacker to corrupt or forge log entries to hide their activities",
+        "C": "It causes the server to stop logging all events, creating a blind spot",
+        "D": "It results in the server's log files being encrypted with ransomware",
+        "E": "It allows an attacker to steal the database's administrative password"
+      },
+      "correct": "B",
+      "explanation": "Log Injection occurs when an application fails to sanitize user input before writing it to a log file. An attacker can inject CRLF characters to create fake log entries, potentially misleading administrators during an investigation or hiding evidence of a real attack."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How is 'Vishing' defined in the context of social engineering?",
+      "options": {
+        "A": "A phishing attack that uses malicious SMS messages (text messages)",
+        "B": "A phishing attack that uses voice communication (phone calls or VoIP)",
+        "C": "A phishing attack that targets high-profile executives (whaling)",
+        "D": "A phishing attack that uses physical mail sent to a victim's home",
+        "E": "A phishing attack that involves tailgating into a secure facility"
+      },
+      "correct": "B",
+      "explanation": "Vishing (Voice Phishing) is a social engineering technique where attackers use phone calls or voice messages to trick victims into revealing sensitive information, such as credit card numbers or login credentials, often by impersonating a trusted entity like a bank or IT support."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In virtualization security, what does the term 'VM Escape' refer to?",
+      "options": {
+        "A": "A user successfully logging out of a virtual machine and returning to the host",
+        "B": "An attacker breaking out of a guest VM to gain access to the underlying host OS",
+        "C": "A virtual machine automatically migrating to a different physical host for load balancing",
+        "D": "A virtual machine losing its network connection due to a misconfigured vSwitch",
+        "E": "The process of converting a physical server into a virtual machine (P2V)"
+      },
+      "correct": "B",
+      "explanation": "VM Escape is a critical security vulnerability where an attacker is able to bypass the isolation between a guest virtual machine and the host hypervisor. If successful, the attacker can gain control over the host system and potentially access all other virtual machines running on that same physical hardware."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "How can a 'MIME-Type' mismatch be exploited in a web application?",
+      "options": {
+        "A": "By forcing the server to compress all files using an outdated algorithm",
+        "B": "By tricking the browser into executing a file as a different type (e.g., a text file as a script)",
+        "C": "By causing the server to run out of memory by uploading many small files",
+        "D": "By intercepting the MIME-Type header to steal the user's session cookie",
+        "E": "By modifying the server's configuration to only allow .txt file uploads"
+      },
+      "correct": "B",
+      "explanation": "MIME-Type exploitation often involves 'MIME sniffing' or 'content sniffing'. If a server serves a file with an incorrect or missing MIME-Type, a browser might try to guess the type by looking at the content. An attacker can upload a file that looks like an image but contains malicious JavaScript, tricking the browser into executing it."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is a primary focus of the Australian 'Cybercrime Act 2001'?",
+      "options": {
+        "A": "Regulating the sale of encryption software to foreign governments",
+        "B": "Defining criminal offenses related to unauthorized access or modification of data",
+        "C": "Mandating that all citizens use multi-factor authentication for personal banking",
+        "D": "Establishing a national database of all registered domain names in Australia",
+        "E": "Providing financial compensation to victims of online identity theft"
+      },
+      "correct": "B",
+      "explanation": "The Cybercrime Act 2001 (Cth) amended the Commonwealth Crimes Act 1914 to include specific offenses related to computer crime. It covers activities such as unauthorized access to data (hacking), unauthorized modification of data, and impairing electronic communications (DoS attacks)."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the main objective of the Australian 'Privacy Act 1988'?",
+      "options": {
+        "A": "To prevent the government from monitoring citizens' private phone calls",
+        "B": "To regulate how personal information is collected, used, and disclosed by organizations",
+        "C": "To ensure that all websites use HTTPS for every page on their domain",
+        "D": "To provide a legal framework for the use of facial recognition in public spaces",
+        "E": "To mandate that all data stored in Australia must be encrypted with AES-256"
+      },
+      "correct": "B",
+      "explanation": "The Privacy Act 1988 (Cth) is the principal piece of Australian legislation protecting the privacy of individuals. It includes the Australian Privacy Principles (APPs), which set out standards for how 'APP entities' (government agencies and many private sector organizations) must handle personal information."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Under the Australian 'Notifiable Data Breaches' (NDB) scheme, when must an organization notify affected individuals and the OAIC?",
+      "options": {
+        "A": "Whenever any data, regardless of its sensitivity, is accessed by an unauthorized person",
+        "B": "Only if the data breach involves more than 10,000 individual records",
+        "C": "When a data breach is likely to result in serious harm to any of the individuals involved",
+        "D": "Within 24 hours of the breach occurring, regardless of whether it has been contained",
+        "E": "Only if the breach was caused by a deliberate malicious act from an external attacker"
+      },
+      "correct": "C",
+      "explanation": "The NDB scheme requires organizations to notify individuals and the Office of the Australian Information Commissioner (OAIC) when an 'eligible data breach' occurs. This is defined as a breach where personal information is lost or accessed/disclosed without authorization, and this is likely to result in serious harm to any of the affected individuals."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the primary purpose of the 'Security of Critical Infrastructure Act 2018' (SOCI Act) in Australia?",
+      "options": {
+        "A": "To provide funding for the construction of new physical security barriers around power plants",
+        "B": "To manage risks to the security of assets that are essential to Australia's social or economic wellbeing",
+        "C": "To mandate that all critical infrastructure providers use only Australian-made software",
+        "D": "To establish a new military branch dedicated to defending physical infrastructure from attack",
+        "E": "To regulate the use of drones in the airspace above sensitive government buildings"
+      },
+      "correct": "B",
+      "explanation": "The SOCI Act aims to manage risks to Australia's critical infrastructure, such as electricity, water, health, and transport. It requires owners and operators of critical assets to identify and manage security risks (including cyber risks) and to report certain cyber security incidents to the government."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In a professional penetration testing report, what is the main purpose of the 'Technical Summary' section?",
+      "options": {
+        "A": "To provide a high-level overview of the findings for non-technical executives",
+        "B": "To list every single tool and command used during the engagement in chronological order",
+        "C": "To provide a concise overview of the key technical findings and their overall impact",
+        "D": "To provide a detailed step-by-step guide for developers on how to fix each vulnerability",
+        "E": "To include the full raw output of all automated vulnerability scanners used"
+      },
+      "correct": "C",
+      "explanation": "The Technical Summary is intended for technical managers and leads. It provides a more detailed overview than the Executive Summary, focusing on the key technical vulnerabilities discovered, the overall security posture of the environment, and the potential impact of the findings from a technical perspective."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "During the introduction phase of a penetration test, who should be the primary reporting line for urgent security issues?",
+      "options": {
+        "A": "The organization's CEO or Board of Directors",
+        "B": "The designated technical point of contact (POC) for the engagement",
+        "C": "The local law enforcement agency's cybercrime division",
+        "D": "The public relations department to prepare for potential media inquiries",
+        "E": "The general employee population via a company-wide email alert"
+      },
+      "correct": "B",
+      "explanation": "Before a penetration test begins, a technical point of contact (POC) is established. If the tester discovers a critical or urgent security issue (e.g., an active breach or a vulnerability that could cause immediate damage), they must report it immediately to this designated POC as per the agreed-upon communication plan."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the key difference between 'Session Fixation' and 'Session Hijacking'?",
+      "options": {
+        "A": "Fixation happens after login, while hijacking happens before login",
+        "B": "Fixation involves a known session ID, while hijacking involves stealing an active session ID",
+        "C": "Fixation targets the server's database, while hijacking targets the user's browser",
+        "D": "Fixation is a type of social engineering, while hijacking is a technical exploit",
+        "E": "There is no difference; they are two names for the same attack"
+      },
+      "correct": "B",
+      "explanation": "In Session Fixation, the attacker provides a specific session ID to the victim and waits for them to log in. In Session Hijacking, the attacker steals a valid session ID from a victim who is already logged in (e.g., via XSS or network sniffing). Fixation is 'pre-authentication' setup, while Hijacking is 'post-authentication' theft."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following is a characteristic of a 'Weak Session ID' that makes it vulnerable to attack?",
+      "options": {
+        "A": "The session ID is too long and causes the browser to slow down",
+        "B": "The session ID is generated using a predictable or non-random pattern",
+        "C": "The session ID is stored in a cookie that is marked as 'Secure'",
+        "D": "The session ID is automatically rotated every time the user clicks a link",
+        "E": "The session ID is only valid for a single IP address"
+      },
+      "correct": "B",
+      "explanation": "A weak session ID is one that an attacker can easily guess or predict. This often happens if the ID is sequential (e.g., 1001, 1002), based on a timestamp, or generated using a weak random number generator. If an attacker can predict a future session ID, they can hijack a user's session as soon as it is created."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "What is the risk associated with 'Premature Session Population'?",
+      "options": {
+        "A": "The server runs out of memory by creating too many sessions for anonymous users",
+        "B": "A session is created and populated with data before the user has successfully authenticated",
+        "C": "The session ID is sent to the browser before the HTTPS connection is established",
+        "D": "The user is logged out automatically before they have a chance to finish their task",
+        "E": "The application's database is overwhelmed with session data for inactive users"
+      },
+      "correct": "B",
+      "explanation": "Premature Session Population occurs when an application creates a session and stores sensitive information in it (like a username or role) before the user has actually proven their identity. This can sometimes be exploited in conjunction with session fixation to gain unauthorized access."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "Which of the following is a common example of a session variable that should be protected from unauthorized modification?",
+      "options": {
+        "A": "The user's preferred theme color (e.g., 'dark' or 'light')",
+        "B": "The user's current language setting (e.g., 'en-US')",
+        "C": "The user's administrative role or permission level (e.g., 'isAdmin')",
+        "D": "The number of items currently in the user's shopping cart",
+        "E": "The time of the user's last successful login"
+      },
+      "correct": "C",
+      "explanation": "Session variables that control authorization, such as a user's role or specific permissions, are highly sensitive. If an attacker can modify these variables (e.g., by changing `isAdmin` from `false` to `true`), they can escalate their privileges and gain full control over the application."
+    },
+    {
+      "category": "Unknown",
+      "skill": "Unknown",
+      "question": "In a 'TE.TE' (Transfer-Encoding/Transfer-Encoding) Request Smuggling attack, how does the attacker typically bypass the front-end proxy?",
+      "options": {
+        "A": "By providing two identical Transfer-Encoding headers that the proxy ignores",
+        "B": "By obfuscating one of the Transfer-Encoding headers so only the back-end server sees it",
+        "C": "By using a very large Content-Length header to overwhelm the proxy's buffer",
+        "D": "By encrypting the entire request body so the proxy cannot inspect the headers",
+        "E": "By sending the request over a non-standard port that the proxy does not monitor"
+      },
+      "correct": "B",
+      "explanation": "In a TE.TE attack, both the front-end and back-end support `Transfer-Encoding`. The attacker sends two `Transfer-Encoding` headers, but obfuscates one (e.g., `Transfer-Encoding: xchunked`). If the front-end uses the first header but the back-end uses the second (obfuscated) one, they will disagree on where the request ends, leading to smuggling."
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "A side-channel attack exploits physical information leaked during the execution of a cryptographic algorithm, such as timing, power consumption, or electromagnetic emissions, rather than attacking the mathematical properties of the algorithm itself.",
+      "options": {
+        "A": "An attack that exploits information inadvertently leaked during the execution of cryptographic algorithms (e.g., timing, power, sound)",
+        "B": "An attack that uses brute force to guess the cryptographic key by trying all possible combinations",
+        "C": "An attack that targets the mathematical weaknesses of the encryption algorithm itself",
+        "D": "An attack that intercepts the communication between two parties to steal the key",
+        "E": "An attack that uses social engineering to trick a user into revealing their password"
+      },
+      "question": "What is the defining characteristic of a 'Cryptanalysis Side Channel Attack'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Common side-channel attacks include timing attacks (measuring computation time), power-monitoring attacks (analyzing power consumption), and acoustic attacks (analyzing sound emissions).",
+      "options": {
+        "A": "Phishing, Vishing, and Smishing",
+        "B": "Timing attacks, Power-monitoring attacks, and Acoustic attacks",
+        "C": "SQL Injection, XSS, and CSRF",
+        "D": "Brute force, Dictionary attacks, and Rainbow tables",
+        "E": "Man-in-the-Middle, Replay, and Denial of Service"
+      },
+      "question": "What are the three primary categories of cryptanalysis side-channel attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "A timing attack measures the time a system takes to process different inputs. Since some operations take longer depending on the secret key bits, an attacker can deduce the key by analyzing these variations.",
+      "options": {
+        "A": "An attack that changes the system clock to bypass security checks",
+        "B": "An attack that floods a server with requests to cause a timeout",
+        "C": "An attack where the adversary gains information based on the amount of time a system takes to process different inputs",
+        "D": "An attack that predicts the next sequence number in a TCP connection",
+        "E": "An attack that exploits the expiration time of a session cookie"
+      },
+      "question": "How does a 'Timing Attack' function in the context of cryptanalysis?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "Using constant-time algorithms ensures that the execution time is independent of the input data or secret keys, effectively neutralizing the correlation that timing attacks rely on.",
+      "options": {
+        "A": "Increasing the processing speed of the CPU",
+        "B": "Adding random delays to every network request",
+        "C": "Using longer cryptographic keys (e.g., 4096-bit RSA)",
+        "D": "Implementing constant-time algorithms to remove data-dependent computation variations",
+        "E": "Disabling all logging on the target system"
+      },
+      "question": "Which of the following is an effective mitigation against timing attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Power-monitoring attacks analyze the variations in a device's power consumption during cryptographic operations to extract sensitive information like secret keys.",
+      "options": {
+        "A": "Exploiting variations in a device's power consumption during the execution of cryptographic operations",
+        "B": "Cutting off the power supply to a server to cause a hard reset",
+        "C": "Injecting high voltage into a USB port to fry the motherboard",
+        "D": "Monitoring the electricity bill of a data center to estimate its load",
+        "E": "Using a battery-powered device to avoid detection by network monitors"
+      },
+      "question": "What is the primary mechanism of a 'Power Monitoring Attack'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Simple Power Analysis (SPA) involves directly interpreting power consumption graphs, while Differential Power Analysis (DPA) uses statistical methods over many operations to find correlations.",
+      "options": {
+        "A": "Static Power Analysis and Dynamic Power Analysis",
+        "B": "Simple Power Analysis (SPA) and Differential Power Analysis (DPA)",
+        "C": "Single Phase Analysis and Dual Phase Analysis",
+        "D": "Symmetric Power Attack and Direct Power Attack",
+        "E": "Source Power Analysis and Destination Power Analysis"
+      },
+      "question": "What are the two main types of Power Monitoring attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "SPA stands for Simple Power Analysis, a technique where an attacker visually inspects power consumption traces to identify cryptographic operations.",
+      "options": {
+        "A": "Secure Power Access",
+        "B": "System Performance Analysis",
+        "C": "Statistical Power Assessment",
+        "D": "Symmetric Protocol Attack",
+        "E": "Simple Power Analysis"
+      },
+      "question": "What does the acronym 'SPA' stand for in power-monitoring cryptanalysis?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "DPA stands for Differential Power Analysis, which is more advanced than SPA as it uses statistical analysis to correlate power consumption with secret key bits.",
+      "options": {
+        "A": "Direct Power Access",
+        "B": "Data Protection Analysis",
+        "C": "Differential Power Analysis",
+        "D": "Dynamic Protocol Attack",
+        "E": "Digital Performance Assessment"
+      },
+      "question": "What does the acronym 'DPA' stand for in power-monitoring cryptanalysis?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "In SPA, the attacker looks for specific patterns or spikes in a power consumption graph that correspond to known cryptographic operations or instructions.",
+      "options": {
+        "A": "It uses complex statistical models to guess the key",
+        "B": "It requires physical access to the device's internal circuitry",
+        "C": "It compares the power usage of two different devices",
+        "D": "The attacker interprets power consumption graphs to identify specific operations or spikes",
+        "E": "It injects noise into the power line to disrupt the device"
+      },
+      "question": "How does an attacker perform a 'Simple Power Analysis' (SPA)?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "DPA is more sophisticated than SPA because it collects data from many operations and applies statistical analysis to find subtle correlations between power usage and secret values.",
+      "options": {
+        "A": "It collects data from many operations and uses statistical analysis to find correlations with secret key bits",
+        "B": "It measures the difference in power between the CPU and the RAM",
+        "C": "It requires the attacker to physically modify the device's power supply",
+        "D": "It only works on devices that use alternating current (AC)",
+        "E": "It uses a single power trace to identify the entire cryptographic key"
+      },
+      "question": "What distinguishes 'Differential Power Analysis' (DPA) from 'Simple Power Analysis' (SPA)?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Power regulation (smoothing out consumption) and randomization (adding noise or changing operation order) are key defenses against power analysis.",
+      "options": {
+        "A": "Using a more powerful CPU to process data faster",
+        "B": "Implementing power regulation and randomization techniques to obscure power signatures",
+        "C": "Disconnecting the device from the main power grid",
+        "D": "Using fiber optic cables for all data transmissions",
+        "E": "Encrypting the power line itself"
+      },
+      "question": "Which of the following is a common mitigation strategy for power monitoring attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "Acoustic cryptanalysis involves analyzing the sounds (ultrasonic or audible) produced by electronic components like CPUs or capacitors, which can vary based on the operations being performed.",
+      "options": {
+        "A": "An attack that uses high-frequency sound to break physical locks",
+        "B": "An attack that records a user's voice to steal their password",
+        "C": "Extracting information by analyzing the sound emissions produced by a device during operation",
+        "D": "Using sonar to map the internal layout of a secure facility",
+        "E": "An attack that plays loud music to distract security personnel"
+      },
+      "question": "What is the core concept of an 'Acoustic Cryptanalysis' attack?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "Using sound-absorbing materials and physically isolating sensitive components can significantly reduce the detectable acoustic leakage from a device.",
+      "options": {
+        "A": "Installing a silent cooling fan in the server room",
+        "B": "Using headphones while performing cryptographic operations",
+        "C": "Increasing the volume of background noise in the data center",
+        "D": "Using sound-absorbing materials and physically isolating sensitive components",
+        "E": "Encrypting the audio output of the system"
+      },
+      "question": "How can 'Acoustic Cryptanalysis' attacks be mitigated?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Spectre is a hardware vulnerability that exploits speculative execution in modern microprocessors to trick programs into leaking their own memory contents to an attacker.",
+      "options": {
+        "A": "A microprocessor vulnerability that exploits speculative execution to leak secrets between applications",
+        "B": "A software bug in web browsers that allows cross-site scripting",
+        "C": "A network protocol flaw that enables man-in-the-middle attacks",
+        "D": "A type of malware that hides in the BIOS of a computer",
+        "E": "A vulnerability in the Linux kernel's memory management system"
+      },
+      "question": "What is the 'Spectre' vulnerability?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Meltdown exploits out-of-order execution to allow a user-level application to read the entire physical memory of the system, including kernel memory and memory belonging to other processes.",
+      "options": {
+        "A": "A vulnerability that causes a CPU to overheat and shut down",
+        "B": "A microprocessor vulnerability that allows user applications to access kernel memory and other programs' data",
+        "C": "An attack that targets the cooling system of a data center",
+        "D": "A flaw in the way operating systems handle software updates",
+        "E": "A type of ransomware that encrypts the entire hard drive"
+      },
+      "question": "What is the 'Meltdown' vulnerability?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "BOLA stands for Broken Object Level Authorization, which occurs when an application fails to properly verify if a user has permission to access a specific object (e.g., by changing an ID in a URL).",
+      "options": {
+        "A": "Binary Object Link Access",
+        "B": "Backend Object Logic Attack",
+        "C": "Basic Output Level Authentication",
+        "D": "Boundary Object Leakage Analysis",
+        "E": "Broken Object Level Authorization"
+      },
+      "question": "What does the acronym 'BOLA' stand for in the context of API security?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "BFLA stands for Broken Function Level Authorization, which occurs when an application fails to restrict access to sensitive functions (e.g., administrative actions) to authorized users only.",
+      "options": {
+        "A": "Binary File Link Access",
+        "B": "Backend Function Logic Attack",
+        "C": "Broken Function Level Authorization",
+        "D": "Boundary Function Leakage Analysis",
+        "E": "Basic File Level Authentication"
+      },
+      "question": "What does the acronym 'BFLA' stand for in the context of API security?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "SSRF (Server-Side Request Forgery) occurs when an attacker can trick a server into making requests to internal or external resources that the attacker wouldn't normally be able to reach.",
+      "options": {
+        "A": "Secure Server Response Format",
+        "B": "Static Site Resource Fetching",
+        "C": "System Side Request Filtering",
+        "D": "Server-Side Request Forgery",
+        "E": "Symmetric Server Resource Flow"
+      },
+      "question": "What does the acronym 'SSRF' stand for in web security?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "A common way to test for SSRF is to provide a URL that points back to the attacker's own server (e.g., using netcat) or to internal services (e.g., localhost:80) and observe if the server makes the connection.",
+      "options": {
+        "A": "By checking the server's SSL certificate for errors",
+        "B": "By attempting to make the server connect to a controlled listener (e.g., netcat) or internal resources (e.g., localhost)",
+        "C": "By performing a port scan on the server's public IP address",
+        "D": "By analyzing the server's response headers for 'X-SSRF' flags",
+        "E": "By sending a large payload to the server to cause a buffer overflow"
+      },
+      "question": "How can a penetration tester typically determine if an application is vulnerable to SSRF?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "SSRF can be prevented by validating user-supplied URLs against a strict whitelist and avoiding the use of user input directly in server-side requests.",
+      "options": {
+        "A": "Validating remote resources against a strict whitelist and avoiding direct user-input in requests",
+        "B": "Installing a firewall on the client's machine",
+        "C": "Using HTTPS instead of HTTP for all internal communications",
+        "D": "Disabling all outbound traffic from the web server",
+        "E": "Encrypting the server's hard drive"
+      },
+      "question": "What is a primary method for preventing SSRF vulnerabilities?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "HTTPS is essentially HTTP traffic encapsulated within a TLS (formerly SSL) session to provide encryption, integrity, and authentication.",
+      "options": {
+        "A": "HTTP over SSH",
+        "B": "HTTP over VPN",
+        "C": "HTTP over TLS",
+        "D": "HTTP over IPsec",
+        "E": "HTTP over PGP"
+      },
+      "question": "What is another common name for HTTPS?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "TLS stands for Transport Layer Security, the successor to SSL, used to secure communications over a computer network.",
+      "options": {
+        "A": "Total Link Security",
+        "B": "Traffic Layer Shield",
+        "C": "Terminal Login System",
+        "D": "Transfer Level Safety",
+        "E": "Transport Layer Security"
+      },
+      "question": "What does the acronym 'TLS' stand for?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "SSL stands for Secure Sockets Layer, the original protocol for securing web traffic, now largely replaced by TLS.",
+      "options": {
+        "A": "System Security Link",
+        "B": "Secure Sockets Layer",
+        "C": "Static Server Login",
+        "D": "Symmetric Shell Layer",
+        "E": "Standard Socket Security"
+      },
+      "question": "What does the acronym 'SSL' stand for?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "Encryption can be applied to data while it is stored (at rest), while it is being moved across a network (in transit), or from the sender all the way to the recipient (end-to-end).",
+      "options": {
+        "A": "Local, Regional, and Global",
+        "B": "Hardware, Software, and Firmware",
+        "C": "Primary, Secondary, and Tertiary",
+        "D": "At rest, In transit, and End-to-end",
+        "E": "Public, Private, and Shared"
+      },
+      "question": "What are the three primary levels/states at which encryption is typically applied?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Encryption at rest refers to protecting data while it is stored on physical media (e.g., hard drives, databases) to prevent unauthorized access if the media is stolen or accessed directly.",
+      "options": {
+        "A": "Data stored in an encrypted format on physical media to prevent unauthorized access",
+        "B": "Data that is currently being processed by the CPU",
+        "C": "Data that is being transmitted over a wireless network",
+        "D": "Data that has been deleted but not yet overwritten",
+        "E": "Data that is stored in the cloud but not on-premises"
+      },
+      "question": "What is the definition of 'Encryption at Rest'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Bluesnarfing is the unauthorized access of information from a wireless device through a Bluetooth connection, often used to steal contacts, messages, or other data.",
+      "options": {
+        "A": "Unauthorized access to information from a wireless device via Bluetooth",
+        "B": "Sending unsolicited messages to Bluetooth-enabled devices",
+        "C": "A Denial of Service attack against Bluetooth connections",
+        "D": "Gaining full control over a device via Bluetooth vulnerabilities",
+        "E": "Intercepting Bluetooth signals to track a user's location"
+      },
+      "question": "What is 'Bluesnarfing'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Bluejacking involves sending unsolicited messages (like electronic business cards) to Bluetooth-enabled devices within range. It is generally considered an annoyance rather than a data-stealing attack.",
+      "options": {
+        "A": "Stealing data from a device via Bluetooth",
+        "B": "Sending unsolicited messages to Bluetooth-enabled devices",
+        "C": "Cracking Bluetooth encryption keys",
+        "D": "Impersonating a trusted Bluetooth device",
+        "E": "Overwhelming a Bluetooth device with traffic"
+      },
+      "question": "What is 'Bluejacking'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "BlueSmacking is a type of Denial of Service (DoS) attack that targets Bluetooth devices by sending oversized packets to overwhelm the connection.",
+      "options": {
+        "A": "Gaining unauthorized access to files via Bluetooth",
+        "B": "Eavesdropping on Bluetooth voice communications",
+        "C": "A Denial of Service attack that overwhelms a device's Bluetooth connection",
+        "D": "Exploiting the pairing process to impersonate a device",
+        "E": "Using Bluetooth to track a device's physical location"
+      },
+      "question": "What is 'BlueSmacking'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "Bluebugging is a more severe attack where the attacker gains full control over a Bluetooth-enabled device, allowing them to make calls, send messages, and access data.",
+      "options": {
+        "A": "Sending annoying messages via Bluetooth",
+        "B": "Stealing contact lists from a Bluetooth device",
+        "C": "Performing a DoS attack on a Bluetooth headset",
+        "D": "A technique used to gain full control over a device via Bluetooth",
+        "E": "Monitoring Bluetooth traffic for sensitive information"
+      },
+      "question": "What is 'Bluebugging'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "BlueBorne is a set of vulnerabilities that allow attackers to take control of devices, spread malware, or perform other malicious activities via Bluetooth without requiring pairing or discoverable mode.",
+      "options": {
+        "A": "A method for extending Bluetooth range using specialized antennas",
+        "B": "A protocol for secure Bluetooth communication in industrial environments",
+        "C": "A type of Bluetooth-enabled wearable device",
+        "D": "A legacy attack that targets old Bluetooth versions",
+        "E": "A set of vulnerabilities allowing attackers to take control of devices via Bluetooth"
+      },
+      "question": "What is 'BlueBorne'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "KNB (Key Negotiation Bluetooth) is an attack that manipulates the encryption process during connection establishment, potentially weakening the security of the Bluetooth link.",
+      "options": {
+        "A": "An attack that manipulates the Bluetooth encryption process during connection establishment",
+        "B": "A method for bypassing Bluetooth pairing PINs",
+        "C": "A type of Bluetooth-based malware that spreads via file transfers",
+        "D": "A protocol for high-speed Bluetooth data transmission",
+        "E": "A tool used for Bluetooth network discovery"
+      },
+      "question": "What is the 'KNB' attack in Bluetooth?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "KNB stands for Key Negotiation Bluetooth, referring to the process of establishing encryption keys between devices.",
+      "options": {
+        "A": "Kernel Network Bridge",
+        "B": "Key Negotiation Bluetooth",
+        "C": "Knowledge Network Base",
+        "D": "Kinetic Node Broadcast",
+        "E": "Keyless Network Beacon"
+      },
+      "question": "What does the acronym 'KNB' stand for in the context of Bluetooth security?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "BIAS stands for Bluetooth Impersonation AttackS, which targets the pairing and authentication process.",
+      "options": {
+        "A": "Binary Interface Authentication System",
+        "B": "Bluetooth Integrated Access Service",
+        "C": "Bluetooth Impersonation AttackS",
+        "D": "Basic Information Analysis Suite",
+        "E": "Beacon Interference and Suppression"
+      },
+      "question": "What does the acronym 'BIAS' stand for in Bluetooth security?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "BIAS (Bluetooth Impersonation AttackS) exploits the pairing process to allow an attacker to impersonate a previously trusted device, bypassing authentication.",
+      "options": {
+        "A": "It crashes the Bluetooth stack on the target device",
+        "B": "It intercepts and decrypts all Bluetooth traffic in real-time",
+        "C": "It prevents new devices from pairing with the target",
+        "D": "It exploits the pairing process to impersonate a trusted device",
+        "E": "It uses Bluetooth to drain the target device's battery"
+      },
+      "question": "What is the primary function of a 'BIAS' attack?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "The 'Car Whisperer' is a Bluetooth hack that targets vehicle systems, potentially allowing attackers to interact with the car's audio system or other Bluetooth-enabled features.",
+      "options": {
+        "A": "A device used to track stolen vehicles via Bluetooth",
+        "B": "A software update for car infotainment systems",
+        "C": "A method for hands-free calling in older vehicles",
+        "D": "A type of Bluetooth-based car alarm",
+        "E": "A Bluetooth hack that targets vehicle systems, potentially allowing remote interaction"
+      },
+      "question": "What is a 'Car Whisperer' in the context of Bluetooth security?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Bluetooth is designed for short-range wireless data transfer between fixed and mobile devices, such as headsets, keyboards, and smartphones.",
+      "options": {
+        "A": "Transferring data over short distances between fixed and mobile devices",
+        "B": "Long-range satellite communication",
+        "C": "High-speed fiber optic networking",
+        "D": "Secure military-grade radio transmission",
+        "E": "Broadcasting television signals"
+      },
+      "question": "What is Bluetooth primarily designed for?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "A piconet is a network formed by a group of Bluetooth devices that are connected together.",
+      "options": {
+        "A": "Microcell",
+        "B": "Piconet",
+        "C": "Nano-network",
+        "C": "Bluetooth-mesh",
+        "E": "Personal Area Network (PAN)"
+      },
+      "question": "What is a network of Bluetooth devices called?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "A scatternet is formed when multiple piconets are connected, allowing devices to interact across different piconets.",
+      "options": {
+        "A": "Inter-net",
+        "B": "Multi-piconet",
+        "C": "Scatternet",
+        "D": "Wide Area Network (WAN)",
+        "E": "Mesh-net"
+      },
+      "question": "What are multiple piconets called when they are interconnected?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "Bluetooth risks include unauthorized data access, theft of information, interference from other devices, and the ability to track a device's physical location.",
+      "options": {
+        "A": "Only data theft and interference",
+        "B": "Only unauthorized access and device tracking",
+        "C": "Only signal loss and battery drain",
+        "D": "Unauthorized access, data theft, interference, and device tracking",
+        "E": "Bluetooth has no significant security risks"
+      },
+      "question": "What are some common security risks associated with Bluetooth?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Legacy Bluejacking involves sending unsolicited messages to Bluetooth-enabled devices, which is more of an annoyance than a data-stealing attack.",
+      "options": {
+        "A": "Sending unsolicited messages to Bluetooth-enabled devices as an annoyance",
+        "B": "Stealing contact lists from a device",
+        "C": "Gaining full control over a device's operating system",
+        "D": "Cracking the Bluetooth encryption key",
+        "E": "Eavesdropping on Bluetooth voice calls"
+      },
+      "question": "What is the 'legacy' Bluejacking attack?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Legacy Bluebugging is an attack where an attacker gains full control over a Bluetooth-enabled device, allowing them to access and modify information.",
+      "options": {
+        "A": "Sending unsolicited messages to a device",
+        "B": "Gaining full control over a device to access and modify information",
+        "C": "Performing a DoS attack on a Bluetooth connection",
+        "D": "Tracking a device's location via Bluetooth",
+        "E": "Intercepting Bluetooth traffic in a public area"
+      },
+      "question": "What is the 'legacy' Bluebugging attack?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "BlueBorne allows attackers to exploit Bluetooth connections and gain complete control over targeted devices without requiring them to be paired or in discoverable mode.",
+      "options": {
+        "A": "A method for secure Bluetooth pairing",
+        "B": "A type of Bluetooth-enabled smart home device",
+        "C": "A set of vulnerabilities allowing complete control over devices via Bluetooth",
+        "D": "A tool for monitoring Bluetooth signal strength",
+        "E": "A protocol for high-speed Bluetooth data transfer"
+      },
+      "question": "What is the 'BlueBorne' attack?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "KNOB (Key Negotiation Of Bluetooth) exploits a flaw in the Bluetooth standard to undermine encryption by forcing the use of a very short encryption key (1 byte) which can be brute-forced.",
+      "options": {
+        "A": "It crashes the Bluetooth stack on the target device",
+        "B": "It prevents new devices from pairing with the target",
+        "C": "It intercepts and decrypts all Bluetooth traffic in real-time",
+        "D": "It undermines encryption by forcing the use of a very short encryption key",
+        "E": "It uses Bluetooth to drain the target device's battery"
+      },
+      "question": "What is the primary function of a 'KNOB' or 'KNB' attack?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "Bluetooth attack mitigations include keeping devices updated, disabling Bluetooth when not needed, and avoiding connections to unknown or random devices.",
+      "options": {
+        "A": "Only keeping devices updated",
+        "B": "Only disabling Bluetooth when not needed",
+        "C": "Only avoiding connections to random devices",
+        "D": "Only using Bluetooth in public areas",
+        "E": "Keeping devices updated, disabling Bluetooth when not needed, and avoiding random connections"
+      },
+      "question": "What are common mitigations against Bluetooth attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Cryptanalysis is the process of decrypting coded or encrypted data without access to the key used in the encryption process, often by exploiting weaknesses in the algorithm or its implementation.",
+      "options": {
+        "A": "The process of decrypting data without access to the original key",
+        "B": "The process of creating new encryption algorithms",
+        "C": "The study of physical security for cryptographic hardware",
+        "D": "The management of cryptographic keys throughout their lifecycle",
+        "E": "The legal framework surrounding the use of encryption"
+      },
+      "question": "What is 'Cryptanalysis'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Ciphertext is the scrambled, unreadable form of plaintext resulting from an encryption algorithm. It requires a key to be decrypted back into its original form.",
+      "options": {
+        "A": "The original, readable message before encryption",
+        "B": "The scrambled, unreadable form of data resulting from encryption",
+        "C": "A secret password used to access a system",
+        "D": "A digital signature used for authentication",
+        "E": "A type of cryptographic hash function"
+      },
+      "question": "What is 'Ciphertext'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "Symmetric encryption uses the same key for both the encryption of plaintext and the decryption of ciphertext.",
+      "options": {
+        "A": "Encryption that uses different keys for encryption and decryption",
+        "B": "Encryption that only works on symmetric data structures",
+        "C": "Encryption where the same key is used for both encryption and decryption",
+        "D": "A type of encryption that is resistant to quantum computing",
+        "E": "Encryption that requires a hardware security module (HSM)"
+      },
+      "question": "What is 'Symmetric Encryption'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "Asymmetric encryption (also known as public-key cryptography) uses a pair of keys: a public key for encryption and a private key for decryption.",
+      "options": {
+        "A": "Encryption where the key length is asymmetric",
+        "B": "Encryption that uses a single shared secret key",
+        "C": "Encryption that is only used for digital signatures",
+        "D": "Encryption that uses a public key for encryption and a private key for decryption",
+        "E": "Encryption that is performed in multiple stages"
+      },
+      "question": "What is 'Asymmetric Encryption'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "Frequency analysis is a cryptanalysis technique based on the statistical study of the frequency of letters or symbols in ciphertext, which can provide clues about the underlying plaintext.",
+      "options": {
+        "A": "Analyzing the frequency of network packets to detect attacks",
+        "B": "Measuring the clock frequency of a CPU during encryption",
+        "C": "A method for generating random numbers for cryptographic keys",
+        "D": "Testing the signal frequency of wireless communications",
+        "E": "A technique based on the statistical study of characters in ciphertext"
+      },
+      "question": "What is 'Frequency Analysis' in the context of cryptanalysis?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "A Side Channel Attack exploits information inadvertently leaked during the execution of a cryptographic algorithm, such as timing, power consumption, or sound.",
+      "options": {
+        "A": "An attack that exploits information leaked during algorithm execution",
+        "B": "An attack that targets the communication channel between two parties",
+        "C": "A brute-force attack against a cryptographic key",
+        "D": "A social engineering attack to obtain a password",
+        "E": "An attack that modifies the source code of an encryption program"
+      },
+      "question": "What is a 'Cryptanalysis Side Channel Attack'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "The three primary types of side-channel attacks are timing attacks, power-monitoring attacks, and acoustic attacks.",
+      "options": {
+        "A": "Brute-force, Dictionary, and Rainbow table attacks",
+        "B": "Timing, Power-monitoring, and Acoustic attacks",
+        "C": "Phishing, Vishing, and Smishing attacks",
+        "D": "SQL injection, XSS, and CSRF attacks",
+        "E": "Man-in-the-middle, Replay, and Birthday attacks"
+      },
+      "question": "What are the three primary types of cryptanalysis side-channel attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "A timing attack is a side-channel attack where an attacker gains information by measuring the amount of time a system takes to process different cryptographic inputs.",
+      "options": {
+        "A": "An attack that changes the system clock to bypass security",
+        "B": "A DoS attack that delays network responses",
+        "C": "An attack that gains information based on the computation time of inputs",
+        "D": "A method for synchronizing cryptographic keys across a network",
+        "E": "An attack that targets time-based one-time passwords (TOTP)"
+      },
+      "question": "What is a 'Timing Attack' in cryptanalysis?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "A primary mitigation for timing attacks is using constant-time algorithms, which ensure that the computation time is independent of the secret information being processed.",
+      "options": {
+        "A": "Increasing the CPU clock speed",
+        "B": "Using a more complex encryption algorithm",
+        "C": "Adding random delays to all network traffic",
+        "D": "Using constant-time algorithms to remove data-dependent timing variations",
+        "E": "Implementing multi-factor authentication"
+      },
+      "question": "What is a common mitigation against timing attacks in cryptanalysis?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "A power monitoring attack is a side-channel attack where an attacker exploits variations in a device's power consumption during the execution of cryptographic operations to extract sensitive information.",
+      "options": {
+        "A": "Exploiting variations in a device's power consumption to extract information",
+        "B": "Cutting off power to a device to cause a denial of service",
+        "C": "Injecting power surges to damage cryptographic hardware",
+        "D": "Monitoring the power grid to detect cryptographic activity",
+        "E": "Using a device's battery level to guess its encryption key"
+      },
+      "question": "What is a 'Power Monitoring Attack' in cryptanalysis?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "The two primary types of power monitoring attacks are Simple Power Analysis (SPA) and Differential Power Analysis (DPA).",
+      "options": {
+        "A": "Direct and Indirect Power Analysis",
+        "B": "Simple Power Analysis (SPA) and Differential Power Analysis (DPA)",
+        "C": "Static and Dynamic Power Analysis",
+        "D": "Active and Passive Power Analysis",
+        "E": "Internal and External Power Analysis"
+      },
+      "question": "What are the two primary types of power monitoring attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "SPA stands for Simple Power Analysis, a technique where an attacker directly interprets power consumption measurements to identify cryptographic operations.",
+      "options": {
+        "A": "Secure Power Authentication",
+        "B": "System Performance Analysis",
+        "C": "Simple Power Analysis",
+        "D": "Symmetric Power Allocation",
+        "E": "Standard Power Assessment"
+      },
+      "question": "What does the acronym 'SPA' stand for in the context of power monitoring attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "DPA stands for Differential Power Analysis, a more advanced technique that uses statistical analysis of many power consumption measurements to extract secret keys.",
+      "options": {
+        "A": "Digital Power Authentication",
+        "B": "Data Protection Analysis",
+        "C": "Direct Power Access",
+        "D": "Differential Power Analysis",
+        "E": "Dynamic Power Allocation"
+      },
+      "question": "What does the acronym 'DPA' stand for in the context of power monitoring attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "In Simple Power Analysis (SPA), the attacker interprets the power consumption graph to identify specific operations, such as identifying a spike in power that corresponds to a particular cryptographic step.",
+      "options": {
+        "A": "Interpreting power consumption graphs to identify specific operations",
+        "B": "Using statistical analysis to find correlations in power data",
+        "C": "Measuring the total energy consumed by a device over time",
+        "D": "Bypassing power regulations to gain access to a device",
+        "E": "Monitoring the sound produced by a device's power supply"
+      },
+      "question": "What is the primary method used in 'Simple Power Analysis' (SPA)?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Differential Power Analysis (DPA) is a sophisticated attack that collects power consumption data for many operations and uses statistical analysis to find correlations between power consumption and the values of bits in a secret key.",
+      "options": {
+        "A": "Directly reading the power consumption of a single operation",
+        "B": "Using statistical analysis of many operations to find correlations with secret keys",
+        "C": "Measuring the difference in power between two different devices",
+        "D": "Analyzing the power consumption of a device while it is idle",
+        "E": "Injecting noise into the power supply to disrupt encryption"
+      },
+      "question": "What is the primary method used in 'Differential Power Analysis' (DPA)?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "Mitigations for power monitoring attacks include power regulation to smooth out consumption and randomization techniques to make statistical analysis more difficult.",
+      "options": {
+        "A": "Using a larger battery for the device",
+        "B": "Increasing the voltage of the power supply",
+        "C": "Implementing power regulation and randomization techniques",
+        "D": "Disconnecting the device from the power grid during encryption",
+        "E": "Using a Faraday cage to block electromagnetic emissions"
+      },
+      "question": "What are common mitigations against power monitoring attacks?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "An acoustic cryptanalysis attack extracts information by analyzing the sound emissions produced by a device (e.g., from CPU or fans) during its operation, which can correlate with internal states or computations.",
+      "options": {
+        "A": "Eavesdropping on voice communications over a network",
+        "B": "Using ultrasound to disrupt a device's operation",
+        "C": "Analyzing the sound of a user typing their password",
+        "D": "Extracting information by analyzing a device's sound emissions during operation",
+        "E": "Monitoring the background noise in a server room"
+      },
+      "question": "What is an 'Acoustic Cryptanalysis' attack?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "Mitigations for acoustic cryptanalysis attacks include using sound-absorbing materials in device construction and physically isolating sensitive components to reduce or block sound emissions.",
+      "options": {
+        "A": "Playing loud music in the data center",
+        "B": "Using noise-canceling headphones for all staff",
+        "C": "Encrypting the audio output of the computer",
+        "D": "Increasing the fan speed to mask other sounds",
+        "E": "Using sound-absorbing materials and physically isolating sensitive components"
+      },
+      "question": "How can 'Acoustic Cryptanalysis' attacks be mitigated?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Encryption in transit (or encryption in motion) refers to protecting data as it moves across a network, typically using protocols like TLS/SSL or IPsec to prevent eavesdropping.",
+      "options": {
+        "A": "Protecting data as it is transmitted across a network",
+        "B": "Encrypting data before it is written to a hard drive",
+        "C": "A method for encrypting data while it is being processed by the CPU",
+        "D": "Using physical locks to protect network cables",
+        "E": "Encrypting data only at the source and destination nodes"
+      },
+      "question": "What is the definition of 'Encryption in Transit'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "MongoDB is a popular NoSQL database that is categorized as a 'Document-Oriented' database, storing data in flexible, JSON-like documents.",
+      "options": {
+        "A": "Relational (RDBMS)",
+        "B": "Document-Oriented",
+        "C": "Key-Value Store",
+        "D": "Graph Database",
+        "E": "Column-Family Store"
+      },
+      "question": "What type of database is MongoDB?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "MongoDB stores data in a format called BSON (Binary JSON), which is a binary representation of JSON-like documents.",
+      "options": {
+        "A": "XML",
+        "B": "CSV",
+        "C": "BSON (Binary JSON)",
+        "D": "Protocol Buffers",
+        "E": "YAML"
+      },
+      "question": "In what format are documents stored in MongoDB?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "In MongoDB, every document must have a unique primary key, and the field name reserved for this purpose is '_id'.",
+      "options": {
+        "A": "id",
+        "B": "uuid",
+        "C": "pk",
+        "D": "_id",
+        "E": "key"
+      },
+      "question": "What is the reserved field name for the primary key in MongoDB documents?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "A JSON-based NoSQL injection often uses operators like '$regex' to bypass authentication or extract data, for example: { \"username\": { \"$regex\": \".*\" } }.",
+      "options": {
+        "A": "SELECT * FROM users WHERE username = 'admin'--",
+        "B": "<script>alert('XSS')</script>",
+        "C": "../../etc/passwd",
+        "D": "() { :; }; /bin/bash",
+        "E": "{ \"username\": { \"$regex\": \".*\" } }"
+      },
+      "question": "Which of the following represents a typical JSON-based NoSQL injection payload?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "In-Band NoSQL injection occurs when the attacker uses the same communication channel to both launch the attack and receive the results directly in the application's response.",
+      "options": {
+        "A": "Using the same channel to launch the attack and receive results",
+        "B": "Launching an attack via a different network protocol",
+        "C": "An attack that only works on internal networks",
+        "D": "An attack that requires physical access to the database server",
+        "E": "An attack that uses DNS or ICMP to exfiltrate data"
+      },
+      "question": "What is 'In-Band NoSQL Injection'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Blind NoSQL injection occurs when the attacker does not receive direct results from the query but can infer information based on the server's response (e.g., success/failure or response time).",
+      "options": {
+        "A": "An attack that targets visually impaired users",
+        "B": "An attack where results are inferred from server behavior rather than direct output",
+        "C": "An attack that uses encrypted payloads to hide from WAFs",
+        "D": "An attack that targets the database's logging system",
+        "E": "An attack that only works when the database is offline"
+      },
+      "question": "What is 'Blind NoSQL Injection'?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "The two primary sub-types of Blind NoSQL injection are Boolean-based (inferring truth based on response content) and Time-based (inferring truth based on response delays).",
+      "options": {
+        "A": "Direct and Indirect",
+        "B": "Static and Dynamic",
+        "C": "Boolean-based and Time-based",
+        "D": "Symmetric and Asymmetric",
+        "E": "Local and Remote"
+      },
+      "question": "What are the two common sub-types of Blind NoSQL injection?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "Boolean-based Blind NoSQL injection involves forcing the server to evaluate a condition and observing whether the response indicates the condition was true or false.",
+      "options": {
+        "A": "Measuring the time the server takes to respond",
+        "B": "Analyzing the server's error messages for clues",
+        "C": "Extracting data via a secondary DNS channel",
+        "D": "Observing different server responses based on true/false conditions",
+        "E": "Brute-forcing the database administrator's password"
+      },
+      "question": "How does 'Boolean-based' Blind NoSQL injection work?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "Time-based Blind NoSQL injection involves making the server wait for a specific amount of time before responding if a condition is true, allowing the attacker to infer the result.",
+      "options": {
+        "A": "Synchronizing the attacker's clock with the server",
+        "B": "Flooding the server with requests to slow it down",
+        "C": "Analyzing the 'Date' header in the server's response",
+        "D": "Using a stopwatch to measure the user's reaction time",
+        "E": "Inferring information based on the time the server takes to respond"
+      },
+      "question": "How does 'Time-based' Blind NoSQL injection work?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "When a NoSQL query is sent using URL-encoded format (x-www-form-urlencoded), operators can often be injected using array-like syntax, such as 'param[$regex]=value'.",
+      "options": {
+        "A": "param[$regex]=value",
+        "B": "param.regex=value",
+        "C": "param{regex}=value",
+        "D": "param:regex=value",
+        "E": "param--regex=value"
+      },
+      "question": "What is the common format for injecting NoSQL operators when the query uses 'x-www-form-urlencoded' encoding?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "Common NoSQL query operators include '$ne' (not equal), '$regex' (regular expression), '$gt' (greater than), and '$lt' (less than).",
+      "options": {
+        "A": "!=, LIKE, >, <",
+        "B": "$ne, $regex, $gt, $lt",
+        "C": "NOT, MATCH, MORE, LESS",
+        "D": "OR, AND, XOR, NOT",
+        "E": "IS, AS, IN, ON"
+      },
+      "question": "What are some common NoSQL query operators used in MongoDB?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "A simple authentication bypass in NoSQL can be achieved by using the '$regex' operator to match any character for both username and password, e.g., 'username[$regex]=.&password[$regex]=.'.",
+      "options": {
+        "A": "username=admin&password=password",
+        "B": "username=admin' OR 1=1--",
+        "C": "username[$regex]=.&password[$regex]=.",
+        "D": "username=admin&password[$ne]=invalid",
+        "E": "username[$gt]=&password[$gt]="
+      },
+      "question": "What is a common method for a simple authentication bypass using NoSQL injection?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "If the username is known, an attacker can bypass the password check by using the '$ne' (not equal) operator with a value that is known to be incorrect, e.g., 'username=admin@mail.com&password[$ne]=invalid'.",
+      "options": {
+        "A": "username=admin@mail.com&password=*",
+        "B": "username=admin@mail.com&password[$eq]=admin",
+        "C": "username=admin@mail.com&password[$regex]=^password",
+        "D": "username=admin@mail.com&password[$ne]=invalid",
+        "E": "username=admin@mail.com&password[$gt]=0"
+      },
+      "question": "If the username is known, how can an attacker potentially bypass the password check using NoSQL injection?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "The tilde (~) character is often used in '$lt' (less than) or '$lte' (less than or equal) NoSQL injections because it is one of the largest ASCII characters, making it useful for range-based comparisons.",
+      "options": {
+        "A": "The asterisk (*) as it is a wildcard",
+        "B": "The percentage (%) as it is used in SQL LIKE",
+        "C": "The dollar sign ($) as it is the operator prefix",
+        "D": "The null byte (%00) to terminate strings",
+        "E": "The tilde (~) as it is a large ASCII character"
+      },
+      "question": "Which character is commonly used in '$lt' or '$lte' NoSQL injections for range-based comparisons, and why?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "A",
+      "explanation": "Blind data extraction in NoSQL can be performed by testing characters one by one using the '$regex' operator and observing the server's response, e.g., testing if 'username[$regex]=^A' is true.",
+      "options": {
+        "A": "By testing characters one by one using the '$regex' operator and observing responses",
+        "B": "By dumping the entire database using the '$dump' operator",
+        "C": "By using the '$where' operator to execute a JavaScript loop",
+        "D": "By analyzing the server's error logs for leaked data",
+        "E": "By performing a timing attack on the database's indexing system"
+      },
+      "question": "How can an attacker perform 'Blind Data Extraction' using NoSQL injection?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "B",
+      "explanation": "SSJI (Server-Side JavaScript Injection) occurs when an application takes user input and uses it within a server-side JavaScript function, such as MongoDB's '$where' operator, without proper sanitization.",
+      "options": {
+        "A": "Injecting JavaScript into the client's browser",
+        "B": "Injecting JavaScript that is executed on the server, often via NoSQL operators",
+        "C": "A type of XSS that targets server-side rendered pages",
+        "D": "A method for bypassing CSRF protections using JavaScript",
+        "E": "Injecting JavaScript into a database's stored procedures"
+      },
+      "question": "What is 'SSJI' in the context of NoSQL security?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "C",
+      "explanation": "SSJI stands for Server-Side JavaScript Injection.",
+      "options": {
+        "A": "Secure Server JSON Interface",
+        "B": "Static Site JavaScript Integration",
+        "C": "Server-Side JavaScript Injection",
+        "D": "Symmetric Server Join Index",
+        "E": "System Side JSON Ingestion"
+      },
+      "question": "What does the acronym 'SSJI' stand for?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "D",
+      "explanation": "SSJI can be exploited in NoSQL by injecting JavaScript code into a '$where' query, for example, by using a 'sleep()' function to cause a delay if a condition is met.",
+      "options": {
+        "A": "By using the '$regex' operator to match patterns",
+        "B": "By bypassing the WAF with encoded payloads",
+        "C": "By performing a brute-force attack on the session cookie",
+        "D": "By injecting JavaScript code (e.g., sleep()) into a '$where' query",
+        "E": "By using the '$ne' operator to bypass authentication"
+      },
+      "question": "How can 'SSJI' be exploited in a NoSQL injection attack?",
+      "skill": "Unknown"
+    },
+    {
+      "category": "Unknown",
+      "correct": "E",
+      "explanation": "To check the first character of a field using SSJI, an attacker can inject a JavaScript '.match()' function into the '$where' query, e.g., 'this.username.match(\"^A\")'.",
+      "options": {
+        "A": "By using the '$gt' operator with 'A'",
+        "B": "By analyzing the server's response headers",
+        "C": "By using a SQL-like SUBSTRING function",
+        "D": "By performing a timing attack on the 'A' character",
+        "E": "By injecting a JavaScript '.match()' function into the '$where' query"
+      },
+      "question": "How can an attacker check if the first character of a 'username' is 'A' using SSJI in a NoSQL injection?",
+      "skill": "Unknown"
     }
   ]
 }
