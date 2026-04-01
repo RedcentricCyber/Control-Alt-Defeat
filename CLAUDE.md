@@ -49,6 +49,7 @@ Exam state lives in the Flask session (server-side, cookie-signed). The session 
 Exams live in `app/exams/*.json`. Each file defines:
 - `title`, `description`, `difficulty`, `time_limit` (minutes, 0 = untimed), `pass_mark` (percentage)
 - `questions[]` — each with `question`, `options` (object keyed A/B/C/D), `answer` (key), optional `explanation` and `category`
+- Optional `reward` — text displayed when a user passes (e.g. voucher code, CTF flag)
 - Optional `based_on`, `created_by`, `links[]` metadata shown in the UI
 
 Question selection is **stratified by category** — the app samples proportionally from each category so all domains are represented in every session.

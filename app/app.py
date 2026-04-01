@@ -10,7 +10,7 @@ import uuid
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from flask import Flask, abort, make_response, render_template, request, session, redirect, url_for
+from flask import Flask, abort, flash, get_flashed_messages, make_response, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "cyberpunk-secret-key-change-in-prod")
@@ -402,10 +402,11 @@ def start():
     pool_size = len(all_questions)
 
     # Number of questions — use form override if valid, else exam default
+    default_num_questions = min(exam.get("num_questions", pool_size), pool_size)
     try:
         num_questions = max(1, min(int(request.form.get("num_questions", "")), pool_size))
     except (ValueError, TypeError):
-        num_questions = min(exam.get("num_questions", pool_size), pool_size)
+        num_questions = default_num_questions
 
     question_indices = select_question_indices(all_questions, num_questions)
 
@@ -417,10 +418,12 @@ def start():
     session["started"] = True
     session["session_token"] = str(uuid.uuid4())[:8].upper()
     session["start_time"] = int(time.time())
+    session["default_settings"] = (num_questions == default_num_questions)
 
     # Time limit — use form override if valid, else leave unset (exam default used in /exam)
     try:
         session["time_limit_override"] = max(0, min(int(request.form.get("time_limit_override", "")), 9999))
+        session["default_settings"] = False
     except (ValueError, TypeError):
         pass  # no override — /exam will use exam.time_limit directly
 
@@ -526,6 +529,9 @@ def submit():
         "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
     }, answers=results, time_taken=time_taken)
 
+    if passed and exam.get("reward") and session.get("default_settings"):
+        flash(exam["reward"], "reward")
+
     logger.info(
         "Exam submitted — alias=%r exam=%r score=%d/%d (%.0f%%) passed=%s entry_id=%d",
         session.get("alias"), exam_id, score, total, percentage, passed, entry_id,
@@ -592,12 +598,16 @@ def history_detail(entry_id):
     category_breakdown = _compute_category_breakdown(answers) if answers else []
     grade = {"label": entry["grade_label"], "class": entry["grade_class"]}
 
+    reward_messages = get_flashed_messages(category_filter=["reward"])
+    reward = reward_messages[0] if reward_messages else None
+
     return render_template(
         "history_detail.html",
         entry=entry,
         answers=answers,
         category_breakdown=category_breakdown,
         grade=grade,
+        reward=reward,
         github_repo=GITHUB_REPO,
         csp_nonce=_generate_csp_nonce(),
     )
