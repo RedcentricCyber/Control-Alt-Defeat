@@ -39,9 +39,9 @@ python app/app.py
 
 | Exam | Question Pool | Difficulty | Source |
 |------|-----------|------------|--------|
-| CREST CCT Multichoice Preparation | 1649 | Hard | ChatGPT, Claude, Gemini |
+| CREST CCT Multichoice Preparation | 1821 | Hard | ChatGPT, Claude, Gemini |
 | CyberScheme CSTM | 108 | Medium | ChatGPT |
-| CREST CPSA Multichoice Preparation | 355 | Medium | Gemini |
+| CREST CPSA Multichoice Preparation | 493 | Medium | Gemini |
 
 ## Creating Your Own Exams
 
