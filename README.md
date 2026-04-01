@@ -55,6 +55,7 @@ Add a JSON file to `app/exams/` following this format:
   "pass_mark": 70,
   "time_limit": 30,
   "num_questions": 20,
+  "reward": "FLAG{optional-reward-for-passing}",
   "based_on": "Optional — what the exam is based on",
   "created_by": "Optional — author name",
   "links": [
@@ -90,6 +91,7 @@ Create an XYZ exam .json file, using the below format
   "pass_mark": 70,
   "time_limit": 30,
   "num_questions": 20,
+  "reward": "FLAG{optional-reward-for-passing}",
   "based_on": "Optional — what the exam is based on",
   "created_by": "Optional — author name",
   "links": [
@@ -133,6 +135,7 @@ Also note:
 - `num_questions` — how many to serve per session (can be less than the total pool)
 - `category` — questions are sampled proportionally across categories so every topic is represented
 - `correct` — the key (`A`/`B`/`C`/`D`) of the right answer
+- `reward` — optional text (e.g. voucher code, CTF flag) shown once to users who pass with default exam settings (question count and time limit unchanged)
 
 If running with Docker, the exams directory is mounted as a volume — just drop the file in `app/exams/` and refresh the page. No rebuild needed.
 
