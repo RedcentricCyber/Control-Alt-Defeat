@@ -143,9 +143,9 @@
         "D": "Exploitation",
         "E": "Post-engagement and Reporting"
       },
-      "answer": "A",
       "explanation": "The Rules of Engagement (RoE) are part of the pre-engagement phase. This document defines the technical constraints, communication paths, and legal boundaries before any testing begins.",
-      "skill": "Engagement Lifecycle"
+      "skill": "Engagement Lifecycle",
+      "correct": "A"
     },
     {
       "category": "Soft Skills and Assessment Management (PT001)",
@@ -478,9 +478,9 @@
         "D": "The region of the data center",
         "E": "The number of IAM users"
       },
-      "answer": "B",
       "explanation": "In cloud environments, the shared responsibility model dictates what the client owns versus the provider. Testing assets owned by the provider without explicit permission is a major legal risk.",
-      "skill": "Scoping"
+      "skill": "Scoping",
+      "correct": "B"
     },
     {
       "category": "Soft Skills and Assessment Management (PT001)",
@@ -603,9 +603,9 @@
         "D": "Risk Transference",
         "E": "Risk Ignoring"
       },
-      "answer": "C",
       "explanation": "Risk mitigation involves taking active steps to reduce the impact or likelihood of a risk. Implementing a WAF is a technical control designed to mitigate web-based threats.",
-      "skill": "Managing Risk"
+      "skill": "Managing Risk",
+      "correct": "C"
     },
     {
       "category": "Soft Skills and Assessment Management (PT001)",
@@ -728,9 +728,9 @@
         "D": "Post it on the company's public Slack channel",
         "E": "Email the CEO directly without following the communication plan"
       },
-      "answer": "C",
       "explanation": "Critical findings that pose an immediate threat should be reported as soon as possible according to the communication plan established in the RoE, typically to a designated technical contact.",
-      "skill": "Client Communications"
+      "skill": "Client Communications",
+      "correct": "C"
     },
     {
       "category": "Soft Skills and Assessment Management (PT001)",
@@ -1329,9 +1329,9 @@
         "D": "To increase the number of findings",
         "E": "To bypass the need for a Letter of Authorization"
       },
-      "answer": "B",
       "explanation": "IP whitelisting ensures that the security testing traffic is not blocked by defensive systems, allowing for a thorough assessment of the underlying application or infrastructure vulnerabilities.",
-      "skill": "Platform Preparation"
+      "skill": "Platform Preparation",
+      "correct": "B"
     },
     {
       "category": "Core Technical Skills (PT002)",
@@ -1468,9 +1468,9 @@
         "D": "T5 (Insane)",
         "E": "T2 (Polite)"
       },
-      "answer": "A",
       "explanation": "T0 (Paranoid) is the slowest timing template, designed to evade IDS by sending packets very slowly. T5 is the fastest and most likely to be detected or cause network issues.",
-      "skill": "Using Tools and Interpreting Output"
+      "skill": "Using Tools and Interpreting Output",
+      "correct": "A"
     },
     {
       "category": "Network Security (PT005)",
@@ -1509,9 +1509,9 @@
         "D": "Social Engineering",
         "E": "Phishing"
       },
-      "answer": "C",
       "explanation": "Pivoting (or tunneling) is the method of using a compromised system to attack other systems on the same or different networks that were previously inaccessible.",
-      "skill": "Pivoting"
+      "skill": "Pivoting",
+      "correct": "C"
     },
     {
       "question": "When interpreting Nmap output, what does the 'Filtered' state for a port typically indicate?",
@@ -1522,9 +1522,9 @@
         "D": "The service on that port is unresponsive",
         "E": "The target host is down"
       },
-      "answer": "C",
       "explanation": "The 'Filtered' state means Nmap cannot determine if the port is open or closed because its probes are being blocked by a packet filter or firewall.",
-      "skill": "Using Tools and Interpreting Output"
+      "skill": "Using Tools and Interpreting Output",
+      "correct": "C"
     },
     {
       "category": "Network Security (PT005)",
@@ -1549,9 +1549,9 @@
         "D": "Non-repudiation",
         "E": "Authentication"
       },
-      "answer": "B",
       "explanation": "Integrity ensures that data remains accurate and unchanged from its original state. Hashing algorithms are commonly used to verify integrity.",
-      "skill": "Cryptography"
+      "skill": "Cryptography",
+      "correct": "B"
     },
     {
       "question": "What is the main difference between symmetric and asymmetric encryption?",
@@ -1562,9 +1562,9 @@
         "D": "Asymmetric is only used for hashing",
         "E": "Symmetric is more secure for key exchange"
       },
-      "answer": "C",
       "explanation": "Symmetric encryption uses a single shared key for both encryption and decryption. Asymmetric encryption uses a public key for encryption and a private key for decryption.",
-      "skill": "Cryptography"
+      "skill": "Cryptography",
+      "correct": "C"
     },
     {
       "question": "What is the primary advantage of using the '-sV' flag in Nmap compared to a standard port scan?",
@@ -1575,9 +1575,9 @@
         "D": "It bypasses all known firewalls",
         "E": "It provides the MAC address of the target"
       },
-      "answer": "B",
       "explanation": "The '-sV' flag enables version detection, which probes open ports to determine what service is actually running and its version number, which is crucial for vulnerability research.",
-      "skill": "Using Tools and Interpreting Output"
+      "skill": "Using Tools and Interpreting Output",
+      "correct": "B"
     },
     {
       "category": "Network Security (PT005)",
@@ -1602,9 +1602,9 @@
         "D": "Blowfish",
         "E": "SHA-256"
       },
-      "answer": "C",
       "explanation": "RSA is a classic and widely used asymmetric algorithm. AES, DES, and Blowfish are symmetric, while SHA-256 is a hashing algorithm.",
-      "skill": "Cryptography"
+      "skill": "Cryptography",
+      "correct": "C"
     },
     {
       "question": "Which hardware security feature provides a secure cryptoprocessor to store cryptographic keys and perform encryption tasks?",
@@ -1615,9 +1615,9 @@
         "D": "RAM",
         "E": "SSD Controller"
       },
-      "answer": "B",
       "explanation": "A TPM is a dedicated microcontroller designed to secure hardware through integrated cryptographic keys. It is commonly used for disk encryption and platform integrity checks.",
-      "skill": "Hardware Security"
+      "skill": "Hardware Security",
+      "correct": "B"
     },
     {
       "question": "In Nmap, which additional flag is often used alongside '-sV' to increase the intensity of version detection probes?",
@@ -1628,9 +1628,9 @@
         "D": "--script default",
         "E": "-O"
       },
-      "answer": "C",
       "explanation": "--version-intensity allows you to set a level from 0 to 9. Higher levels send more probes to increase the likelihood of a correct identification, though it takes longer.",
-      "skill": "Using Tools and Interpreting Output"
+      "skill": "Using Tools and Interpreting Output",
+      "correct": "C"
     },
     {
       "category": "Network Security (PT005)",
@@ -1655,9 +1655,9 @@
         "D": "To allow the password to be decrypted later",
         "E": "To replace the need for a strong password policy"
       },
-      "answer": "C",
       "explanation": "A salt is random data added to a password before hashing. This ensures that identical passwords result in different hashes, making precomputed rainbow table attacks ineffective.",
-      "skill": "Cryptography"
+      "skill": "Cryptography",
+      "correct": "C"
     },
     {
       "question": "How does Nmap's '-O' flag attempt to determine the operating system of a target host?",
@@ -1668,9 +1668,9 @@
         "D": "By brute-forcing the SSH login",
         "E": "By reading the /etc/os-release file"
       },
-      "answer": "B",
       "explanation": "OS fingerprinting works by sending various TCP and UDP packets to the target and analyzing the subtle differences in how different OS stacks respond to those packets.",
-      "skill": "OS Fingerprinting"
+      "skill": "OS Fingerprinting",
+      "correct": "B"
     },
     {
       "category": "Information Gathering (PT001)",
@@ -2059,9 +2059,9 @@
         "D": "TXT",
         "E": "PTR"
       },
-      "answer": "C",
       "explanation": "MX (Mail Exchanger) records specify the mail server responsible for accepting email messages on behalf of a domain name.",
-      "skill": "Information Gathering"
+      "skill": "Information Gathering",
+      "correct": "C"
     },
     {
       "question": "If an MX record points to 'mail.example.com', what is the next logical DNS query to find the IP address of that mail server?",
@@ -2072,9 +2072,9 @@
         "D": "Query for the SOA record of example.com",
         "E": "Query for the PTR record of the domain"
       },
-      "answer": "B",
       "explanation": "An MX record provides a hostname. To connect to that host, you need its IP address, which is found by querying for its A (IPv4) or AAAA (IPv6) record.",
-      "skill": "Information Gathering"
+      "skill": "Information Gathering",
+      "correct": "B"
     },
     {
       "question": "Which Google Dork operator would you use to find files of a specific type, such as PDF, on a target domain?",
@@ -2085,9 +2085,9 @@
         "D": "inurl:",
         "E": "cache:"
       },
-      "answer": "C",
       "explanation": "The 'filetype:' operator restricts search results to files of a specific extension, which is useful for finding sensitive documents like 'filetype:pdf site:example.com'.",
-      "skill": "Information Gathering"
+      "skill": "Information Gathering",
+      "correct": "C"
     },
     {
       "category": "Network Security (PT005)",
@@ -2112,9 +2112,9 @@
         "D": "To find pages that link to a specific site",
         "E": "To view the cached version of a page"
       },
-      "answer": "B",
       "explanation": "The 'intitle:' operator searches for specific text within the title of the webpage, which can help find login pages or administrative panels (e.g., 'intitle:\"index of\"').",
-      "skill": "Information Gathering"
+      "skill": "Information Gathering",
+      "correct": "B"
     },
     {
       "question": "When performing DNS reconnaissance, which record type would you query to find the mail servers authorized to receive email for a domain?",
@@ -2125,9 +2125,9 @@
         "D": "TXT",
         "E": "PTR"
       },
-      "answer": "C",
       "explanation": "MX (Mail Exchanger) records specify the mail server responsible for accepting email messages on behalf of a domain name.",
-      "skill": "Information Gathering"
+      "skill": "Information Gathering",
+      "correct": "C"
     },
     {
       "question": "If an MX record points to 'mail.example.com', what is the next logical DNS query to find the IP address of that mail server?",
@@ -2138,9 +2138,9 @@
         "D": "Query for the SOA record of example.com",
         "E": "Query for the PTR record of the domain"
       },
-      "answer": "B",
       "explanation": "An MX record provides a hostname. To connect to that host, you need its IP address, which is found by querying for its A (IPv4) or AAAA (IPv6) record.",
-      "skill": "Information Gathering"
+      "skill": "Information Gathering",
+      "correct": "B"
     },
     {
       "category": "Networks (PT004)",
@@ -6351,9 +6351,9 @@
         "D": "Send a large payload to test for buffer overflows.",
         "E": "Use an exploit from a public database based on the port number."
       },
-      "answer": "C",
       "explanation": "Analyzing HTTP response headers (like 'Server' or 'X-Powered-By') and the content of error pages can often reveal the underlying technology or web server version without being intrusive.",
-      "skill": "Unknown Services"
+      "skill": "Unknown Services",
+      "correct": "C"
     },
     {
       "question": "You find an unknown service on TCP port 9000. A simple connection reveals a banner: 'Welcome to the Management Console v2.1'. What should be your primary concern before further testing?",
@@ -6364,9 +6364,9 @@
         "D": "The port number is non-standard for management consoles.",
         "E": "The banner is encrypted."
       },
-      "answer": "B",
       "explanation": "Unknown or proprietary services, especially management consoles, can be fragile. Sending unexpected data or using automated scanners can cause them to crash, potentially impacting business operations.",
-      "skill": "Unknown Services"
+      "skill": "Unknown Services",
+      "correct": "B"
     },
     {
       "question": "You discover a service on TCP port 5000 that responds with 'READY' to any input. What is the most effective next step for identification without using intrusive scanners?",
@@ -6377,9 +6377,9 @@
         "D": "Assume it is a custom backdoor and attempt to exploit it immediately.",
         "E": "Run an Nmap script scan (-sC) against the port."
       },
-      "answer": "B",
       "explanation": "Searching for unique banner strings like 'READY' in conjunction with the port number can often lead to identifying proprietary or less common software through documentation or community discussions.",
-      "skill": "Unknown Services"
+      "skill": "Unknown Services",
+      "correct": "B"
     },
     {
       "question": "During a network scan, you find a service on port 10000 that appears to be a web-based management interface but doesn't provide a clear banner. What is a safe way to gather more information?",
@@ -6390,9 +6390,9 @@
         "D": "Send a large amount of data to the port to test for a denial-of-service vulnerability.",
         "E": "Use a tool to automatically exploit common web server vulnerabilities."
       },
-      "answer": "A",
       "explanation": "Visiting the service with a web browser is a standard, non-intrusive way to gather information. Inspecting the page source, HTTP headers, and SSL/TLS certificates can provide clues about the software and version.",
-      "skill": "Unknown Services"
+      "skill": "Unknown Services",
+      "correct": "A"
     },
     {
       "question": "You encounter an unknown service on TCP port 8888. A simple GET request returns a JSON response: {'status': 'ok', 'version': '1.0.4', 'service': 'DataSync'}. What is the most reliable way to find known vulnerabilities for this service?",
@@ -6403,9 +6403,9 @@
         "D": "Assume it is a standard HTTP service and use common web exploits.",
         "E": "Send a large amount of random data to the port to test for crashes."
       },
-      "answer": "A",
       "explanation": "Once a service name and version are identified (often through banners or API responses), the most effective next step is to research known vulnerabilities for that specific version in databases like CVE or Exploit-DB.",
-      "skill": "Unknown Services"
+      "skill": "Unknown Services",
+      "correct": "A"
     },
     {
       "question": "When probing an unknown service, you notice that it closes the connection immediately after receiving any input that doesn't start with a specific 4-byte header. This suggests the service is using:",
@@ -6416,9 +6416,9 @@
         "D": "An encrypted SSH tunnel.",
         "E": "A RESTful API."
       },
-      "answer": "B",
       "explanation": "Proprietary or custom protocols often use specific headers or magic bytes for synchronization and identification. If the service expects a specific header and doesn't receive it, it will typically terminate the connection.",
-      "skill": "Unknown Services"
+      "skill": "Unknown Services",
+      "correct": "B"
     },
     {
       "question": "You find a service on TCP port 31337 that returns a banner: 'Elite Shell v0.1'. What is the most appropriate next step for identification?",
@@ -6429,9 +6429,9 @@
         "D": "Run an aggressive vulnerability scan with all plugins enabled.",
         "E": "Use a tool to automatically exploit the service based on the port number."
       },
-      "answer": "B",
       "explanation": "Identifying a service through its banner and then researching that specific name and version in security databases is a standard, non-intrusive way to find known vulnerabilities.",
-      "skill": "Unknown Services"
+      "skill": "Unknown Services",
+      "correct": "B"
     },
     {
       "category": "Network Services (PT005)",
@@ -6456,9 +6456,9 @@
         "D": "An encrypted SSH tunnel.",
         "E": "A simple RESTful API with JSON."
       },
-      "answer": "B",
       "explanation": "Services that communicate using XML, especially when encoded or wrapped in other formats, are often SOAP or XML-RPC web services, which have specific attack surfaces like XXE or command injection.",
-      "skill": "Unknown Services"
+      "skill": "Unknown Services",
+      "correct": "B"
     },
     {
       "category": "Network Security (PT005)",
@@ -7155,9 +7155,9 @@
         "D": "inurl:",
         "E": "cache:"
       },
-      "answer": "C",
       "explanation": "The 'filetype:' operator restricts search results to files of a specific extension, which is useful for finding sensitive documents like 'filetype:pdf site:example.com'.",
-      "skill": "Information Gathering"
+      "skill": "Information Gathering",
+      "correct": "C"
     },
     {
       "question": "What is the purpose of the 'intitle:' operator in a Google search query during reconnaissance?",
@@ -7168,9 +7168,9 @@
         "D": "To find pages that link to a specific site",
         "E": "To view the cached version of a page"
       },
-      "answer": "B",
       "explanation": "The 'intitle:' operator searches for specific text within the title of the webpage, which can help find login pages or administrative panels (e.g., 'intitle:\"index of\"').",
-      "skill": "Information Gathering"
+      "skill": "Information Gathering",
+      "correct": "B"
     },
     {
       "skill": "Information Gathering",
@@ -7182,8 +7182,8 @@
         "D": "web.config",
         "E": "crossdomain.xml"
       },
-      "answer": "B",
-      "explanation": "The robots.txt file contains rules for search engine bots and can often reveal hidden directories or sensitive areas that the developer intended to keep private but failed to secure through proper access controls."
+      "explanation": "The robots.txt file contains rules for search engine bots and can often reveal hidden directories or sensitive areas that the developer intended to keep private but failed to secure through proper access controls.",
+      "correct": "B"
     },
     {
       "skill": "Information Gathering",
@@ -7195,8 +7195,8 @@
         "D": "WHOIS Lookup",
         "E": "Banner Grabbing"
       },
-      "answer": "C",
-      "explanation": "Directory brute-forcing tools help find unlinked content that might be sensitive or misconfigured by testing a list of common names against the web server."
+      "explanation": "Directory brute-forcing tools help find unlinked content that might be sensitive or misconfigured by testing a list of common names against the web server.",
+      "correct": "C"
     },
     {
       "category": "Network Security (PT005)",
@@ -9811,9 +9811,9 @@
         "D": "Service Level Agreement (SLA).",
         "E": "Project Plan."
       },
-      "answer": "B",
       "explanation": "The Rules of Engagement (RoE) document defines the technical constraints, scope, authorized activities, and communication channels for a penetration test.",
-      "skill": "Penetration Testing Authorisation"
+      "skill": "Penetration Testing Authorisation",
+      "correct": "B"
     },
     {
       "category": "Network Security (PT005)",
@@ -9866,9 +9866,9 @@
         "D": "It automatically grants access to all cloud resources.",
         "E": "It replaces the need for an NDA."
       },
-      "answer": "B",
       "explanation": "A Letter of Authorisation (LoA) is a formal document signed by the client that explicitly grants permission for the penetration test, providing legal 'get out of jail free' coverage for the testers.",
-      "skill": "Penetration Testing Authorisation"
+      "skill": "Penetration Testing Authorisation",
+      "correct": "B"
     },
     {
       "category": "Network Security (PT005)",
@@ -9893,9 +9893,9 @@
         "D": "A secret question answer.",
         "E": "A PIN."
       },
-      "answer": "C",
       "explanation": "Multi-factor authentication (MFA) uses different categories of factors: something you know (password), something you are (biometrics), and something you have (physical tokens or smart cards).",
-      "skill": "Identity and Access Management"
+      "skill": "Identity and Access Management",
+      "correct": "C"
     },
     {
       "category": "Network Security (PT005)",
@@ -9948,9 +9948,9 @@
         "D": "It is incompatible with multi-factor authentication.",
         "E": "It only works for web-based applications."
       },
-      "answer": "C",
       "explanation": "While SSO improves user experience and can centralize security controls, it creates a single point of failure. A compromise of the SSO identity provider grants access to every service integrated with it.",
-      "skill": "Identity and Access Management"
+      "skill": "Identity and Access Management",
+      "correct": "C"
     },
     {
       "category": "Cloud Security (PT011)",
@@ -9975,9 +9975,9 @@
         "D": "They are only allowed to test physical security controls.",
         "E": "They are testing from within the target's internal network."
       },
-      "answer": "C",
       "explanation": "In a Black Box test, the tester has no prior knowledge of the target's systems or network, forcing them to perform their own reconnaissance and discovery, much like a real-world external attacker.",
-      "skill": "Penetration Testing Authorisation"
+      "skill": "Penetration Testing Authorisation",
+      "correct": "C"
     },
     {
       "category": "Cloud Security (PT009)",
@@ -10002,9 +10002,9 @@
         "D": "It eliminates the need for passwords.",
         "E": "It only works for physical access control."
       },
-      "answer": "B",
       "explanation": "RBAC simplifies security management by grouping users into roles and assigning permissions to those roles. This is more scalable and less error-prone than managing permissions for every individual user.",
-      "skill": "Identity and Access Management"
+      "skill": "Identity and Access Management",
+      "correct": "B"
     },
     {
       "category": "Cloud Security (PT009)",
@@ -10029,9 +10029,9 @@
         "D": "Wait until the final report to mention it.",
         "E": "Attempt to fix the vulnerability yourself."
       },
-      "answer": "C",
       "explanation": "Professional ethics dictate that critical vulnerabilities found incidentally, even if out of scope, should be reported to the client immediately to allow them to mitigate the risk.",
-      "skill": "Penetration Testing Authorisation"
+      "skill": "Penetration Testing Authorisation",
+      "correct": "C"
     },
     {
       "category": "Network Security (PT005)",
@@ -10056,9 +10056,9 @@
         "D": "To replace the need for firewalls.",
         "E": "To monitor employee social media activity."
       },
-      "answer": "B",
       "explanation": "PAM solutions are designed to secure, manage, and monitor access to privileged accounts. They often include features like credential vaulting, just-in-time access, and session recording.",
-      "skill": "Identity and Access Management"
+      "skill": "Identity and Access Management",
+      "correct": "B"
     },
     {
       "category": "Network Security (PT005)",
@@ -10083,9 +10083,9 @@
         "D": "To define the payment terms for the project.",
         "E": "To replace the need for a final report."
       },
-      "answer": "B",
       "explanation": "An LoA is a critical legal document that protects the testers by proving they have explicit permission from the asset owner to conduct the security testing.",
-      "skill": "Penetration Testing Authorisation"
+      "skill": "Penetration Testing Authorisation",
+      "correct": "B"
     },
     {
       "category": "Cloud Security (PT009)",
@@ -10110,9 +10110,9 @@
         "D": "A secret question answer.",
         "E": "A PIN."
       },
-      "answer": "C",
       "explanation": "Multi-factor authentication (MFA) uses different categories of factors: something you know (password), something you are (biometrics), and something you have (physical tokens or smart cards).",
-      "skill": "Identity and Access Management"
+      "skill": "Identity and Access Management",
+      "correct": "C"
     },
     {
       "category": "Cloud Security (PT009)",
@@ -10516,8 +10516,8 @@
         "D": "Somewhere you are (Geolocation)",
         "E": "Something you do (Typing pattern)"
       },
-      "answer": "C",
-      "explanation": "Hardware tokens and smart cards are physical items that a user possesses for authentication, providing a strong second factor that is difficult for remote attackers to steal."
+      "explanation": "Hardware tokens and smart cards are physical items that a user possesses for authentication, providing a strong second factor that is difficult for remote attackers to steal.",
+      "correct": "C"
     },
     {
       "category": "Network Security (PT005)",
@@ -23378,9 +23378,8 @@
       "options": {
         "A": "The server's entire database contents",
         "B": "An incoming connection request from the target server's IP address",
-        "C": "The administrator's session cookie",
-        "D": "A \"403 Forbidden\" error message",
-        "C": "The source code of the application's index page"
+        "C": "The source code of the application's index page",
+        "D": "A \"403 Forbidden\" error message"
       },
       "correct": "B",
       "explanation": "To confirm SSRF, an attacker often tries to make the vulnerable server connect back to a machine they control. If they see an incoming connection on their listener (e.g., `nc -lvp 80`), it proves the server is making outbound requests based on user input, confirming the vulnerability."
@@ -24834,7 +24833,6 @@
       "options": {
         "A": "Microcell",
         "B": "Piconet",
-        "C": "Nano-network",
         "C": "Bluetooth-mesh",
         "E": "Personal Area Network (PAN)"
       },
